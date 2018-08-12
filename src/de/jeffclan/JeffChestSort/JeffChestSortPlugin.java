@@ -4,14 +4,12 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class JeffChestSortPlugin extends JavaPlugin {
 
 	Map<String, JeffChestSortPlayerSetting> PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
-	FileConfiguration config = getConfig();
 	JeffChestSortMessages msg;
 
 	@Override
