@@ -12,7 +12,6 @@ import org.mcstats.Metrics;
 
 public class JeffChestSortPlugin extends JavaPlugin {
 
-	boolean debug = false;
 	Map<String, JeffChestSortPlayerSetting> PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 	JeffChestSortMessages msg;
 
