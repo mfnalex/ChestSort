@@ -29,6 +29,19 @@ show-message-again-after-logout: true
 ##### localization ######
 #########################
 
+# Available color codes:
+# &0 Black        &6 Gold       &c Red
+# &1 Dark Blue    &7 Gray       &d Light Purple
+# &2 Dark Green   &8 Dark Gray  &e Yellow
+# &3 Dark Aqua    &9 Blue       &f White
+# &4 Dark Red     &a Green     
+# &5 Dark Purple  &b Aqua
+
+# Available formatting codes:
+# &k Obfuscated   &m Strikethrough
+# &l Bold         &o Italic
+# &n Underline    &r Reset
+
 ##### English
 message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
 message-when-using-chest2: "&7Hint: Type &6/chestsort&7 to disable automatic chest sorting."
