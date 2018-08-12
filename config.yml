@@ -1,0 +1,21 @@
+# when set to false, new players will have
+# to run /chestsort once to enable automatic
+# chest sorting.
+sorting-enabled-by-default: false
+
+# when set to true, players with sorting
+# disabled will be shown a message on how
+# to enable automatic chest sorting when
+# they use a chest for the first time.
+show-message-when-using-chest: true
+
+# when set to true, the message is shown again
+# when a player logs out and back in and then
+# uses a chest again.
+show-message-again-after-logout: true
+
+# localization
+message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
+message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7.&r"
+message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7.&r"
+message-error-players-only: "&cError: This command can only be run by players.&r"
