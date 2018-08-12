@@ -152,9 +152,6 @@ public class JeffChestSortListener implements Listener {
 
 		// put everything back in the inventory
 		for (String s : shortenedArray) {
-			if (plugin.debug) {
-				System.out.println(s);
-			}
 			for (ItemStack item : items) {
 				if (item != null && s != null) {
 					if (item.hashCode() == Integer.parseInt(s.split(",")[1])) {
