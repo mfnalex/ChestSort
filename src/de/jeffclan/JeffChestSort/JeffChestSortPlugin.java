@@ -6,11 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.mcstats.Metrics;
 
 public class JeffChestSortPlugin extends JavaPlugin {
 
+	boolean debug = false;
 	Map<String, JeffChestSortPlayerSetting> PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 	JeffChestSortMessages msg;
 
@@ -39,6 +41,14 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		File playerDataFolder = new File(getDataFolder().getPath() + File.separator + "playerdata");
 		if (!playerDataFolder.exists())
 			playerDataFolder.mkdir();
+	}
+	
+	String getSortableString(ItemStack item) {
+		return item.getType().name()
+				/*+ ","
+				+ (10000-item.getDurability())*/
+				+ ","
+				+ String.valueOf(item.hashCode());
 	}
 
 }

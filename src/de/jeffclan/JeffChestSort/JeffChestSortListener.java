@@ -28,6 +28,11 @@ public class JeffChestSortListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		
+		if(event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
+			plugin.debug=true;
+		}
+		
 		UUID uniqueId = event.getPlayer().getUniqueId();
 		if (!plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
 
@@ -106,6 +111,16 @@ public class JeffChestSortListener implements Listener {
 				}
 			}
 		}
+		
+		/*
+		 * Alright, what the f**k is going on here? Well...
+		 * 
+		 * First of all, we get the inventory's contents in a nice ItemStack-array.
+		 * Altering this array does NOT change the inventory! We just use it to
+		 * generate a sorted list of our items including a string (which happens
+		 * to be the item's type) and a unique identifier, so that we will not
+		 * confuse two items with the same name but different attributes.
+		 */
 
 		Inventory inv = event.getInventory();
 		ItemStack[] items = inv.getContents();
@@ -115,7 +130,7 @@ public class JeffChestSortListener implements Listener {
 		int i = 0;
 		for (ItemStack item : items) {
 			if (item != null) {
-				itemList[i] = item.getType().name() + "," + String.valueOf(item.hashCode());
+				itemList[i] = plugin.getSortableString(item);
 				i++;
 			}
 		}
@@ -141,7 +156,9 @@ public class JeffChestSortListener implements Listener {
 
 		// put everything back in the inventory
 		for (String s : shortenedArray) {
-			// System.out.println(s);
+			if (plugin.debug) {
+				System.out.println(s);
+			}
 			for (ItemStack item : items) {
 				if (item != null && s != null) {
 					if (item.hashCode() == Integer.parseInt(s.split(",")[1])) {
