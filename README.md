@@ -1,5 +1,5 @@
 # ChestSort
-First 1.13 compatible Minecraft-/Spigot-Plugin to allow automatic chest sorting.
+1.13 compatible Minecraft-/Spigot-Plugin to allow automatic chest sorting.
 
 ## About
 Tired of sorting your chests? Let's spend less time on organizing, and more on playing!
