@@ -98,13 +98,6 @@ public class JeffChestSortListener implements Listener {
 				}
 			}
 			return;
-		} else {
-			if (!setting.hasSeenMessage) {
-				setting.hasSeenMessage = true;
-				if (plugin.getConfig().getBoolean("show-message-when-using-chest-and-sorting-is-enabled")) {
-					p.sendMessage(plugin.msg.MSG_COMMANDMESSAGE2);
-				}
-			}
 		}
 
 		Inventory inv = event.getInventory();

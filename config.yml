@@ -6,21 +6,12 @@
 # once to enable automatic chest sorting.
 sorting-enabled-by-default: false
 
-# when set to true, players with sorting DISABLED will be
+# when set to true, players with sorting disabled will be
 # shown a message on how to enable automatic chest sorting
 # when they use a chest for the first time.
-# consider setting this to true when you disable sorting by default.
-# see also -> message-when-using-chest
 show-message-when-using-chest: true
 
-# when set to true, players with sorting ENABLED will be
-# shown a message on how to disable automatic chest sorting
-# when they use a chest for the first time.
-# consider setting this to true when you enable sorting by default.
-# see also -> message-when-using-chest2
-show-message-when-using-chest-and-sorting-is-enabled: false
-
-# when set to true, the messages are shown again when a player
+# when set to true, the message is shown again when a player
 # logs out and back in and then uses a chest again.
 show-message-again-after-logout: true
 
@@ -31,14 +22,12 @@ show-message-again-after-logout: true
 
 ##### English
 message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
-message-when-using-chest2: "&7Hint: Type &6/chestsort&7 to disable automatic chest sorting."
 message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7.&r"
 message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7.&r"
 message-error-players-only: "&cError: This command can only be run by players.&r"
 
 ##### German
 #message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."
-#message-when-using-chest2: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu deaktivieren."
 #message-sorting-disabled: "&7Automatische Kistensortierung &cdeaktiviert&7.&r"
 #message-sorting-enabled: "&7Automatische Kistensortierung &aaktiviert&7.&r"
 #message-error-players-only: "&cFehler: Dieser Befehl ist nur für Spieler verfügbar.&r"
