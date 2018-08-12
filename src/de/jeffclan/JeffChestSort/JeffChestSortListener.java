@@ -29,10 +29,6 @@ public class JeffChestSortListener implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		
-		if(event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
-			plugin.debug=true;
-		}
-		
 		UUID uniqueId = event.getPlayer().getUniqueId();
 		if (!plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
 
