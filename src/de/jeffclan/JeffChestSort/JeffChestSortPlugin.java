@@ -1,11 +1,13 @@
 package de.jeffclan.JeffChestSort;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.mcstats.Metrics;
 
 public class JeffChestSortPlugin extends JavaPlugin {
 
@@ -19,6 +21,13 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
+		
+	    try {
+	        Metrics metrics = new Metrics(this);
+	        metrics.start();
+	    } catch (IOException e) {
+	        getLogger().warning("Error while trying to start Metrics. This is not important.");
+	    }
 	}
 
 	public boolean sortingEnabled(Player p) {
