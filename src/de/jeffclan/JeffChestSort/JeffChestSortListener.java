@@ -77,7 +77,7 @@ public class JeffChestSortListener implements Listener {
 			if (!setting.hasSeenMessage) {
 				setting.hasSeenMessage = true;
 				if (plugin.getConfig().getBoolean("show-message-when-using-chest")) {
-					p.sendMessage(plugin.msg.MSG_COMMANDMESSAGE);
+					p.sendMessage(plugin.messages.MSG_COMMANDMESSAGE);
 				}
 			}
 			return;
@@ -85,7 +85,7 @@ public class JeffChestSortListener implements Listener {
 			if (!setting.hasSeenMessage) {
 				setting.hasSeenMessage = true;
 				if (plugin.getConfig().getBoolean("show-message-when-using-chest-and-sorting-is-enabled")) {
-					p.sendMessage(plugin.msg.MSG_COMMANDMESSAGE2);
+					p.sendMessage(plugin.messages.MSG_COMMANDMESSAGE2);
 				}
 			}
 		}

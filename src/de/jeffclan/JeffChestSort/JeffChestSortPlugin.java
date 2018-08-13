@@ -14,15 +14,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class JeffChestSortPlugin extends JavaPlugin {
 
 	Map<String, JeffChestSortPlayerSetting> PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
-	JeffChestSortMessages msg;
+	JeffChestSortMessages messages;
 
 	@Override
 	public void onEnable() {
 		createConfig();
-		msg = new JeffChestSortMessages(this);
+		messages = new JeffChestSortMessages(this);
 		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
+		
+		@SuppressWarnings("unused")
+		Metrics metrics = new Metrics(this);
 		
 	}
 	
@@ -73,7 +76,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			try {
 				playerConfig.save(playerFile);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

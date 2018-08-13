@@ -15,26 +15,21 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
-		if (!(sender instanceof Player)) {
-			return false;
-		}
 
 		if (arg1.getName().equalsIgnoreCase("chestsort")) {
 			if (!(sender instanceof Player)) {
-				sender.sendMessage(plugin.msg.MSG_PLAYERSONLY);
+				sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
 				return true;
 			}
 
 			Player p = (Player) sender;
 			JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
 			setting.sortingEnabled = !setting.sortingEnabled;
-			
-			
 
 			if (setting.sortingEnabled) {
-				p.sendMessage(plugin.msg.MSG_ACTIVATED);
+				p.sendMessage(plugin.messages.MSG_ACTIVATED);
 			} else {
-				p.sendMessage(plugin.msg.MSG_DEACTIVATED);
+				p.sendMessage(plugin.messages.MSG_DEACTIVATED);
 			}
 
 			return true;
