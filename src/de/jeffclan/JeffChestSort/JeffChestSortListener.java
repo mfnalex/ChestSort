@@ -1,6 +1,5 @@
 package de.jeffclan.JeffChestSort;
 
-import java.util.Arrays;
 import java.util.UUID;
 import java.io.File;
 
@@ -14,8 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class JeffChestSortListener implements Listener {
 
