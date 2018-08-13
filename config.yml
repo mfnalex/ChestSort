@@ -2,6 +2,11 @@
 #####   ChestSort   #####
 #########################
 
+#
+# Please note that players will need the chestsort.use permission
+# or have to be OP to be able to use automatic chest sorting.
+#
+
 # when set to false, new players will have to run /chestsort
 # once to enable automatic chest sorting.
 sorting-enabled-by-default: false
