@@ -1,6 +1,6 @@
 main: de.jeffclan.JeffChestSort.JeffChestSortPlugin
 name: ChestSort
-version: 1.5
+version: 1.5.2
 api-version: 1.13
 description: Allows automatic chest sorting
 author: mfnalex
@@ -16,4 +16,3 @@ commands:
 permissions:
   chestsort.use:
     description: Allows usage of automatic chest sorting
-    default: op
