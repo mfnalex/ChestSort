@@ -57,12 +57,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("message-error-players-only","&cError: This command can only be run by players.&r");
 	}
 	
-	String getSortableString(ItemStack item) {
-		return item.getType().name()
-				+ ","
-				+ String.valueOf(item.hashCode());
-	}
-	
 	void unregisterPlayer(Player p) {
 		UUID uniqueId = p.getUniqueId();
 		if (PerPlayerSettings.containsKey(uniqueId.toString())) {

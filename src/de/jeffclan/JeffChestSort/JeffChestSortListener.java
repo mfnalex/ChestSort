@@ -89,60 +89,7 @@ public class JeffChestSortListener implements Listener {
 				}
 			}
 		}
-		
-		/*
-		 * Alright, what the f**k is going on here? Well...
-		 * 
-		 * First of all, we get the inventory's contents in a nice ItemStack-array.
-		 * Altering this array does NOT change the inventory! We just use it to
-		 * generate a sorted list of our items including a string (which happens
-		 * to be the item's type) and a unique identifier, so that we will not
-		 * confuse two items with the same name but different attributes.
-		 */
 
-		Inventory inv = event.getInventory();
-		ItemStack[] items = inv.getContents();
-		event.getInventory().clear();
-		String[] itemList = new String[inv.getSize()];
-
-		int i = 0;
-		for (ItemStack item : items) {
-			if (item != null) {
-				itemList[i] = plugin.getSortableString(item);
-				i++;
-			}
-		}
-
-		// count all items that are not null
-		int count = 0;
-		for (String s : itemList) {
-			if (s != null) {
-				count++;
-			}
-		}
-
-		// create new array with just the size we need
-		String[] shortenedArray = new String[count];
-
-		// fill new array with items
-		for (int j = 0; j < count; j++) {
-			shortenedArray[j] = itemList[j];
-		}
-
-		// sort array alphabetically
-		Arrays.sort(shortenedArray);
-
-		// put everything back in the inventory
-		for (String s : shortenedArray) {
-			for (ItemStack item : items) {
-				if (item != null && s != null) {
-					if (item.hashCode() == Integer.parseInt(s.split(",")[1])) {
-						inv.addItem(item);
-						item = null;
-						s = null;
-					}
-				}
-			}
-		}
+		JeffChestSortOrganizer.sortInventory(event.getInventory());
 	}
 }
