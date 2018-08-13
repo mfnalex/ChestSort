@@ -9,8 +9,7 @@ public class JeffChestSortOrganizer {
 	
 	static String getSortableString(ItemStack item) {
 		return item.getType().name()
-				+ ","
-				+ String.valueOf(item.hashCode());
+				+ "," + String.valueOf(item.hashCode());
 	}
 	
 	static void sortInventory(Inventory inv) {
@@ -47,6 +46,7 @@ public class JeffChestSortOrganizer {
 
 		// put everything back in the inventory
 		for (String s : shortenedArray) {
+			// System.out.println(s);
 			for (ItemStack item : items) {
 				if (item != null && s != null) {
 					if (item.hashCode() == Integer.parseInt(s.split(",")[1])) {
