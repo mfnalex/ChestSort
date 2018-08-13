@@ -44,23 +44,23 @@ show-message-again-after-logout: true
 ##### English
 message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
 message-when-using-chest2: "&7Hint: Type &6/chestsort&7 to disable automatic chest sorting."
-message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7.&r"
-message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7.&r"
-message-error-players-only: "&cError: This command can only be run by players.&r"
+message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7."
+message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7."
+message-error-players-only: "&cError: This command can only be run by players."
 
 ##### French - Thanks to automatizer for translating! -> https://www.spigotmc.org/members/automatizer.26188/
 #message-when-using-chest: "&7Astuce: Écris &6/chestsort&7 pour activer le classement automatique."
 #message-when-using-chest2: "&7Astuce: Écris &6/chestsort&7 pour désactiver le classement automatique."
-#message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7.&r"
-#message-sorting-enabled: "&7Le classement automatique a été &aactivé&7.&r"
-#message-error-players-only: "&cErreur: Cette commande ne peut être utilisée que par des joueurs.&r"
+#message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7."
+#message-sorting-enabled: "&7Le classement automatique a été &aactivé&7."
+#message-error-players-only: "&cErreur: Cette commande ne peut être utilisée que par des joueurs."
 
 ##### German
 #message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."
 #message-when-using-chest2: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu deaktivieren."
-#message-sorting-disabled: "&7Automatische Kistensortierung &cdeaktiviert&7.&r"
-#message-sorting-enabled: "&7Automatische Kistensortierung &aaktiviert&7.&r"
-#message-error-players-only: "&cFehler: Dieser Befehl ist nur für Spieler verfügbar.&r"
+#message-sorting-disabled: "&7Automatische Kistensortierung &cdeaktiviert&7."
+#message-sorting-enabled: "&7Automatische Kistensortierung &aaktiviert&7."
+#message-error-players-only: "&cFehler: Dieser Befehl ist nur für Spieler verfügbar."
 
 
 #########################
