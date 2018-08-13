@@ -1,10 +1,10 @@
 main: de.jeffclan.JeffChestSort.JeffChestSortPlugin
 name: ChestSort
-version: 1.5.2
+version: 1.5.3
 api-version: 1.13
 description: Allows automatic chest sorting
 author: mfnalex
-website: www.jeff-media.de
+website: https://www.spigotmc.org/resources/1-13-chestsort.59773/
 prefix: ChestSort
 database: false 
 commands:
