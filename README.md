@@ -10,7 +10,7 @@ Sorting will work with chests and shulker boxes.
 
 ![Screenshot ChestSort](https://static.jeff-media.de/i/chestsortbeforeafter.jpg "Screenshot ChestSort")
 
-## Download
-Please see the related topic at spigotmc.org for download links:
+## Download & more information
+Please see the related topic at spigotmc.org for information regarding the commands, permissions and download links:
 
 https://www.spigotmc.org/resources/1-13-chestsort.59773/
