@@ -62,6 +62,11 @@ public class JeffChestSortListener implements Listener {
 		}
 
 		Player p = (Player) event.getPlayer();
+		
+		if(!p.hasPermission("chestsort.use")) {
+			return;
+		}
+		
 		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
 
 		if (!(event.getInventory().getHolder() instanceof Chest)
