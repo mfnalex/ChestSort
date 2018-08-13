@@ -24,7 +24,6 @@ show-message-when-using-chest-and-sorting-is-enabled: false
 # logs out and back in and then uses a chest again.
 show-message-again-after-logout: true
 
-
 #########################
 ##### localization ######
 #########################
@@ -49,9 +48,24 @@ message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7.&r"
 message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7.&r"
 message-error-players-only: "&cError: This command can only be run by players.&r"
 
+##### French - Thanks to automatizer for translating! -> https://www.spigotmc.org/members/automatizer.26188/
+#message-when-using-chest: "&7Astuce: Écris &6/chestsort&7 pour activer le classement automatique."
+#message-when-using-chest2: "&7Astuce: Écris &6/chestsort&7 pour désactiver le classement automatique."
+#message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7.&r"
+#message-sorting-enabled: "&7Le classement automatique a été &aactivé&7.&r"
+#message-error-players-only: "&cErreur: Cette commande ne peut être utilisée que par des joueurs.&r"
+
 ##### German
 #message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."
 #message-when-using-chest2: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu deaktivieren."
 #message-sorting-disabled: "&7Automatische Kistensortierung &cdeaktiviert&7.&r"
 #message-sorting-enabled: "&7Automatische Kistensortierung &aaktiviert&7.&r"
 #message-error-players-only: "&cFehler: Dieser Befehl ist nur für Spieler verfügbar.&r"
+
+
+#########################
+#####     Done!     #####
+#########################
+
+# please do not change the following line manually!
+config-version: 2

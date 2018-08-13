@@ -3,7 +3,6 @@ package de.jeffclan.JeffChestSort;
 import java.util.Arrays;
 import java.util.UUID;
 import java.io.File;
-import java.io.IOException;
 
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
@@ -55,24 +54,7 @@ public class JeffChestSortListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		UUID uniqueId = event.getPlayer().getUniqueId();
-		if (plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
-			JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings
-					.get(event.getPlayer().getUniqueId().toString());
-			File playerFile = new File(plugin.getDataFolder() + File.separator + "playerdata",
-					event.getPlayer().getUniqueId().toString() + ".yml");
-			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-			playerConfig.set("sortingEnabled", setting.sortingEnabled);
-			playerConfig.set("hasSeenMessage", setting.hasSeenMessage);
-			try {
-				playerConfig.save(playerFile);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			plugin.PerPlayerSettings.remove(uniqueId.toString());
-		}
+		plugin.unregisterPlayer(event.getPlayer());
 	}
 
 	@EventHandler
