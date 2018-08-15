@@ -25,6 +25,7 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 			Player p = (Player) sender;
 			JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
 			setting.sortingEnabled = !setting.sortingEnabled;
+			setting.hasSeenMessage=true;
 
 			if (setting.sortingEnabled) {
 				p.sendMessage(plugin.messages.MSG_ACTIVATED);
