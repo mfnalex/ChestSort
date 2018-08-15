@@ -25,7 +25,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this);
-		
 	}
 	
 	@Override

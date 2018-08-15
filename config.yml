@@ -74,6 +74,13 @@ message-error-players-only: "&cError: This command can only be run by players."
 #message-sorting-enabled: "&7L'ordinamento automatico dei bauli è stato &aattivato&7."
 #message-error-players-only: "&cErrore: questo comando è disponibile solo per i giocatori."
 
+##### Chinese - Thanks to qsefthuopq for translating! -> https://www.spigotmc.org/members/qsefthuopq.339953/
+#message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
+#message-when-using-chest2: "&7提示: 输入 &6/chestsort&7 来关闭自动整理箱子."
+#message-sorting-disabled: "&7自动整理箱子已 &c关闭&7."
+#message-sorting-enabled: "&7自动整理箱子已 &a启用&7."
+#message-error-players-only: "&c错误: 指令只能由玩家运行."
+
 #########################
 #####     Done!     #####
 #########################
