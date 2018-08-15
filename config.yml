@@ -67,6 +67,12 @@ message-error-players-only: "&cError: This command can only be run by players."
 #message-sorting-enabled: "&7Automatische Kistensortierung &aaktiviert&7."
 #message-error-players-only: "&cFehler: Dieser Befehl ist nur für Spieler verfügbar."
 
+##### Italian - Translated with Google. Please tell me if something is wrong :)
+#message-when-using-chest: "&7Nota: inserire &6/chestsort&7 per abilitare l'ordinamento automatico dei bauli."
+#message-when-using-chest2: "&7Nota: inserire &6/chestsort&7 per disabilitare l'ordinamento automatico dei bauli."
+#message-sorting-disabled: "&7L'ordinamento automatico dei bauli è stato &cdisattivato&7."
+#message-sorting-enabled: "&7L'ordinamento automatico dei bauli è stato &aattivato&7."
+#message-error-players-only: "&cErrore: questo comando è disponibile solo per i giocatori."
 
 #########################
 #####     Done!     #####
