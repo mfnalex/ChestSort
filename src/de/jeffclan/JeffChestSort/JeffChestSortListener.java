@@ -3,6 +3,7 @@ package de.jeffclan.JeffChestSort;
 import java.util.UUID;
 import java.io.File;
 
+import org.bukkit.GameMode;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.block.ShulkerBox;
@@ -64,6 +65,11 @@ public class JeffChestSortListener implements Listener {
 		Player p = (Player) event.getPlayer();
 		
 		if(!p.hasPermission("chestsort.use")) {
+			return;
+		}
+		
+		// Don't sort automatically when player is spectator
+		if(p.getGameMode().equals(GameMode.SPECTATOR)) {
 			return;
 		}
 		

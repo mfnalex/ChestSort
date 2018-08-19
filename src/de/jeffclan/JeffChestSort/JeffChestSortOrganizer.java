@@ -8,16 +8,24 @@ import org.bukkit.inventory.ItemStack;
 public class JeffChestSortOrganizer {
 
     static String getSortableString(ItemStack item,String sortingMethod) {
-        int typeIsBlock = item.getType().isBlock() ? 1 : 0;
-        int typeIsItem = item.getType().isItem() ? 1 : 0;
+        char blocksFirst;
+        char itemsFirst;
+        if(item.getType().isBlock()) {
+        	blocksFirst='!';
+        	itemsFirst='#';
+        	//System.out.println(item.getType().name() + " is a block.");
+        } else {
+        	blocksFirst='#';
+        	itemsFirst='!';
+        	//System.out.println(item.getType().name() + " is an item.");
+        }
+        
         String typeName = item.getType().name();
         String hashCode = String.valueOf(item.hashCode());
-        short maxDurability = item.getType().getMaxDurability();
 
-        String sortableString = sortingMethod.replaceAll("\\{typeIsBlock\\}", "typeIsBlock:"+String.valueOf(typeIsBlock));
-        sortableString = sortableString.replaceAll("\\{typeIsItem\\}", "typeIsItem:"+typeIsItem);
-        sortableString = sortableString.replaceAll("\\{typeName\\}", "typeName:"+typeName);
-        sortableString = sortableString.replaceAll("\\{typeMaxDurability\\}", "maxDurability:"+String.format("%06d", maxDurability));
+        String sortableString = sortingMethod.replaceAll("\\{itemsFirst\\}", String.valueOf(itemsFirst));
+        sortableString = sortableString.replaceAll("\\{blocksFirst\\}", String.valueOf(blocksFirst));
+        sortableString = sortableString.replaceAll("\\{name\\}", "name:"+typeName);
         sortableString = sortableString + "," + hashCode;
 
         return sortableString;
@@ -33,7 +41,7 @@ public class JeffChestSortOrganizer {
         for (ItemStack item : items) {
             if (item != null) {
                 itemList[i] = getSortableString(item,sortingMethod);
-                System.out.println(itemList[i]);
+                //System.out.println(itemList[i]);
                 i++;
             }
         }

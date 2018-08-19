@@ -33,26 +33,26 @@ show-message-again-after-logout: true
 ##### Sorting Method #####
 ##########################
 
-# Advanced: how to sort things! There is an example at our spigotmc page
+# Advanced: how to sort things! See below for examples.
 #
 # Available variables:
-# {type.isBlock} returns 1 if it is a block and 0 if not
-# {type.isItem}  returns 1 if it is an item and 0 if not
-# {type.name}    returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
+# {itemsFirst}   put items before blocks (must be at the beginning)
+# {blocksFirst}  put blocks before items (must be at the beginning)
+# {name}         returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
 #
 # Warning: You must not use spaces and fields have to be separated by commas.
 #
 # Examples:
 #   sort by name:
-#     '{type.name}'
+#     '{name}'
 #
 #   sort by name, but put items before blocks:
-#     '{type.isBlock},{type.name}'
+#     '{itemsFirst},{name}'
 #
 #   sort by name, but put blocks before items:
-#     '{type.isItem},{type.name}'
+#     '{blocksFirst},{name}'
 #
-sorting-method: '{type.isBlock},{type.name}'
+sorting-method: '{itemsFirst},{name}'
 
 #########################
 ##### localization ######

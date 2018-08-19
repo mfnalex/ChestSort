@@ -21,7 +21,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	public void onEnable() {
 		createConfig();
 		messages = new JeffChestSortMessages(this);
-		sortingMethod = getConfig().getString("sorting-method","{typeIsBlock},{typeName}");
+		sortingMethod = getConfig().getString("sorting-method","{itemsFirst},{name}");
 		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
@@ -29,15 +29,18 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this);
 		
-		if(getConfig().getInt("config-version",0) != currentConfigVersion) {
-			getLogger().warning("======================================================================");
+		getLogger().info("Current sorting method: "+sortingMethod);
+		
+		if(getConfig().getInt("config-version",0) != currentConfigVersion) {		
+			getLogger().warning("========================================================");
 			getLogger().warning("YOU ARE USING AN OLD CONFIG FILE!");
-			getLogger().warning("This is not a problem, as ChestSort will just use the default settings");
-			getLogger().warning("for unset values. However, if you want to configure the new options,");
-			getLogger().warning("please go to https://www.spigotmc.org/resources/1-13-chestsort.59773/");
-			getLogger().warning("and replace your config.yml with the new one. You can then insert your");
-			getLogger().warning("old changes.");
-			getLogger().warning("======================================================================");
+			getLogger().warning("This is not a problem, as ChestSort will just use the");
+			getLogger().warning("default settings for unset values. However, if you want");
+			getLogger().warning("to configure the new options, please go to");
+			getLogger().warning("https://www.spigotmc.org/resources/1-13-chestsort.59773/");
+			getLogger().warning("and replace your config.yml with the new one. You can");
+			getLogger().warning("then insert your old changes into the new file.");
+			getLogger().warning("========================================================");
 		}
 	}
 	
@@ -62,7 +65,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("show-message-when-using-chest", true);
 		getConfig().addDefault("show-message-when-using-chest-and-sorting-is-enabled", false);
 		getConfig().addDefault("show-message-again-after-logout", true);
-		getConfig().addDefault("sorting-method", "{typeIsBlock},{typeName}");
+		getConfig().addDefault("sorting-method", "{itemsFirst},{name}");
 	}
 	
 	void unregisterPlayer(Player p) {
