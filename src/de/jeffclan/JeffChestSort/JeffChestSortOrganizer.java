@@ -48,6 +48,7 @@ public class JeffChestSortOrganizer {
 		if(typeName.contains("pickaxe") || typeName.contains("shovel") ) {
 			return "";
 		}
+		return "";
 	}
 
     String getSortableString(ItemStack item) {

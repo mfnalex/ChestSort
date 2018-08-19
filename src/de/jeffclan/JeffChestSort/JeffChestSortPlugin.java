@@ -16,7 +16,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortMessages messages;
 	JeffChestSortOrganizer organizer;
 	String sortingMethod;
-	int currentConfigVersion = 3;
+	int currentConfigVersion = 4;
 	boolean debug = false;
 
 	@Override
