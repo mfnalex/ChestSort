@@ -29,6 +29,31 @@ show-message-when-using-chest-and-sorting-is-enabled: false
 # logs out and back in and then uses a chest again.
 show-message-again-after-logout: true
 
+##########################
+##### Sorting Method #####
+##########################
+
+# Advanced: how to sort things! There is an example at our spigotmc page
+#
+# Available variables:
+# {type.isBlock} returns 1 if it is a block and 0 if not
+# {type.isItem}  returns 1 if it is an item and 0 if not
+# {type.name}    returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
+#
+# Warning: You must not use spaces and fields have to be separated by commas.
+#
+# Examples:
+#   sort by name:
+#     '{type.name}'
+#
+#   sort by name, but put items before blocks:
+#     '{type.isBlock},{type.name}'
+#
+#   sort by name, but put blocks before items:
+#     '{type.isItem},{type.name}'
+#
+sorting-method: '{type.isBlock},{type.name}'
+
 #########################
 ##### localization ######
 #########################
@@ -86,4 +111,4 @@ message-error-players-only: "&cError: This command can only be run by players."
 #########################
 
 # please do not change the following line manually!
-config-version: 2
+config-version: 3

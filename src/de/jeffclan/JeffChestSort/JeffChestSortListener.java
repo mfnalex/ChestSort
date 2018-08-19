@@ -92,6 +92,6 @@ public class JeffChestSortListener implements Listener {
 			}
 		}
 
-		JeffChestSortOrganizer.sortInventory(event.getInventory());
+		JeffChestSortOrganizer.sortInventory(event.getInventory(),plugin.sortingMethod);
 	}
 }

@@ -14,17 +14,31 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	Map<String, JeffChestSortPlayerSetting> PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 	JeffChestSortMessages messages;
+	String sortingMethod;
+	int currentConfigVersion = 3;
 
 	@Override
 	public void onEnable() {
 		createConfig();
 		messages = new JeffChestSortMessages(this);
+		sortingMethod = getConfig().getString("sorting-method","{typeIsBlock},{typeName}");
 		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
 		
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this);
+		
+		if(getConfig().getInt("config-version",0) != currentConfigVersion) {
+			getLogger().warning("======================================================================");
+			getLogger().warning("YOU ARE USING AN OLD CONFIG FILE!");
+			getLogger().warning("This is not a problem, as ChestSort will just use the default settings");
+			getLogger().warning("for unset values. However, if you want to configure the new options,");
+			getLogger().warning("please go to https://www.spigotmc.org/resources/1-13-chestsort.59773/");
+			getLogger().warning("and replace your config.yml with the new one. You can then insert your");
+			getLogger().warning("old changes.");
+			getLogger().warning("======================================================================");
+		}
 	}
 	
 	@Override
@@ -48,6 +62,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("show-message-when-using-chest", true);
 		getConfig().addDefault("show-message-when-using-chest-and-sorting-is-enabled", false);
 		getConfig().addDefault("show-message-again-after-logout", true);
+		getConfig().addDefault("sorting-method", "{typeIsBlock},{typeName}");
 	}
 	
 	void unregisterPlayer(Player p) {
