@@ -39,20 +39,21 @@ show-message-again-after-logout: true
 # {itemsFirst}   put items before blocks (must be at the beginning)
 # {blocksFirst}  put blocks before items (must be at the beginning)
 # {name}         returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
+# {color}        returns the color, e.g. light_blue for wool. Empty if block/item is not dyeable
 #
 # Warning: You must not use spaces and fields have to be separated by commas.
 #
 # Examples:
-#   sort by name:
-#     '{name}'
+#   sort by name and color:
+#     '{name},{color}'
 #
-#   sort by name, but put items before blocks:
-#     '{itemsFirst},{name}'
+#   sort by name and color, but put items before blocks:
+#     '{itemsFirst},{name},{color}'
 #
-#   sort by name, but put blocks before items:
-#     '{blocksFirst},{name}'
+#   sort by name and color, but put blocks before items:
+#     '{blocksFirst},{name},{color}'
 #
-sorting-method: '{itemsFirst},{name}'
+sorting-method: '{itemsFirst},{name},{color}'
 
 #########################
 ##### localization ######
@@ -111,4 +112,4 @@ message-error-players-only: "&cError: This command can only be run by players."
 #########################
 
 # please do not change the following line manually!
-config-version: 3
+config-version: 4

@@ -14,13 +14,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	Map<String, JeffChestSortPlayerSetting> PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 	JeffChestSortMessages messages;
+	JeffChestSortOrganizer organizer;
 	String sortingMethod;
 	int currentConfigVersion = 3;
+	boolean debug = false;
 
 	@Override
 	public void onEnable() {
 		createConfig();
 		messages = new JeffChestSortMessages(this);
+		organizer = new JeffChestSortOrganizer(this);
 		sortingMethod = getConfig().getString("sorting-method","{itemsFirst},{name}");
 		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
@@ -65,7 +68,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("show-message-when-using-chest", true);
 		getConfig().addDefault("show-message-when-using-chest-and-sorting-is-enabled", false);
 		getConfig().addDefault("show-message-again-after-logout", true);
-		getConfig().addDefault("sorting-method", "{itemsFirst},{name}");
+		getConfig().addDefault("sorting-method", "{itemsFirst},{name},{color}");
 	}
 	
 	void unregisterPlayer(Player p) {

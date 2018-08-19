@@ -6,33 +6,80 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class JeffChestSortOrganizer {
+	
+	JeffChestSortPlugin plugin;
+	
+	String[] colors = {"white","orange","magenta","light_blue","light_gray","yellow","lime","pink","gray","cyan","purple","blue","brown","green","red","black"};
+	
+	public JeffChestSortOrganizer(JeffChestSortPlugin plugin) {
+		this.plugin = plugin;
+	}
+	
+	String[] getTypeAndColor(String typeName) {
+		
+		String myColor = "<none>";
+		typeName = typeName.toLowerCase();
+		
+		
+		for(String color : colors) {
+			if(typeName.startsWith(color)) {
+				typeName = typeName.replaceFirst(color + "_", "");
+				myColor = color;
+			}
+		}
+		
+		// Wool (sort by color)
+		/*if(typeName.endsWith("_wool")) {
+			
+			typeName = typeName.replaceFirst("_wool", "");
+			return "wool_" + typeName;
+			}
+		}*/
+		
+		String[] typeAndColor = new String[2];
+		typeAndColor[0] = typeName;
+		typeAndColor[1] = myColor;
+		
+		return typeAndColor;
+	}
+	
+	String getCategory(String typeName) {
+		typeName = typeName.toLowerCase();
+		if(typeName.contains("pickaxe") || typeName.contains("shovel") ) {
+			return "";
+		}
+	}
 
-    static String getSortableString(ItemStack item,String sortingMethod) {
+    String getSortableString(ItemStack item) {
         char blocksFirst;
         char itemsFirst;
         if(item.getType().isBlock()) {
         	blocksFirst='!';
         	itemsFirst='#';
-        	//System.out.println(item.getType().name() + " is a block.");
+        	if(plugin.debug) System.out.println(item.getType().name() + " is a block.");
         } else {
         	blocksFirst='#';
         	itemsFirst='!';
-        	//System.out.println(item.getType().name() + " is an item.");
+        	if(plugin.debug) System.out.println(item.getType().name() + " is an item.");
         }
         
-        String typeName = item.getType().name();
+        String[] typeAndColor = getTypeAndColor(item.getType().name());
+        String typeName = typeAndColor[0];
+        String color = typeAndColor[1];
+        
         String hashCode = String.valueOf(item.hashCode());
 
-        String sortableString = sortingMethod.replaceAll("\\{itemsFirst\\}", String.valueOf(itemsFirst));
+        String sortableString = plugin.sortingMethod.replaceAll("\\{itemsFirst\\}", String.valueOf(itemsFirst));
         sortableString = sortableString.replaceAll("\\{blocksFirst\\}", String.valueOf(blocksFirst));
-        sortableString = sortableString.replaceAll("\\{name\\}", "name:"+typeName);
+        sortableString = sortableString.replaceAll("\\{name\\}", typeName);
+        sortableString = sortableString.replaceAll("\\{color\\}", color);
         sortableString = sortableString + "," + hashCode;
 
         return sortableString;
 
     }
 
-    static void sortInventory(Inventory inv,String sortingMethod) {
+    void sortInventory(Inventory inv) {
         ItemStack[] items = inv.getContents();
         inv.clear();
         String[] itemList = new String[inv.getSize()];
@@ -40,8 +87,8 @@ public class JeffChestSortOrganizer {
         int i = 0;
         for (ItemStack item : items) {
             if (item != null) {
-                itemList[i] = getSortableString(item,sortingMethod);
-                //System.out.println(itemList[i]);
+                itemList[i] = getSortableString(item);
+                if(plugin.debug) System.out.println(itemList[i]);
                 i++;
             }
         }
