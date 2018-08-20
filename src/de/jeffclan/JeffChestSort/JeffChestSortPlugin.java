@@ -32,6 +32,13 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this);
 		
+		//metrics.addCustomChart(new Metrics.SimplePie("bukkit_version", () -> getServer().getBukkitVersion()));
+		metrics.addCustomChart(new Metrics.SimplePie("sorting_method", () -> sortingMethod));
+		metrics.addCustomChart(new Metrics.SimplePie("config_version", () ->  Integer.toString(getConfig().getInt("config-version",0))));
+		metrics.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest", () ->  Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
+		metrics.addCustomChart(new Metrics.SimplePie("show_message_again_after_logout", () ->  Boolean.toString(getConfig().getBoolean("show-message-again-after-logout"))));
+		metrics.addCustomChart(new Metrics.SimplePie("sorting_enabled_by_default", () -> Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
+		
 		getLogger().info("Current sorting method: "+sortingMethod);
 		
 		if(getConfig().getInt("config-version",0) != currentConfigVersion) {		
