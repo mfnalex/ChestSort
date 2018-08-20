@@ -24,7 +24,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		createConfig();
 		messages = new JeffChestSortMessages(this);
 		organizer = new JeffChestSortOrganizer(this);
-		sortingMethod = getConfig().getString("sorting-method","{itemsFirst},{name}");
+		sortingMethod = getConfig().getString("sorting-method","{itemsFirst},{name},{color}");
 		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
