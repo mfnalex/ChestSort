@@ -53,7 +53,7 @@ show-message-again-after-logout: true
 #   sort by name and color, but put blocks before items:
 #     '{blocksFirst},{name},{color}'
 #
-sorting-method: '{itemsFirst},{name},{color}'
+sorting-method: '{itemsFirst},{name},{color},{category}'
 
 #########################
 ##### localization ######

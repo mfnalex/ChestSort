@@ -9,7 +9,13 @@ public class JeffChestSortOrganizer {
 	
 	JeffChestSortPlugin plugin;
 	
+	
 	String[] colors = {"white","orange","magenta","light_blue","light_gray","yellow","lime","pink","gray","cyan","purple","blue","brown","green","red","black"};
+	String[] tools = {"pickaxe","axe","shovel","hoe","flint_and_steel"};
+	String[] loot = {"rotten_flesh","string","spider_eye"};
+	
+	
+			
 	
 	public JeffChestSortOrganizer(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
@@ -44,11 +50,20 @@ public class JeffChestSortOrganizer {
 	}
 	
 	String getCategory(String typeName) {
+		
 		typeName = typeName.toLowerCase();
-		if(typeName.contains("pickaxe") || typeName.contains("shovel") ) {
-			return "";
+		
+		for (String pattern : tools) {
+			if(typeName.contains(pattern)) {
+				return "tools";
+			}
 		}
-		return "";
+		for(String pattern : loot) {
+			if(typeName.contains(pattern)) {
+				return "loot";
+			}
+		}
+		return "<none>";
 	}
 
     String getSortableString(ItemStack item) {
@@ -67,6 +82,7 @@ public class JeffChestSortOrganizer {
         String[] typeAndColor = getTypeAndColor(item.getType().name());
         String typeName = typeAndColor[0];
         String color = typeAndColor[1];
+        String category = getCategory(item.getType().name());
         
         String hashCode = String.valueOf(item.hashCode());
 
@@ -74,6 +90,7 @@ public class JeffChestSortOrganizer {
         sortableString = sortableString.replaceAll("\\{blocksFirst\\}", String.valueOf(blocksFirst));
         sortableString = sortableString.replaceAll("\\{name\\}", typeName);
         sortableString = sortableString.replaceAll("\\{color\\}", color);
+        sortableString = sortableString.replaceAll("\\{category\\}", category);
         sortableString = sortableString + "," + hashCode;
 
         return sortableString;
