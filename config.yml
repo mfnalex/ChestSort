@@ -107,6 +107,13 @@ message-error-players-only: "&cError: This command can only be run by players."
 #message-sorting-enabled: "&7L'ordinamento automatico dei bauli è stato &aattivato&7."
 #message-error-players-only: "&cErrore: questo comando è disponibile solo per i giocatori."
 
+##### Spanish - Thanks to Bers_ for translating! ->  https://www.spigotmc.org/members/bers_.146126/
+#message-when-using-chest: "&7Pista: Usa &6/chestsort&7 para activar el orden automático de los cofres."
+#message-when-using-chest2: "&7Pista: Usa &6/chestsort&7 para desactivar el orden automático de los cofres."
+#message-sorting-disabled: "&7Orden automático de los cofres &cdesactivado&7."
+#message-sorting-enabled: "&7Orden automático de los cofres &aactivado&7."
+#message-error-players-only: "&cError: Este comando solo puede ser ejecutado por jugadores."
+
 #########################
 #####     Done!     #####
 #########################
