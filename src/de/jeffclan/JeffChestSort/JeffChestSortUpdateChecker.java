@@ -18,13 +18,16 @@ public class JeffChestSortUpdateChecker {
 
 	String latestVersionLink = "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt";
 	String downloadLink = "https://www.spigotmc.org/resources/1-13-chestsort.59773/";
-	private String currentVersion;
-	private String latestVersion;
+	private String currentVersion = "undefined";
+	private String latestVersion = "undefined";
 
 	public void sendUpdateMessage(Player p) {
+		if(!latestVersion.equals("undefined")) {
 		if (!currentVersion.equals(latestVersion)) {
 			p.sendMessage(ChatColor.GRAY + "There is a new version of " + ChatColor.GOLD + "ChestSort" + ChatColor.GRAY
-					+ " available. Please download at " + downloadLink);
+					+ " available.");
+					p.sendMessage(ChatColor.GRAY + "Please download at " + downloadLink);
+		}
 		}
 	}
 
@@ -41,17 +44,20 @@ public class JeffChestSortUpdateChecker {
 
 			String inputLine = reader.readLine().trim();
 
-			currentVersion = plugin.getDescription().getVersion().trim();
 			latestVersion = inputLine;
+			currentVersion = plugin.getDescription().getVersion().trim();
 
-			plugin.getLogger().info("Latest : " + inputLine);
-			plugin.getLogger().info("Current: " + currentVersion);
+			
 			if (latestVersion.equals(currentVersion)) {
 				plugin.getLogger().info("You are using the latest version of ChestSort.");
 			} else {
+				plugin.getLogger().warning("========================================================");
 				plugin.getLogger().warning("There is a new version of ChestSort available!");
+				plugin.getLogger().warning("Latest : " + inputLine);
+				plugin.getLogger().warning("Current: " + currentVersion);
 				plugin.getLogger().warning("Please update to the newest version. Download:");
 				plugin.getLogger().warning(downloadLink);
+				plugin.getLogger().warning("========================================================");
 			}
 
 			reader.close();

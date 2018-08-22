@@ -29,6 +29,12 @@ show-message-when-using-chest-and-sorting-is-enabled: false
 # logs out and back in and then uses a chest again.
 show-message-again-after-logout: true
 
+# should we check for updates on server startup?
+# when enabled, a message is printed in the console if a new
+# version has been found, and OPs will be notified when they
+# join the server
+check-for-updates: true
+
 ##########################
 ##### Sorting Method #####
 ##########################

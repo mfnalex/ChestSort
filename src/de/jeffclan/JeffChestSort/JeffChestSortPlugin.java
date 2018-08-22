@@ -31,12 +31,17 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
 		
+		if(getConfig().getBoolean("check-for-updates",true)) {
+			updateChecker.checkForUpdate();
+		}
+		
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this);
 		
 		//metrics.addCustomChart(new Metrics.SimplePie("bukkit_version", () -> getServer().getBukkitVersion()));
 		metrics.addCustomChart(new Metrics.SimplePie("sorting_method", () -> sortingMethod));
 		metrics.addCustomChart(new Metrics.SimplePie("config_version", () ->  Integer.toString(getConfig().getInt("config-version",0))));
+		metrics.addCustomChart(new Metrics.SimplePie("check_for_updates", () ->  Boolean.toString(getConfig().getBoolean("check-for-updates",true))));
 		metrics.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest", () ->  Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
 		metrics.addCustomChart(new Metrics.SimplePie("show_message_again_after_logout", () ->  Boolean.toString(getConfig().getBoolean("show-message-again-after-logout"))));
 		metrics.addCustomChart(new Metrics.SimplePie("sorting_enabled_by_default", () -> Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
@@ -55,7 +60,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().warning("========================================================");
 		}
 		
-		updateChecker.checkForUpdate();
+		
 	}
 	
 	@Override
@@ -80,6 +85,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("show-message-when-using-chest-and-sorting-is-enabled", false);
 		getConfig().addDefault("show-message-again-after-logout", true);
 		getConfig().addDefault("sorting-method", "{itemsFirst},{name},{color}");
+		getConfig().addDefault("check-for-updates", true);
 	}
 	
 	void unregisterPlayer(Player p) {
