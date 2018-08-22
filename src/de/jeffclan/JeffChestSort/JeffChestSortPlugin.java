@@ -54,6 +54,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().warning("then insert your old changes into the new file.");
 			getLogger().warning("========================================================");
 		}
+		
+		updateChecker.checkForUpdate();
 	}
 	
 	@Override

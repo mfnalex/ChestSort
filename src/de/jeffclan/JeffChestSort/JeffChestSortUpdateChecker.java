@@ -29,6 +29,8 @@ public class JeffChestSortUpdateChecker {
 	}
 
 	public void checkForUpdate() {
+		
+		plugin.getLogger().info("Checking for available updates...");
 
 		try {
 
@@ -42,8 +44,8 @@ public class JeffChestSortUpdateChecker {
 			currentVersion = plugin.getDescription().getVersion().trim();
 			latestVersion = inputLine;
 
-			System.out.print("latest : " + inputLine);
-			System.out.print("current: " + currentVersion);
+			plugin.getLogger().info("Latest : " + inputLine);
+			plugin.getLogger().info("Current: " + currentVersion);
 			if (latestVersion.equals(currentVersion)) {
 				plugin.getLogger().info("You are using the latest version of ChestSort.");
 			} else {
