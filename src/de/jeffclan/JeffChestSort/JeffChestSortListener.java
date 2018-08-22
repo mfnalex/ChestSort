@@ -30,6 +30,10 @@ public class JeffChestSortListener implements Listener {
 			plugin.debug = true;
 		}
 		
+		if(event.getPlayer().isOp()) {
+			plugin.updateChecker.sendUpdateMessage(event.getPlayer());
+		}
+		
 		UUID uniqueId = event.getPlayer().getUniqueId();
 		if (!plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
 

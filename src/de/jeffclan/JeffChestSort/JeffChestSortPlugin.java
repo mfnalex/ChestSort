@@ -15,6 +15,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	Map<String, JeffChestSortPlayerSetting> PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 	JeffChestSortMessages messages;
 	JeffChestSortOrganizer organizer;
+	JeffChestSortUpdateChecker updateChecker;
 	String sortingMethod;
 	int currentConfigVersion = 4;
 	boolean debug = false;
@@ -24,6 +25,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		createConfig();
 		messages = new JeffChestSortMessages(this);
 		organizer = new JeffChestSortOrganizer(this);
+		updateChecker = new JeffChestSortUpdateChecker(this);
 		sortingMethod = getConfig().getString("sorting-method","{itemsFirst},{name},{color}");
 		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
