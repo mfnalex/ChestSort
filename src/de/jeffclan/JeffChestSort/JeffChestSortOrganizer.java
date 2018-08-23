@@ -19,8 +19,6 @@ public class JeffChestSortOrganizer {
 
 	ArrayList<JeffChestSortCategory> categories = new ArrayList<JeffChestSortCategory>();
 
-	String[] loot = { "rotten_flesh", "string", "spider_eye", "gunpowder" };
-	String[] tools = { "_pickaxe", "_shovel", "_hoe", "flint_and_steel", "_axe" , "compass","fishing_rod","clock","shears","lead"};
 	String[] woodBlocks = { "_log", "_wood", "_planks", "acacia_", "oak_", "birch_", "jungle_", "dark_oak_",
 			"spruce_" };
 	String[] redstone = { "dispenser","note_block","sticky_piston","piston","tnt","lever","_pressure_plate","redstone", "_button","tripwire","trapped_chest","daylight_detector","hopper","dropper","observer","iron_trapdoor","iron_door","repeater","comparator","powered_rail","detector_rail","rail","activator_rail","minecart" };
