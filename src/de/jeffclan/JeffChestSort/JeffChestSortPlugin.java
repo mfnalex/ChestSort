@@ -102,7 +102,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	}
 
 	private void saveDefaultCategories() {
-		String[] defaultCategories = { "900-valuables","910-tools","920-combat","930-brewing","940-food","950-redstone" };
+		String[] defaultCategories = { "900-valuables","910-tools","920-combat","930-brewing","940-food","950-redstone","960-wood","970-stone","980-plants","981-corals" };
 
 		for (String category : defaultCategories) {
 

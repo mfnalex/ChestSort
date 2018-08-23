@@ -83,8 +83,20 @@ public class JeffChestSortOrganizer {
 		}
 		
 		for(String woodName : woodNames) {
-			if(typeName.startsWith(woodName)) {
+			if(typeName.equals(woodName+"_wood")) {
+				typeName = "log_wood";
+				myColor = woodName;
+			}
+			else if(typeName.startsWith(woodName)) {
 				typeName = typeName.replaceFirst(woodName+"_", "");
+				myColor = woodName;
+			}
+			else if(typeName.equals("stripped_"+woodName+"_log")) {
+				//typeName = typeName.replaceFirst("stripped_"+woodName+"_", "stripped_");
+				typeName = "log_stripped";
+				myColor = woodName;
+			} else if(typeName.equals("stripped_"+woodName+"_wood")) {
+				typeName = "log_wood_stripped";
 				myColor = woodName;
 			}
 		}

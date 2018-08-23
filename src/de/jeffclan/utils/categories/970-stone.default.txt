@@ -1,0 +1,6 @@
+stone
+cobblestone
+granite
+diorite
+andesite
+*stone_bricks
