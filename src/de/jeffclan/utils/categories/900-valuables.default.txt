@@ -1,0 +1,8 @@
+diamond
+emerald
+diamond_ore
+emerald_ore
+iron_ingot
+iron_ore
+gold_ingot
+gold_ore

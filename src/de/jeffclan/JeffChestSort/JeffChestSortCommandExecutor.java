@@ -5,6 +5,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class JeffChestSortCommandExecutor implements CommandExecutor {
 
 	JeffChestSortPlugin plugin;
@@ -17,6 +19,19 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
 
 		if (arg1.getName().equalsIgnoreCase("chestsort")) {
+			
+			if(arg3.length>0) {
+				if(arg3[0].equalsIgnoreCase("reload")) {
+					if(sender.hasPermission("chestsort.reload")) {
+						/* Reload Configuration */
+						plugin.getServer().getPluginManager().disablePlugin(plugin);
+						plugin.getServer().getPluginManager().enablePlugin(plugin);
+						sender.sendMessage(ChatColor.GOLD + "ChestSort " + ChatColor.GRAY + plugin.getDescription().getVersion() + " has been reloaded.");
+						return true;
+					}
+				}
+			}
+			
 			if (!(sender instanceof Player)) {
 				sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
 				return true;
