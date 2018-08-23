@@ -23,7 +23,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortOrganizer organizer;
 	JeffChestSortUpdateChecker updateChecker;
 	String sortingMethod;
-	int currentConfigVersion = 4;
+	int currentConfigVersion = 5;
+	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never restart your
 	// server)
@@ -52,6 +53,33 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		
 
+
+
+		getLogger().info("Current sorting method: " + sortingMethod);
+
+		if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
+			getLogger().warning("========================================================");
+			getLogger().warning("YOU ARE USING AN OLD CONFIG FILE!");
+			getLogger().warning("This is not a problem, as ChestSort will just use the");
+			getLogger().warning("default settings for unset values. However, if you want");
+			getLogger().warning("to configure the new options, please go to");
+			getLogger().warning("https://www.spigotmc.org/resources/1-13-chestsort.59773/");
+			getLogger().warning("and replace your config.yml with the new one. You can");
+			getLogger().warning("then insert your old changes into the new file.");
+			getLogger().warning("========================================================");
+			usingMatchingConfig = false;
+		}
+
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+			public void run() {
+				if (getConfig().getBoolean("check-for-updates", true)) {
+					updateChecker.checkForUpdate();
+				}
+			}
+		}, 0L, updateCheckInterval * 20);
+		
+		
+		
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this);
 
@@ -68,33 +96,13 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				() -> Boolean.toString(getConfig().getBoolean("show-message-again-after-logout"))));
 		metrics.addCustomChart(new Metrics.SimplePie("sorting_enabled_by_default",
 				() -> Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
-
-		getLogger().info("Current sorting method: " + sortingMethod);
-
-		if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
-			getLogger().warning("========================================================");
-			getLogger().warning("YOU ARE USING AN OLD CONFIG FILE!");
-			getLogger().warning("This is not a problem, as ChestSort will just use the");
-			getLogger().warning("default settings for unset values. However, if you want");
-			getLogger().warning("to configure the new options, please go to");
-			getLogger().warning("https://www.spigotmc.org/resources/1-13-chestsort.59773/");
-			getLogger().warning("and replace your config.yml with the new one. You can");
-			getLogger().warning("then insert your old changes into the new file.");
-			getLogger().warning("========================================================");
-		}
-
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				if (getConfig().getBoolean("check-for-updates", true)) {
-					updateChecker.checkForUpdate();
-				}
-			}
-		}, 0L, updateCheckInterval * 20);
+		metrics.addCustomChart(new Metrics.SimplePie("using_matching_config_version",
+				() ->Boolean.toString(usingMatchingConfig)));
 
 	}
 
 	private void saveDefaultCategories() {
-		String[] defaultCategories = { "900-valuables","902-brewing","905-tools","907-combat","910-food","920-redstone" };
+		String[] defaultCategories = { "900-valuables","910-tools","920-combat","930-brewing","940-food","950-redstone" };
 
 		for (String category : defaultCategories) {
 
@@ -165,7 +173,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("show-message-when-using-chest", true);
 		getConfig().addDefault("show-message-when-using-chest-and-sorting-is-enabled", false);
 		getConfig().addDefault("show-message-again-after-logout", true);
-		getConfig().addDefault("sorting-method", "{itemsFirst},{name},{color}");
+		getConfig().addDefault("sorting-method", "{category},{itemsFirst},{name},{color}");
 		getConfig().addDefault("check-for-updates", true);
 	}
 

@@ -40,10 +40,12 @@ check-for-updates: true
 ##########################
 
 # Advanced: how to sort things! See below for examples.
+# Only change this if you know what you are doing.
 #
 # Available variables:
-# {itemsFirst}   put items before blocks (must be at the beginning)
-# {blocksFirst}  put blocks before items (must be at the beginning)
+# {category}     order stuff by category as defined in plugins/ChestSort/categories/<category>.txt
+# {itemsFirst}   put items before blocks
+# {blocksFirst}  put blocks before items
 # {name}         returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
 # {color}        returns the color, e.g. light_blue for wool. Empty if block/item is not dyeable
 #
@@ -59,7 +61,10 @@ check-for-updates: true
 #   sort by name and color, but put blocks before items:
 #     '{blocksFirst},{name},{color}'
 #
-sorting-method: '{itemsFirst},{name},{color}'
+#   sort by category, then put items before blocks and sort by name and color
+#      '{category},{itemsFirst},{name},{color}'
+#
+sorting-method: '{category},{itemsFirst},{name},{color}'
 
 #########################
 ##### localization ######
@@ -125,4 +130,4 @@ message-error-players-only: "&cError: This command can only be run by players."
 #########################
 
 # please do not change the following line manually!
-config-version: 4
+config-version: 5

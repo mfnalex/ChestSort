@@ -88,6 +88,30 @@ public class JeffChestSortOrganizer {
 				myColor = woodName;
 			}
 		}
+		
+		// Egg has to be put in front to group spawn eggs
+		// E.g. cow_spawn_egg -> egg_cow_spawn
+		if(typeName.endsWith("_egg")) {
+			typeName = typeName.replaceFirst("_egg", "");
+			typeName = "egg_" + typeName;
+		}
+		
+		// Sort armor: helmet, chestplate, leggings, boots
+		if(typeName.endsWith("helmet")) {
+			typeName = typeName.replaceFirst("helmet", "1_helmet");
+		} else if(typeName.endsWith("chestplate")) {
+			typeName = typeName.replaceFirst("chestplate", "2_chestplate");
+		} else if(typeName.endsWith("leggings")) {
+			typeName = typeName.replaceFirst("leggings", "3_leggings");
+		} else if(typeName.endsWith("boots")) {
+			typeName = typeName.replaceFirst("boots", "4_boots");
+		}
+		
+		// Group horse armor
+		if(typeName.endsWith("horse_armor")) {
+			typeName = typeName.replaceFirst("_horse_armor", "");
+			typeName = "horse_armor_" + typeName;
+		}
 
 		// Wool (sort by color)
 		/*
@@ -122,13 +146,9 @@ public class JeffChestSortOrganizer {
 		if (item.getType().isBlock()) {
 			blocksFirst = '!';
 			itemsFirst = '#';
-			if (plugin.debug)
-				System.out.println(item.getType().name() + " is a block.");
 		} else {
 			blocksFirst = '#';
 			itemsFirst = '!';
-			if (plugin.debug)
-				System.out.println(item.getType().name() + " is an item.");
 		}
 
 		String[] typeAndColor = getTypeAndColor(item.getType().name());

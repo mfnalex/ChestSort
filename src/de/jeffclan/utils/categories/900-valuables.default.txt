@@ -11,3 +11,17 @@ diamond_block
 iron_block
 lapis_lazuli
 lapis_block
+obsidian
+beacon
+conduit
+scute
+elytra
+ender_pearl
+ender_eye
+*_horse_armor
+music_disc_*
+heart_of_the_sea
+nautilus_shell
+gold_nugget
+iron_nugget
+enchanted_book
