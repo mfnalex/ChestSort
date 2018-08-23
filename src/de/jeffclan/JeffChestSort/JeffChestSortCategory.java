@@ -12,9 +12,35 @@ public class JeffChestSortCategory {
 	
 	public boolean matches(String itemname) {
 		
+		boolean asteriskBefore = false;
+		boolean asteriskAfter = false;
+		
 		for(String typeMatch : typeMatches) {
+			if(typeMatch.startsWith("*")) {
+				asteriskBefore = true;
+				typeMatch=typeMatch.substring(1);
+			}
+			if(typeMatch.endsWith("*")) {
+				asteriskAfter = true;
+				typeMatch=typeMatch.substring(0, typeMatch.length()-1);
+			}
+			
+			if(asteriskBefore == false && asteriskAfter == false) {
 			if(itemname.equalsIgnoreCase(typeMatch)) {
 				return true;
+			}
+			} else if(asteriskBefore == true && asteriskAfter == true) {
+				if(itemname.contains(typeMatch)) {
+					return true;
+				}
+			} else if(asteriskBefore == true && asteriskAfter == false) {
+				if(itemname.endsWith(typeMatch)) {
+					return true;
+				}
+			} else {
+				if(itemname.startsWith(typeMatch)) {
+					return true;
+				}
 			}
 		}
 		

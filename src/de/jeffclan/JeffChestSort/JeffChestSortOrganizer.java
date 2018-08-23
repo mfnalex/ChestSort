@@ -16,26 +16,20 @@ public class JeffChestSortOrganizer {
 
 	String[] colors = { "white", "orange", "magenta", "light_blue", "light_gray", "yellow", "lime", "pink", "gray",
 			"cyan", "purple", "blue", "brown", "green", "red", "black" };
+	String[] woodNames = { "acacia", "birch", "jungle", "oak", "spruce", "dark_oak" };  
 
 	ArrayList<JeffChestSortCategory> categories = new ArrayList<JeffChestSortCategory>();
 
 	String[] woodBlocks = { "_log", "_wood", "_planks", "acacia_", "oak_", "birch_", "jungle_", "dark_oak_",
 			"spruce_" };
 	String[] redstone = { "dispenser","note_block","sticky_piston","piston","tnt","lever","_pressure_plate","redstone", "_button","tripwire","trapped_chest","daylight_detector","hopper","dropper","observer","iron_trapdoor","iron_door","repeater","comparator","powered_rail","detector_rail","rail","activator_rail","minecart" };
-	String[] food = { "apple", "baked_potato", "beef", "beetroot", "beetroot_soup", "bread", "mushroom_stew",
-			"porkchop", "cooked_porkchop", "cod", "salmon", "cooked_cod", "cooked_salmon", "cake", "cookie",
-			"melon_slice", "dried_kelp", "cooked_beef", "chicken", "cooked_chicken", "carrot", "potato", "pumpkin_pie",
-			"rabbit", "cooked_rabbit", "rabbit_stew", "mutton", "cooked_mutton" };
 	String[] combat = { "turtle_helmet","bow","arrow","_sword","_helmet","_chestplate","_leggings","_boots","spectral_arrow","tipped_arrow","shield","totem_of_undying","trident"};
 
 	String[] plants = { "_sapling","_leaves","grass","fern","dead_bush","seagrass","sea_pickle","dandelion","poppy","blue_orchid","allium","azure_bluet","red_tulip","orange_tulip","white_tulip","pink_tulip","oxeye_daisy","brown_mushroom","red_mushroom","chorus_plant","chorus_flower","cactus","brown_mushroom_block","red_mushroom_block","mushroom_stem","vine","lily_pad","sunflower","lilac","rose_bush","peony","tall_grass","large_fern","_coral","flower_pot"};
 	public JeffChestSortOrganizer(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
 
-		//categories.add(new JeffChestSortCategory("tools", tools));
-		//categories.add(new JeffChestSortCategory("loot", loot));
-		//categories.add(new JeffChestSortCategory("wood_blocks", woodBlocks));
-		
+	
 		// Load Categories
 		File categoriesFolder = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator);
 		File[] listOfCategoryFiles = categoriesFolder.listFiles();
@@ -60,7 +54,9 @@ public class JeffChestSortOrganizer {
 		Scanner sc = new Scanner(file);
 		List<String> lines = new ArrayList<String>();
 		while (sc.hasNextLine()) {
+			if(!sc.nextLine().startsWith("#")) {
 		  lines.add(sc.nextLine());
+			}
 		}
 
 		String[] arr = lines.toArray(new String[0]);
@@ -70,6 +66,9 @@ public class JeffChestSortOrganizer {
 	
 
 	String[] getTypeAndColor(String typeName) {
+		
+		// [0] = TypeName
+		// [1] = Color
 
 		String myColor = "<none>";
 		typeName = typeName.toLowerCase();
@@ -78,6 +77,13 @@ public class JeffChestSortOrganizer {
 			if (typeName.startsWith(color)) {
 				typeName = typeName.replaceFirst(color + "_", "");
 				myColor = color;
+			}
+		}
+		
+		for(String woodName : woodNames) {
+			if(typeName.startsWith(woodName)) {
+				typeName = typeName.replaceFirst(woodName+"_", "");
+				myColor = woodName;
 			}
 		}
 
