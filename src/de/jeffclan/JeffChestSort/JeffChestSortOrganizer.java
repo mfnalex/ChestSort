@@ -11,21 +11,23 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class JeffChestSortOrganizer {
+	
+	/*
+	 * Thoughts before implementing:
+	 * We create a string from each item that can be sorted.
+	 * We will omit certain parts of the name and put them behind the main name for sorting reasons.
+	 * E.g. ACACIA_LOG -> LOG_ACACIA (so all LOGs are grouped)
+	 * Diamond, Gold, Iron, Stone, Wood does NOT have to be sorted, because they are already alphabetically in the right order
+	 */
 
 	JeffChestSortPlugin plugin;
 
-	String[] colors = { "white", "orange", "magenta", "light_blue", "light_gray", "yellow", "lime", "pink", "gray",
+	static final String[] colors = { "white", "orange", "magenta", "light_blue", "light_gray", "yellow", "lime", "pink", "gray",
 			"cyan", "purple", "blue", "brown", "green", "red", "black" };
-	String[] woodNames = { "acacia", "birch", "jungle", "oak", "spruce", "dark_oak" };  
+	static final String[] woodNames = { "acacia", "birch", "jungle", "oak", "spruce", "dark_oak" };  
 
 	ArrayList<JeffChestSortCategory> categories = new ArrayList<JeffChestSortCategory>();
 
-	String[] woodBlocks = { "_log", "_wood", "_planks", "acacia_", "oak_", "birch_", "jungle_", "dark_oak_",
-			"spruce_" };
-	String[] redstone = { "dispenser","note_block","sticky_piston","piston","tnt","lever","_pressure_plate","redstone", "_button","tripwire","trapped_chest","daylight_detector","hopper","dropper","observer","iron_trapdoor","iron_door","repeater","comparator","powered_rail","detector_rail","rail","activator_rail","minecart" };
-	String[] combat = { "turtle_helmet","bow","arrow","_sword","_helmet","_chestplate","_leggings","_boots","spectral_arrow","tipped_arrow","shield","totem_of_undying","trident"};
-
-	String[] plants = { "_sapling","_leaves","grass","fern","dead_bush","seagrass","sea_pickle","dandelion","poppy","blue_orchid","allium","azure_bluet","red_tulip","orange_tulip","white_tulip","pink_tulip","oxeye_daisy","brown_mushroom","red_mushroom","chorus_plant","chorus_flower","cactus","brown_mushroom_block","red_mushroom_block","mushroom_stem","vine","lily_pad","sunflower","lilac","rose_bush","peony","tall_grass","large_fern","_coral","flower_pot"};
 	public JeffChestSortOrganizer(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
 
@@ -148,6 +150,10 @@ public class JeffChestSortOrganizer {
 	}
 
 	void sortInventory(Inventory inv) {
+		if(plugin.debug) {
+			System.out.println(" ");
+			System.out.println(" ");
+		}
 		ItemStack[] items = inv.getContents();
 		inv.clear();
 		String[] itemList = new String[inv.getSize()];

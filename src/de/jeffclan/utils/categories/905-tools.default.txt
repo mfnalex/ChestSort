@@ -1,7 +1,7 @@
-pickaxe
-shovel
-hoe
-axe
+*_pickaxe
+*_shovel
+*_hoe
+*_axe
 flint_and_steel
 fishing_rod
 compass

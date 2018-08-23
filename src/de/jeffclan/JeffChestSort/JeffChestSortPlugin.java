@@ -98,7 +98,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		for (String category : defaultCategories) {
 
-			getLogger().info("Trying to save default category file: " + category);
+			if(debug) getLogger().info("Trying to save default category file: " + category);
 
 			FileOutputStream fopDefault = null;
 			File fileDefault;
