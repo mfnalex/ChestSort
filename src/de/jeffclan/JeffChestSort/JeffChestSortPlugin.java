@@ -30,9 +30,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		for(Material mat : Material.values()) {
-			System.out.println(mat.name().toLowerCase());
+		
+		if(debug) {
+			System.out.println("======= ALL MATERIALS ======");
+			for(Material mat : Material.values()) {
+		
+				System.out.println(mat.name().toLowerCase());
+			}
+			System.out.println("============================");
 		}
+		
 		createConfig();
 		saveDefaultCategories();
 		messages = new JeffChestSortMessages(this);

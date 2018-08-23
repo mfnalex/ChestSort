@@ -15,7 +15,12 @@ public class JeffChestSortCategory {
 		boolean asteriskBefore = false;
 		boolean asteriskAfter = false;
 		
+		//System.out.println("Checking if "+itemname + " is in cat "+name);
+		
 		for(String typeMatch : typeMatches) {
+			
+			//System.out.println("  Checking if "+itemname + " matches "+typeMatch);
+			
 			if(typeMatch.startsWith("*")) {
 				asteriskBefore = true;
 				typeMatch=typeMatch.substring(1);
@@ -27,6 +32,7 @@ public class JeffChestSortCategory {
 			
 			if(asteriskBefore == false && asteriskAfter == false) {
 			if(itemname.equalsIgnoreCase(typeMatch)) {
+				
 				return true;
 			}
 			} else if(asteriskBefore == true && asteriskAfter == true) {

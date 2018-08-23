@@ -1,7 +1,3 @@
-# Names have to match exactly, except one exception:
-# Color names HAVE to be ommited!
-# Do not write white_bed, but just bed.
-# Lines starting with a hashtag are ignored.
 diamond
 emerald
 diamond_ore

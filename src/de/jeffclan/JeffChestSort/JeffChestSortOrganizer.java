@@ -54,9 +54,9 @@ public class JeffChestSortOrganizer {
 		Scanner sc = new Scanner(file);
 		List<String> lines = new ArrayList<String>();
 		while (sc.hasNextLine()) {
-			if(!sc.nextLine().startsWith("#")) {
+			//if(!sc.nextLine().startsWith("#")) {
 		  lines.add(sc.nextLine());
-			}
+			//}
 		}
 
 		String[] arr = lines.toArray(new String[0]);
