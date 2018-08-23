@@ -6,3 +6,8 @@ iron_ingot
 iron_ore
 gold_ingot
 gold_ore
+gold_block
+diamond_block
+iron_block
+lapis_lazuli
+lapis_block
