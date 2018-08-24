@@ -26,3 +26,5 @@ cooked_rabbit
 rabbit_stew
 mutton
 cooked_mutton
+wheat
+*_seeds
