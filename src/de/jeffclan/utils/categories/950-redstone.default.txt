@@ -13,6 +13,7 @@ tripwire_hook
 trapped_chest
 daylight_detector
 redstone_block
+redstone_ore
 hopper
 dropper
 iron_trapdoor

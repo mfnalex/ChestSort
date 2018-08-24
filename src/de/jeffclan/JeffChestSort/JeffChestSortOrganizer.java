@@ -110,6 +110,20 @@ public class JeffChestSortOrganizer {
 			typeName = "egg_" + typeName;
 		}
 		
+		// polished_andesite -> andesite_polished
+		if(typeName.startsWith("polished_")) {
+			typeName = typeName.replaceFirst("polished_", "");
+			typeName = typeName + "_polished";
+		}
+		
+		if(typeName.equalsIgnoreCase("wet_sponge")) {
+			typeName = "sponge_wet";
+		}
+		
+		if(typeName.equalsIgnoreCase("carved_pumpkin")) {
+			typeName = "pumpkin_carved";
+		}
+		
 		// Sort armor: helmet, chestplate, leggings, boots
 		if(typeName.endsWith("helmet")) {
 			typeName = typeName.replaceFirst("helmet", "1_helmet");

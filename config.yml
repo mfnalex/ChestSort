@@ -35,6 +35,14 @@ show-message-again-after-logout: true
 # join the server
 check-for-updates: true
 
+# to sort by category, we need category files. ChestSort comes
+# with a number of pregenerated category files, named
+# 900-valuables.txt, 910-tools.txt, 920-combat.txt, ...
+# If you wish to edit those, you can disable the generation of these
+# files, because otherwise all your changes in the pregenerated
+# files will be overwritten on each server startup.
+auto-generate-category-files: true
+
 ##########################
 ##### Sorting Method #####
 ##########################

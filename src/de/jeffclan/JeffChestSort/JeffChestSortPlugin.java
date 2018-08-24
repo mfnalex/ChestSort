@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,43 +33,29 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		
-		if(debug) {
+		/*if(debug) {
 			System.out.println("======= ALL MATERIALS ======");
 			for(Material mat : Material.values()) {
 		
 				System.out.println(mat.name().toLowerCase());
 			}
 			System.out.println("============================");
-		}
+		}*/
 		
 		createConfig();
 		saveDefaultCategories();
 		messages = new JeffChestSortMessages(this);
 		organizer = new JeffChestSortOrganizer(this);
 		updateChecker = new JeffChestSortUpdateChecker(this);
-		sortingMethod = getConfig().getString("sorting-method", "{itemsFirst},{name},{color}");
+		sortingMethod = getConfig().getString("sorting-method");
 		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
 
-		
-
-
-
 		getLogger().info("Current sorting method: " + sortingMethod);
-
-		if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
-			getLogger().warning("========================================================");
-			getLogger().warning("YOU ARE USING AN OLD CONFIG FILE!");
-			getLogger().warning("This is not a problem, as ChestSort will just use the");
-			getLogger().warning("default settings for unset values. However, if you want");
-			getLogger().warning("to configure the new options, please go to");
-			getLogger().warning("https://www.spigotmc.org/resources/1-13-chestsort.59773/");
-			getLogger().warning("and replace your config.yml with the new one. You can");
-			getLogger().warning("then insert your old changes into the new file.");
-			getLogger().warning("========================================================");
-			usingMatchingConfig = false;
-		}
+		getLogger().info("Sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
+		getLogger().info("Auto generate category files: "+getConfig().getBoolean("auto-generate-category-files"));
+		getLogger().info("Check for updates: "+getConfig().getBoolean("check-for-updates"));		
 
 		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
 			public void run() {
@@ -104,9 +91,15 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	private void saveDefaultCategories() {
 		String[] defaultCategories = { "900-valuables","910-tools","920-combat","930-brewing","940-food","950-redstone","960-wood","970-stone","980-plants","981-corals" };
 
+		
+		if(getConfig().getBoolean("auto-generate-category-files",true) != true) {
+			
+			return;
+		}
+		
 		for (String category : defaultCategories) {
 
-			if(debug) getLogger().info("Trying to save default category file: " + category);
+			//getLogger().info("Saving default category file: " + category);
 
 			FileOutputStream fopDefault = null;
 			File fileDefault;
@@ -160,12 +153,52 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	void createConfig() {
 		this.saveDefaultConfig();
+		
+		if (getConfig().getInt("config-version", 0) < 5) {
+			getLogger().warning("========================================================");
+			getLogger().warning("You are using a config file that has been generated");
+			getLogger().warning("prior to ChestSort version 2.0.0.");
+			getLogger().warning("To allow everyone to use the new features, your config");
+			getLogger().warning("has been renamed to config.old.yml and a new one has");
+			getLogger().warning("been generated. Please examine the new config file to");
+			getLogger().warning("see the new possibilities and adjust your settings.");
+			getLogger().warning("========================================================");
+			
+			
+			File configFile = new File(getDataFolder().getAbsolutePath()+File.separator+"config.yml");
+			File oldConfigFile = new File(getDataFolder().getAbsolutePath()+File.separator+"config.old.yml");
+			if(oldConfigFile.getAbsoluteFile().exists()) {
+				oldConfigFile.getAbsoluteFile().delete();
+			}
+			configFile.getAbsoluteFile().renameTo(oldConfigFile.getAbsoluteFile());
+			saveDefaultConfig();
+			try {
+				getConfig().load(configFile.getAbsoluteFile());
+			} catch (IOException | InvalidConfigurationException e) {
+				getLogger().warning("Could not load freshly generated config file!");
+				e.printStackTrace();
+			}
+		} else if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
+			getLogger().warning("========================================================");
+			getLogger().warning("YOU ARE USING AN OLD CONFIG FILE!");
+			getLogger().warning("This is not a problem, as ChestSort will just use the");
+			getLogger().warning("default settings for unset values. However, if you want");
+			getLogger().warning("to configure the new options, please go to");
+			getLogger().warning("https://www.spigotmc.org/resources/1-13-chestsort.59773/");
+			getLogger().warning("and replace your config.yml with the new one. You can");
+			getLogger().warning("then insert your old changes into the new file.");
+			getLogger().warning("========================================================");
+			usingMatchingConfig = false;
+		}
+		
 		File playerDataFolder = new File(getDataFolder().getPath() + File.separator + "playerdata");
-		if (!playerDataFolder.exists()) {
+		if (!playerDataFolder.getAbsoluteFile().exists()) {
+			getLogger().info("playerdata directory does not exist, creating...");
 			playerDataFolder.mkdir();
 		}
 		File categoriesFolder = new File(getDataFolder().getPath() + File.separator + "categories");
-		if (!categoriesFolder.exists()) {
+		if (!categoriesFolder.getAbsoluteFile().exists()) {
+			getLogger().info("categories directory does not exist, creating...");
 			categoriesFolder.mkdir();
 		}
 
@@ -175,6 +208,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("show-message-again-after-logout", true);
 		getConfig().addDefault("sorting-method", "{category},{itemsFirst},{name},{color}");
 		getConfig().addDefault("check-for-updates", true);
+		getConfig().addDefault("auto-generate-category-files", true);
 	}
 
 	void unregisterPlayer(Player p) {

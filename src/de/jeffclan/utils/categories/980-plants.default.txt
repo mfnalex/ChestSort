@@ -26,3 +26,6 @@ rose_bush
 peony
 tall_grass
 large_fern
+pumpkin
+carved_pumpkin
+melon
