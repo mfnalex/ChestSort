@@ -197,13 +197,13 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	public boolean sortingEnabled(Player p) {
 		
 		// The following is for all the lazy server admins who use /reload instead of properly restarting their
-		// server. I am constantly getting stacktraces although it is clearly stated that /reload is NOT
-		// supported. But I am tired of explaining that to everyone, so here is a quick but actually useless fix
+		// server ;) I am sometimes getting stacktraces although it is clearly stated that /reload is NOT
+		// supported. So, here is a quick fix
 		if(PerPlayerSettings == null) {
 			PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 		}
 		listener.registerPlayerIfNeeded(p);
-		// End of quick but actually useless fix
+		// End of quick fix
 		
 		return PerPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
 	}
