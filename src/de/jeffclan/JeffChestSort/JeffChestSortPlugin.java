@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -27,23 +26,24 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	int currentConfigVersion = 5;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
+	boolean verbose = true;
 	long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never restart your
 	// server)
 
 	@Override
 	public void onEnable() {
-		
-		/*if(debug) {
-			System.out.println("======= ALL MATERIALS ======");
-			for(Material mat : Material.values()) {
-		
-				System.out.println(mat.name().toLowerCase());
-			}
-			System.out.println("============================");
-		}*/
-		
+
+		/*
+		 * if(debug) { System.out.println("======= ALL MATERIALS ======"); for(Material
+		 * mat : Material.values()) {
+		 * 
+		 * System.out.println(mat.name().toLowerCase()); }
+		 * System.out.println("============================"); }
+		 */
+
 		createConfig();
 		saveDefaultCategories();
+		verbose = getConfig().getBoolean("verbose");
 		messages = new JeffChestSortMessages(this);
 		organizer = new JeffChestSortOrganizer(this);
 		updateChecker = new JeffChestSortUpdateChecker(this);
@@ -52,21 +52,22 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
 
-		getLogger().info("Current sorting method: " + sortingMethod);
-		getLogger().info("Sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
-		getLogger().info("Auto generate category files: "+getConfig().getBoolean("auto-generate-category-files"));
-		getLogger().info("Check for updates: "+getConfig().getBoolean("check-for-updates"));		
-
-		Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-			public void run() {
-				if (getConfig().getBoolean("check-for-updates", true)) {
+		if(verbose) {
+			getLogger().info("Current sorting method: " + sortingMethod);
+			getLogger().info("Sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
+			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
+			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
+		}
+		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
+			Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+				public void run() {
 					updateChecker.checkForUpdate();
 				}
-			}
-		}, 0L, updateCheckInterval * 20);
-		
-		
-		
+			}, 0L, updateCheckInterval * 20);
+		} else if(getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
+			updateChecker.checkForUpdate();
+		}
+
 		@SuppressWarnings("unused")
 		Metrics metrics = new Metrics(this);
 
@@ -76,46 +77,48 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		metrics.addCustomChart(new Metrics.SimplePie("config_version",
 				() -> Integer.toString(getConfig().getInt("config-version", 0))));
 		metrics.addCustomChart(new Metrics.SimplePie("check_for_updates",
-				() -> Boolean.toString(getConfig().getBoolean("check-for-updates", true))));
+				() -> getConfig().getString("check-for-updates", "true")));
 		metrics.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest",
 				() -> Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
 		metrics.addCustomChart(new Metrics.SimplePie("show_message_again_after_logout",
 				() -> Boolean.toString(getConfig().getBoolean("show-message-again-after-logout"))));
 		metrics.addCustomChart(new Metrics.SimplePie("sorting_enabled_by_default",
 				() -> Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
-		metrics.addCustomChart(new Metrics.SimplePie("using_matching_config_version",
-				() ->Boolean.toString(usingMatchingConfig)));
+		metrics.addCustomChart(
+				new Metrics.SimplePie("using_matching_config_version", () -> Boolean.toString(usingMatchingConfig)));
 
 	}
 
 	private void saveDefaultCategories() {
-		String[] defaultCategories = { "900-valuables","910-tools","920-combat","930-brewing","940-food","950-redstone","960-wood","970-stone","980-plants","981-corals" };
+		String[] defaultCategories = { "900-valuables", "910-tools", "920-combat", "930-brewing", "940-food",
+				"950-redstone", "960-wood", "970-stone", "980-plants", "981-corals" };
 
-		
-		if(getConfig().getBoolean("auto-generate-category-files",true) != true) {
-			
+		if (getConfig().getBoolean("auto-generate-category-files", true) != true) {
+
 			return;
 		}
-		
+
 		for (String category : defaultCategories) {
 
-			//getLogger().info("Saving default category file: " + category);
+			// getLogger().info("Saving default category file: " + category);
 
 			FileOutputStream fopDefault = null;
 			File fileDefault;
 			// String content = "This is the text content";
 
 			try {
-				InputStream in = getClass().getResourceAsStream("/de/jeffclan/utils/categories/" + category + ".default.txt");
+				InputStream in = getClass()
+						.getResourceAsStream("/de/jeffclan/utils/categories/" + category + ".default.txt");
 				// Reader fr = new InputStreamReader(in, "utf-8");
 
-				fileDefault = new File(getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator + category + ".txt");
+				fileDefault = new File(getDataFolder().getAbsolutePath() + File.separator + "categories"
+						+ File.separator + category + ".txt");
 				fopDefault = new FileOutputStream(fileDefault);
 
 				// if file doesnt exists, then create it
-				//if (!fileDefault.getAbsoluteFile().exists()) {
-					fileDefault.createNewFile();
-				//}
+				// if (!fileDefault.getAbsoluteFile().exists()) {
+				fileDefault.createNewFile();
+				// }
 
 				// get the content in bytes
 				byte[] contentInBytes = Utils.getBytes(in);
@@ -153,7 +156,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	void createConfig() {
 		this.saveDefaultConfig();
-		
+
 		if (getConfig().getInt("config-version", 0) < 5) {
 			getLogger().warning("========================================================");
 			getLogger().warning("You are using a config file that has been generated");
@@ -163,11 +166,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().warning("been generated. Please examine the new config file to");
 			getLogger().warning("see the new possibilities and adjust your settings.");
 			getLogger().warning("========================================================");
-			
-			
-			File configFile = new File(getDataFolder().getAbsolutePath()+File.separator+"config.yml");
-			File oldConfigFile = new File(getDataFolder().getAbsolutePath()+File.separator+"config.old.yml");
-			if(oldConfigFile.getAbsoluteFile().exists()) {
+
+			File configFile = new File(getDataFolder().getAbsolutePath() + File.separator + "config.yml");
+			File oldConfigFile = new File(getDataFolder().getAbsolutePath() + File.separator + "config.old.yml");
+			if (oldConfigFile.getAbsoluteFile().exists()) {
 				oldConfigFile.getAbsoluteFile().delete();
 			}
 			configFile.getAbsoluteFile().renameTo(oldConfigFile.getAbsoluteFile());
@@ -190,15 +192,15 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().warning("========================================================");
 			usingMatchingConfig = false;
 		}
-		
+
 		File playerDataFolder = new File(getDataFolder().getPath() + File.separator + "playerdata");
 		if (!playerDataFolder.getAbsoluteFile().exists()) {
-			getLogger().info("playerdata directory does not exist, creating...");
+			// getLogger().info("playerdata directory does not exist, creating...");
 			playerDataFolder.mkdir();
 		}
 		File categoriesFolder = new File(getDataFolder().getPath() + File.separator + "categories");
 		if (!categoriesFolder.getAbsoluteFile().exists()) {
-			getLogger().info("categories directory does not exist, creating...");
+			//getLogger().info("categories directory does not exist, creating...");
 			categoriesFolder.mkdir();
 		}
 
@@ -207,8 +209,9 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("show-message-when-using-chest-and-sorting-is-enabled", false);
 		getConfig().addDefault("show-message-again-after-logout", true);
 		getConfig().addDefault("sorting-method", "{category},{itemsFirst},{name},{color}");
-		getConfig().addDefault("check-for-updates", true);
+		getConfig().addDefault("check-for-updates", "true");
 		getConfig().addDefault("auto-generate-category-files", true);
+		getConfig().addDefault("verbose", true);
 	}
 
 	void unregisterPlayer(Player p) {

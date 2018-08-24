@@ -42,7 +42,9 @@ public class JeffChestSortOrganizer {
 				
 				try {
 					categories.add(new JeffChestSortCategory(categoryName,getArrayFromCategoryFile(file)));
-					plugin.getLogger().info("Loaded category file "+file.getName());
+					if(plugin.verbose) {
+						plugin.getLogger().info("Loaded category file "+file.getName());
+					}
 				} catch (FileNotFoundException e) {
 					plugin.getLogger().warning("Could not load category file: "+file.getName());
 					//e.printStackTrace();

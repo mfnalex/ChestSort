@@ -29,12 +29,6 @@ show-message-when-using-chest-and-sorting-is-enabled: false
 # logs out and back in and then uses a chest again.
 show-message-again-after-logout: true
 
-# should we check for updates on server startup?
-# when enabled, a message is printed in the console if a new
-# version has been found, and OPs will be notified when they
-# join the server
-check-for-updates: true
-
 # to sort by category, we need category files. ChestSort comes
 # with a number of pregenerated category files, named
 # 900-valuables.txt, 910-tools.txt, 920-combat.txt, ...
@@ -42,6 +36,18 @@ check-for-updates: true
 # files, because otherwise all your changes in the pregenerated
 # files will be overwritten on each server startup.
 auto-generate-category-files: true
+
+# should we check for updates?
+# when enabled, a message is printed in the console if a new
+# version has been found, and OPs will be notified when they
+# join the server
+# When set to true, we will check for updates on startup and every 24 hours
+# When set to on-startup, we will only check on startup
+# When set to false, don't check for updates
+check-for-updates: true
+
+# when set to true, show some verbose information on startup
+verbose: true
 
 ##########################
 ##### Sorting Method #####
