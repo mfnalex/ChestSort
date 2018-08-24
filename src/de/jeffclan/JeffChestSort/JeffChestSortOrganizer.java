@@ -101,6 +101,8 @@ public class JeffChestSortOrganizer {
 			}
 		}
 		
+		//Todo: the same for corals
+		
 		// Egg has to be put in front to group spawn eggs
 		// E.g. cow_spawn_egg -> egg_cow_spawn
 		if(typeName.endsWith("_egg")) {
