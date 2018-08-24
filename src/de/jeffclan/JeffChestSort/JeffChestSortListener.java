@@ -25,15 +25,15 @@ public class JeffChestSortListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
-		
-		if(event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
+
+		if (event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
 			plugin.debug = true;
 		}
-		
-		if(event.getPlayer().isOp()) {
+
+		if (event.getPlayer().isOp()) {
 			plugin.updateChecker.sendUpdateMessage(event.getPlayer());
 		}
-		
+
 		UUID uniqueId = event.getPlayer().getUniqueId();
 		if (!plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
 
@@ -71,16 +71,16 @@ public class JeffChestSortListener implements Listener {
 		}
 
 		Player p = (Player) event.getPlayer();
-		
-		if(!p.hasPermission("chestsort.use")) {
+
+		if (!p.hasPermission("chestsort.use")) {
 			return;
 		}
-		
+
 		// Don't sort automatically when player is spectator
-		if(p.getGameMode().equals(GameMode.SPECTATOR)) {
+		if (p.getGameMode().equals(GameMode.SPECTATOR)) {
 			return;
 		}
-		
+
 		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
 
 		if (!(event.getInventory().getHolder() instanceof Chest)
@@ -107,5 +107,6 @@ public class JeffChestSortListener implements Listener {
 		}
 
 		plugin.organizer.sortInventory(event.getInventory());
+
 	}
 }
