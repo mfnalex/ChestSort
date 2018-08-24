@@ -16,5 +16,3 @@ commands:
 permissions:
   chestsort.use:
     description: Allows usage of automatic chest sorting
-  chestsort.reload:
-    description: Allows usage of /chestsort reload
