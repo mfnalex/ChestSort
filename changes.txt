@@ -1,0 +1,2 @@
+changes since 1.0.0:
+- added re-initialization of the PerPlayerSettings object to avoid problems with /reload 

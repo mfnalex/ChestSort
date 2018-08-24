@@ -22,6 +22,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortMessages messages;
 	JeffChestSortOrganizer organizer;
 	JeffChestSortUpdateChecker updateChecker;
+	JeffChestSortListener listener;
 	String sortingMethod;
 	private int currentConfigVersion = 5;
 	private boolean usingMatchingConfig = true;
@@ -105,8 +106,9 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		messages = new JeffChestSortMessages(this);
 		organizer = new JeffChestSortOrganizer(this);
 		updateChecker = new JeffChestSortUpdateChecker(this);
+		listener = new JeffChestSortListener(this);
 		sortingMethod = getConfig().getString("sorting-method");
-		getServer().getPluginManager().registerEvents(new JeffChestSortListener(this), this);
+		getServer().getPluginManager().registerEvents(listener, this);
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
 
@@ -193,6 +195,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	}
 
 	public boolean sortingEnabled(Player p) {
+		
+		// The following is for all the lazy server admins who use /reload instead of properly restarting their
+		// server. I am constantly getting stacktraces although it is clearly stated that /reload is NOT
+		// supported. But I am tired of explaining that to everyone, so here is a quick but actually useless fix
+		if(PerPlayerSettings == null) {
+			PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
+		}
+		listener.registerPlayerIfNeeded(p);
+		// End of quick but actually useless fix
+		
 		return PerPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
 	}
 

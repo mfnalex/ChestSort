@@ -33,12 +33,18 @@ public class JeffChestSortListener implements Listener {
 		if (event.getPlayer().isOp()) {
 			plugin.updateChecker.sendUpdateMessage(event.getPlayer());
 		}
+		
+		registerPlayerIfNeeded(event.getPlayer());
 
-		UUID uniqueId = event.getPlayer().getUniqueId();
+		
+	}
+	
+	public void registerPlayerIfNeeded(Player p) {
+		UUID uniqueId = p.getUniqueId();
 		if (!plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
 
 			File playerFile = new File(plugin.getDataFolder() + File.separator + "playerdata",
-					event.getPlayer().getUniqueId().toString() + ".yml");
+					p.getUniqueId().toString() + ".yml");
 			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 
 			boolean activeForThisPlayer;
@@ -81,6 +87,9 @@ public class JeffChestSortListener implements Listener {
 			return;
 		}
 
+		// Fixes exception when using /reload
+		registerPlayerIfNeeded(p);
+		
 		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
 
 		if (!(event.getInventory().getHolder() instanceof Chest)
