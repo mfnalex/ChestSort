@@ -38,7 +38,7 @@ public class JeffChestSortUpdateChecker {
 		try {
 
 			HttpURLConnection httpcon = (HttpURLConnection) new URL(latestVersionLink).openConnection();
-			httpcon.addRequestProperty("User-Agent", "Mozilla/4.76");
+			httpcon.addRequestProperty("User-Agent", "ChestSort/"+plugin.getDescription().getVersion());
 
 			BufferedReader reader = new BufferedReader(new InputStreamReader(httpcon.getInputStream()));
 

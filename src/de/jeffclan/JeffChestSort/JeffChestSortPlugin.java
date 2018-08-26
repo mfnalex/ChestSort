@@ -137,6 +137,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				new Metrics.SimplePie("check_for_updates", () -> getConfig().getString("check-for-updates", "true")));
 		metrics.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest",
 				() -> Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
+		metrics.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest_and_sorting_is_enabl",
+				() -> Boolean.toString(getConfig().getBoolean("show-message-when-using-chest-and-sorting-is-enabled"))));
 		metrics.addCustomChart(new Metrics.SimplePie("show_message_again_after_logout",
 				() -> Boolean.toString(getConfig().getBoolean("show-message-again-after-logout"))));
 		metrics.addCustomChart(new Metrics.SimplePie("sorting_enabled_by_default",
