@@ -29,3 +29,4 @@ large_fern
 pumpkin
 carved_pumpkin
 melon
+sugar_cane
