@@ -82,8 +82,8 @@ public class JeffChestSortListener implements Listener {
 			return;
 		}
 
-		// Don't sort automatically when player is spectator
-		if (p.getGameMode().equals(GameMode.SPECTATOR)) {
+		// Don't sort automatically when player is spectator or in adventure mode
+		if (p.getGameMode() == GameMode.SPECTATOR || p.getGameMode() == GameMode.ADVENTURE) {
 			return;
 		}
 
