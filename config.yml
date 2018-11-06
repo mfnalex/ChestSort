@@ -111,6 +111,13 @@ message-error-players-only: "&cError: This command can only be run by players."
 #message-sorting-enabled: "&7自动整理箱子已 &a启用&7."
 #message-error-players-only: "&c错误: 指令只能由玩家运行."
 
+##### Traditional Chinese 繁體中文
+#message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
+#message-when-using-chest2: "&7小提醒: 輸入 &6/chestsort&7 來關閉自動整理箱子"
+#message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
+#message-sorting-enabled: "&7自動整理箱子已 &a開啟&7"
+#message-error-players-only: "&c錯誤: 這個指令只能由玩家使用"
+
 ##### French - Thanks to automatizer for translating! -> https://www.spigotmc.org/members/automatizer.26188/
 #message-when-using-chest: "&7Astuce: Écris &6/chestsort&7 pour activer le classement automatique."
 #message-when-using-chest2: "&7Astuce: Écris &6/chestsort&7 pour désactiver le classement automatique."
@@ -131,6 +138,13 @@ message-error-players-only: "&cError: This command can only be run by players."
 #message-sorting-disabled: "&7L'ordinamento automatico dei bauli è stato &cdisattivato&7."
 #message-sorting-enabled: "&7L'ordinamento automatico dei bauli è stato &aattivato&7."
 #message-error-players-only: "&cErrore: questo comando è disponibile solo per i giocatori."
+
+##### Japanese
+#message-when-using-chest: "&7ヒント: &6/chestsort&7 と入力して自動チェスト整理を有効にできます。"
+#message-when-using-chest2: "&7ヒント: &6/chestsort&7 と入力すると自動チェスト整理を無効にできます。"
+#message-sorting-disabled: "&7自動チェスト整理は現在 &cOFF&7です。"
+#message-sorting-enabled: "&7自動チェスト整理は現在 &aON&7です。"
+#message-error-players-only: "&cエラー: このコマンドはプレイヤーのみ実行できます。"
 
 ##### Spanish - Thanks to Bers_ for translating! ->  https://www.spigotmc.org/members/bers_.146126/
 #message-when-using-chest: "&7Pista: Usa &6/chestsort&7 para activar el orden automático de los cofres."
