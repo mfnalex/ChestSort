@@ -6,7 +6,9 @@ description: Allows automatic chest sorting
 author: mfnalex
 website: https://www.spigotmc.org/resources/1-13-chestsort.59773/
 prefix: ChestSort
-database: false 
+database: false
+loadbefore:
+- InvUnload
 commands:
   chestsort:
     description: Toggle automatic chest sorting
