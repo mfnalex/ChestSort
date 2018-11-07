@@ -18,18 +18,6 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 
 		if (arg1.getName().equalsIgnoreCase("chestsort")) {
 
-			//			if(arg3.length>0) {
-			//				if(arg3[0].equalsIgnoreCase("reload")) {
-			//					if(sender.hasPermission("chestsort.reload")) {
-			//						/* Reload Configuration */
-			//						plugin.getServer().getPluginManager().disablePlugin(plugin);
-			//						plugin.getServer().getPluginManager().enablePlugin(plugin);
-			//						sender.sendMessage(ChatColor.GOLD + "ChestSort " + ChatColor.GRAY + plugin.getDescription().getVersion() + " has been reloaded.");
-			//						return true;
-			//					}
-			//				}
-			//			}
-
 			if (!(sender instanceof Player)) {
 				sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
 				return true;

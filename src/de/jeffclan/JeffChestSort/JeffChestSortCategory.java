@@ -10,15 +10,15 @@ public class JeffChestSortCategory {
 	// "COARSE_DIRT" will not match the typeMatch "dirt"
 	// "COARSE_DIRT" will match the typeMatch "*dirt"
 
-	public String name;
-	public String[] typeMatches;
+	String name;
+	String[] typeMatches;
 
-	public JeffChestSortCategory(String name, String[] typeMatches) {
+	JeffChestSortCategory(String name, String[] typeMatches) {
 		this.name = name;
 		this.typeMatches = typeMatches;
 	}
 
-	public boolean matches(String itemname) {
+	boolean matches(String itemname) {
 
 		boolean asteriskBefore = false;
 		boolean asteriskAfter = false;

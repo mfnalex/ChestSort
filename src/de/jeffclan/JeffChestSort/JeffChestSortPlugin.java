@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.jeffclan.utils.Utils;
@@ -24,13 +25,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortUpdateChecker updateChecker;
 	JeffChestSortListener listener;
 	String sortingMethod;
-	private int currentConfigVersion = 5;
-	private boolean usingMatchingConfig = true;
+	int currentConfigVersion = 5;
+	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
-	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never
-	// restart your server)
+	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never restart your server)
 
+	public void sortInventory(Inventory inv) {
+		this.organizer.sortInventory(inv);
+	}
+	
 	void createConfig() {
 		this.saveDefaultConfig();
 
@@ -196,7 +200,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 	}
 
-	public boolean sortingEnabled(Player p) {
+	boolean sortingEnabled(Player p) {
 		
 		// The following is for all the lazy server admins who use /reload instead of properly restarting their
 		// server ;) I am sometimes getting stacktraces although it is clearly stated that /reload is NOT

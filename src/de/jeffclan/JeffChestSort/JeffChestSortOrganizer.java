@@ -28,7 +28,7 @@ public class JeffChestSortOrganizer {
 
 	ArrayList<JeffChestSortCategory> categories = new ArrayList<JeffChestSortCategory>();
 
-	public JeffChestSortOrganizer(JeffChestSortPlugin plugin) {
+	JeffChestSortOrganizer(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
 
 	
@@ -103,8 +103,6 @@ public class JeffChestSortOrganizer {
 			}
 		}
 		
-		//Todo: the same for corals
-		
 		// Egg has to be put in front to group spawn eggs
 		// E.g. cow_spawn_egg -> egg_cow_spawn
 		if(typeName.endsWith("_egg")) {
@@ -143,13 +141,6 @@ public class JeffChestSortOrganizer {
 			typeName = typeName.replaceFirst("_horse_armor", "");
 			typeName = "horse_armor_" + typeName;
 		}
-
-		// Wool (sort by color)
-		/*
-		 * if(typeName.endsWith("_wool")) {
-		 * 
-		 * typeName = typeName.replaceFirst("_wool", ""); return "wool_" + typeName; } }
-		 */
 
 		String[] typeAndColor = new String[2];
 		typeAndColor[0] = typeName;

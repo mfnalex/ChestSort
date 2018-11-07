@@ -39,7 +39,7 @@ public class JeffChestSortListener implements Listener {
 		
 	}
 	
-	public void registerPlayerIfNeeded(Player p) {
+	void registerPlayerIfNeeded(Player p) {
 		UUID uniqueId = p.getUniqueId();
 		if (!plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
 

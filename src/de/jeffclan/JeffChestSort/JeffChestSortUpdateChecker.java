@@ -12,7 +12,7 @@ public class JeffChestSortUpdateChecker {
 
 	private JeffChestSortPlugin plugin;
 
-	public JeffChestSortUpdateChecker(JeffChestSortPlugin plugin) {
+	JeffChestSortUpdateChecker(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -21,7 +21,7 @@ public class JeffChestSortUpdateChecker {
 	private String currentVersion = "undefined";
 	private String latestVersion = "undefined";
 
-	public void sendUpdateMessage(Player p) {
+	void sendUpdateMessage(Player p) {
 		if(!latestVersion.equals("undefined")) {
 		if (!currentVersion.equals(latestVersion)) {
 			p.sendMessage(ChatColor.GRAY + "There is a new version of " + ChatColor.GOLD + "ChestSort" + ChatColor.GRAY
@@ -31,7 +31,7 @@ public class JeffChestSortUpdateChecker {
 		}
 	}
 
-	public void checkForUpdate() {
+	void checkForUpdate() {
 		
 		plugin.getLogger().info("Checking for available updates...");
 
