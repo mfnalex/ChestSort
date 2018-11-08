@@ -192,12 +192,27 @@ public class JeffChestSortOrganizer {
 	}
 
 	void sortInventory(Inventory inv) {
+		sortInventory(inv,0,inv.getSize()-1);
+	}
+	
+	void sortInventory(Inventory inv,int startSlot, int endSlot) {
 		if(plugin.debug) {
 			System.out.println(" ");
 			System.out.println(" ");
 		}
 		ItemStack[] items = inv.getContents();
-		inv.clear();
+		
+		for(int i = 0; i<startSlot;i++) {
+			items[i] = null;
+		}
+		for(int i=endSlot;i<inv.getSize();i++) {
+			items[i] = null;
+		}
+		
+		//inv.clear();
+		for(int i = startSlot; i<endSlot;i++) {
+			inv.clear(i);
+		}
 		String[] itemList = new String[inv.getSize()];
 
 		int i = 0;

@@ -35,6 +35,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		this.organizer.sortInventory(inv);
 	}
 	
+	public void sortInventory(Inventory inv, int startSlot, int endSlot) {
+		this.organizer.sortInventory(inv,startSlot,endSlot);
+	}
+	
 	void createConfig() {
 		this.saveDefaultConfig();
 

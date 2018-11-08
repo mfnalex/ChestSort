@@ -1,9 +1,0 @@
-changes since 2.0.1:
-- updated spigot api to version 1.13.2
-- players in adventure mode will no longer have their chests sorted (maybe make this toggleable?)
-
-changes since 2.0.0:
-- added re-initialization of the PerPlayerSettings object to avoid problems with /reload 
-- updated spigot api to version 1.13.1
-- added ChestSort version to user agent for auto update
-- added show-message-when-using-chest-and-sorting-is-enabled to Metrics
