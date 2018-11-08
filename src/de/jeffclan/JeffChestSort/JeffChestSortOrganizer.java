@@ -205,12 +205,12 @@ public class JeffChestSortOrganizer {
 		for(int i = 0; i<startSlot;i++) {
 			items[i] = null;
 		}
-		for(int i=endSlot;i<inv.getSize();i++) {
+		for(int i=endSlot+1;i<inv.getSize();i++) {
 			items[i] = null;
 		}
 		
 		//inv.clear();
-		for(int i = startSlot; i<endSlot;i++) {
+		for(int i = startSlot; i<=endSlot;i++) {
 			inv.clear(i);
 		}
 		String[] itemList = new String[inv.getSize()];
