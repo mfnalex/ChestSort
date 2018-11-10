@@ -18,6 +18,7 @@ public class JeffChestSortOrganizer {
 	 * We will omit certain parts of the name and put them behind the main name for sorting reasons.
 	 * E.g. ACACIA_LOG -> LOG_ACACIA (so all LOGs are grouped)
 	 * Diamond, Gold, Iron, Stone, Wood does NOT have to be sorted, because they are already alphabetically in the right order
+	 * We identify the ItemStack by its uuid, which is appended to the sorting string.
 	 */
 
 	JeffChestSortPlugin plugin;
