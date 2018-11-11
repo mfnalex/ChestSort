@@ -4,15 +4,22 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.material.Skull;
 
 public class JeffChestSortOrganizer {
 	
 	/*
+	 * DEPRECATED: THE FOLLOWING INFOS ARE OUTDATED
+	 * I HAVE REPLACED THE UUID CONNECTION WITH AN ARRAY THAT REFERS TO THE ACTUAL ITEMSTACK
 	 * Thoughts before implementing:
 	 * We create a string from each item that can be sorted.
 	 * We will omit certain parts of the name and put them behind the main name for sorting reasons.
@@ -179,7 +186,7 @@ public class JeffChestSortOrganizer {
 		String color = typeAndColor[1];
 		String category = getCategory(item.getType().name());
 
-		String hashCode = String.valueOf(item.hashCode());
+		String hashCode = String.valueOf(getBetterHash(item));
 
 		String sortableString = plugin.sortingMethod.replaceAll("\\{itemsFirst\\}", String.valueOf(itemsFirst));
 		sortableString = sortableString.replaceAll("\\{blocksFirst\\}", String.valueOf(blocksFirst));
@@ -197,12 +204,19 @@ public class JeffChestSortOrganizer {
 	}
 	
 	void sortInventory(Inventory inv,int startSlot, int endSlot) {
+		
+		// This has been optimized as of ChestSort 3.2.
+		// The hashCode is just kept for legacy reasons, it is actually not needed.
+		
 		if(plugin.debug) {
 			System.out.println(" ");
 			System.out.println(" ");
 		}
+		
+		// We copy the complete inventory into an array
 		ItemStack[] items = inv.getContents();
 		
+		// Get rid of all stuff before startSlot and after endSlot
 		for(int i = 0; i<startSlot;i++) {
 			items[i] = null;
 		}
@@ -210,54 +224,86 @@ public class JeffChestSortOrganizer {
 			items[i] = null;
 		}
 		
-		//inv.clear();
+		// Remove the stuff that we took from the original inventory
 		for(int i = startSlot; i<=endSlot;i++) {
 			inv.clear(i);
 		}
-		String[] itemList = new String[inv.getSize()];
-
-		int i = 0;
-		for (ItemStack item : items) {
-			if (item != null) {
-				itemList[i] = getSortableString(item);
-				if (plugin.debug)
-					System.out.println(itemList[i]);
-				i++;
+		
+		// We don't want to have stacks of null
+		ArrayList<ItemStack> nonNullItemsList = new ArrayList<ItemStack>();
+		for(ItemStack item : items) {
+			if(item!=null) {
+				nonNullItemsList.add(item);
 			}
 		}
+		
+		
+		//String[] itemList = new String[inv.getSize()];
+
+//		int i = 0;
+//		for (ItemStack item : items) {
+//			if (item != null) {
+//				itemList[i] = getSortableString(item);
+//				i++;
+//			}
+//		}
+		
+		items=null;
+		
+		// We need the list as array
+		ItemStack[] nonNullItems = nonNullItemsList.toArray(new ItemStack[nonNullItemsList.size()]);
+		
+		// Sort the array with ItemStacks according to our sortable String
+		Arrays.sort(nonNullItems,new Comparator<ItemStack>(){
+            public int compare(ItemStack s1,ItemStack s2){
+                  return(getSortableString(s1).compareTo(getSortableString(s2)));
+            }});
 
 		// count all items that are not null
-		int count = 0;
-		for (String s : itemList) {
-			if (s != null) {
-				count++;
-			}
-		}
+//		int count = 0;
+//		for (String s : itemList) {
+//			if (s != null) {
+//				count++;
+//			}
+//		}
 
 		// create new array with just the size we need
-		String[] shortenedArray = new String[count];
+		//String[] shortenedArray = new String[count];
 
 		// fill new array with items
-		for (int j = 0; j < count; j++) {
-			shortenedArray[j] = itemList[j];
-		}
+//		for (int j = 0; j < count; j++) {
+//			shortenedArray[j] = itemList[j];
+//		}
 
 		// sort array alphabetically
-		Arrays.sort(shortenedArray);
+		//Arrays.sort(shortenedArray);
 
 		// put everything back in the inventory
-		for (String s : shortenedArray) {
+		
+		for(ItemStack item : nonNullItems) {
+			if(plugin.debug) System.out.println(getSortableString(item));
+			inv.addItem(item);
+		}
+		
+		/*for (String s : shortenedArray) {
+			System.out.println(s);
 			// System.out.println(s);
 			for (ItemStack item : items) {
 				if (item != null && s != null) {
-					if (item.hashCode() == Integer.parseInt(s.split(",")[s.split(",").length - 1])) {
+					if (getBetterHash(item) == Integer.parseInt(s.split(",")[s.split(",").length - 1])) {
 						inv.addItem(item);
 						item = null;
 						s = null;
 					}
 				}
 			}
-		}
+		}*/
+	}
+	
+	private static int getBetterHash(ItemStack item) {
+		// I wanted to fix the skull problems here. Instead, I ended up not using the hashCode at all.
+		// I still left this here because it is nice to see the hashcodes when debug is enabled
+		return item.hashCode();
 	}
 
 }
