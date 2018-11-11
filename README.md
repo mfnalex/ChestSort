@@ -10,9 +10,13 @@ ChestSort will automatically sort every chest after you have closed it. Every pl
 
 Sorting will work with chests and shulker boxes.
 
-Tested Spigot versions: 1.12.2 and 1.13
+Tested Spigot versions: 1.11 to 1.13
 
 ## Download & more information
 Please see the related topic at spigotmc.org for information regarding the commands, permissions and download links:
 
 https://www.spigotmc.org/resources/1-13-chestsort.59773/
+
+## Technical stuff
+ChestSort takes an instance of org.bukkit.inventory.Inventory and copies the contents. The resulting array is sorted by rules defined in the config.yml. This takes far less than one millisecond for a whole chest. So there should be no problems even on big servers, where hundreds of players are using chests at the same time.
+The plugin should cause no lag at all.
