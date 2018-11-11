@@ -25,7 +25,7 @@ public class JeffChestSortOrganizer {
 	 * We will omit certain parts of the name and put them behind the main name for sorting reasons.
 	 * E.g. ACACIA_LOG -> LOG_ACACIA (so all LOGs are grouped)
 	 * Diamond, Gold, Iron, Stone, Wood does NOT have to be sorted, because they are already alphabetically in the right order
-	 * We identify the ItemStack by its uuid, which is appended to the sorting string.
+	 * We identify the ItemStack by its hashcode, which is appended to the sorting string.
 	 */
 
 	JeffChestSortPlugin plugin;
@@ -237,17 +237,7 @@ public class JeffChestSortOrganizer {
 			}
 		}
 		
-		
-		//String[] itemList = new String[inv.getSize()];
-
-//		int i = 0;
-//		for (ItemStack item : items) {
-//			if (item != null) {
-//				itemList[i] = getSortableString(item);
-//				i++;
-//			}
-//		}
-		
+		// We don't need the copied inventory anymore
 		items=null;
 		
 		// We need the list as array
@@ -259,45 +249,12 @@ public class JeffChestSortOrganizer {
                   return(getSortableString(s1).compareTo(getSortableString(s2)));
             }});
 
-		// count all items that are not null
-//		int count = 0;
-//		for (String s : itemList) {
-//			if (s != null) {
-//				count++;
-//			}
-//		}
-
-		// create new array with just the size we need
-		//String[] shortenedArray = new String[count];
-
-		// fill new array with items
-//		for (int j = 0; j < count; j++) {
-//			shortenedArray[j] = itemList[j];
-//		}
-
-		// sort array alphabetically
-		//Arrays.sort(shortenedArray);
-
 		// put everything back in the inventory
 		
 		for(ItemStack item : nonNullItems) {
 			if(plugin.debug) System.out.println(getSortableString(item));
 			inv.addItem(item);
 		}
-		
-		/*for (String s : shortenedArray) {
-			System.out.println(s);
-			// System.out.println(s);
-			for (ItemStack item : items) {
-				if (item != null && s != null) {
-					if (getBetterHash(item) == Integer.parseInt(s.split(",")[s.split(",").length - 1])) {
-						inv.addItem(item);
-						item = null;
-						s = null;
-					}
-				}
-			}
-		}*/
 	}
 	
 	private static int getBetterHash(ItemStack item) {
