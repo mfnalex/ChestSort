@@ -1,22 +1,19 @@
 package de.jeffclan.JeffChestSort;
 
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-import org.bukkit.Material;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.material.Skull;
-
 public class JeffChestSortOrganizer {
-	
+
 	/*
 	 * DEPRECATED: THE FOLLOWING INFOS ARE OUTDATED
 	 * I HAVE REPLACED THE UUID CONNECTION WITH AN ARRAY THAT REFERS TO THE ACTUAL ITEMSTACK
@@ -250,13 +247,68 @@ public class JeffChestSortOrganizer {
             }});
 
 		// put everything back in the inventory
-		
+
 		for(ItemStack item : nonNullItems) {
 			if(plugin.debug) System.out.println(getSortableString(item));
 			inv.addItem(item);
 		}
 	}
-	
+
+	void sortInventoryStrict(Inventory inv,int startSlot, int endSlot) {
+        // We copy the complete inventory into an array
+        ItemStack[] items = inv.getContents();
+
+        // Get rid of all stuff before startSlot and after endSlot
+        for (int i = 0; i < startSlot; i++) {
+            items[i] = null;
+        }
+        for (int i = endSlot + 1; i < inv.getSize(); i++) {
+            items[i] = null;
+        }
+
+        // Remove the stuff that we took from the original inventory
+        for (int i = startSlot; i <= endSlot; i++) {
+            inv.clear(i);
+        }
+
+        // We don't want to have stacks of null
+        ArrayList<ItemStack> nonNullItemsList = new ArrayList<>();
+        for (ItemStack item : items) {
+            if (item != null) {
+                nonNullItemsList.add(item);
+            }
+        }
+
+        // I noticed what you meant about the items not stacking when using setItem because addItem attempts to stack with matching ItemStack in the inventory.
+        // The only solution I could think of would to stack matching ItemStack before sorting happens.
+        // An inventory size of 54 should fit most needs but can be changed or made into a parameter
+        Inventory inventoryStack = Bukkit.createInventory(null, 54);
+        for (ItemStack item : nonNullItemsList) {
+            inventoryStack.addItem(item);
+        }
+
+        // We need the list as array
+        // This is taken from the temp inventory that is used to stack matching items
+        ItemStack[] nonNullItems = inventoryStack.getContents();
+
+        // Sort the array with ItemStacks according to our sortable String
+        Arrays.sort(nonNullItems, new Comparator<ItemStack>() {
+            public int compare(ItemStack s1, ItemStack s2) {
+                // getContents is returning null items so return if they are to avoid NullPointerException
+                // Needs to return 0 or the actual items are placed at the end of the array
+                if (s1 == null || s2 == null) return 0;
+                return getSortableString(s1).compareTo(getSortableString(s2));
+            }
+        });
+
+        // put everything back in the inventory starting from the startSlot index
+        int startIndex = startSlot;
+        for (ItemStack item : nonNullItems) {
+            inv.setItem(startIndex, item);
+            startIndex++;
+        }
+	}
+
 	private static int getBetterHash(ItemStack item) {
 		// I wanted to fix the skull problems here. Instead, I ended up not using the hashCode at all.
 		// I still left this here because it is nice to see the hashcodes when debug is enabled

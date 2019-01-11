@@ -1,13 +1,6 @@
 package de.jeffclan.JeffChestSort;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
+import de.jeffclan.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,7 +8,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.jeffclan.utils.Utils;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class JeffChestSortPlugin extends JavaPlugin {
 
@@ -37,6 +36,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	
 	public void sortInventory(Inventory inv, int startSlot, int endSlot) {
 		this.organizer.sortInventory(inv,startSlot,endSlot);
+	}
+
+	public void sortInventoryStrict(Inventory inv, int startSlot, int endSlot) {
+		this.organizer.sortInventoryStrict(inv,startSlot,endSlot);
 	}
 	
 	void createConfig() {
