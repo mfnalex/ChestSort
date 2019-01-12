@@ -20,7 +20,7 @@ Now, you can sort any Inventory! Just like this:
 chestSort.sortInventory(Inventory inventory);
 ```
 
-To sort only specific slots, you can pass slot numbers where to start and end sorting.
+To sort only specific slots, you can pass slot numbers where to start and end sorting. ChestSort will not modify the inventory outside the given slot range.
 
 ```
 chestSort.sortInventory(Inventory inventory, int startSlot, int endSlot);
