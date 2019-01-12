@@ -4,16 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
-import org.bukkit.Material;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.material.Skull;
 
 public class JeffChestSortOrganizer {
 	
@@ -212,6 +209,7 @@ public class JeffChestSortOrganizer {
 			System.out.println(" ");
 			System.out.println(" ");
 		}
+	
 		
 		// We copy the complete inventory into an array
 		ItemStack[] items = inv.getContents();
@@ -249,11 +247,20 @@ public class JeffChestSortOrganizer {
                   return(getSortableString(s1).compareTo(getSortableString(s2)));
             }});
 
-		// put everything back in the inventory
+		// put everything back in a temporary inventory to combine ItemStacks even when using strict slot sorting
+		// Thanks to SnackMix for this idea!
+		Inventory tempInventory = Bukkit.createInventory(null, 63);
 		
 		for(ItemStack item : nonNullItems) {
 			if(plugin.debug) System.out.println(getSortableString(item));
-			inv.addItem(item);
+			tempInventory.addItem(item);
+		}
+		
+		int currentSlot = startSlot;
+		for(ItemStack item : tempInventory.getContents()) {
+			if(item==null) continue;
+			inv.setItem(currentSlot, item);
+			currentSlot++;
 		}
 	}
 	
