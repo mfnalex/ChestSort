@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -25,7 +26,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortUpdateChecker updateChecker;
 	JeffChestSortListener listener;
 	String sortingMethod;
-	int currentConfigVersion = 5;
+	ArrayList<String> disabledWorlds;
+	int currentConfigVersion = 6;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
@@ -96,6 +98,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("check-for-updates", "true");
 		getConfig().addDefault("auto-generate-category-files", true);
 		getConfig().addDefault("verbose", true);
+		
+		disabledWorlds = (ArrayList<String>) getConfig().getStringList("disabled-worlds");
 	}
 
 	@Override
