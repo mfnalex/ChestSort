@@ -49,6 +49,21 @@ check-for-updates: true
 # when set to true, show some verbose information on startup
 verbose: true
 
+#########################
+#### disabled worlds ####
+#########################
+
+# You can disable ChestSort for certain worlds. Each world's name has to
+# be on a separate line, starting with a hyphen and followed by a space
+
+# Example:
+#
+# disabled-worlds:
+# - world_nether
+# - world_the_end
+
+disabled-worlds:
+
 ##########################
 ##### Sorting Method #####
 ##########################
@@ -158,4 +173,4 @@ message-error-players-only: "&cError: This command can only be run by players."
 #########################
 
 # please do not change the following line manually!
-config-version: 5
+config-version: 6
