@@ -81,6 +81,10 @@ public class JeffChestSortListener implements Listener {
 		if (!p.hasPermission("chestsort.use")) {
 			return;
 		}
+		
+		if(plugin.disabledWorlds.contains(p.getWorld().getName().toLowerCase())) {
+			return;
+		}
 
 		// Don't sort automatically when player is spectator or in adventure mode
 		if (p.getGameMode() == GameMode.SPECTATOR || p.getGameMode() == GameMode.ADVENTURE) {
