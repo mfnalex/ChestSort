@@ -1,0 +1,13 @@
+turtle_helmet
+bow
+arrow
+*_sword
+*_helmet
+*_chestplate
+*_leggings
+*_boots
+spectral_arrow
+tipped_arrow
+shield
+totem_of_undying
+trident

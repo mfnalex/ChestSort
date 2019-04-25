@@ -1,0 +1,176 @@
+#########################
+#####   ChestSort   #####
+#########################
+
+#
+# Please note that players will need the chestsort.use permission
+# or have to be OP to be able to use automatic chest sorting.
+#
+
+# when set to false, new players will have to run /chestsort
+# once to enable automatic chest sorting.
+sorting-enabled-by-default: false
+
+# when set to true, players with sorting DISABLED will be
+# shown a message on how to enable automatic chest sorting
+# when they use a chest for the first time.
+# consider setting this to true when you disable sorting by default.
+# see also -> message-when-using-chest
+show-message-when-using-chest: true
+
+# when set to true, players with sorting ENABLED will be
+# shown a message on how to disable automatic chest sorting
+# when they use a chest for the first time.
+# consider setting this to true when you enable sorting by default.
+# see also -> message-when-using-chest2
+show-message-when-using-chest-and-sorting-is-enabled: false
+
+# when set to true, the messages are shown again when a player
+# logs out and back in and then uses a chest again.
+show-message-again-after-logout: true
+
+# to sort by category, we need category files. ChestSort comes
+# with a number of pregenerated category files, named
+# 900-valuables.txt, 910-tools.txt, 920-combat.txt, ...
+# If you wish to edit those, you can disable the generation of these
+# files, because otherwise all your changes in the pregenerated
+# files will be overwritten on each server startup.
+auto-generate-category-files: true
+
+# should we check for updates?
+# when enabled, a message is printed in the console if a new
+# version has been found, and OPs will be notified when they
+# join the server
+# When set to true, we will check for updates on startup and every 24 hours
+# When set to on-startup, we will only check on startup
+# When set to false, don't check for updates
+check-for-updates: true
+
+# when set to true, show some verbose information on startup
+verbose: true
+
+#########################
+#### disabled worlds ####
+#########################
+
+# You can disable ChestSort for certain worlds. Each world's name has to
+# be on a separate line, starting with a hyphen and followed by a space
+
+# Example:
+#
+# disabled-worlds:
+# - world_nether
+# - world_the_end
+
+disabled-worlds:
+
+##########################
+##### Sorting Method #####
+##########################
+
+# Advanced: how to sort things! See below for examples.
+# Only change this if you know what you are doing.
+#
+# Available variables:
+# {category}     order stuff by category as defined in plugins/ChestSort/categories/<category>.txt
+# {itemsFirst}   put items before blocks
+# {blocksFirst}  put blocks before items
+# {name}         returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
+# {color}        returns the color, e.g. light_blue for wool. Empty if block/item is not dyeable
+#
+# Warning: You must not use spaces and fields have to be separated by commas.
+#
+# Examples:
+#   sort by name and color:
+#     '{name},{color}'
+#
+#   sort by name and color, but put items before blocks:
+#     '{itemsFirst},{name},{color}'
+#
+#   sort by name and color, but put blocks before items:
+#     '{blocksFirst},{name},{color}'
+#
+#   sort by category, then put items before blocks and sort by name and color
+#      '{category},{itemsFirst},{name},{color}'
+#
+sorting-method: '{category},{itemsFirst},{name},{color}'
+
+#########################
+##### localization ######
+#########################
+
+# Available color codes:
+# &0 Black        &6 Gold       &c Red
+# &1 Dark Blue    &7 Gray       &d Light Purple
+# &2 Dark Green   &8 Dark Gray  &e Yellow
+# &3 Dark Aqua    &9 Blue       &f White
+# &4 Dark Red     &a Green     
+# &5 Dark Purple  &b Aqua
+
+# Available formatting codes:
+# &k Obfuscated   &m Strikethrough
+# &l Bold         &o Italic
+# &n Underline    &r Reset
+
+##### English
+message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
+message-when-using-chest2: "&7Hint: Type &6/chestsort&7 to disable automatic chest sorting."
+message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7."
+message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7."
+message-error-players-only: "&cError: This command can only be run by players."
+
+##### Chinese - Thanks to qsefthuopq for translating! -> https://www.spigotmc.org/members/qsefthuopq.339953/
+#message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
+#message-when-using-chest2: "&7提示: 输入 &6/chestsort&7 来关闭自动整理箱子."
+#message-sorting-disabled: "&7自动整理箱子已 &c关闭&7."
+#message-sorting-enabled: "&7自动整理箱子已 &a启用&7."
+#message-error-players-only: "&c错误: 指令只能由玩家运行."
+
+##### Traditional Chinese 繁體中文
+#message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
+#message-when-using-chest2: "&7小提醒: 輸入 &6/chestsort&7 來關閉自動整理箱子"
+#message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
+#message-sorting-enabled: "&7自動整理箱子已 &a開啟&7"
+#message-error-players-only: "&c錯誤: 這個指令只能由玩家使用"
+
+##### French - Thanks to automatizer for translating! -> https://www.spigotmc.org/members/automatizer.26188/
+#message-when-using-chest: "&7Astuce: Écris &6/chestsort&7 pour activer le classement automatique."
+#message-when-using-chest2: "&7Astuce: Écris &6/chestsort&7 pour désactiver le classement automatique."
+#message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7."
+#message-sorting-enabled: "&7Le classement automatique a été &aactivé&7."
+#message-error-players-only: "&cErreur: Cette commande ne peut être utilisée que par des joueurs."
+
+##### German
+#message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."
+#message-when-using-chest2: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu deaktivieren."
+#message-sorting-disabled: "&7Automatische Kistensortierung &cdeaktiviert&7."
+#message-sorting-enabled: "&7Automatische Kistensortierung &aaktiviert&7."
+#message-error-players-only: "&cFehler: Dieser Befehl ist nur für Spieler verfügbar."
+
+##### Italian - Translated with Google. Please tell me if something is wrong :)
+#message-when-using-chest: "&7Nota: inserire &6/chestsort&7 per abilitare l'ordinamento automatico dei bauli."
+#message-when-using-chest2: "&7Nota: inserire &6/chestsort&7 per disabilitare l'ordinamento automatico dei bauli."
+#message-sorting-disabled: "&7L'ordinamento automatico dei bauli è stato &cdisattivato&7."
+#message-sorting-enabled: "&7L'ordinamento automatico dei bauli è stato &aattivato&7."
+#message-error-players-only: "&cErrore: questo comando è disponibile solo per i giocatori."
+
+##### Japanese
+#message-when-using-chest: "&7ヒント: &6/chestsort&7 と入力して自動チェスト整理を有効にできます。"
+#message-when-using-chest2: "&7ヒント: &6/chestsort&7 と入力すると自動チェスト整理を無効にできます。"
+#message-sorting-disabled: "&7自動チェスト整理は現在 &cOFF&7です。"
+#message-sorting-enabled: "&7自動チェスト整理は現在 &aON&7です。"
+#message-error-players-only: "&cエラー: このコマンドはプレイヤーのみ実行できます。"
+
+##### Spanish - Thanks to Bers_ for translating! ->  https://www.spigotmc.org/members/bers_.146126/
+#message-when-using-chest: "&7Pista: Usa &6/chestsort&7 para activar el orden automático de los cofres."
+#message-when-using-chest2: "&7Pista: Usa &6/chestsort&7 para desactivar el orden automático de los cofres."
+#message-sorting-disabled: "&7Orden automático de los cofres &cdesactivado&7."
+#message-sorting-enabled: "&7Orden automático de los cofres &aactivado&7."
+#message-error-players-only: "&cError: Este comando solo puede ser ejecutado por jugadores."
+
+#########################
+#####     Done!     #####
+#########################
+
+# please do not change the following line manually!
+config-version: 6
