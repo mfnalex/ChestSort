@@ -1,0 +1,15 @@
+ghast_tear
+potion
+glass_bottle
+fermented_spider_eye
+blaze_powder
+magma_cream
+brewing_stand
+cauldron
+glistering_melon_slice
+golden_carrot
+rabbit_foot
+dragon_breath
+splash_potion
+lingering_potion
+phantom_membrane
