@@ -26,9 +26,9 @@ public class JeffChestSortListener implements Listener {
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
 
-		if (event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
-			plugin.debug = true;
-		}
+		//if (event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
+		//	plugin.debug = true;
+		//}
 
 		if (event.getPlayer().isOp()) {
 			plugin.updateChecker.sendUpdateMessage(event.getPlayer());
