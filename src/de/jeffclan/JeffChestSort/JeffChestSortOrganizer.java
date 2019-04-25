@@ -249,7 +249,7 @@ public class JeffChestSortOrganizer {
 
 		// put everything back in a temporary inventory to combine ItemStacks even when using strict slot sorting
 		// Thanks to SnackMix for this idea!
-		Inventory tempInventory = Bukkit.createInventory(null, 63);
+		Inventory tempInventory = Bukkit.createInventory(null, 54);
 		
 		for(ItemStack item : nonNullItems) {
 			if(plugin.debug) System.out.println(getSortableString(item));
