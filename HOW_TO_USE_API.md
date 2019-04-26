@@ -1,6 +1,6 @@
 # API Usage
 
-If you want to use ChestSort's advanced sorting features for your own plugin, you can use the ChestSort API. It provides two methods to sort any given inventory, following the rules you have specified in your ChestSort's plugin.yml and the corresponding category files.
+If you want to use ChestSort's advanced sorting features for your own plugin, you can use the ChestSort API. It provides methods to sort any given inventory, following the rules you have specified in your ChestSort's plugin.yml and the corresponding category files.
 
 To use ChestSort's sorting features in your Spigot/Bukkit plugin, you have to import ChestSort.jar into your BuildPath.
 
@@ -24,4 +24,10 @@ To sort only specific slots, you can pass slot numbers where to start and end so
 
 ```
 chestSort.sortInventory(Inventory inventory, int startSlot, int endSlot);
+```
+
+You can also check if a player has automatic sorting enabled or disabled:
+
+```
+boolean sortingEnabled = chestSort.sortingEnabled(Player player);
 ```

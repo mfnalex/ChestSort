@@ -208,7 +208,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 	}
 
-	boolean sortingEnabled(Player p) {
+	public boolean sortingEnabled(Player p) {
 
 		// The following is for all the lazy server admins who use /reload instead of properly restarting their
 		// server ;) I am sometimes getting stacktraces although it is clearly stated that /reload is NOT
