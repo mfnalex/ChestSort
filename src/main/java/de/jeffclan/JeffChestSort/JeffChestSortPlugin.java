@@ -137,7 +137,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				}
 			}, 0L, updateCheckInterval * 20);
 		} else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
-			updateChecker.checkForUpdate();
+			getServer().getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
+	            @Override
+	            public void run() {
+	            	updateChecker.checkForUpdate();
+	            }
+	        }, 0L);
 		}
 
 		Metrics metrics = new Metrics(this);
