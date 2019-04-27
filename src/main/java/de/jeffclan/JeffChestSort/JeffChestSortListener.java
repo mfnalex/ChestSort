@@ -96,9 +96,15 @@ public class JeffChestSortListener implements Listener {
 
 		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
 
+		// We use .getClass().toString() for new items instead of directly comparing the ENUM, because we want to
+		// keep compatability between different minecraft versions (e.g. there is no BARREL prior 1.14)
+		// WARNING: The names are inconsistent! A chest will return org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
+		// while a double chest returns org.bukkit.block.DoubleChest
+		//p.sendMessage(event.getInventory().getHolder().toString()); 
 		if (!(event.getInventory().getHolder() instanceof Chest)
 				&& !(event.getInventory().getHolder() instanceof DoubleChest)
-				&& !(event.getInventory().getHolder() instanceof ShulkerBox)) {
+				&& !(event.getInventory().getHolder() instanceof ShulkerBox)
+				&& !(event.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
 			return;
 		}
 
