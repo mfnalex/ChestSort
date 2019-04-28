@@ -27,6 +27,7 @@ public class JeffChestSortListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 
 		// DEBUG
+		// Checking for my username because I always forget to comment this out before releases
 		//if (event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
 		//	plugin.debug = true;
 		//}
