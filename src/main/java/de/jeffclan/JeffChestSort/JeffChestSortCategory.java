@@ -18,13 +18,14 @@ public class JeffChestSortCategory {
 		this.typeMatches = typeMatches;
 	}
 
+	// Checks whether a the given itemname fits into this category
 	boolean matches(String itemname) {
 
 		boolean asteriskBefore = false;
 		boolean asteriskAfter = false;
 
+		// Very, very simple wildcard checks
 		for (String typeMatch : typeMatches) {
-
 			if (typeMatch.startsWith("*")) {
 				asteriskBefore = true;
 				typeMatch = typeMatch.substring(1);
@@ -36,7 +37,6 @@ public class JeffChestSortCategory {
 
 			if (asteriskBefore == false && asteriskAfter == false) {
 				if (itemname.equalsIgnoreCase(typeMatch)) {
-
 					return true;
 				}
 			} else if (asteriskBefore == true && asteriskAfter == true) {
