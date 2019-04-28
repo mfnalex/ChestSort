@@ -16,6 +16,7 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] arg3) {
 
+		// This command toggles automatic chest sorting for the player that runs the command
 		if (arg1.getName().equalsIgnoreCase("chestsort")) {
 
 			if (!(sender instanceof Player)) {
