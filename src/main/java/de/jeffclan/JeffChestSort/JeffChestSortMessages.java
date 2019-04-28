@@ -3,10 +3,16 @@ package de.jeffclan.JeffChestSort;
 import org.bukkit.ChatColor;
 
 public class JeffChestSortMessages {
+	
+	// Messages can be customized in the config.yml
+	// To avoid problems with missing messages in the config, the default messages are
+	// hardcoded.
+	// When creating pull requests that feature a message to the player, please stick to this scheme
 
 	JeffChestSortPlugin plugin;
 
 	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY;
+
 
 	JeffChestSortMessages(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
