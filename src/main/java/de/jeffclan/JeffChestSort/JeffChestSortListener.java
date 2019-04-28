@@ -101,6 +101,12 @@ public class JeffChestSortListener implements Listener {
 		// WARNING: The names are inconsistent! A chest will return org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
 		// while a double chest returns org.bukkit.block.DoubleChest
 		//p.sendMessage(event.getInventory().getHolder().toString()); 
+		
+		// Possible Fix for https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues/13 
+		if(event.getInventory().getHolder() == null) {
+			return;
+		}
+		
 		if (!(event.getInventory().getHolder() instanceof Chest)
 				&& !(event.getInventory().getHolder() instanceof DoubleChest)
 				&& !(event.getInventory().getHolder() instanceof ShulkerBox)
