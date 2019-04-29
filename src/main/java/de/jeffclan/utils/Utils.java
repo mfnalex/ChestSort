@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class Utils {
+	
+	// We need this to write the category files inside the .jar to the disk
+	// Maybe there is a smarter way, i don't know.
 	public static byte[] getBytes(InputStream is) throws IOException {
 
 	    int len;
@@ -25,6 +28,4 @@ public class Utils {
 	    }
 	    return buf;
 	  }
-	
-	
 }
