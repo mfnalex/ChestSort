@@ -1,6 +1,6 @@
 main: de.jeffclan.JeffChestSort.JeffChestSortPlugin
 name: ChestSort
-version: 4.0
+version: 4.1-beta2
 api-version: 1.13
 description: Allows automatic chest sorting
 author: mfnalex
@@ -16,8 +16,8 @@ commands:
     aliases: sort
     permission: chestsort.use
   invsort:
-    description: Sorts the player's inventory except hotbar, armor slots and items in hands
-    usage: /<command>
+    description: Sorts the player's inventory. When no option is specified, only the regular inventory (excluding the hotbar) is sorted.
+    usage: /<command> [inv|hotbar|all]
     aliases: [isort,inventorysort]
     permission: chestsort.use.inventory
 permissions:
