@@ -118,9 +118,9 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().warning("This is not a problem, as ChestSort will just use the");
 			getLogger().warning("default settings for unset values. However, if you want");
 			getLogger().warning("to configure the new options, please go to");
-			getLogger().warning("https://www.spigotmc.org/resources/1-13-chestsort.59773/");
-			getLogger().warning("and replace your config.yml with the new one. You can");
-			getLogger().warning("then insert your old changes into the new file.");
+			getLogger().warning("https://www.chestsort.de and replace your config.yml");
+			getLogger().warning("with the new one. You can then insert your old changes");
+			getLogger().warning("into the new file.");
 			getLogger().warning("========================================================");
 			usingMatchingConfig = false;
 		}

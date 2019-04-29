@@ -25,7 +25,7 @@ public class JeffChestSortUpdateChecker {
 	// This text file always contains a string with the latest version, e.g. 3.7.1
 	String latestVersionLink = "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt";
 	
-	String downloadLink = "https://www.spigotmc.org/resources/1-13-chestsort.59773/";
+	String downloadLink = "https://www.chestsort.de";
 	private String currentVersion = "undefined";
 	private String latestVersion = "undefined";
 
