@@ -1,10 +1,10 @@
 main: de.jeffclan.JeffChestSort.JeffChestSortPlugin
 name: ChestSort
-version: 3.7.1
+version: 4.0
 api-version: 1.13
 description: Allows automatic chest sorting
 author: mfnalex
-website: https://www.spigotmc.org/resources/1-13-chestsort.59773/
+website: https://www.chestsort.de
 prefix: ChestSort
 database: false
 loadbefore:
@@ -15,6 +15,13 @@ commands:
     usage: /<command>
     aliases: sort
     permission: chestsort.use
+  invsort:
+    description: Sorts the player's inventory except hotbar, armor slots and items in hands
+    usage: /<command>
+    aliases: [isort,inventorysort]
+    permission: chestsort.use.inventory
 permissions:
   chestsort.use:
     description: Allows usage of automatic chest sorting
+  chestsort.use.inventory:
+    description: Allows usage of inventory sorting (/invsort)

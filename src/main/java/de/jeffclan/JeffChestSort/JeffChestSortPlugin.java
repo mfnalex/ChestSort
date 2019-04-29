@@ -58,7 +58,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortListener listener;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 6;
+	int currentConfigVersion = 7;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
@@ -146,6 +146,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("show-message-when-using-chest-and-sorting-is-enabled", false);
 		getConfig().addDefault("show-message-again-after-logout", true);
 		getConfig().addDefault("sorting-method", "{category},{itemsFirst},{name},{color}");
+		getConfig().addDefault("allow-player-inventory-sorting", false);
 		getConfig().addDefault("check-for-updates", "true");
 		getConfig().addDefault("auto-generate-category-files", true);
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
@@ -187,7 +188,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// the Organizer to sort inventories when a player closes a chest, shulkerbox or barrel inventory
 		listener = new JeffChestSortListener(this);
 		
-		
 		// The sorting method will determine how stuff is sorted
 		sortingMethod = getConfig().getString("sorting-method"); 
 		
@@ -197,7 +197,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// Register the /chestsort command and associate it to a new CommandExecutor
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
 		this.getCommand("chestsort").setExecutor(commandExecutor);
-
+		
+		// Register the /invsort command
+		this.getCommand("invsort").setExecutor(commandExecutor);
+		
 		// Does anyone actually need this?
 		if (verbose) {
 			getLogger().info("Current sorting method: " + sortingMethod);

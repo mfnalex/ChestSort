@@ -5,11 +5,11 @@
 
 	<groupId>de.jeffclan</groupId>
 	<artifactId>JeffChestSort</artifactId>
-	<version>3.7.1</version>
+	<version>4.0</version>
 	<packaging>jar</packaging>
 
 	<name>JeffChestSort</name>
-	<url>https://www.spigotmc.org/resources/1-11-1-13-chestsort-api.59773/</url>
+	<url>https://www.chestsort.de</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

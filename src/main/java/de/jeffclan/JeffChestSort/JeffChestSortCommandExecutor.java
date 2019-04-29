@@ -41,6 +41,21 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 
 			return true;
 
+		} else if(command.getName().equalsIgnoreCase("invsort")) {
+			// This command sorts the player's inventory
+			
+			if (!(sender instanceof Player)) {
+				sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
+				return true;
+			}
+			
+			Player p = (Player) sender;
+			
+			plugin.sortInventory(p.getInventory(), 9, 35);
+			p.sendMessage(plugin.messages.MSG_PLAYERINVSORTED);
+			
+			return true;
+			
 		}
 
 		return false;

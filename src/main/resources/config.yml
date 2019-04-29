@@ -8,6 +8,7 @@
 #
 # Please note that players will need the chestsort.use permission
 # or have to be OP to be able to use automatic chest sorting.
+# To use /invsort, the permission chestsort.use.inventory is required.
 #
 
 # when set to false, new players will have to run /chestsort
@@ -121,6 +122,7 @@ message-when-using-chest2: "&7Hint: Type &6/chestsort&7 to disable automatic che
 message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7."
 message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7."
 message-error-players-only: "&cError: This command can only be run by players."
+message-player-inventory-sorted: "&7Your inventory has been sorted."
 
 ##### Chinese - Thanks to qsefthuopq for translating! -> https://www.spigotmc.org/members/qsefthuopq.339953/
 #message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
@@ -184,4 +186,4 @@ message-error-players-only: "&cError: This command can only be run by players."
 #########################
 
 # please do not change the following line manually!
-config-version: 6
+config-version: 7

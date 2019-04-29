@@ -3,6 +3,7 @@ package de.jeffclan.JeffChestSort;
 import java.util.UUID;
 import java.io.File;
 
+
 import org.bukkit.GameMode;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
@@ -90,7 +91,7 @@ public class JeffChestSortListener implements Listener {
 	// the chestsort.use permission and has /chestsort enabled)
 	@EventHandler
 	public void onInventoryClose(InventoryCloseEvent event) {
-
+		
 		// I don't know if this is neccesary. Have to check if getPlayer() always returns a player,
 		// or if it might return an OfflinePlayer under some circumstances
 		if (!(event.getPlayer() instanceof Player)) {

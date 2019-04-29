@@ -11,7 +11,7 @@ public class JeffChestSortMessages {
 
 	JeffChestSortPlugin plugin;
 
-	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY;
+	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY, MSG_PLAYERINVSORTED;
 
 
 	JeffChestSortMessages(JeffChestSortPlugin plugin) {
@@ -31,6 +31,9 @@ public class JeffChestSortMessages {
 
 		MSG_PLAYERSONLY = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-error-players-only", "&cError: This command can only be run by players.&r"));
+		
+		MSG_PLAYERINVSORTED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(
+				"message-player-inventory-sorted", "&7Your inventory has been sorted."));
 	}
 
 }
