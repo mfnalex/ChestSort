@@ -129,7 +129,7 @@ message-error-players-only: "&cError: This command can only be run by players."
 #message-sorting-enabled: "&7自动整理箱子已 &a启用&7."
 #message-error-players-only: "&c错误: 指令只能由玩家运行."
 
-##### Traditional Chinese 繁體中文
+##### Chinese (Traditional) 繁體中文
 #message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
 #message-when-using-chest2: "&7小提醒: 輸入 &6/chestsort&7 來關閉自動整理箱子"
 #message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
@@ -163,6 +163,13 @@ message-error-players-only: "&cError: This command can only be run by players."
 #message-sorting-disabled: "&7自動チェスト整理は現在 &cOFF&7です。"
 #message-sorting-enabled: "&7自動チェスト整理は現在 &aON&7です。"
 #message-error-players-only: "&cエラー: このコマンドはプレイヤーのみ実行できます。"
+
+##### Russian - Translated with Google. Please tell me if something is wrong :)
+#message-when-using-chest: "&7Подсказка: введите &6"/chestsort&7, чтобы включить автоматическую сортировку сундуков."
+#message-when-using-chest2: "&7Подсказка: введите &6/chestsort&7, чтобы отключить автоматическую сортировку сундуков."
+#message-sorting-disabled: "&7Автоматическая сортировка сундуков была &cотключена&7."
+#message-sorting-enabled: "&7Автоматическая сортировка сундуков была &aвключена&7."
+#message-error-players-only: "&cОшибка: эта команда может использоваться только игроками."
 
 ##### Spanish - Thanks to Bers_ for translating! ->  https://www.spigotmc.org/members/bers_.146126/
 #message-when-using-chest: "&7Pista: Usa &6/chestsort&7 para activar el orden automático de los cofres."
