@@ -9,6 +9,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class JeffChestSortUpdateChecker {
+	
+	// This checks for updates. A txt file is downloaded. If the txt file contains a string that is
+	// unequal to the currently used plugin's version, a message is printed in the console.
+	// The listener will also ensure that OPs will be notified on join.
+	// When the update checker could not complete the request, e.g. when the JEFF Media GbR API server is
+	// offline, or if you have no internet connection, a warning will be printed in the console.
 
 	private JeffChestSortPlugin plugin;
 
@@ -16,7 +22,9 @@ public class JeffChestSortUpdateChecker {
 		this.plugin = plugin;
 	}
 
+	// This text file always contains a string with the latest version, e.g. 3.7.1
 	String latestVersionLink = "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt";
+	
 	String downloadLink = "https://www.spigotmc.org/resources/1-13-chestsort.59773/";
 	private String currentVersion = "undefined";
 	private String latestVersion = "undefined";
@@ -31,22 +39,15 @@ public class JeffChestSortUpdateChecker {
 		}
 	}
 
-	void checkForUpdate() {
-		
+	void checkForUpdate() {	
 		plugin.getLogger().info("Checking for available updates...");
-
 		try {
-
 			HttpURLConnection httpcon = (HttpURLConnection) new URL(latestVersionLink).openConnection();
 			httpcon.addRequestProperty("User-Agent", "ChestSort/"+plugin.getDescription().getVersion());
-
 			BufferedReader reader = new BufferedReader(new InputStreamReader(httpcon.getInputStream()));
-
 			String inputLine = reader.readLine().trim();
-
 			latestVersion = inputLine;
 			currentVersion = plugin.getDescription().getVersion().trim();
-
 			
 			if (latestVersion.equals(currentVersion)) {
 				plugin.getLogger().info("You are using the latest version of ChestSort.");
