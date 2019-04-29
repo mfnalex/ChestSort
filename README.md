@@ -10,7 +10,7 @@ ChestSort will automatically sort every chest after you have closed it. Every pl
 
 Sorting will work with chests and shulker boxes.
 
-Tested Spigot versions: 1.11 to 1.14
+Tested Spigot versions: 1.8 to 1.14
 
 ## Download & more information
 Please see the related topic at spigotmc.org for information regarding the commands, permissions and download links:
