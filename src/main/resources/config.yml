@@ -154,7 +154,7 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-disabled: "&7Automatische Kistensortierung &cdeaktiviert&7."
 #message-sorting-enabled: "&7Automatische Kistensortierung &aaktiviert&7."
 #message-error-players-only: "&cFehler: Dieser Befehl ist nur für Spieler verfügbar."
-#message-player-inventory-sorted: "&7Dein Inventar wurde sortiert.."
+#message-player-inventory-sorted: "&7Dein Inventar wurde sortiert."
 
 ##### Italian - Translated with Google. Please tell me if something is wrong :)
 #message-when-using-chest: "&7Nota: inserire &6/chestsort&7 per abilitare l'ordinamento automatico dei bauli."
