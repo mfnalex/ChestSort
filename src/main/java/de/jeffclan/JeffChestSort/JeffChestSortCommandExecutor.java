@@ -1,5 +1,6 @@
 package de.jeffclan.JeffChestSort;
 
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -51,7 +52,26 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 			
 			Player p = (Player) sender;
 			
-			plugin.sortInventory(p.getInventory(), 9, 35);
+			int start = 9;
+			int end = 35;
+			
+			if(args.length>0) {
+				if(args[0].equalsIgnoreCase("all")) {
+					start=0;
+					end=35;
+				} else if(args[0].equalsIgnoreCase("hotbar")) {
+					start=0;
+					end=8;
+				} else if(args[0].equalsIgnoreCase("inv")) {
+					start=9;
+					end=35;
+				} else {
+					p.sendMessage(ChatColor.RED+"Error: unknown option \""+args[0]+"\". Valid values are \"inv\", \"hotbar\" and \"all\".");
+					return true;
+				}
+			}
+			
+			plugin.sortInventory(p.getInventory(), start, end);
 			p.sendMessage(plugin.messages.MSG_PLAYERINVSORTED);
 			
 			return true;
