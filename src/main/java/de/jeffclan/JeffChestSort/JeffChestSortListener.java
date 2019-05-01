@@ -7,12 +7,14 @@ import java.io.File;
 import org.bukkit.GameMode;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
+import org.bukkit.block.EnderChest;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
@@ -92,26 +94,52 @@ public class JeffChestSortListener implements Listener {
 	@EventHandler
 	public void onInventoryClose(InventoryCloseEvent event) {
 		
-		// I don't know if this is neccesary. Have to check if getPlayer() always returns a player,
-		// or if it might return an OfflinePlayer under some circumstances
+		// Only continue if the inventory belongs to a chest, double chest, shulkerbox or barrel
+		// NOTE: We use .getClass().toString() for new items instead of directly comparing the ENUM, because we 
+		// want to keep compatability between different minecraft versions (e.g. there is no BARREL prior 1.14)
+		// WARNING: The names are inconsistent! A chest will return org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
+		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
+		
+		// Possible Fix for https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues/13 
+		if(event.getInventory().getHolder() == null) {
+			return;
+		}
+		
+		if (!(event.getInventory().getHolder() instanceof Chest)
+				&& !(event.getInventory().getHolder() instanceof DoubleChest)
+				&& !(event.getInventory().getHolder() instanceof ShulkerBox)
+				&& !(event.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
+			return;
+		}
+		
+		// event.getPlayer returns HumanEntity, so it could also be an NPC or something
 		if (!(event.getPlayer() instanceof Player)) {
 			return;
 		}
 		Player p = (Player) event.getPlayer();
 
+		if(isReadyToSort(p)) {
+
+			// Finally call the Organizer to sort the inventory
+			plugin.organizer.sortInventory(event.getInventory());
+		}
+
+	}
+
+	private boolean isReadyToSort(Player p) {
 		if (!p.hasPermission("chestsort.use")) {
-			return;
+			return false;
 		}
 
 		// checking in lower case for lazy admins
 		if(plugin.disabledWorlds.contains(p.getWorld().getName().toLowerCase())) {
-			return;
+			return false;
 		}
 
 		// Don't sort automatically when player is spectator or in adventure mode
 		// TODO: Make this configurable in config.yml
 		if (p.getGameMode() == GameMode.SPECTATOR || p.getGameMode() == GameMode.ADVENTURE) {
-			return;
+			return false;
 		}
 
 		// Fixes exception when using Spigot's stupid /reload command
@@ -121,23 +149,6 @@ public class JeffChestSortListener implements Listener {
 		// We do not immediately cancel when sorting is disabled because we might want to show the hint message
 		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
 		
-		// Possible Fix for https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues/13 
-		if(event.getInventory().getHolder() == null) {
-			return;
-		}
-
-		// Only continue if the inventory belongs to a chest, double chest, shulkerbox or barrel
-		// NOTE: We use .getClass().toString() for new items instead of directly comparing the ENUM, because we 
-		// want to keep compatability between different minecraft versions (e.g. there is no BARREL prior 1.14)
-		// WARNING: The names are inconsistent! A chest will return org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
-		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
-		// DEBUG: p.sendMessage(event.getInventory().getHolder().toString()); 
-		if (!(event.getInventory().getHolder() instanceof Chest)
-				&& !(event.getInventory().getHolder() instanceof DoubleChest)
-				&& !(event.getInventory().getHolder() instanceof ShulkerBox)
-				&& !(event.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
-			return;
-		}
 
 		// Show "how to enable ChestSort" message when ALL of the following criteria are met:
 		// - Player has sorting disabled
@@ -151,7 +162,7 @@ public class JeffChestSortListener implements Listener {
 					p.sendMessage(plugin.messages.MSG_COMMANDMESSAGE);
 				}
 			}
-			return;
+			return false;
 		}
 		// Show "how to disable ChestSort" message when ALL of the following criteria are met:
 		// - Player has sorting enabled
@@ -166,9 +177,28 @@ public class JeffChestSortListener implements Listener {
 				}
 			}
 		}
-
-		// Finally call the Organizer to sort the inventory
-		plugin.organizer.sortInventory(event.getInventory());
-
+		return true;
 	}
+	
+	@EventHandler
+	public void onInventoryOpen(InventoryOpenEvent event)
+	{
+    	if(!(event.getPlayer() instanceof Player)) {
+    		return;
+    	}
+    	
+    	Player p = (Player) event.getPlayer();
+    	
+		// Check if this is an EnderChest (is there a smarter way?)
+    	if(!event.getInventory().equals(p.getEnderChest())) {
+    		return;
+    	}    	
+    	
+		if(isReadyToSort(p)) {
+
+			// Finally call the Organizer to sort the inventory
+			plugin.organizer.sortInventory(event.getInventory());
+		}
+	}
+    	
 }
