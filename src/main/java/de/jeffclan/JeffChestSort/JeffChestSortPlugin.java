@@ -257,7 +257,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 		
 		// Isn't there a smarter way to find all the 9** files in the .jar?
-		String[] defaultCategories = { "900-valuables", "910-tools", "920-combat", "930-brewing", "940-food",
+		String[] defaultCategories = { "900-tools", "910-valuables", "920-combat", "930-brewing", "940-food",
 				"950-redstone", "960-wood", "970-stone", "980-plants", "981-corals" };
 
 		for (String category : defaultCategories) {
