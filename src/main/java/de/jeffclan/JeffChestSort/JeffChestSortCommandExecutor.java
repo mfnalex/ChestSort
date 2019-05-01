@@ -66,7 +66,7 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 					start=9;
 					end=35;
 				} else {
-					p.sendMessage(ChatColor.RED+"Error: unknown option \""+args[0]+"\". Valid values are \"inv\", \"hotbar\" and \"all\".");
+					p.sendMessage(String.format(plugin.messages.MSG_INVALIDOPTIONS,"\""+args[0]+"\"","\"inv\", \"hotbar\", \"all\""));
 					return true;
 				}
 			}

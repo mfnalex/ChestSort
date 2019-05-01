@@ -116,6 +116,9 @@ sorting-method: '{category},{itemsFirst},{name},{color}'
 # &l Bold         &o Italic
 # &n Underline    &r Reset
 
+# IMPORTANT NOTE:
+# Some messages contain placeholders (%s). You must not remove those, or you will get exceptions in the console
+
 ##### English
 message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
 message-when-using-chest2: "&7Hint: Type &6/chestsort&7 to disable automatic chest sorting."
@@ -123,6 +126,7 @@ message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7."
 message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7."
 message-error-players-only: "&cError: This command can only be run by players."
 message-player-inventory-sorted: "&7Your inventory has been sorted."
+message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Chinese - Thanks to qsefthuopq for translating! -> https://www.spigotmc.org/members/qsefthuopq.339953/
 #message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
@@ -131,6 +135,7 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-enabled: "&7自动整理箱子已 &a启用&7."
 #message-error-players-only: "&c错误: 指令只能由玩家运行."
 #message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Chinese (Traditional) 繁體中文
 #message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
@@ -139,6 +144,7 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-enabled: "&7自動整理箱子已 &a開啟&7"
 #message-error-players-only: "&c錯誤: 這個指令只能由玩家使用"
 #message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### French - Thanks to automatizer for translating! -> https://www.spigotmc.org/members/automatizer.26188/
 #message-when-using-chest: "&7Astuce: Écris &6/chestsort&7 pour activer le classement automatique."
@@ -147,6 +153,7 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-enabled: "&7Le classement automatique a été &aactivé&7."
 #message-error-players-only: "&cErreur: Cette commande ne peut être utilisée que par des joueurs."
 #message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### German
 #message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."
@@ -155,6 +162,7 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-enabled: "&7Automatische Kistensortierung &aaktiviert&7."
 #message-error-players-only: "&cFehler: Dieser Befehl ist nur für Spieler verfügbar."
 #message-player-inventory-sorted: "&7Dein Inventar wurde sortiert."
+#message-error-invalid-options: "&cFehler: Unbekannte Option %s. Gültige Optionen sind %s."
 
 ##### Italian - Translated with Google. Please tell me if something is wrong :)
 #message-when-using-chest: "&7Nota: inserire &6/chestsort&7 per abilitare l'ordinamento automatico dei bauli."
@@ -162,7 +170,8 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-disabled: "&7L'ordinamento automatico dei bauli è stato &cdisattivato&7."
 #message-sorting-enabled: "&7L'ordinamento automatico dei bauli è stato &aattivato&7."
 #message-error-players-only: "&cErrore: questo comando è disponibile solo per i giocatori."
-#message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-player-inventory-sorted: "&7Il tuo inventario è stato ordinato."
+#message-error-invalid-options: "&cErrore: Parametro sconosciuto %s. I parametri validi sono %s."
 
 ##### Japanese
 #message-when-using-chest: "&7ヒント: &6/chestsort&7 と入力して自動チェスト整理を有効にできます。"
@@ -171,6 +180,7 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-enabled: "&7自動チェスト整理は現在 &aON&7です。"
 #message-error-players-only: "&cエラー: このコマンドはプレイヤーのみ実行できます。"
 #message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Portuguese - Thanks to wildastral for translating! -> https://www.spigotmc.org/members/wildastral.673147/
 #message-when-using-chest: "&7Dica: Digite &6/chestsort&7 para habilitar a organização automática."
@@ -179,6 +189,7 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-enabled: "&7A Organização automática de baús foi &ahabilitada&7."
 #message-error-players-only: "&cErro: Esse comando não pode ser executado por jogadores."
 #message-player-inventory-sorted: "&7Seu inventário foi organizado." 
+#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Russian - Thanks to Gandon for translating! -> https://www.spigotmc.org/members/gandon.443887/
 #message-when-using-chest: "&7Подсказка: введите &6"/chestsort&7, чтобы включить автоматическую сортировку вещей в сундуках."
@@ -187,6 +198,7 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-enabled: "&7Автоматическая сортировка вещей в сундуках была &aвключена&7."
 #message-error-players-only: "&cОшибка: эта команда может быть использована только игроками."
 #message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Spanish - Thanks to Bers_ for translating! ->  https://www.spigotmc.org/members/bers_.146126/
 #message-when-using-chest: "&7Pista: Usa &6/chestsort&7 para activar el orden automático de los cofres."
@@ -195,10 +207,11 @@ message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-sorting-enabled: "&7Orden automático de los cofres &aactivado&7."
 #message-error-players-only: "&cError: Este comando solo puede ser ejecutado por jugadores."
 #message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 #########################
 #####     Done!     #####
 #########################
 
 # please do not change the following line manually!
-config-version: 7
+config-version: 8

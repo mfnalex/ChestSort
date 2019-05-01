@@ -3,16 +3,18 @@ package de.jeffclan.JeffChestSort;
 import org.bukkit.ChatColor;
 
 public class JeffChestSortMessages {
-	
+
 	// Messages can be customized in the config.yml
-	// To avoid problems with missing messages in the config, the default messages are
+	// To avoid problems with missing messages in the config, the default messages
+	// are
 	// hardcoded.
-	// When creating pull requests that feature a message to the player, please stick to this scheme
+	// When creating pull requests that feature a message to the player, please
+	// stick to this scheme
 
 	JeffChestSortPlugin plugin;
 
-	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY, MSG_PLAYERINVSORTED;
-
+	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY,
+			MSG_PLAYERINVSORTED, MSG_INVALIDOPTIONS;
 
 	JeffChestSortMessages(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
@@ -31,9 +33,12 @@ public class JeffChestSortMessages {
 
 		MSG_PLAYERSONLY = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-error-players-only", "&cError: This command can only be run by players.&r"));
-		
-		MSG_PLAYERINVSORTED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(
-				"message-player-inventory-sorted", "&7Your inventory has been sorted."));
+
+		MSG_PLAYERINVSORTED = ChatColor.translateAlternateColorCodes('&',
+				plugin.getConfig().getString("message-player-inventory-sorted", "&7Your inventory has been sorted."));
+
+		MSG_INVALIDOPTIONS = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+				.getString("message-error-invalid-options", "&cError: Unknown option %s. Valid options are %s."));
 	}
 
 }
