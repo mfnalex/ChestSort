@@ -263,7 +263,8 @@ public class JeffChestSortOrganizer {
 
 		// Sort the array with ItemStacks according to each ItemStacks' sortable String
 		Arrays.sort(nonNullItems,new Comparator<ItemStack>(){
-            public int compare(ItemStack s1,ItemStack s2){
+            @Override
+			public int compare(ItemStack s1,ItemStack s2){
                   return(getSortableString(s1).compareTo(getSortableString(s2)));
             }});
 

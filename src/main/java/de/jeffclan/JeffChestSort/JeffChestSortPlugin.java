@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -230,6 +231,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// updateCheckInterval)
 		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+				@Override
 				public void run() {
 					updateChecker.checkForUpdate();
 				}
@@ -240,8 +242,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			updateChecker.checkForUpdate();
 		}
 
-		// Metrics will need json-simple with 1.14 API. See pom.xml, it is already
-		// included and commented out
+		// Metrics will need json-simple with 1.14 API. 
 		Metrics metrics = new Metrics(this);
 		metrics.addCustomChart(new Metrics.SimplePie("sorting_method", () -> sortingMethod));
 		metrics.addCustomChart(new Metrics.SimplePie("config_version",
@@ -258,6 +259,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				() -> Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
 		metrics.addCustomChart(
 				new Metrics.SimplePie("using_matching_config_version", () -> Boolean.toString(usingMatchingConfig)));
+		
 
 	}
 
