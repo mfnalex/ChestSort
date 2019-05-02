@@ -43,26 +43,22 @@ auto-generate-category-files: true
 
 # you can choose when ChestSort should sort chests.
 # The default option is to sort when an inventory is closed.
-# This is useful, because the onInventoryClose event never
-# gets fired when access to the chest is forbidden by
-# another plugin, e.g. WorldGuard
-# You can also sort whenenver a chest is opened.
-# ChestSort will check if the onInventoryOpenEvent gets
-# cancelled. If it does get cancelled, ChestSort will
-# not sort the chest. However, if a plugin uses the
+# This is useful, because the onInventoryClose event never gets fired
+# when access to the chest is forbidden by another plugin, e.g. WorldGuard
+# You can also sort whenenver a chest is opened. ChestSort will then check
+# if the onInventoryOpenEvent gets cancelled. If it does get cancelled,
+# ChestSort will not sort the chest. However, if a plugin uses the
 # MONITOR event priority, ChestSort cannot detect this.
-# If you have problems with unaccessible chests being
-# sorted, set this option to "close".
-# If you want, you can sort twice, however this is not
+# If you have problems with unaccessible chests being sorted, set this
+# option to "close". If you want, you can sort twice, however this is not
 # very useful.
-# Available options:
-# open, close, both
+# If you don't know what to put here, just use the default "close"
+# Available options: open, close, both
 sort-time: close
 
 # should we check for updates?
 # when enabled, a message is printed in the console if a new
-# version has been found, and OPs will be notified when they
-# join the server
+# version has been found, and OPs will be notified when they join the server
 # When set to true, we will check for updates on startup and every 24 hours
 # When set to on-startup, we will only check on startup
 # When set to false, don't check for updates
@@ -232,4 +228,4 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #########################
 
 # please do not change the following line manually!
-config-version: 8
+config-version: 9

@@ -59,7 +59,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortListener listener;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 8;
+	int currentConfigVersion = 9;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
@@ -260,6 +260,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			updateChecker.checkForUpdate();
 		}
 
+		registerMetrics();
+		
+
+	}
+
+	private void registerMetrics() {
 		// Metrics will need json-simple with 1.14 API. 
 		Metrics metrics = new Metrics(this);
 		metrics.addCustomChart(new Metrics.SimplePie("sorting_method", () -> sortingMethod));
@@ -277,8 +283,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				() -> Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
 		metrics.addCustomChart(
 				new Metrics.SimplePie("using_matching_config_version", () -> Boolean.toString(usingMatchingConfig)));
-		
-
+		metrics.addCustomChart(new Metrics.SimplePie("sort_time", () -> getConfig().getString("sort-time")));
 	}
 
 	// Saves default category files, when enabled in the config
