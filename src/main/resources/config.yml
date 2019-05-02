@@ -234,4 +234,4 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #########################
 
 # please do not change the following line manually!
-config-version: 9
+config-version: 10
