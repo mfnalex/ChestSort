@@ -206,8 +206,8 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-sorting-disabled: "&7Orden automático de los cofres &cdesactivado&7."
 #message-sorting-enabled: "&7Orden automático de los cofres &aactivado&7."
 #message-error-players-only: "&cError: Este comando solo puede ser ejecutado por jugadores."
-#message-player-inventory-sorted: "&7Your inventory has been sorted."
-#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
+#message-player-inventory-sorted: "&7Tu inventario ha sido ordenado."
+#message-error-invalid-options: "&cError: %s es una opción inválida. Las opciones válidas son: %s."
 
 #########################
 #####     Done!     #####
