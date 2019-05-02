@@ -1,5 +1,7 @@
 package de.jeffclan.JeffChestSort;
 
+import de.jeffclan.utils.TypeMatchPositionPair;
+
 public class JeffChestSortCategory {
 
 	// Represents a sorting category
@@ -11,21 +13,22 @@ public class JeffChestSortCategory {
 	// "COARSE_DIRT" will match the typeMatch "*dirt"
 
 	String name;
-	String[] typeMatches;
+	TypeMatchPositionPair[] typeMatches;
 
-	JeffChestSortCategory(String name, String[] typeMatches) {
+	JeffChestSortCategory(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
 		this.name = name;
-		this.typeMatches = typeMatches;
+		this.typeMatches = typeMatchPositionPairs;
 	}
 
-	// Checks whether a the given itemname fits into this category
-	boolean matches(String itemname) {
+	// Checks whether a the given itemname fits into this category and returns the line number. 0 means not found
+	short matches(String itemname) {
 
 		boolean asteriskBefore = false;
 		boolean asteriskAfter = false;
 
 		// Very, very simple wildcard checks
-		for (String typeMatch : typeMatches) {
+		for (TypeMatchPositionPair typeMatchPositionPair : typeMatches) {
+			String typeMatch = typeMatchPositionPair.getTypeMatch();
 			if (typeMatch.startsWith("*")) {
 				asteriskBefore = true;
 				typeMatch = typeMatch.substring(1);
@@ -37,24 +40,24 @@ public class JeffChestSortCategory {
 
 			if (asteriskBefore == false && asteriskAfter == false) {
 				if (itemname.equalsIgnoreCase(typeMatch)) {
-					return true;
+					return typeMatchPositionPair.getPosition();
 				}
 			} else if (asteriskBefore == true && asteriskAfter == true) {
 				if (itemname.contains(typeMatch)) {
-					return true;
+					return typeMatchPositionPair.getPosition();
 				}
 			} else if (asteriskBefore == true && asteriskAfter == false) {
 				if (itemname.endsWith(typeMatch)) {
-					return true;
+					return typeMatchPositionPair.getPosition();
 				}
 			} else {
 				if (itemname.startsWith(typeMatch)) {
-					return true;
+					return typeMatchPositionPair.getPosition();
 				}
 			}
 		}
 
-		return false;
+		return 0;
 	}
 
 }

@@ -197,6 +197,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// Create the config file, including checks for old config versions, and load
 		// the default values for unset options
 		createConfig();
+		
+		debug = getConfig().getBoolean("debug");
 
 		// Save default sorting category files when enabled in the config (default=true)
 		saveDefaultCategories();

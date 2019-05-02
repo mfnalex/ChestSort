@@ -90,11 +90,14 @@ disabled-worlds:
 # Only change this if you know what you are doing.
 #
 # Available variables:
-# {category}     order stuff by category as defined in plugins/ChestSort/categories/<category>.txt
-# {itemsFirst}   put items before blocks
-# {blocksFirst}  put blocks before items
-# {name}         returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
-# {color}        returns the color, e.g. light_blue for wool. Empty if block/item is not dyeable
+# {category}          order stuff by category as defined in plugins/ChestSort/categories/<category>.txt
+# {keepCategoryOrder} orders stuff in the same category according to their line numbers in the category file
+# {itemsFirst}        put items before blocks
+# {blocksFirst}       put blocks before items
+# {name}              returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
+# {color}             returns the color, e.g. light_blue for wool. Empty if block/item is not dyeable
+# {customName}        returns the display name if set (e.g. with an anvil)
+# {lore}              returns the lore if set
 #
 # Warning: You must not use spaces and fields have to be separated by commas.
 #
@@ -110,6 +113,9 @@ disabled-worlds:
 #
 #   sort by category, then put items before blocks and sort by name and color
 #      '{category},{itemsFirst},{name},{color}'
+#
+#   sort by category, but keep exactly the same order as defined in each category file, then sort any undefined items by name and color
+#      '{category},{keepCategoryOrder},{name},{color}
 #
 sorting-method: '{category},{itemsFirst},{name},{color}'
 
