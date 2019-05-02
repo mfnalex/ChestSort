@@ -53,7 +53,7 @@ public class JeffChestSortOrganizer {
 				// Category name is the filename without .txt
 				String categoryName = file.getName().replaceFirst(".txt", "");
 				try {
-					categories.add(new JeffChestSortCategory(categoryName,getArrayFromCategoryFile(file)));
+					categories.add(new JeffChestSortCategory(categoryName,loadCategoryFile(file)));
 					if(plugin.verbose) {
 						plugin.getLogger().info("Loaded category file "+file.getName());
 					}
@@ -67,7 +67,7 @@ public class JeffChestSortOrganizer {
 	}
 
 	// Returns an array with all typematches listed in the category file
-	TypeMatchPositionPair[] getArrayFromCategoryFile(File file) throws FileNotFoundException {
+	TypeMatchPositionPair[] loadCategoryFile(File file) throws FileNotFoundException {
 		Scanner sc = new Scanner(file);
 		List<TypeMatchPositionPair> lines = new ArrayList<TypeMatchPositionPair>();
 		short currentLine=1;
@@ -173,7 +173,7 @@ public class JeffChestSortOrganizer {
 
 	// This method takes a sortable item name and checks all categories for a match
 	// If none, matches, return "<none>" (it will be put behind all categorized items when sorting by category)
-	CategoryLinePair getCategory(String typeName) {
+	CategoryLinePair getCategoryLinePair(String typeName) {
 		typeName = typeName.toLowerCase();
 		for (JeffChestSortCategory cat : categories) {
 			short matchingLineNumber = cat.matches(typeName);
@@ -200,7 +200,7 @@ public class JeffChestSortOrganizer {
 		String[] typeAndColor = getTypeAndColor(item.getType().name());
 		String typeName = typeAndColor[0];
 		String color = typeAndColor[1];
-		String category = getCategory(item.getType().name()).getCategoryName();
+		String category = getCategoryLinePair(item.getType().name()).getCategoryName();
 		String customName = (plugin.debug) ? "~customName~" : emptyPlaceholderString;
 		if(item.getItemMeta().hasDisplayName()  && item.getItemMeta().getDisplayName()!=null) {
 				customName=item.getItemMeta().getDisplayName();
@@ -210,7 +210,7 @@ public class JeffChestSortOrganizer {
 			String[] loreArray=item.getItemMeta().getLore().toArray(new String[0]);
 			lore = String.join(",", loreArray);
 		}
-		short lineNumber = getCategory(item.getType().name()).getPosition();
+		String lineNumber = getCategoryLinePair(item.getType().name()).getFormattedPosition();
 
 
 		// Generate the strings that finally are used for sorting.
@@ -221,7 +221,7 @@ public class JeffChestSortOrganizer {
 		sortableString = sortableString.replaceAll("\\{name\\}", typeName);
 		sortableString = sortableString.replaceAll("\\{color\\}", color);
 		sortableString = sortableString.replaceAll("\\{category\\}", category);
-		sortableString = sortableString.replaceAll("\\{line\\}", String.valueOf(lineNumber));
+		sortableString = sortableString.replaceAll("\\{line\\}", lineNumber);
 		sortableString = sortableString.replaceAll("\\{customName\\}", customName);
 		sortableString = sortableString.replaceAll("\\{lore\\}", lore);
 
