@@ -62,7 +62,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
-	private long updateCheckInterval = 60; // in seconds. We check on startup and every 24 hours (if you never
+	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never
 												// restart your server)
 
 	// Public API method to sort any given inventory
