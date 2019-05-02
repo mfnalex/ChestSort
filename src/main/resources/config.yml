@@ -41,6 +41,24 @@ show-message-again-after-logout: true
 # files will be overwritten on each server startup.
 auto-generate-category-files: true
 
+# you can choose when ChestSort should sort chests.
+# The default option is to sort when an inventory is closed.
+# This is useful, because the onInventoryClose event never
+# gets fired when access to the chest is forbidden by
+# another plugin, e.g. WorldGuard
+# You can also sort whenenver a chest is opened.
+# ChestSort will check if the onInventoryOpenEvent gets
+# cancelled. If it does get cancelled, ChestSort will
+# not sort the chest. However, if a plugin uses the
+# MONITOR event priority, ChestSort cannot detect this.
+# If you have problems with unaccessible chests being
+# sorted, set this option to "close".
+# If you want, you can sort twice, however this is not
+# very useful.
+# Available options:
+# open, close, both
+sort-time: close
+
 # should we check for updates?
 # when enabled, a message is printed in the console if a new
 # version has been found, and OPs will be notified when they

@@ -3,7 +3,6 @@ package de.jeffclan.JeffChestSort;
 import java.util.UUID;
 import java.io.File;
 
-
 import org.bukkit.GameMode;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
@@ -12,11 +11,14 @@ import org.bukkit.block.ShulkerBox;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
 
 public class JeffChestSortListener implements Listener {
 
@@ -30,10 +32,11 @@ public class JeffChestSortListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 
 		// DEBUG
-		// Checking for my username because I always forget to comment this out before releases
-		//if (event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
-		//	plugin.debug = true;
-		//}
+		// Checking for my username because I always forget to comment this out before
+		// releases
+		// if (event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
+		// plugin.debug = true;
+		// }
 
 		// OPs will get an update notice if a new update is available
 		if (event.getPlayer().isOp()) {
@@ -43,14 +46,14 @@ public class JeffChestSortListener implements Listener {
 		// Put player into our perPlayerSettings map
 		registerPlayerIfNeeded(event.getPlayer());
 
-
 	}
 
 	// Put player into our perPlayerSettings map
 	void registerPlayerIfNeeded(Player p) {
-		// Players are stored by their UUID, so that name changes don't break player's settings
+		// Players are stored by their UUID, so that name changes don't break player's
+		// settings
 		UUID uniqueId = p.getUniqueId();
-		
+
 		// Add player to map only if they aren't registered already
 		if (!plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
 
@@ -62,7 +65,8 @@ public class JeffChestSortListener implements Listener {
 			boolean activeForThisPlayer = false;
 
 			if (!playerFile.exists()) {
-				// If the player settings file does not exist for this player, set it to the default value
+				// If the player settings file does not exist for this player, set it to the
+				// default value
 				activeForThisPlayer = plugin.getConfig().getBoolean("sorting-enabled-by-default");
 			} else {
 				// If the file exists, check if the player has sorting enabled
@@ -70,12 +74,13 @@ public class JeffChestSortListener implements Listener {
 			}
 
 			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer);
-			
-			// when "show-message-again-after-logout" is enabled, we don't care if the player already saw the message
+
+			// when "show-message-again-after-logout" is enabled, we don't care if the
+			// player already saw the message
 			if (!plugin.getConfig().getBoolean("show-message-again-after-logout")) {
 				newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
 			}
-			
+
 			// Finally add the PlayerSetting object to the map
 			plugin.PerPlayerSettings.put(uniqueId.toString(), newSettings);
 
@@ -87,28 +92,21 @@ public class JeffChestSortListener implements Listener {
 		plugin.unregisterPlayer(event.getPlayer());
 	}
 
+	
+	@EventHandler
+	public void onInventoryEvent(InventoryEvent event) {
+		plugin.getLogger().info("InventoryEvent");
+	}
+	
 	// This event fires when someone closes an inventory
-	// We check if the closed inventory belongs to a chest, shulkerbox or barrel, 
+	// We check if the closed inventory belongs to a chest, shulkerbox or barrel,
 	// and then call the Organizer to sort the inventory (if the player has
 	// the chestsort.use permission and has /chestsort enabled)
 	@EventHandler
-	public void onInventoryClose(InventoryCloseEvent event) {
-		
-		// Only continue if the inventory belongs to a chest, double chest, shulkerbox or barrel
-		// NOTE: We use .getClass().toString() for new items instead of directly comparing the ENUM, because we 
-		// want to keep compatability between different minecraft versions (e.g. there is no BARREL prior 1.14)
-		// WARNING: The names are inconsistent! A chest will return org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
-		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
-		
-		// Possible Fix for https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues/13 
-		if(event.getInventory().getHolder() == null) {
-			return;
-		}
-		
-		if (!(event.getInventory().getHolder() instanceof Chest)
-				&& !(event.getInventory().getHolder() instanceof DoubleChest)
-				&& !(event.getInventory().getHolder() instanceof ShulkerBox)
-				&& !(event.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
+	public void onChestClose(InventoryCloseEvent event) {
+
+		if (!(plugin.getConfig().getString("sort-time").equalsIgnoreCase("close")
+				|| plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))) {
 			return;
 		}
 		
@@ -117,13 +115,73 @@ public class JeffChestSortListener implements Listener {
 			return;
 		}
 		Player p = (Player) event.getPlayer();
+		Inventory inventory = event.getInventory();
 
-		if(isReadyToSort(p)) {
+		if(!belongsToChestLikeBlock(inventory)) {
+			return;
+		}
+
+		if (isReadyToSort(p)) {
 
 			// Finally call the Organizer to sort the inventory
 			plugin.organizer.sortInventory(event.getInventory());
 		}
 
+	}
+	
+	@EventHandler(priority=EventPriority.MONITOR)
+	public void onChestClose(InventoryOpenEvent event) {
+
+		if (!(plugin.getConfig().getString("sort-time").equalsIgnoreCase("open")
+				|| plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))) {
+			return;
+		}
+		
+		if(event.isCancelled()) {
+			return;
+		}
+		
+		// event.getPlayer returns HumanEntity, so it could also be an NPC or something
+		if (!(event.getPlayer() instanceof Player)) {
+			return;
+		}
+		Player p = (Player) event.getPlayer();
+		Inventory inventory = event.getInventory();
+
+		if(!belongsToChestLikeBlock(inventory)) {
+			return;
+		}
+
+		if (isReadyToSort(p)) {
+
+			// Finally call the Organizer to sort the inventory
+			plugin.organizer.sortInventory(event.getInventory());
+		}
+
+	}
+
+	private boolean belongsToChestLikeBlock(Inventory inventory) {
+		// Possible Fix for https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues/13
+		if (inventory.getHolder() == null) {
+			return false;
+		}
+		
+		// Only continue if the inventory belongs to a chest, double chest, shulkerbox
+		// or barrel
+		// NOTE: We use .getClass().toString() for new items instead of directly
+		// comparing the ENUM, because we
+		// want to keep compatability between different minecraft versions (e.g. there
+		// is no BARREL prior 1.14)
+		// WARNING: The names are inconsistent! A chest will return
+		// org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
+		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
+		if (!(inventory.getHolder() instanceof Chest)
+				&& !(inventory.getHolder() instanceof DoubleChest)
+				&& !(inventory.getHolder() instanceof ShulkerBox)
+				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
+			return false;
+		}
+		return true;
 	}
 
 	private boolean isReadyToSort(Player p) {
@@ -132,7 +190,7 @@ public class JeffChestSortListener implements Listener {
 		}
 
 		// checking in lower case for lazy admins
-		if(plugin.disabledWorlds.contains(p.getWorld().getName().toLowerCase())) {
+		if (plugin.disabledWorlds.contains(p.getWorld().getName().toLowerCase())) {
 			return false;
 		}
 
@@ -146,14 +204,16 @@ public class JeffChestSortListener implements Listener {
 		registerPlayerIfNeeded(p);
 
 		// Get the current player's settings
-		// We do not immediately cancel when sorting is disabled because we might want to show the hint message
+		// We do not immediately cancel when sorting is disabled because we might want
+		// to show the hint message
 		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
-		
 
-		// Show "how to enable ChestSort" message when ALL of the following criteria are met:
+		// Show "how to enable ChestSort" message when ALL of the following criteria are
+		// met:
 		// - Player has sorting disabled
-		// - Player has not seen the message yet (whether or not this resets after a logout
-		//       is defined by the config setting "show-message-again-after-logout")
+		// - Player has not seen the message yet (whether or not this resets after a
+		// logout
+		// is defined by the config setting "show-message-again-after-logout")
 		// - "show-message-when-using-chest" is set to true in the config.yml
 		if (!plugin.sortingEnabled(p)) {
 			if (!setting.hasSeenMessage) {
@@ -164,11 +224,14 @@ public class JeffChestSortListener implements Listener {
 			}
 			return false;
 		}
-		// Show "how to disable ChestSort" message when ALL of the following criteria are met:
+		// Show "how to disable ChestSort" message when ALL of the following criteria
+		// are met:
 		// - Player has sorting enabled
-		// - Player has not seen the message yet (whether or not this resets after a logout
-		//       is defined by the config setting "show-message-again-after-logout")
-		// - "show-message-when-using-chest-and-sorting-is-enabled" is set to true in the config.yml
+		// - Player has not seen the message yet (whether or not this resets after a
+		// logout
+		// is defined by the config setting "show-message-again-after-logout")
+		// - "show-message-when-using-chest-and-sorting-is-enabled" is set to true in
+		// the config.yml
 		else {
 			if (!setting.hasSeenMessage) {
 				setting.hasSeenMessage = true;
@@ -179,26 +242,26 @@ public class JeffChestSortListener implements Listener {
 		}
 		return true;
 	}
-	
+
 	@EventHandler
-	public void onInventoryOpen(InventoryOpenEvent event)
-	{
-    	if(!(event.getPlayer() instanceof Player)) {
-    		return;
-    	}
-    	
-    	Player p = (Player) event.getPlayer();
-    	
+	public void onEnderChestOpen(InventoryOpenEvent event) {
+		
+		if (!(event.getPlayer() instanceof Player)) {
+			return;
+		}
+
+		Player p = (Player) event.getPlayer();
+
 		// Check if this is an EnderChest (is there a smarter way?)
-    	if(!event.getInventory().equals(p.getEnderChest())) {
-    		return;
-    	}    	
-    	
-		if(isReadyToSort(p)) {
+		if (!event.getInventory().equals(p.getEnderChest())) {
+			return;
+		}
+
+		if (isReadyToSort(p)) {
 
 			// Finally call the Organizer to sort the inventory
 			plugin.organizer.sortInventory(event.getInventory());
 		}
 	}
-    	
+
 }
