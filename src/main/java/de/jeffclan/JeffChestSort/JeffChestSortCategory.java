@@ -13,12 +13,22 @@ public class JeffChestSortCategory implements Comparable<JeffChestSortCategory>{
 	// "COARSE_DIRT" will match the typeMatch "*dirt"
 
 	String name;
+	boolean sticky = false;
 	TypeMatchPositionPair[] typeMatches;
 
 	JeffChestSortCategory(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
 		this.name = name;
 		this.typeMatches = typeMatchPositionPairs;
 	}
+	
+	void setSticky() {
+		this.sticky=true;
+	}
+	
+	boolean isSticky() {
+		return this.sticky;
+	}
+	
 
 	// Checks whether a the given itemname fits into this category and returns the line number. 0 means not found
 	short matches(String itemname) {
