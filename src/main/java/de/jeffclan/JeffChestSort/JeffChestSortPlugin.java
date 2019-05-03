@@ -197,7 +197,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// Create the config file, including checks for old config versions, and load
 		// the default values for unset options
 		createConfig();
-		
+
 		debug = getConfig().getBoolean("debug");
 
 		// Save default sorting category files when enabled in the config (default=true)
@@ -263,12 +263,11 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 
 		registerMetrics();
-		
 
 	}
 
 	private void registerMetrics() {
-		// Metrics will need json-simple with 1.14 API. 
+		// Metrics will need json-simple with 1.14 API.
 		Metrics metrics = new Metrics(this);
 		metrics.addCustomChart(new Metrics.SimplePie("sorting_method", () -> sortingMethod));
 		metrics.addCustomChart(new Metrics.SimplePie("config_version",
@@ -286,6 +285,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		metrics.addCustomChart(
 				new Metrics.SimplePie("using_matching_config_version", () -> Boolean.toString(usingMatchingConfig)));
 		metrics.addCustomChart(new Metrics.SimplePie("sort_time", () -> getConfig().getString("sort-time")));
+		metrics.addCustomChart(new Metrics.SimplePie("auto_generate_category_files",
+				() -> Boolean.toString(getConfig().getBoolean("auto-generate-category-files"))));
 	}
 
 	// Saves default category files, when enabled in the config
