@@ -321,7 +321,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 
 		// Isn't there a smarter way to find all the 9** files in the .jar?
-		String[] defaultCategories = { "900-weapons", "905-tools", "910-valuables", "920-armor", "930-brewing", "940-food",
+		String[] defaultCategories = { "900-weapons", "905-common-tools", "907-other-tools", "909-food", "910-valuables", "920-armor-and-arrows", "930-brewing",
 				"950-redstone", "960-wood", "970-stone", "980-plants", "981-corals","_ReadMe - Category files" };
 
 		// Delete all files starting with 9..
