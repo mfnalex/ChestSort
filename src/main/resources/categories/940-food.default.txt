@@ -1,3 +1,11 @@
+#
+# ChestSort Default Category File
+#
+# If you want to change this file, rename it.
+# Please do NOT use file prefixed between 900 and 999 for
+# your custom files because ChestSort will overwrite them
+#
+
 apple
 baked_potato
 beef
