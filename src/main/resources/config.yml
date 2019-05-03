@@ -39,6 +39,8 @@ show-message-again-after-logout: true
 # If you wish to edit those, you can disable the generation of these
 # files, because otherwise all your changes in the pregenerated
 # files will be overwritten on each server startup.
+# However, a much smarter option is to copy the default files
+# and rename them to from 900... to 800... and edit those instead.
 auto-generate-category-files: true
 
 # you can choose when ChestSort should sort chests.
@@ -90,11 +92,14 @@ disabled-worlds:
 # Only change this if you know what you are doing.
 #
 # Available variables:
-# {category}     order stuff by category as defined in plugins/ChestSort/categories/<category>.txt
-# {itemsFirst}   put items before blocks
-# {blocksFirst}  put blocks before items
-# {name}         returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
-# {color}        returns the color, e.g. light_blue for wool. Empty if block/item is not dyeable
+# {category}          order stuff by category as defined in plugins/ChestSort/categories/<category>.txt
+# {keepCategoryOrder} orders stuff in the same category according to their line numbers in the category file
+# {itemsFirst}        put items before blocks
+# {blocksFirst}       put blocks before items
+# {name}              returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
+# {color}             returns the color, e.g. light_blue for wool. Empty if block/item is not dyeable
+# {customName}        returns the display name if set (e.g. with an anvil)
+# {lore}              returns the lore if set
 #
 # Warning: You must not use spaces and fields have to be separated by commas.
 #
@@ -110,6 +115,9 @@ disabled-worlds:
 #
 #   sort by category, then put items before blocks and sort by name and color
 #      '{category},{itemsFirst},{name},{color}'
+#
+#   sort by category, but keep exactly the same order as defined in each category file, then sort any undefined items by name and color
+#      '{category},{keepCategoryOrder},{name},{color}
 #
 sorting-method: '{category},{itemsFirst},{name},{color}'
 
@@ -228,4 +236,4 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #########################
 
 # please do not change the following line manually!
-config-version: 9
+config-version: 10

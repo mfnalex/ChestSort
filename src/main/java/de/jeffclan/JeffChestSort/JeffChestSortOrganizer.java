@@ -2,6 +2,7 @@ package de.jeffclan.JeffChestSort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -11,6 +12,9 @@ import java.util.Scanner;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import de.jeffclan.utils.CategoryLinePair;
+import de.jeffclan.utils.TypeMatchPositionPair;
 
 public class JeffChestSortOrganizer {
 	
@@ -34,6 +38,8 @@ public class JeffChestSortOrganizer {
 	// The same applies for wood. We strip the wood name from the item name and keep it in the above mentioned color variable
 	static final String[] woodNames = { "acacia", "birch", "jungle", "oak", "spruce", "dark_oak" };
 
+	private static final String emptyPlaceholderString= "~";
+
 	// We store a list of all Category objects
 	ArrayList<JeffChestSortCategory> categories = new ArrayList<JeffChestSortCategory>();
 
@@ -42,13 +48,24 @@ public class JeffChestSortOrganizer {
 
 		// Load Categories
 		File categoriesFolder = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator);
-		File[] listOfCategoryFiles = categoriesFolder.listFiles();
+		File[] listOfCategoryFiles = categoriesFolder.listFiles(new FilenameFilter() {
+			public boolean accept(File directory, String fileName) {
+				if (!fileName.endsWith(".txt")) {
+					return false;
+				}
+				if (fileName.matches("(?i)^\\d\\d\\d.*\\.txt$")) // Category between 900 and 999-... are default categories
+				{
+					return true;
+				}
+				return false;
+			}
+		});
 		for (File file : listOfCategoryFiles) {
 			if (file.isFile()) {
 				// Category name is the filename without .txt
 				String categoryName = file.getName().replaceFirst(".txt", "");
 				try {
-					categories.add(new JeffChestSortCategory(categoryName,getArrayFromCategoryFile(file)));
+					categories.add(new JeffChestSortCategory(categoryName,loadCategoryFile(file)));
 					if(plugin.verbose) {
 						plugin.getLogger().info("Loaded category file "+file.getName());
 					}
@@ -62,17 +79,17 @@ public class JeffChestSortOrganizer {
 	}
 
 	// Returns an array with all typematches listed in the category file
-	String[] getArrayFromCategoryFile(File file) throws FileNotFoundException {
+	TypeMatchPositionPair[] loadCategoryFile(File file) throws FileNotFoundException {
 		Scanner sc = new Scanner(file);
-		List<String> lines = new ArrayList<String>();
+		List<TypeMatchPositionPair> lines = new ArrayList<TypeMatchPositionPair>();
+		short currentLine=1;
 		while (sc.hasNextLine()) {
-			//if(!sc.nextLine().startsWith("#")) {
-		  lines.add(sc.nextLine());
-			//}
+		  lines.add(new TypeMatchPositionPair(sc.nextLine(),currentLine));
+		  currentLine++;
 		}
-		String[] arr = lines.toArray(new String[0]);
+		TypeMatchPositionPair[] result = lines.toArray(new TypeMatchPositionPair[0]);
 		sc.close();
-		return arr;
+		return result;
 	}
 
 
@@ -85,7 +102,7 @@ public class JeffChestSortOrganizer {
 		// [0] = Sortable Item name
 		// [1] = Color/Wood
 
-		String myColor = "<none>";
+		String myColor = (plugin.debug) ? "~color~" : emptyPlaceholderString;
 		
 		// Only work with lowercase
 		typeName = typeName.toLowerCase();
@@ -168,15 +185,17 @@ public class JeffChestSortOrganizer {
 
 	// This method takes a sortable item name and checks all categories for a match
 	// If none, matches, return "<none>" (it will be put behind all categorized items when sorting by category)
-	String getCategory(String typeName) {
+	CategoryLinePair getCategoryLinePair(String typeName) {
 		typeName = typeName.toLowerCase();
 		for (JeffChestSortCategory cat : categories) {
-			if (cat.matches(typeName)) {
-				return cat.name;
+			short matchingLineNumber = cat.matches(typeName);
+			if (matchingLineNumber!=0) {
+				return new CategoryLinePair(cat.name,matchingLineNumber);
 			}
 		}
-		return "<none>";
+		return new CategoryLinePair((plugin.debug) ? "~category~" : emptyPlaceholderString,(short) 0);
 	}
+
 
 	// This puts together the sortable item name, the category, the color, and whether the item is a block or a "regular item"
 	String getSortableString(ItemStack item) {
@@ -193,23 +212,35 @@ public class JeffChestSortOrganizer {
 		String[] typeAndColor = getTypeAndColor(item.getType().name());
 		String typeName = typeAndColor[0];
 		String color = typeAndColor[1];
-		String category = getCategory(item.getType().name());
+		String category = getCategoryLinePair(item.getType().name()).getCategoryName();
+		String customName = (plugin.debug) ? "~customName~" : emptyPlaceholderString;
+		if(item.getItemMeta().hasDisplayName()  && item.getItemMeta().getDisplayName()!=null) {
+				customName=item.getItemMeta().getDisplayName();
+			}
+		String lore =(plugin.debug)? "~lore~" : emptyPlaceholderString; 
+		if(item.getItemMeta().hasLore() && item.getItemMeta().getLore() != null && item.getItemMeta().getLore().size()!=0) {
+			String[] loreArray=item.getItemMeta().getLore().toArray(new String[0]);
+			lore = String.join(",", loreArray);
+		}
+		String lineNumber = getCategoryLinePair(item.getType().name()).getFormattedPosition();
 
-		// The hashcode actually not needed anymore, but I kept it for debugging purposes
-		String hashCode = String.valueOf(getBetterHash(item));
 
 		// Generate the strings that finally are used for sorting.
 		// They are generated according to the config.yml's sorting-method option
-		String sortableString = plugin.sortingMethod.replaceAll("\\{itemsFirst\\}", String.valueOf(itemsFirst));
+		String sortableString = plugin.sortingMethod.replaceAll(",", "|");
+		sortableString = sortableString.replaceAll("\\{itemsFirst\\}", String.valueOf(itemsFirst));
 		sortableString = sortableString.replaceAll("\\{blocksFirst\\}", String.valueOf(blocksFirst));
 		sortableString = sortableString.replaceAll("\\{name\\}", typeName);
 		sortableString = sortableString.replaceAll("\\{color\\}", color);
 		sortableString = sortableString.replaceAll("\\{category\\}", category);
-		sortableString = sortableString + "," + hashCode;
+		sortableString = sortableString.replaceAll("\\{line\\}", lineNumber);
+		sortableString = sortableString.replaceAll("\\{customName\\}", customName);
+		sortableString = sortableString.replaceAll("\\{lore\\}", lore);
 
 		return sortableString;
 
 	}
+
 
 	// Sort a complete inventory
 	void sortInventory(Inventory inv) {
@@ -296,13 +327,5 @@ public class JeffChestSortOrganizer {
 		}
 	}
 	
-	// I wanted to fix the skull problems here. Instead, I ended up not using the hashCode at all.
-	// I still left this here for nostalgic reasons. Also it is nice to see the hashcodes when debug is enabled
-	// TODO: feel free to remove this and all references, it is really not needed anymore.
-	private static int getBetterHash(ItemStack item) {
-		// I used to add some metadata here, but it has been removed since a long time
-		// as I said: feel free to remove this completely
-		return item.hashCode();
-	}
 
 }

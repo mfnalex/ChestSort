@@ -28,4 +28,8 @@ public class Utils {
 	    }
 	    return buf;
 	  }
+	
+	public static String shortToStringWithLeadingZeroes(short number) {
+		return String.format("%05d", number);
+	}
 }
