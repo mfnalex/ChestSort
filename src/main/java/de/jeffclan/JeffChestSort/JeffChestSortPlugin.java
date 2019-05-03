@@ -36,6 +36,7 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -244,6 +245,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
 			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
 			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
+			getLogger().info("Categories: " + getCategoryList());
 		}
 
 		// Check for updates (async, of course)
@@ -265,6 +267,19 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		registerMetrics();
 
+	}
+
+	private String getCategoryList() {
+		String list = "";
+		JeffChestSortCategory[] categories = organizer.categories.toArray(new JeffChestSortCategory[organizer.categories.size()]);
+		Arrays.sort(categories);
+		for(JeffChestSortCategory category : categories) {
+			list = list + category.name + " (";
+			list = list + category.typeMatches.length + "), ";
+		}
+		list = list.substring(0, list.length()-2);
+		return list;
+		
 	}
 
 	private void registerMetrics() {
@@ -299,7 +314,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 
 		// Isn't there a smarter way to find all the 9** files in the .jar?
-		String[] defaultCategories = { "900-tools", "910-valuables", "920-combat", "930-brewing", "940-food",
+		String[] defaultCategories = { "900-weapons", "905-tools", "910-valuables", "920-armor", "930-brewing", "940-food",
 				"950-redstone", "960-wood", "970-stone", "980-plants", "981-corals","_ReadMe - Category files" };
 
 		// Delete all files starting with 9..

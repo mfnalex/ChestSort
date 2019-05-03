@@ -2,7 +2,7 @@ package de.jeffclan.JeffChestSort;
 
 import de.jeffclan.utils.TypeMatchPositionPair;
 
-public class JeffChestSortCategory {
+public class JeffChestSortCategory implements Comparable<JeffChestSortCategory>{
 
 	// Represents a sorting category
 	// Includes an array of strings called typeMatches
@@ -58,6 +58,10 @@ public class JeffChestSortCategory {
 		}
 
 		return 0;
+	}
+	
+	public int compareTo(JeffChestSortCategory compareCategory) {
+		return this.name.compareTo(compareCategory.name);
 	}
 
 }
