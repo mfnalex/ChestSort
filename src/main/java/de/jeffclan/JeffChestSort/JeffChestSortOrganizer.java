@@ -2,6 +2,7 @@ package de.jeffclan.JeffChestSort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -47,7 +48,18 @@ public class JeffChestSortOrganizer {
 
 		// Load Categories
 		File categoriesFolder = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator);
-		File[] listOfCategoryFiles = categoriesFolder.listFiles();
+		File[] listOfCategoryFiles = categoriesFolder.listFiles(new FilenameFilter() {
+			public boolean accept(File directory, String fileName) {
+				if (!fileName.endsWith(".txt")) {
+					return false;
+				}
+				if (fileName.matches("(?i)^\\d\\d\\d.*\\.txt$")) // Category between 900 and 999-... are default categories
+				{
+					return true;
+				}
+				return false;
+			}
+		});
 		for (File file : listOfCategoryFiles) {
 			if (file.isFile()) {
 				// Category name is the filename without .txt

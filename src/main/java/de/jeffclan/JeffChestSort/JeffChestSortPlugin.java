@@ -32,6 +32,7 @@ package de.jeffclan.JeffChestSort;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -299,7 +300,39 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		// Isn't there a smarter way to find all the 9** files in the .jar?
 		String[] defaultCategories = { "900-tools", "910-valuables", "920-combat", "930-brewing", "940-food",
-				"950-redstone", "960-wood", "970-stone", "980-plants", "981-corals" };
+				"950-redstone", "960-wood", "970-stone", "980-plants", "981-corals","_ReadMe - Category files" };
+
+		// Delete all files starting with 9..
+		for (File file : new File(getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator)
+				.listFiles(new FilenameFilter() {
+					public boolean accept(File directory, String fileName) {
+						if (!fileName.endsWith(".txt")) {
+							return false;
+						}
+						if (fileName.matches("(?i)9\\d\\d.*\\.txt$")) // Category between 900 and 999-... are default
+																	// categories
+						{
+							return true;
+						}
+						return false;
+					}
+				})) {
+
+			boolean delete = true;
+
+			for (String name : defaultCategories) {
+				name=name+".txt";
+				if (name.equalsIgnoreCase(file.getName())) {
+					delete = false;
+					break;
+				}
+			}
+			if (delete) {
+				file.delete();
+				getLogger().warning("Deleting deprecated default category file " + file.getName());
+			}
+
+		}
 
 		for (String category : defaultCategories) {
 

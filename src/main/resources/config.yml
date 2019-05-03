@@ -39,6 +39,8 @@ show-message-again-after-logout: true
 # If you wish to edit those, you can disable the generation of these
 # files, because otherwise all your changes in the pregenerated
 # files will be overwritten on each server startup.
+# However, a much smarter option is to copy the default files
+# and rename them to from 900... to 800... and edit those instead.
 auto-generate-category-files: true
 
 # you can choose when ChestSort should sort chests.
