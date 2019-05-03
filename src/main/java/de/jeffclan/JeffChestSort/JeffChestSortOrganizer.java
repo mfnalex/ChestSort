@@ -44,6 +44,7 @@ public class JeffChestSortOrganizer {
 
 	// We store a list of all Category objects
 	ArrayList<JeffChestSortCategory> categories = new ArrayList<JeffChestSortCategory>();
+	ArrayList<String> stickyCategoryNames = new ArrayList<String>();
 
 	JeffChestSortOrganizer(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
@@ -85,6 +86,15 @@ public class JeffChestSortOrganizer {
 				}
 			}
 		}
+		
+		// Make categories sticky
+		for(String catName : stickyCategoryNames) {
+			for(JeffChestSortCategory cat : categories) {
+				if(catName.equalsIgnoreCase(cat.name)) {
+					cat.setSticky();
+				}
+			}
+		}
 
 	}
 
@@ -118,6 +128,7 @@ public class JeffChestSortOrganizer {
 
 					if (currentLine.toLowerCase().endsWith("=true")) {
 						appendLineNumber = true;
+						makeCategoryStickyByFileName(file.getName());
 						if (plugin.debug)
 							plugin.getLogger().info("Sticky set to true in " + file.getName());
 					}
@@ -134,6 +145,14 @@ public class JeffChestSortOrganizer {
 		TypeMatchPositionPair[] result = lines.toArray(new TypeMatchPositionPair[0]);
 		sc.close();
 		return result;
+	}
+
+	private void makeCategoryStickyByFileName(String name) {
+		String catName = name.replaceAll("\\.txt$", "");
+		
+		stickyCategoryNames.add(catName);
+		
+		
 	}
 
 	// Convert the item name to what I call a "sortable item name".
@@ -258,8 +277,13 @@ public class JeffChestSortOrganizer {
 		String typeName = typeAndColor[0];
 		String color = typeAndColor[1];
 		CategoryLinePair categoryLinePair = getCategoryLinePair(item.getType().name());
-		// String categoryName = categoryLinePair.getCategoryName();
-		String categorySticky = categoryLinePair.getCategoryNameSticky();
+		String categoryName = categoryLinePair.getCategoryName();
+		String categorySticky = categoryName;
+		String lineNumber = getCategoryLinePair(item.getType().name()).getFormattedPosition();
+		if(stickyCategoryNames.contains(categoryName)) {
+			categorySticky = categoryName+"~"+lineNumber;
+		}
+		
 		String customName = (plugin.debug) ? "~customName~" : emptyPlaceholderString;
 		if (item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName() != null) {
 			customName = item.getItemMeta().getDisplayName();
@@ -270,7 +294,7 @@ public class JeffChestSortOrganizer {
 			String[] loreArray = item.getItemMeta().getLore().toArray(new String[0]);
 			lore = String.join(",", loreArray);
 		}
-		String lineNumber = getCategoryLinePair(item.getType().name()).getFormattedPosition();
+		
 
 		// Generate the strings that finally are used for sorting.
 		// They are generated according to the config.yml's sorting-method option
@@ -280,7 +304,7 @@ public class JeffChestSortOrganizer {
 		sortableString = sortableString.replaceAll("\\{name\\}", typeName);
 		sortableString = sortableString.replaceAll("\\{color\\}", color);
 		sortableString = sortableString.replaceAll("\\{category\\}", categorySticky);
-		sortableString = sortableString.replaceAll("\\{line\\}", lineNumber);
+		sortableString = sortableString.replaceAll("\\{keepCategoryOrder\\}", lineNumber);
 		sortableString = sortableString.replaceAll("\\{customName\\}", customName);
 		sortableString = sortableString.replaceAll("\\{lore\\}", lore);
 
