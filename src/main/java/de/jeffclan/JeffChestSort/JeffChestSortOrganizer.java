@@ -87,8 +87,14 @@ public class JeffChestSortOrganizer {
 		short currentLineNumber=1;
 		while (sc.hasNextLine()) {
 			String currentLine = sc.nextLine();
-			
-		  lines.add(new TypeMatchPositionPair(currentLine,currentLineNumber));
+			if(currentLine.contains(" ") || currentLine.contains("#")) {
+				currentLine = currentLine.trim().split("#")[0].split(" ")[0]; // Remove everything after the first # and space
+			}
+			if(currentLine.toLowerCase().startsWith("sticky=") && currentLine.toLowerCase().endsWith("=true")) {
+				appendLineNumber = true;
+			} else {
+				lines.add(new TypeMatchPositionPair(currentLine,currentLineNumber,appendLineNumber));
+			}
 		  currentLineNumber++;
 		}
 		TypeMatchPositionPair[] result = lines.toArray(new TypeMatchPositionPair[0]);
@@ -216,7 +222,9 @@ public class JeffChestSortOrganizer {
 		String[] typeAndColor = getTypeAndColor(item.getType().name());
 		String typeName = typeAndColor[0];
 		String color = typeAndColor[1];
-		String category = getCategoryLinePair(item.getType().name()).getCategoryName();
+		CategoryLinePair categoryLinePair = getCategoryLinePair(item.getType().name());
+		//String categoryName = categoryLinePair.getCategoryName();
+		String categorySticky = categoryLinePair.getCategoryNameSticky();
 		String customName = (plugin.debug) ? "~customName~" : emptyPlaceholderString;
 		if(item.getItemMeta().hasDisplayName()  && item.getItemMeta().getDisplayName()!=null) {
 				customName=item.getItemMeta().getDisplayName();
@@ -236,7 +244,7 @@ public class JeffChestSortOrganizer {
 		sortableString = sortableString.replaceAll("\\{blocksFirst\\}", String.valueOf(blocksFirst));
 		sortableString = sortableString.replaceAll("\\{name\\}", typeName);
 		sortableString = sortableString.replaceAll("\\{color\\}", color);
-		sortableString = sortableString.replaceAll("\\{category\\}", category);
+		sortableString = sortableString.replaceAll("\\{category\\}", categorySticky);
 		sortableString = sortableString.replaceAll("\\{line\\}", lineNumber);
 		sortableString = sortableString.replaceAll("\\{customName\\}", customName);
 		sortableString = sortableString.replaceAll("\\{lore\\}", lore);
