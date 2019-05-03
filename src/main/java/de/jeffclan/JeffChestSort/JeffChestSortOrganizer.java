@@ -68,7 +68,7 @@ public class JeffChestSortOrganizer {
 			if (file.isFile()) {
 				// Category name is the filename without .txt
 				String categoryName = file.getName().replaceFirst(".txt", "");
-				
+
 				if (plugin.debug) {
 					plugin.getLogger().info("Loading category file " + file.getName());
 				}
@@ -76,7 +76,8 @@ public class JeffChestSortOrganizer {
 					JeffChestSortCategory category = new JeffChestSortCategory(categoryName, loadCategoryFile(file));
 					categories.add(category);
 					if (plugin.debug) {
-						plugin.getLogger().info("Loaded category file " + file.getName() + " ("+category.typeMatches.length+" items)");
+						plugin.getLogger().info("Loaded category file " + file.getName() + " ("
+								+ category.typeMatches.length + " items)");
 					}
 				} catch (FileNotFoundException e) {
 					plugin.getLogger().warning("Could not load category file: " + file.getName());
@@ -101,8 +102,6 @@ public class JeffChestSortOrganizer {
 			currentLine = currentLine.trim().replaceAll(" ", "");
 
 			if (currentLine.contains("#")) {
-				// System.out.println("File contains a comment: " + currentLine);
-				// currentLine = currentLine.trim().split("\\#")[0]; // Remove everything after
 				// the first #
 				String[] split = currentLine.split("#");
 				if (split.length > 0) {
@@ -115,10 +114,13 @@ public class JeffChestSortOrganizer {
 				currentLine = null;
 			}
 			if (currentLine != null) {
-				if (currentLine.toLowerCase().startsWith("sticky=") && currentLine.toLowerCase().endsWith("=true")) {
-					appendLineNumber = true;
-					if (plugin.debug)
-						plugin.getLogger().info("Sticky set to true in " + file.getName());
+				if (currentLine.toLowerCase().startsWith("sticky=")) {
+
+					if (currentLine.toLowerCase().endsWith("=true")) {
+						appendLineNumber = true;
+						if (plugin.debug)
+							plugin.getLogger().info("Sticky set to true in " + file.getName());
+					}
 				} else {
 					if (currentLine != null) {
 						lines.add(new TypeMatchPositionPair(currentLine, currentLineNumber, appendLineNumber));
