@@ -104,7 +104,11 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			// use the default values later on
 		} else if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
 			showOldConfigWarning();
-			usingMatchingConfig = false;
+			JeffChestSortConfigUpdater configUpdater = new JeffChestSortConfigUpdater(this);
+			configUpdater.updateConfig();
+			configUpdater = null;
+			usingMatchingConfig = true;
+			//createConfig();
 		}
 
 		createDirectories();
@@ -151,13 +155,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	private void showOldConfigWarning() {
 		getLogger().warning("========================================================");
-		getLogger().warning("YOU ARE USING AN OLD CONFIG FILE!");
-		getLogger().warning("This is not a problem, as ChestSort will just use the");
-		getLogger().warning("default settings for unset values. However, if you want");
-		getLogger().warning("to configure the new options, please go to");
-		getLogger().warning("https://www.chestsort.de and replace your config.yml");
-		getLogger().warning("with the new one. You can then insert your old changes");
-		getLogger().warning("into the new file.");
+//		getLogger().warning("YOU ARE USING AN OLD CONFIG FILE!");
+//		getLogger().warning("This is not a problem, as ChestSort will just use the");
+//		getLogger().warning("default settings for unset values. However, if you want");
+//		getLogger().warning("to configure the new options, please go to");
+//		getLogger().warning("https://www.chestsort.de and replace your config.yml");
+//		getLogger().warning("with the new one. You can then insert your old changes");
+//		getLogger().warning("into the new file.");
+		getLogger().warning("You were using an old config file. ChestSort has");
+		getLogger().warning("updated the file to the newest version. Your changes");
+		getLogger().warning("have been kept.");
 		getLogger().warning("========================================================");
 	}
 
@@ -314,7 +321,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 
 		// Isn't there a smarter way to find all the 9** files in the .jar?
-		String[] defaultCategories = { "900-weapons", "905-tools", "910-valuables", "920-armor", "930-brewing", "940-food",
+		String[] defaultCategories = { "900-weapons", "905-common-tools", "907-other-tools", "909-food", "910-valuables", "920-armor-and-arrows", "930-brewing",
 				"950-redstone", "960-wood", "970-stone", "980-plants", "981-corals","_ReadMe - Category files" };
 
 		// Delete all files starting with 9..

@@ -16,3 +16,4 @@ sticky=true
 bow
 *_sword
 trident
+shield

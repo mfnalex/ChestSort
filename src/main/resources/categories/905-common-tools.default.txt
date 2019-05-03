@@ -11,37 +11,9 @@
 # When set to false, the items are only grouped together
 # and then sorted according to the other variables
 # in your sorting-method
-sticky=false
+sticky=true
 
-grass
-fern
-dead_bush
-seagrass
-sea_pickle
-dandelion
-poppy
-blue_orchid
-allium
-azure_bluet
-red_tulip
-orange_tulip
-white_tulip
-pink_tulip
-oxeye_daisy
-brown_mushroom
-red_mushroom
-chorus_plant
-chorus_flower
-cactus
-vine
-lily_pad
-sunflower
-lilac
-rose_bush
-peony
-tall_grass
-large_fern
-pumpkin
-carved_pumpkin
-melon
-sugar_cane
+*_pickaxe
+*_axe
+*_shovel
+*_hoe

@@ -2,8 +2,11 @@ package de.jeffclan.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+
+import de.jeffclan.JeffChestSort.JeffChestSortPlugin;
 
 public class Utils {
 	
@@ -31,5 +34,11 @@ public class Utils {
 	
 	public static String shortToStringWithLeadingZeroes(short number) {
 		return String.format("%05d", number);
+	}
+	
+	public static void renameFileInPluginDir(JeffChestSortPlugin plugin,String oldName, String newName) {
+		File oldFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + oldName);
+		File newFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + newName);
+		oldFile.getAbsoluteFile().renameTo(newFile.getAbsoluteFile());
 	}
 }
