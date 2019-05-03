@@ -47,7 +47,7 @@
 					<relocations>
 						<relocation>
 							<pattern>org.bstats</pattern>
-							<shadedPattern>de.jeffclan.utils</shadedPattern>
+							<shadedPattern>de.jeffclan.JeffChestSort</shadedPattern>
 						</relocation>
 					</relocations>
 				</configuration>

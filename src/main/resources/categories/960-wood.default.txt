@@ -6,6 +6,13 @@
 # your custom files because ChestSort will overwrite them
 #
 
+# When sticky is set to true, order the items in this
+# category exactly as defined in this file.
+# When set to false, the items are only grouped together
+# and then sorted according to the other variables
+# in your sorting-method
+sticky=false
+
 *_planks
 *_sapling
 *_log
