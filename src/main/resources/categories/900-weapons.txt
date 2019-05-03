@@ -1,0 +1,18 @@
+#
+# ChestSort Default Category File
+#
+# If you want to change this file, rename it.
+# Please do NOT use file prefixed between 900 and 999 for
+# your custom files because ChestSort will overwrite them
+#
+
+# When sticky is set to true, order the items in this
+# category exactly as defined in this file.
+# When set to false, the items are only grouped together
+# and then sorted according to the other variables
+# in your sorting-method
+sticky=true
+
+bow
+*_sword
+trident

@@ -80,12 +80,16 @@ public class JeffChestSortOrganizer {
 
 	// Returns an array with all typematches listed in the category file
 	TypeMatchPositionPair[] loadCategoryFile(File file) throws FileNotFoundException {
+		// This is called "sticky" in the category files. When it is enabled, it has the same effect as when you set {keepCategoryOrder} in your sorting-method, but you can set it per category
+		boolean appendLineNumber = false;
 		Scanner sc = new Scanner(file);
 		List<TypeMatchPositionPair> lines = new ArrayList<TypeMatchPositionPair>();
-		short currentLine=1;
+		short currentLineNumber=1;
 		while (sc.hasNextLine()) {
-		  lines.add(new TypeMatchPositionPair(sc.nextLine(),currentLine));
-		  currentLine++;
+			String currentLine = sc.nextLine();
+			
+		  lines.add(new TypeMatchPositionPair(currentLine,currentLineNumber));
+		  currentLineNumber++;
 		}
 		TypeMatchPositionPair[] result = lines.toArray(new TypeMatchPositionPair[0]);
 		sc.close();
