@@ -6,6 +6,11 @@
 #
 
 #
+# This config file will be updated automatically with every new release of ChestSort.
+# Don't worry! Your changes will be kept after every update.
+#
+
+#
 # Please note that players will need the chestsort.use permission
 # or have to be OP to be able to use automatic chest sorting.
 # To use /invsort, the permission chestsort.use.inventory is required.
@@ -142,7 +147,7 @@ sorting-method: '{category},{itemsFirst},{name},{color}'
 # IMPORTANT NOTE:
 # Some messages contain placeholders (%s). You must not remove those, or you will get exceptions in the console
 
-##### English
+##### You can edit these messages yourself or uncomment the existing translations (see below)
 message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
 message-when-using-chest2: "&7Hint: Type &6/chestsort&7 to disable automatic chest sorting."
 message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7."
@@ -151,7 +156,17 @@ message-error-players-only: "&cError: This command can only be run by players."
 message-player-inventory-sorted: "&7Your inventory has been sorted."
 message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
+##### English
+#message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
+#message-when-using-chest2: "&7Hint: Type &6/chestsort&7 to disable automatic chest sorting."
+#message-sorting-disabled: "&7Automatic chest sorting has been &cdisabled&7."
+#message-sorting-enabled: "&7Automatic chest sorting has been &aenabled&7."
+#message-error-players-only: "&cError: This command can only be run by players."
+#message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
+
 ##### Chinese - Thanks to qsefthuopq for translating! -> https://www.spigotmc.org/members/qsefthuopq.339953/
+##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
 #message-when-using-chest2: "&7提示: 输入 &6/chestsort&7 来关闭自动整理箱子."
 #message-sorting-disabled: "&7自动整理箱子已 &c关闭&7."
@@ -161,6 +176,7 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Chinese (Traditional) 繁體中文
+##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
 #message-when-using-chest2: "&7小提醒: 輸入 &6/chestsort&7 來關閉自動整理箱子"
 #message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
@@ -170,6 +186,7 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### French - Thanks to automatizer for translating! -> https://www.spigotmc.org/members/automatizer.26188/
+##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Astuce: Écris &6/chestsort&7 pour activer le classement automatique."
 #message-when-using-chest2: "&7Astuce: Écris &6/chestsort&7 pour désactiver le classement automatique."
 #message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7."
@@ -197,6 +214,7 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-error-invalid-options: "&cErrore: Parametro sconosciuto %s. I parametri validi sono %s."
 
 ##### Japanese
+##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7ヒント: &6/chestsort&7 と入力して自動チェスト整理を有効にできます。"
 #message-when-using-chest2: "&7ヒント: &6/chestsort&7 と入力すると自動チェスト整理を無効にできます。"
 #message-sorting-disabled: "&7自動チェスト整理は現在 &cOFF&7です。"
@@ -206,6 +224,7 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Portuguese - Thanks to wildastral for translating! -> https://www.spigotmc.org/members/wildastral.673147/
+##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Dica: Digite &6/chestsort&7 para habilitar a organização automática."
 #message-when-using-chest2: "&7Dica: Digite &6/chestsort&7 para desabilitar a organização automática."
 #message-sorting-disabled: "&7A Organização automática de baús foi &cdesabilitada&7."
@@ -215,6 +234,7 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Russian - Thanks to Gandon for translating! -> https://www.spigotmc.org/members/gandon.443887/
+##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Подсказка: введите &6"/chestsort&7, чтобы включить автоматическую сортировку вещей в сундуках."
 #message-when-using-chest2: "&7Подсказка: введите &6/chestsort&7, чтобы отключить автоматическую сортировку вещей в сундуках."
 #message-sorting-disabled: "&7Автоматическая сортировка вещей в сундуках была &cотключена&7."
