@@ -136,7 +136,7 @@ sorting-method: '{category},{itemsFirst},{name},{color}'
 # &1 Dark Blue    &7 Gray       &d Light Purple
 # &2 Dark Green   &8 Dark Gray  &e Yellow
 # &3 Dark Aqua    &9 Blue       &f White
-# &4 Dark Red     &a Green     
+# &4 Dark Red     &a Green
 # &5 Dark Purple  &b Aqua
 
 # Available formatting codes:
@@ -185,6 +185,15 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-player-inventory-sorted: "&7Your inventory has been sorted."
 #message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
+##### Dutch - Thanks to Xeyame for translating! -> https://github.com/Xeyame
+#message-when-using-chest: "&7Hint: Gebruik &6/chestsort&7 om automatische kist sortering aan te zetten."
+#message-when-using-chest2: "&7Hint: Gebruik &6/chestsort&7 om automatische kist sortering uit te zetten."
+#message-sorting-disabled: "&7Automatische kist sortering is &cuitgeschakeld&7."
+#message-sorting-enabled: "&7Automatische kist sortering is &aingeschakeld&7."
+#message-error-players-only: "&cFout: Dit commando kan alleen door spelers worden gebruikt."
+#message-player-inventory-sorted: "&7Je inventaris is gesorteerd."
+#message-error-invalid-options: "&cFout: Onbekende optie %s. Mogelijke opties zijn %s."
+
 ##### French - Thanks to automatizer for translating! -> https://www.spigotmc.org/members/automatizer.26188/
 ##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Astuce: Écris &6/chestsort&7 pour activer le classement automatique."
@@ -230,7 +239,7 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-sorting-disabled: "&7A Organização automática de baús foi &cdesabilitada&7."
 #message-sorting-enabled: "&7A Organização automática de baús foi &ahabilitada&7."
 #message-error-players-only: "&cErro: Esse comando não pode ser executado por jogadores."
-#message-player-inventory-sorted: "&7Seu inventário foi organizado." 
+#message-player-inventory-sorted: "&7Seu inventário foi organizado."
 #message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Russian - Thanks to Gandon for translating! -> https://www.spigotmc.org/members/gandon.443887/
