@@ -166,14 +166,13 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Chinese - Thanks to qsefthuopq for translating! -> https://www.spigotmc.org/members/qsefthuopq.339953/
-##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
 #message-when-using-chest2: "&7提示: 输入 &6/chestsort&7 来关闭自动整理箱子."
 #message-sorting-disabled: "&7自动整理箱子已 &c关闭&7."
 #message-sorting-enabled: "&7自动整理箱子已 &a启用&7."
 #message-error-players-only: "&c错误: 指令只能由玩家运行."
-#message-player-inventory-sorted: "&7Your inventory has been sorted."
-#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
+#message-player-inventory-sorted: "&7已成功整理你的背包."
+#message-error-invalid-options: "&c错误: 位置选项 %s. 有效选项为 %s."
 
 ##### Chinese (Traditional) 繁體中文
 ##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
@@ -244,7 +243,7 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 
 ##### Russian - Thanks to Gandon for translating! -> https://www.spigotmc.org/members/gandon.443887/
 ##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
-#message-when-using-chest: "&7Подсказка: введите &6"/chestsort&7, чтобы включить автоматическую сортировку вещей в сундуках."
+#message-when-using-chest: "&7Подсказка: введите &6/chestsort&7, чтобы включить автоматическую сортировку вещей в сундуках."
 #message-when-using-chest2: "&7Подсказка: введите &6/chestsort&7, чтобы отключить автоматическую сортировку вещей в сундуках."
 #message-sorting-disabled: "&7Автоматическая сортировка вещей в сундуках была &cотключена&7."
 #message-sorting-enabled: "&7Автоматическая сортировка вещей в сундуках была &aвключена&7."
