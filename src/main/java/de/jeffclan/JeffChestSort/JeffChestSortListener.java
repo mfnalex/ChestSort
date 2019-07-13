@@ -175,7 +175,7 @@ public class JeffChestSortListener implements Listener {
 		// NOTE: We use .getClass().toString() for new items instead of directly
 		// comparing the ENUM, because we
 		// want to keep compatability between different minecraft versions (e.g. there
-		// is no BARREL prior 1.14)
+		// is no BARREL prior 1.14 and no shulker box prior 1.11)
 		// WARNING: The names are inconsistent! A chest will return
 		// org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
 		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
