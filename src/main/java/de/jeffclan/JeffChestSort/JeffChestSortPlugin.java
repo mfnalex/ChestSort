@@ -61,7 +61,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortListener listener;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 11;
+	int currentConfigVersion = 12;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
@@ -134,6 +134,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("check-for-updates", "true");
 		getConfig().addDefault("auto-generate-category-files", true);
 		getConfig().addDefault("sort-time", "close");
+		getConfig().addDefault("allow-shortcut", true);
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
 	}
 
@@ -251,6 +252,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().info("Sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
 			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
 			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
+			getLogger().info("Allow shortcut: " + getConfig().getString("allow-shortcut"));
 			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
 			getLogger().info("Categories: " + getCategoryList());
 		}
