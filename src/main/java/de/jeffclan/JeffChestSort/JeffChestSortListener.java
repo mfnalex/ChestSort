@@ -13,12 +13,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 
 public class JeffChestSortListener implements Listener {
 
@@ -93,12 +96,11 @@ public class JeffChestSortListener implements Listener {
 		plugin.unregisterPlayer(event.getPlayer());
 	}
 
-	
 	@EventHandler
 	public void onInventoryEvent(InventoryEvent event) {
 		plugin.getLogger().info("InventoryEvent");
 	}
-	
+
 	// This event fires when someone closes an inventory
 	// We check if the closed inventory belongs to a chest, shulkerbox or barrel,
 	// and then call the Organizer to sort the inventory (if the player has
@@ -110,7 +112,7 @@ public class JeffChestSortListener implements Listener {
 				|| plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))) {
 			return;
 		}
-		
+
 		// event.getPlayer returns HumanEntity, so it could also be an NPC or something
 		if (!(event.getPlayer() instanceof Player)) {
 			return;
@@ -118,7 +120,7 @@ public class JeffChestSortListener implements Listener {
 		Player p = (Player) event.getPlayer();
 		Inventory inventory = event.getInventory();
 
-		if(!belongsToChestLikeBlock(inventory)) {
+		if (!belongsToChestLikeBlock(inventory)) {
 			return;
 		}
 
@@ -129,19 +131,19 @@ public class JeffChestSortListener implements Listener {
 		}
 
 	}
-	
-	@EventHandler(priority=EventPriority.MONITOR)
+
+	@EventHandler(priority = EventPriority.MONITOR)
 	public void onChestClose(InventoryOpenEvent event) {
 
 		if (!(plugin.getConfig().getString("sort-time").equalsIgnoreCase("open")
 				|| plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))) {
 			return;
 		}
-		
-		if(event.isCancelled()) {
+
+		if (event.isCancelled()) {
 			return;
 		}
-		
+
 		// event.getPlayer returns HumanEntity, so it could also be an NPC or something
 		if (!(event.getPlayer() instanceof Player)) {
 			return;
@@ -149,7 +151,7 @@ public class JeffChestSortListener implements Listener {
 		Player p = (Player) event.getPlayer();
 		Inventory inventory = event.getInventory();
 
-		if(!belongsToChestLikeBlock(inventory)) {
+		if (!belongsToChestLikeBlock(inventory)) {
 			return;
 		}
 
@@ -166,10 +168,9 @@ public class JeffChestSortListener implements Listener {
 		if (inventory.getHolder() == null) {
 			return false;
 		}
-		
-		//System.out.println(inventory.getHolder().getClass().getName());
-		
-		
+
+		// System.out.println(inventory.getHolder().getClass().getName());
+
 		// Only continue if the inventory belongs to a chest, double chest, shulkerbox
 		// or barrel
 		// NOTE: We use .getClass().toString() for new items instead of directly
@@ -179,8 +180,7 @@ public class JeffChestSortListener implements Listener {
 		// WARNING: The names are inconsistent! A chest will return
 		// org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
 		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
-		if (!(inventory.getHolder() instanceof Chest)
-				&& !(inventory.getHolder() instanceof DoubleChest)
+		if (!(inventory.getHolder() instanceof Chest) && !(inventory.getHolder() instanceof DoubleChest)
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox"))
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
 			return false;
@@ -249,7 +249,7 @@ public class JeffChestSortListener implements Listener {
 
 	@EventHandler
 	public void onEnderChestOpen(InventoryOpenEvent event) {
-		
+
 		if (!(event.getPlayer() instanceof Player)) {
 			return;
 		}
@@ -266,6 +266,30 @@ public class JeffChestSortListener implements Listener {
 			// Finally call the Organizer to sort the inventory
 			plugin.organizer.sortInventory(event.getInventory());
 		}
+	}
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	public void onInventoryClickEvent(InventoryClickEvent event) {
+		if(!(event.getWhoClicked() instanceof Player)) {
+			return;
+		}
+		
+		Player p = (Player) event.getWhoClicked();
+		
+		if(!p.hasPermission("chestsort.use")) {
+			return;
+		}
+		
+		InventoryHolder holder = event.getInventory().getHolder();
+		
+		if(!(holder instanceof Player) && !belongsToChestLikeBlock(event.getInventory())) {
+			return;
+		}
+		
+		if(event.getClick() == ClickType.MIDDLE) {
+			plugin.organizer.sortInventory(event.getInventory());
+		}
+		
 	}
 
 }
