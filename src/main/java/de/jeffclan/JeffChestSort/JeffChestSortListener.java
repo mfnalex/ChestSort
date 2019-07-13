@@ -167,7 +167,7 @@ public class JeffChestSortListener implements Listener {
 			return false;
 		}
 		
-		System.out.println(inventory.getHolder().getClass().getName());
+		//System.out.println(inventory.getHolder().getClass().getName());
 		
 		
 		// Only continue if the inventory belongs to a chest, double chest, shulkerbox
