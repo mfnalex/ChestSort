@@ -181,8 +181,8 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
 #message-sorting-enabled: "&7自動整理箱子已 &a開啟&7"
 #message-error-players-only: "&c錯誤: 這個指令只能由玩家使用"
-#message-player-inventory-sorted: "&7Your inventory has been sorted."
-#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
+#message-player-inventory-sorted: "&7你的背包已成功整理."
+#message-error-invalid-options: "&c錯誤: 未知選項 %s. 有效的選項為 %s."
 
 ##### Dutch - Thanks to Xeyame for translating! -> https://github.com/Xeyame
 #message-when-using-chest: "&7Hint: Gebruik &6/chestsort&7 om automatische kist sortering aan te zetten."
@@ -260,9 +260,18 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-player-inventory-sorted: "&7Tu inventario ha sido ordenado."
 #message-error-invalid-options: "&cError: %s es una opción inválida. Las opciones válidas son: %s."
 
+##### Turkish - Thanks to bertek41 for translating!-> https://www.spigotmc.org/members/bertek41.247705/
+#message-when-using-chest: "&7Ipucu: &6/chestsort&7 Yazarak Otomatik Sandık Organizasyon Sistemini Aktif Edebilirsin."
+#message-when-using-chest2: "&7Ipucu: &6/chestsort&7 Yazarak Otomatik Sandık Organizasyon Sistemini Kapatabilirsin."
+#message-sorting-disabled: "&7Otomatik Sandık Organizasyonu &cKapatıldı&7."
+#message-sorting-enabled: "&7Otomatik Sandık Organizasyonu &aAçıldı&7."
+#message-error-players-only: "&cHata: Bu Komut Yalnızca Oyuncular Tarafından Kullanılabilir."
+#message-player-inventory-sorted: "&7Envanteriniz Düzenlendi."
+#message-error-invalid-options: "&cHata: Bilinmeyen Ayar %s."
+
 #########################
 #####     Done!     #####
 #########################
 
 # please do not change the following line manually!
-config-version: 10
+config-version: 11

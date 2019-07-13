@@ -57,15 +57,15 @@ public class JeffChestSortUpdateChecker {
 					currentVersion = plugin.getDescription().getVersion().trim();
 					
 					if (latestVersion.equals(currentVersion)) {
-						plugin.getLogger().info("You are using the latest version of ChestSort.");
+						plugin.getLogger().info("You are using the latest hversion of ChestSort.");
 					} else {
-						plugin.getLogger().warning("========================================================");
+						plugin.getLogger().warning("=================================================");
 						plugin.getLogger().warning("There is a new version of ChestSort available!");
 						plugin.getLogger().warning("Latest : " + inputLine);
 						plugin.getLogger().warning("Current: " + currentVersion);
 						plugin.getLogger().warning("Please update to the newest version. Download:");
 						plugin.getLogger().warning(downloadLink);
-						plugin.getLogger().warning("========================================================");
+						plugin.getLogger().warning("=================================================");
 					}
 
 					reader.close();

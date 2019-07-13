@@ -167,6 +167,9 @@ public class JeffChestSortListener implements Listener {
 			return false;
 		}
 		
+		System.out.println(inventory.getHolder().getClass().getName());
+		
+		
 		// Only continue if the inventory belongs to a chest, double chest, shulkerbox
 		// or barrel
 		// NOTE: We use .getClass().toString() for new items instead of directly
@@ -178,7 +181,7 @@ public class JeffChestSortListener implements Listener {
 		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
 		if (!(inventory.getHolder() instanceof Chest)
 				&& !(inventory.getHolder() instanceof DoubleChest)
-				&& !(inventory.getHolder() instanceof ShulkerBox)
+				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox"))
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
 			return false;
 		}
