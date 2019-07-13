@@ -63,6 +63,11 @@ auto-generate-category-files: true
 # Available options: open, close, both
 sort-time: close
 
+# Instead of automatic sorting, you can also use middle-click
+# when using an inventory to have it sorted immediately.
+# You can disable this by setting this to false.
+allow-shortcut: true
+
 # should we check for updates?
 # when enabled, a message is printed in the console if a new
 # version has been found, and OPs will be notified when they join the server
@@ -274,4 +279,4 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #########################
 
 # please do not change the following line manually!
-config-version: 11
+config-version: 12

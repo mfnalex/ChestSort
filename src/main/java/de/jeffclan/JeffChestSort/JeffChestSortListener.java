@@ -9,6 +9,7 @@ import org.bukkit.block.DoubleChest;
 import org.bukkit.block.EnderChest;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,6 +19,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
@@ -270,6 +272,11 @@ public class JeffChestSortListener implements Listener {
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
+		
+		if(!plugin.getConfig().getBoolean("allow-shortcut")) {
+			return;
+		}
+		
 		if(!(event.getWhoClicked() instanceof Player)) {
 			return;
 		}
@@ -282,14 +289,41 @@ public class JeffChestSortListener implements Listener {
 		
 		InventoryHolder holder = event.getInventory().getHolder();
 		
-		if(!(holder instanceof Player) && !belongsToChestLikeBlock(event.getInventory())) {
+		if(event.getClick() != ClickType.MIDDLE) {
 			return;
 		}
 		
-		if(event.getClick() == ClickType.MIDDLE) {
+		if(belongsToChestLikeBlock(event.getInventory())) {
+			//p.sendMessage("Sorting chest");
 			plugin.organizer.sortInventory(event.getInventory());
+			updateInventoryView(event);
+			return;
+		} else if(holder instanceof Player) {
+			//p.sendMessage("Sorting player inv");
+			if(event.getSlotType() == SlotType.QUICKBAR) {
+				//p.sendMessage("Sorting Hotbar");
+				plugin.organizer.sortInventory(p.getInventory(),0,8);
+				updateInventoryView(event);
+				return;
+			}
+			else if(event.getSlotType() == SlotType.CONTAINER) {
+				//p.sendMessage("Sorting container");
+				plugin.organizer.sortInventory(p.getInventory(),9,35);
+				updateInventoryView(event);
+				return;
+			}
+			return;
 		}
-		
+
+	}
+	
+	void updateInventoryView(InventoryClickEvent event) {
+		for(HumanEntity viewer : event.getViewers()) {
+			if(viewer instanceof Player) {
+				Player playerViewer = (Player) viewer;
+				playerViewer.updateInventory();
+			}
+		}
 	}
 
 }
