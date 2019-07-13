@@ -61,7 +61,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortListener listener;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 12;
+	int currentConfigVersion = 14;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
@@ -135,6 +135,9 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("auto-generate-category-files", true);
 		getConfig().addDefault("sort-time", "close");
 		getConfig().addDefault("allow-shortcut", true);
+		getConfig().addDefault("shortcuts.middle-click", true);
+		getConfig().addDefault("shortcuts.shift-click", true);
+		getConfig().addDefault("shortcuts.double-click", true);
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
 	}
 
@@ -252,7 +255,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().info("Sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
 			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
 			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
-			getLogger().info("Allow shortcut: " + getConfig().getString("allow-shortcut"));
+			getLogger().info("Allow shortcut: " + getConfig().getBoolean("allow-shortcut"));
+			if(getConfig().getBoolean("allow-shortcut")) {
+				getLogger().info("|- Middle-Click: " + getConfig().getBoolean("shortcuts.middle-click"));
+				getLogger().info("|- Shift-Click: " + getConfig().getBoolean("shortcuts.shift-click"));
+				getLogger().info("|- Double-Click: " + getConfig().getBoolean("shortcuts.double-click"));
+			}
 			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
 			getLogger().info("Categories: " + getCategoryList());
 		}
