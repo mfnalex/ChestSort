@@ -1,21 +1,18 @@
 package de.jeffclan.JeffChestSort;
 
-import java.util.UUID;
 import java.io.File;
+import java.util.UUID;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
-import org.bukkit.block.EnderChest;
-import org.bukkit.block.ShulkerBox;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryEvent;
@@ -274,7 +271,7 @@ public class JeffChestSortListener implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 		
-		if(!plugin.getConfig().getBoolean("allow-shortcut")) {
+		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
 			return;
 		}
 		
@@ -294,12 +291,12 @@ public class JeffChestSortListener implements Listener {
 		
 		switch(event.getClick()) {
 		case MIDDLE:
-			if(plugin.getConfig().getBoolean("shortcuts.middle-click")) {
+			if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
 				sort=true;
 			}
 			break;
 		case DOUBLE_CLICK:
-			if(plugin.getConfig().getBoolean("shortcuts.double-click")) {			
+			if(plugin.getConfig().getBoolean("hotkeys.double-click")) {			
 				// We need getCursor() instead of getCurrentItem(), because after picking up the item, it is gone into the cursor
 				if(event.getCursor().getType() == Material.AIR) {
 					sort=true;
@@ -307,7 +304,7 @@ public class JeffChestSortListener implements Listener {
 			}
 			break;
 		case SHIFT_LEFT: 
-			if(plugin.getConfig().getBoolean("shortcuts.shift-click")) {				
+			if(plugin.getConfig().getBoolean("hotkeys.shift-click")) {				
 				if(event.getCurrentItem().getType() == Material.AIR) {
 					sort=true;
 				}
