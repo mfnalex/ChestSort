@@ -314,7 +314,9 @@ public class JeffChestSortListener implements Listener {
 			break;
 		}
 		
-		if(!sort) return;
+		if(!sort) {
+			return;
+		}
 		
 		if(belongsToChestLikeBlock(event.getInventory())) {
 			plugin.organizer.sortInventory(event.getInventory());
