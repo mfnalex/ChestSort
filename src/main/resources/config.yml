@@ -256,7 +256,6 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
 
 ##### Russian - Thanks to Gandon for translating! -> https://www.spigotmc.org/members/gandon.443887/
-##### Note: the last two messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Подсказка: введите &6/chestsort&7, чтобы включить автоматическую сортировку вещей в сундуках."
 #message-when-using-chest2: "&7Подсказка: введите &6/chestsort&7, чтобы отключить автоматическую сортировку вещей в сундуках."
 #message-sorting-disabled: "&7Автоматическая сортировка вещей в сундуках была &cотключена&7."
