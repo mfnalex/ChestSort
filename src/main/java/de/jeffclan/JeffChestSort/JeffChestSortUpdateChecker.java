@@ -57,7 +57,7 @@ public class JeffChestSortUpdateChecker {
 					currentVersion = plugin.getDescription().getVersion().trim();
 					
 					if (latestVersion.equals(currentVersion)) {
-						plugin.getLogger().info("You are using the latest hversion of ChestSort.");
+						plugin.getLogger().info("You are using the latest version of ChestSort.");
 					} else {
 						plugin.getLogger().warning("=================================================");
 						plugin.getLogger().warning("There is a new version of ChestSort available!");
