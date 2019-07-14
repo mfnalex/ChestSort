@@ -28,9 +28,11 @@ public class JeffChestSortConfigUpdater {
 
 	void updateConfig() {
 
-		if(plugin.debug) plugin.getLogger().info("rename config.yml -> config.old.yml");
+		if (plugin.debug)
+			plugin.getLogger().info("rename config.yml -> config.old.yml");
 		Utils.renameFileInPluginDir(plugin, "config.yml", "config.old.yml");
-		if(plugin.debug) plugin.getLogger().info("saving new config.yml");
+		if (plugin.debug)
+			plugin.getLogger().info("saving new config.yml");
 		plugin.saveDefaultConfig();
 
 		File oldConfigFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.old.yml");
@@ -61,7 +63,25 @@ public class JeffChestSortConfigUpdater {
 		ArrayList<String> newLines = new ArrayList<String>();
 		for (String line : linesInDefaultConfig) {
 			String newline = line;
-			if (!line.startsWith("config-version:")) { // dont replace config-version
+			if (line.startsWith("config-version:")) {
+				// dont replace config-version
+			} else if (line.startsWith("disabled-worlds:")) {
+				newline = null;
+				newLines.add("disabled-worlds:");
+				if (plugin.disabledWorlds != null) {
+					for (String disabledWorld : plugin.disabledWorlds) {
+						newLines.add("- " + disabledWorld);
+					}
+				}
+			} else if (line.startsWith("hotkeys:")) {
+				// dont replace hotkeys root part
+			} else if (line.startsWith("  middle-click:")) {
+				newline = "  middle-click: " + plugin.getConfig().getBoolean("hotkeys.middle-click");
+			} else if (line.startsWith("  shift-click:")) {
+				newline = "  shift-click: " + plugin.getConfig().getBoolean("hotkeys.shift-click");
+			} else if (line.startsWith("  double-click:")) {
+				newline = "  double-click: " + plugin.getConfig().getBoolean("hotkeys.double-click");
+			} else {
 				for (String node : oldValues.keySet()) {
 					if (line.startsWith(node + ":")) {
 
@@ -73,12 +93,14 @@ public class JeffChestSortConfigUpdater {
 							quotes = "\"";
 
 						newline = node + ": " + quotes + oldValues.get(node).toString() + quotes;
-						if(plugin.debug) plugin.getLogger().info("Updating config node " + newline);
+						if (plugin.debug)
+							plugin.getLogger().info("Updating config node " + newline);
 						break;
 					}
 				}
 			}
-			newLines.add(newline);
+			if (newline != null)
+				newLines.add(newline);
 		}
 
 		FileWriter fw;
