@@ -282,11 +282,11 @@ public class JeffChestSortListener implements Listener {
 		Player p = (Player) event.getWhoClicked();
 		
 		// DEBUG START
-		p.sendMessage("=====================");
-		p.sendMessage("Click type: " + event.getClick().name());
-		p.sendMessage("Right click: " + event.isRightClick());
-		p.sendMessage("Shift click: " + event.isShiftClick());
-		p.sendMessage("=====================");
+//		p.sendMessage("=====================");
+//		p.sendMessage("Click type: " + event.getClick().name());
+//		p.sendMessage("Right click: " + event.isRightClick());
+//		p.sendMessage("Shift click: " + event.isShiftClick());
+//		p.sendMessage("=====================");
 		// DEBUG END
 		
 		if(!p.hasPermission("chestsort.use")) {
