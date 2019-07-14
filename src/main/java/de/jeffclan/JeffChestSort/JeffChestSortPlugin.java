@@ -108,7 +108,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			configUpdater.updateConfig();
 			configUpdater = null;
 			usingMatchingConfig = true;
-			//createConfig();
+			// createConfig();
 		}
 
 		createDirectories();
@@ -134,10 +134,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("check-for-updates", "true");
 		getConfig().addDefault("auto-generate-category-files", true);
 		getConfig().addDefault("sort-time", "close");
-		getConfig().addDefault("allow-shortcut", true);
-		getConfig().addDefault("shortcuts.middle-click", true);
-		getConfig().addDefault("shortcuts.shift-click", true);
-		getConfig().addDefault("shortcuts.double-click", true);
+		getConfig().addDefault("allow-hotkeys", true);
+		getConfig().addDefault("hotkeys.middle-click", true);
+		getConfig().addDefault("hotkeys.shift-click", true);
+		getConfig().addDefault("hotkeys.double-click", true);
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
 	}
 
@@ -255,11 +255,11 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().info("Sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
 			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
 			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
-			getLogger().info("Allow shortcut: " + getConfig().getBoolean("allow-shortcut"));
-			if(getConfig().getBoolean("allow-shortcut")) {
-				getLogger().info("|- Middle-Click: " + getConfig().getBoolean("shortcuts.middle-click"));
-				getLogger().info("|- Shift-Click: " + getConfig().getBoolean("shortcuts.shift-click"));
-				getLogger().info("|- Double-Click: " + getConfig().getBoolean("shortcuts.double-click"));
+			getLogger().info("Allow hotkeys " + getConfig().getBoolean("allow-hotkeys"));
+			if (getConfig().getBoolean("allow-hotkeys")) {
+				getLogger().info("|- Middle-Click: " + getConfig().getBoolean("hotkeys.middle-click"));
+				getLogger().info("|- Shift-Click: " + getConfig().getBoolean("hotkeys.shift-click"));
+				getLogger().info("|- Double-Click: " + getConfig().getBoolean("hotkeys.double-click"));
 			}
 			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
 			getLogger().info("Categories: " + getCategoryList());
@@ -288,15 +288,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	private String getCategoryList() {
 		String list = "";
-		JeffChestSortCategory[] categories = organizer.categories.toArray(new JeffChestSortCategory[organizer.categories.size()]);
+		JeffChestSortCategory[] categories = organizer.categories
+				.toArray(new JeffChestSortCategory[organizer.categories.size()]);
 		Arrays.sort(categories);
-		for(JeffChestSortCategory category : categories) {
+		for (JeffChestSortCategory category : categories) {
 			list = list + category.name + " (";
 			list = list + category.typeMatches.length + "), ";
 		}
-		list = list.substring(0, list.length()-2);
+		list = list.substring(0, list.length() - 2);
 		return list;
-		
+
 	}
 
 	private void registerMetrics() {
@@ -320,6 +321,14 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		metrics.addCustomChart(new Metrics.SimplePie("sort_time", () -> getConfig().getString("sort-time")));
 		metrics.addCustomChart(new Metrics.SimplePie("auto_generate_category_files",
 				() -> Boolean.toString(getConfig().getBoolean("auto-generate-category-files"))));
+		metrics.addCustomChart(new Metrics.SimplePie("allow_hotkeys",
+				() -> Boolean.toString(getConfig().getBoolean("allow-hotkeys"))));
+		metrics.addCustomChart(new Metrics.SimplePie("hotkey_middle_click",
+				() -> Boolean.toString(getConfig().getBoolean("hotkeys.middle-click"))));
+		metrics.addCustomChart(new Metrics.SimplePie("hotkey_shift_click",
+				() -> Boolean.toString(getConfig().getBoolean("hotkeys.shift-click"))));
+		metrics.addCustomChart(new Metrics.SimplePie("hotkey_double_click",
+				() -> Boolean.toString(getConfig().getBoolean("hotkeys.double-click"))));
 	}
 
 	// Saves default category files, when enabled in the config
@@ -331,8 +340,9 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 
 		// Isn't there a smarter way to find all the 9** files in the .jar?
-		String[] defaultCategories = { "900-weapons", "905-common-tools", "907-other-tools", "909-food", "910-valuables", "920-armor-and-arrows", "930-brewing",
-				"950-redstone", "960-wood", "970-stone", "980-plants", "981-corals","_ReadMe - Category files" };
+		String[] defaultCategories = { "900-weapons", "905-common-tools", "907-other-tools", "909-food",
+				"910-valuables", "920-armor-and-arrows", "930-brewing", "950-redstone", "960-wood", "970-stone",
+				"980-plants", "981-corals", "_ReadMe - Category files" };
 
 		// Delete all files starting with 9..
 		for (File file : new File(getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator)
@@ -342,7 +352,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 							return false;
 						}
 						if (fileName.matches("(?i)9\\d\\d.*\\.txt$")) // Category between 900 and 999-... are default
-																	// categories
+																		// categories
 						{
 							return true;
 						}
@@ -353,7 +363,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			boolean delete = true;
 
 			for (String name : defaultCategories) {
-				name=name+".txt";
+				name = name + ".txt";
 				if (name.equalsIgnoreCase(file.getName())) {
 					delete = false;
 					break;

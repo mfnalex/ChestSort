@@ -66,10 +66,10 @@ sort-time: close
 # Instead of automatic sorting, you can also use hotkeys (see below)
 # when using an inventory to have it sorted immediately.
 # You can disable this by setting this to false.
-allow-shortcut: true
+allow-hotkeys: true
 
-# You can disable/enable certain hotkeys when you have allow-shortcut enabled
-shortcuts:
+# You can disable/enable certain hotkeys when you have allow-hotkeys enabled
+hotkeys:
   # Use middle click (mousewheel) on ANY inventory slot as hotkey
   middle-click: true 
   # Use shift + left-click on any EMPTY inventory slot as hotkey
