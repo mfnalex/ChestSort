@@ -139,6 +139,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("hotkeys.middle-click", true);
 		getConfig().addDefault("hotkeys.shift-click", true);
 		getConfig().addDefault("hotkeys.double-click", true);
+		getConfig().addDefault("hotkeys.shift-right-click", true);
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
 	}
 
@@ -250,9 +251,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
 			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
 			getLogger().info("Allow hotkeys: " + getConfig().getBoolean("allow-hotkeys"));
-			getLogger().info("|- Middle-Click: " + getConfig().getBoolean("hotkeys.middle-click"));
-			getLogger().info("|- Shift-Click: " + getConfig().getBoolean("hotkeys.shift-click"));
-			getLogger().info("|- Double-Click: " + getConfig().getBoolean("hotkeys.double-click"));
+			if(getConfig().getBoolean("allow-hotkeys")) {
+				getLogger().info("|- Middle-Click: " + getConfig().getBoolean("hotkeys.middle-click"));
+				getLogger().info("|- Shift-Click: " + getConfig().getBoolean("hotkeys.shift-click"));
+				getLogger().info("|- Double-Click: " + getConfig().getBoolean("hotkeys.double-click"));
+				getLogger().info("|- Shift-Right-Click: " + getConfig().getBoolean("hotkeys.shift-right-click"));
+			}
 			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
 			getLogger().info("Categories: " + getCategoryList());
 		}
@@ -320,6 +324,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				() -> Boolean.toString(getConfig().getBoolean("hotkeys.shift-click"))));
 		metrics.addCustomChart(new Metrics.SimplePie("hotkey_double_click",
 				() -> Boolean.toString(getConfig().getBoolean("hotkeys.double-click"))));
+		metrics.addCustomChart(new Metrics.SimplePie("hotkey_shift_right_click",
+				() -> Boolean.toString(getConfig().getBoolean("hotkeys.shift-right-click"))));
 	}
 
 	// Saves default category files, when enabled in the config

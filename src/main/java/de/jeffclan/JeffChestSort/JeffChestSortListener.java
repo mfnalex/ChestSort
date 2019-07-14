@@ -281,6 +281,14 @@ public class JeffChestSortListener implements Listener {
 		
 		Player p = (Player) event.getWhoClicked();
 		
+		// DEBUG START
+		p.sendMessage("=====================");
+		p.sendMessage("Click type: " + event.getClick().name());
+		p.sendMessage("Right click: " + event.isRightClick());
+		p.sendMessage("Shift click: " + event.isShiftClick());
+		p.sendMessage("=====================");
+		// DEBUG END
+		
 		if(!p.hasPermission("chestsort.use")) {
 			return;
 		}
@@ -305,6 +313,13 @@ public class JeffChestSortListener implements Listener {
 			break;
 		case SHIFT_LEFT: 
 			if(plugin.getConfig().getBoolean("hotkeys.shift-click")) {				
+				if(event.getCurrentItem().getType() == Material.AIR) {
+					sort=true;
+				}
+			}
+			break;
+		case SHIFT_RIGHT:
+			if(plugin.getConfig().getBoolean("hotkeys.shift-right-click")) {
 				if(event.getCurrentItem().getType() == Material.AIR) {
 					sort=true;
 				}
