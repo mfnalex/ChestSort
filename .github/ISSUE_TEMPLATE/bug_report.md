@@ -1,11 +1,17 @@
 ---
 name: Bug report
 about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
-**Used version**
-Tell us your Spigot/Minecraft version and ChestSort version
+**Used ChestSort version**
+Tell us your ChestSort version
+
+**Used Spigot version**
+Tell us your Spigot version (output of /version). Please also tell us if you use another fork like Paper, etc.
 
 **Describe the bug**
 A clear and concise description of what the bug is.
