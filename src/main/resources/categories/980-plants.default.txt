@@ -14,6 +14,7 @@
 sticky=false
 
 grass
+bamboo
 fern
 dead_bush
 seagrass
@@ -36,6 +37,23 @@ cactus
 vine
 lily_pad
 sunflower
+beetroots
+bone_meal
+chorus_fruit
+kelp
+kelp_plant
+lily_of_the_valley
+popped_chorus_fruit
+potatoes
+potted_*
+sweet_berry_bush
+tall_seagrass
+cocoa
+cocoa_beans
+dried_kelp_block
+hay_block
+flower_pot
+cornflower
 lilac
 rose_bush
 peony

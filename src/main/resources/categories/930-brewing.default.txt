@@ -16,10 +16,13 @@ sticky=false
 ghast_tear
 potion
 glass_bottle
+blaze_rod
 fermented_spider_eye
 blaze_powder
 magma_cream
 brewing_stand
+nether_wart
+nether_wart_block
 cauldron
 glistering_melon_slice
 golden_carrot

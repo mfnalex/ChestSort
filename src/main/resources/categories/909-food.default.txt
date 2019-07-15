@@ -23,8 +23,10 @@ mushroom_stew
 porkchop
 cooked_porkchop
 cod
+carrots
 salmon
 cooked_cod
+sweet_berries
 cooked_salmon
 cake
 cookie

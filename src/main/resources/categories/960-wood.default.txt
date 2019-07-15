@@ -14,10 +14,17 @@
 sticky=false
 
 *_planks
-*_sapling
 *_log
 *_wood
 *_leaves
+*_sign
+barrel
+oak_sapling
+spruce_sapling
+birch_sapling
+jungle_sapling
+acacia_sapling
+dark_oak_sapling
 acacia_slab
 birch_slab
 jungle_slab
@@ -27,6 +34,12 @@ spruce_slab
 acacia_fence
 birch_fence
 jungle_fence
+campfire
+chest
+composter
+stick
+ladder
+crafting_table
 oak_fence
 dark_oak_fence
 spruce_fence

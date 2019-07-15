@@ -1,5 +1,7 @@
 package de.jeffclan.JeffChestSort;
 
+import java.io.BufferedWriter;
+
 /*
 
 	ChestSort - maintained by mfnalex / JEFF Media GbR ( www.jeff-media.de )
@@ -31,10 +33,12 @@ package de.jeffclan.JeffChestSort;
 */
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -43,6 +47,7 @@ import java.util.UUID;
 
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -144,6 +149,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("hotkeys.shift-click", true);
 		getConfig().addDefault("hotkeys.double-click", true);
 		getConfig().addDefault("hotkeys.shift-right-click", true);
+		getConfig().addDefault("dump", false);
 		
 		getConfig().addDefault("hook-crackshot", true);
 		getConfig().addDefault("hook-crackshot-prefix", "crackshot_weapon");
@@ -293,6 +299,15 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 
 		registerMetrics();
+		
+		if(getConfig().getBoolean("dump")) {
+			try {
+				dump();
+			} catch (IOException e) {
+				System.out.println("Error while writing dump file.");
+				e.printStackTrace();
+			}
+		}
 
 	}
 
@@ -464,6 +479,18 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 			PerPlayerSettings.remove(uniqueId.toString());
 		}
+	}
+	
+	// Dumps all Materials into a csv file with their current category
+	void dump() throws IOException {
+		File file = new File(getDataFolder() + File.separator + "dump.csv");
+		FileOutputStream fos = new FileOutputStream(file);
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+		for(Material mat : Material.values()) {
+			bw.write(mat.name()+","+organizer.getCategoryLinePair(mat.name()).getCategoryName());
+			bw.newLine();
+		}
+		bw.close();
 	}
 
 }
