@@ -47,6 +47,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.jeffclan.utils.Utils;
@@ -61,10 +62,13 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortListener listener;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 15;
+	int currentConfigVersion = 16;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
+	
+	public boolean hookCrackShot = false;
+	
 	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never
 												// restart your server)
 
@@ -140,6 +144,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("hotkeys.shift-click", true);
 		getConfig().addDefault("hotkeys.double-click", true);
 		getConfig().addDefault("hotkeys.shift-right-click", true);
+		
+		getConfig().addDefault("hook-crackshot", true);
+		getConfig().addDefault("hook-crackshot-prefix", "crackshot_weapon");
+		
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
 	}
 
@@ -205,6 +213,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// Create the config file, including checks for old config versions, and load
 		// the default values for unset options
 		createConfig();
+		
+		if(getConfig().getBoolean("hook-crackshot")) {
+			if(Bukkit.getPluginManager().getPlugin("CrackShot") instanceof Plugin) {
+				hookCrackShot=true;
+			}
+		}
 
 		debug = getConfig().getBoolean("debug");
 

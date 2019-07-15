@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import de.jeffclan.hooks.CrackShotHook;
 import de.jeffclan.utils.CategoryLinePair;
 import de.jeffclan.utils.TypeMatchPositionPair;
 
@@ -30,6 +31,7 @@ public class JeffChestSortOrganizer {
 	 */
 
 	JeffChestSortPlugin plugin;
+	CrackShotHook crackShotHook;
 
 	// All available colors in the game. We will strip this from the item names and
 	// keep the color in a separate variable
@@ -95,6 +97,8 @@ public class JeffChestSortOrganizer {
 				}
 			}
 		}
+		
+		crackShotHook = new CrackShotHook(plugin);
 
 	}
 
@@ -276,10 +280,23 @@ public class JeffChestSortOrganizer {
 		String[] typeAndColor = getTypeAndColor(item.getType().name());
 		String typeName = typeAndColor[0];
 		String color = typeAndColor[1];
-		CategoryLinePair categoryLinePair = getCategoryLinePair(item.getType().name());
+		
+		String hookChangedName = item.getType().name();
+		
+		// CrackShot Support Start
+		if(plugin.hookCrackShot) {
+			if(crackShotHook.getCrackShotWeaponName(item)!=null) {
+				typeName = plugin.getConfig().getString("hook-crackshot-prefix") + "_" + crackShotHook.getCrackShotWeaponName(item);
+				color="";
+				hookChangedName = typeName;
+			}
+		}
+		// CrackShot Support End
+		
+		CategoryLinePair categoryLinePair = getCategoryLinePair(hookChangedName);
 		String categoryName = categoryLinePair.getCategoryName();
 		String categorySticky = categoryName;
-		String lineNumber = getCategoryLinePair(item.getType().name()).getFormattedPosition();
+		String lineNumber = getCategoryLinePair(hookChangedName).getFormattedPosition();
 		if(stickyCategoryNames.contains(categoryName)) {
 			categorySticky = categoryName+"~"+lineNumber;
 		}
