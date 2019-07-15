@@ -4,9 +4,9 @@
 ## About
 Tired of sorting your chests? Let's spend less time on organizing, and more on playing!
 
-<p align="center">![Screenshot ChestSort](https://static.jeff-media.de/chestsort/chestsort-screen1.jpg "Screenshot ChestSort")</p>
+<p align="center"><img src="https://static.jeff-media.de/chestsort/chestsort-screen1.jpg" alt="Screenshot ChestSort" /></p>
 
-<p align="center">![Screenshot ChestSort](https://static.jeff-media.de/chestsort/chestsort-screen2.jpg "Screenshot ChestSort")</p>
+<p align="center"><img src="https://static.jeff-media.de/chestsort/chestsort-screen2.jpg" alt="Screenshot ChestSort" /></p>
 
 Tested Spigot versions: 1.8 to 1.14
 
