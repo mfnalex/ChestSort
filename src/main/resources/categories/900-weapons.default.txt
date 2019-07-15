@@ -13,6 +13,8 @@
 # in your sorting-method
 sticky=true
 
+crackshot_weapon_*
+crossbow
 bow
 *_sword
 trident

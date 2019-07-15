@@ -6,7 +6,7 @@
 
 	<groupId>de.jeffclan</groupId>
 	<artifactId>JeffChestSort</artifactId>
-	<version>6.2</version>
+	<version>6.3</version>
 	<packaging>jar</packaging>
 
 	<name>JeffChestSort</name>
@@ -92,6 +92,13 @@
 			<version>1.4</version>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.shampaggon.crackshot</groupId>
+			<artifactId>CSUtility</artifactId>
+			<version>0.98.9</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/CrackShot.jar</systemPath>
+	</dependency>
 
 	</dependencies>
 	<description>Automatically sorts your chests!</description>

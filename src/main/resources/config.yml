@@ -107,6 +107,26 @@ verbose: true
 disabled-worlds:
 
 ##########################
+#####  Plugin hooks  #####
+##########################
+
+# ChestSort can hook into other plugins to allow better sorting
+# for items belonging to 3rd party plugins.
+# You do NOT have to disable the hooks for plugins you don't have
+# installed. ChestSort will automatically check if the plugins
+# are installed.
+
+##### CrackShot #####
+# When CrackShot is installed, all CrackShot weapons will be
+# grouped together and sorted by their name
+hook-crackshot: true
+# You can define a custom name that will be used as prefix
+# for all CrackShot weapon names.
+# E.g. when you set this to "crackshot_weapon", an AK-47
+# will be called "crackshot_weapon_AK-47"
+hook-crackshot-prefix: "crackshot_weapon"
+
+##########################
 ##### Sorting Method #####
 ##########################
 
@@ -289,4 +309,4 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #########################
 
 # please do not change the following line manually!
-config-version: 15
+config-version: 16
