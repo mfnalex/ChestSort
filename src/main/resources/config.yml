@@ -68,7 +68,9 @@ sort-time: close
 # You can disable this by setting this to false.
 allow-hotkeys: true
 
-# You can disable/enable certain hotkeys when you have allow-hotkeys enabled
+# You can disable/enable certain hotkeys when you have allow-hotkeys enabled.
+# Hotkeys that could interfere with Minecraft's normal behaviour (e.g.
+# shift+left-click) only work on empty slots, so don't worry about them.
 hotkeys:
   # Use middle click (mousewheel) on ANY inventory slot as hotkey
   middle-click: true 
@@ -125,6 +127,12 @@ hook-crackshot: true
 # E.g. when you set this to "crackshot_weapon", an AK-47
 # will be called "crackshot_weapon_AK-47"
 hook-crackshot-prefix: "crackshot_weapon"
+
+##### InventoryPages #####
+# When InventoryPages is installed, ChestSort will not sort
+# the "Next Page" and "Prev Page" buttons. You should not
+# disable this behaviour unless you know what you are doing!
+hook-inventorypages: true
 
 ##########################
 ##### Sorting Method #####
@@ -309,4 +317,4 @@ message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s
 #########################
 
 # please do not change the following line manually!
-config-version: 16
+config-version: 17

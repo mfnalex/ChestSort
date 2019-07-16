@@ -67,12 +67,13 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortListener listener;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 16;
+	int currentConfigVersion = 17;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
 	
 	public boolean hookCrackShot = false;
+	public boolean hookInventoryPages = false;
 	
 	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never
 												// restart your server)
@@ -154,6 +155,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("hook-crackshot", true);
 		getConfig().addDefault("hook-crackshot-prefix", "crackshot_weapon");
 		
+		getConfig().addDefault("hook-inventorypages", true);
+		
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
 	}
 
@@ -223,6 +226,11 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		if(getConfig().getBoolean("hook-crackshot")) {
 			if(Bukkit.getPluginManager().getPlugin("CrackShot") instanceof Plugin) {
 				hookCrackShot=true;
+			}
+		}
+		if(getConfig().getBoolean("hook-inventorypages")) {
+			if(Bukkit.getPluginManager().getPlugin("InventoryPages") instanceof Plugin) {
+				hookInventoryPages=true;
 			}
 		}
 

@@ -1,6 +1,6 @@
 main: de.jeffclan.JeffChestSort.JeffChestSortPlugin
 name: ChestSort
-version: 6.4-dev
+version: 6.4
 api-version: 1.13
 description: Allows automatic chest sorting
 author: mfnalex
@@ -8,7 +8,7 @@ website: https://www.chestsort.de
 prefix: ChestSort
 database: false
 loadbefore: [InvUnload]
-softdepend: [CrackShot]
+softdepend: [CrackShot, InventoryPages]
 commands:
   chestsort:
     description: Toggle automatic chest sorting

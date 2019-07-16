@@ -14,6 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import de.jeffclan.hooks.CrackShotHook;
+import de.jeffclan.hooks.InventoryPagesHook;
 import de.jeffclan.utils.CategoryLinePair;
 import de.jeffclan.utils.TypeMatchPositionPair;
 
@@ -32,6 +33,7 @@ public class JeffChestSortOrganizer {
 
 	JeffChestSortPlugin plugin;
 	CrackShotHook crackShotHook;
+	InventoryPagesHook inventoryPagesHook;
 
 	// All available colors in the game. We will strip this from the item names and
 	// keep the color in a separate variable
@@ -99,6 +101,7 @@ public class JeffChestSortOrganizer {
 		}
 		
 		crackShotHook = new CrackShotHook(plugin);
+		inventoryPagesHook = new InventoryPagesHook(plugin);
 
 	}
 
@@ -337,13 +340,12 @@ public class JeffChestSortOrganizer {
 	// Sort an inventory only between startSlot and endSlot
 	void sortInventory(Inventory inv, int startSlot, int endSlot) {
 
-		// This has been optimized as of ChestSort 3.2.
-		// The hashCode is just kept for legacy reasons, it is actually not needed.
-
 		if (plugin.debug) {
 			System.out.println(" ");
 			System.out.println(" ");
 		}
+		
+		ArrayList<Integer> unsortableSlots = new ArrayList<Integer>();
 
 		// We copy the complete inventory into an array
 		ItemStack[] items = inv.getContents();
@@ -356,10 +358,23 @@ public class JeffChestSortOrganizer {
 		for (int i = endSlot + 1; i < inv.getSize(); i++) {
 			items[i] = null;
 		}
+		// If InventoryPages is installed: get rid of the buttons
+		if(plugin.hookInventoryPages) {
+			for(int i = startSlot; i<= endSlot; i++) {
+				if(inventoryPagesHook.isButton(items[i], i,inv)) {
+					//System.out.println("Inventory Pages Button found at slot " + i);
+					items[i] = null;
+					unsortableSlots.add(i);
+				}
+			}
+		}
 
 		// Remove the stuff from the original inventory
 		for (int i = startSlot; i <= endSlot; i++) {
-			inv.clear(i);
+			if(!unsortableSlots.contains(i))
+			{
+				inv.clear(i);
+			}
 		}
 
 		// We don't want to have stacks of null, so we create a new ArrayList and put in
@@ -420,9 +435,14 @@ public class JeffChestSortOrganizer {
 			// our temporary inventory was already sorted. Feel free to make a pull request
 			// to
 			// save your server half a nanosecond :)
-			if (item == null)
-				continue;
-			inv.setItem(currentSlot, item);
+			if (item != null)
+			{
+
+				while(unsortableSlots.contains(currentSlot) && currentSlot < endSlot) {
+					currentSlot++;
+				}
+				inv.setItem(currentSlot, item);
+			}
 			currentSlot++;
 		}
 	}
