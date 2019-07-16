@@ -6,7 +6,7 @@
 
 	<groupId>de.jeffclan</groupId>
 	<artifactId>JeffChestSort</artifactId>
-	<version>6.3</version>
+	<version>6.4-dev</version>
 	<packaging>jar</packaging>
 
 	<name>JeffChestSort</name>
