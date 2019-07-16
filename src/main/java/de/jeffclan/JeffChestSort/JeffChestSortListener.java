@@ -306,21 +306,21 @@ public class JeffChestSortListener implements Listener {
 		case DOUBLE_CLICK:
 			if(plugin.getConfig().getBoolean("hotkeys.double-click")) {			
 				// We need getCursor() instead of getCurrentItem(), because after picking up the item, it is gone into the cursor
-				if(event.getCursor().getType() == Material.AIR) {
+				if(event.getCursor() == null || (event.getCursor() != null && event.getCursor().getType() == Material.AIR)) {
 					sort=true;
 				}
 			}
 			break;
 		case SHIFT_LEFT: 
 			if(plugin.getConfig().getBoolean("hotkeys.shift-click")) {				
-				if(event.getCurrentItem().getType() == Material.AIR) {
+				if(event.getCurrentItem() == null || (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.AIR) ){
 					sort=true;
 				}
 			}
 			break;
 		case SHIFT_RIGHT:
 			if(plugin.getConfig().getBoolean("hotkeys.shift-right-click")) {
-				if(event.getCurrentItem().getType() == Material.AIR) {
+				if(event.getCurrentItem() == null || ( event.getCurrentItem() == null && event.getCurrentItem().getType() == Material.AIR)) {
 					sort=true;
 				}
 			}

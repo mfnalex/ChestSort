@@ -334,35 +334,42 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	private void registerMetrics() {
 		// Metrics will need json-simple with 1.14 API.
-		Metrics metrics = new Metrics(this);
-		metrics.addCustomChart(new Metrics.SimplePie("sorting_method", () -> sortingMethod));
-		metrics.addCustomChart(new Metrics.SimplePie("config_version",
+		Metrics bStats = new Metrics(this);
+		bStats.addCustomChart(new Metrics.SimplePie("sorting_method", () -> sortingMethod));
+		bStats.addCustomChart(new Metrics.SimplePie("config_version",
 				() -> Integer.toString(getConfig().getInt("config-version", 0))));
-		metrics.addCustomChart(
+		bStats.addCustomChart(
 				new Metrics.SimplePie("check_for_updates", () -> getConfig().getString("check-for-updates", "true")));
-		metrics.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest",
+		bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest",
 				() -> Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
-		metrics.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest_and_sorting_is_enabl", () -> Boolean
+		bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest_and_sorting_is_enabl", () -> Boolean
 				.toString(getConfig().getBoolean("show-message-when-using-chest-and-sorting-is-enabled"))));
-		metrics.addCustomChart(new Metrics.SimplePie("show_message_again_after_logout",
+		bStats.addCustomChart(new Metrics.SimplePie("show_message_again_after_logout",
 				() -> Boolean.toString(getConfig().getBoolean("show-message-again-after-logout"))));
-		metrics.addCustomChart(new Metrics.SimplePie("sorting_enabled_by_default",
+		bStats.addCustomChart(new Metrics.SimplePie("sorting_enabled_by_default",
 				() -> Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
-		metrics.addCustomChart(
+		bStats.addCustomChart(
 				new Metrics.SimplePie("using_matching_config_version", () -> Boolean.toString(usingMatchingConfig)));
-		metrics.addCustomChart(new Metrics.SimplePie("sort_time", () -> getConfig().getString("sort-time")));
-		metrics.addCustomChart(new Metrics.SimplePie("auto_generate_category_files",
+		bStats.addCustomChart(new Metrics.SimplePie("sort_time", () -> getConfig().getString("sort-time")));
+		bStats.addCustomChart(new Metrics.SimplePie("auto_generate_category_files",
 				() -> Boolean.toString(getConfig().getBoolean("auto-generate-category-files"))));
-		metrics.addCustomChart(new Metrics.SimplePie("allow_hotkeys",
+		bStats.addCustomChart(new Metrics.SimplePie("allow_hotkeys",
 				() -> Boolean.toString(getConfig().getBoolean("allow-hotkeys"))));
-		metrics.addCustomChart(new Metrics.SimplePie("hotkey_middle_click",
+		bStats.addCustomChart(new Metrics.SimplePie("hotkey_middle_click",
 				() -> Boolean.toString(getConfig().getBoolean("hotkeys.middle-click"))));
-		metrics.addCustomChart(new Metrics.SimplePie("hotkey_shift_click",
+		bStats.addCustomChart(new Metrics.SimplePie("hotkey_shift_click",
 				() -> Boolean.toString(getConfig().getBoolean("hotkeys.shift-click"))));
-		metrics.addCustomChart(new Metrics.SimplePie("hotkey_double_click",
+		bStats.addCustomChart(new Metrics.SimplePie("hotkey_double_click",
 				() -> Boolean.toString(getConfig().getBoolean("hotkeys.double-click"))));
-		metrics.addCustomChart(new Metrics.SimplePie("hotkey_shift_right_click",
+		bStats.addCustomChart(new Metrics.SimplePie("hotkey_shift_right_click",
 				() -> Boolean.toString(getConfig().getBoolean("hotkeys.shift-right-click"))));
+		
+//	    try {
+//	        MetricsLite mcstats = new MetricsLite(this);
+//	        mcstats.start();
+//	    } catch (IOException e) {
+//	        
+//	    }
 	}
 
 	// Saves default category files, when enabled in the config
