@@ -320,7 +320,7 @@ public class JeffChestSortListener implements Listener {
 			break;
 		case SHIFT_RIGHT:
 			if(plugin.getConfig().getBoolean("hotkeys.shift-right-click")) {
-				if(event.getCurrentItem() == null || ( event.getCurrentItem() == null && event.getCurrentItem().getType() == Material.AIR)) {
+				if(event.getCurrentItem() == null || ( event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.AIR)) {
 					sort=true;
 				}
 			}
