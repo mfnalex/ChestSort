@@ -319,14 +319,14 @@ public class JeffChestSortOrganizer {
 		// Generate the strings that finally are used for sorting.
 		// They are generated according to the config.yml's sorting-method option
 		String sortableString = plugin.sortingMethod.replaceAll(",", "|");
-		sortableString = sortableString.replace("\\{itemsFirst\\}", String.valueOf(itemsFirst));
-		sortableString = sortableString.replace("\\{blocksFirst\\}", String.valueOf(blocksFirst));
-		sortableString = sortableString.replace("\\{name\\}", typeName);
-		sortableString = sortableString.replace("\\{color\\}", color);
-		sortableString = sortableString.replace("\\{category\\}", categorySticky);
-		sortableString = sortableString.replace("\\{keepCategoryOrder\\}", lineNumber);
-		sortableString = sortableString.replace("\\{customName\\}", customName);
-		sortableString = sortableString.replace("\\{lore\\}", lore);
+		sortableString = sortableString.replace("{itemsFirst}", String.valueOf(itemsFirst));
+		sortableString = sortableString.replace("{blocksFirst}", String.valueOf(blocksFirst));
+		sortableString = sortableString.replace("{name}", typeName);
+		sortableString = sortableString.replace("{color}", color);
+		sortableString = sortableString.replace("{category}", categorySticky);
+		sortableString = sortableString.replace("{keepCategoryOrder}", lineNumber);
+		sortableString = sortableString.replace("{customName}", customName);
+		sortableString = sortableString.replace("{lore}", lore);
 
 		return sortableString;
 
