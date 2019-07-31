@@ -289,11 +289,15 @@ public class JeffChestSortListener implements Listener {
 //		p.sendMessage("=====================");
 		// DEBUG END
 		
-		if(!p.hasPermission("chestsort.use")) {
+		if(!p.hasPermission("chestsort.use") && !p.hasPermission("chestsort.use.inventory")) {
 			return;
 		}
 		
-		InventoryHolder holder = event.getInventory().getHolder();
+		//InventoryHolder holder = event.getInventory().getHolder();
+		if(event.getClickedInventory() == null) {
+			return;
+		}
+		InventoryHolder holder = event.getClickedInventory().getHolder();
 		
 		boolean sort = false;
 		
@@ -333,11 +337,21 @@ public class JeffChestSortListener implements Listener {
 			return;
 		}
 		
-		if(belongsToChestLikeBlock(event.getInventory())) {
-			plugin.organizer.sortInventory(event.getInventory());
+		if(belongsToChestLikeBlock(event.getClickedInventory())) {
+			
+			if(!p.hasPermission("chestsort.use")) {
+				return;
+			}
+			
+			plugin.organizer.sortInventory(event.getClickedInventory());
 			updateInventoryView(event);
 			return;
 		} else if(holder instanceof Player) {
+			
+			if(!p.hasPermission("chestsort.use.inventory")) {
+				return;
+			}
+			
 			if(event.getSlotType() == SlotType.QUICKBAR) {
 				plugin.organizer.sortInventory(p.getInventory(),0,8);
 				updateInventoryView(event);
