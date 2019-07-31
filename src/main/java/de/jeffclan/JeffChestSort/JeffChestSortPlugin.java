@@ -65,18 +65,27 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortOrganizer organizer;
 	JeffChestSortUpdateChecker updateChecker;
 	JeffChestSortListener listener;
+	JeffChestSortSettingsGUI settingsGUI;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 17;
+	int currentConfigVersion = 18;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
+	boolean hotkeyGUI = true;
 	
 	public boolean hookCrackShot = false;
 	public boolean hookInventoryPages = false;
 	
 	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never
 												// restart your server)
+	
+	String mcVersion; 	// 1.13.2 = 1_13_R2
+						// 1.14.4 = 1_14_R1
+						// 1.8.0  = 1_8_R1
+	int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
+
+
 
 	// Public API method to sort any given inventory
 	public void sortInventory(Inventory inv) {
@@ -219,6 +228,18 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
+		
+		String tmpVersion = getServer().getClass().getPackage().getName();
+		mcVersion = tmpVersion.substring(tmpVersion.lastIndexOf('.') + 1);
+		tmpVersion = mcVersion.substring(mcVersion.indexOf("_")+1);
+		mcMinorVersion = Integer.parseInt(tmpVersion.substring(0,tmpVersion.indexOf("_")));
+
+		//getLogger().info("Running MC version 1."+mcMinorVersion);
+		if(mcMinorVersion < 14) {
+			getLogger().info("You are running a Minecraft version below 1.14. Hotkey GUI will be disabled.");
+			hotkeyGUI = false;
+		}
+		
 		// Create the config file, including checks for old config versions, and load
 		// the default values for unset options
 		createConfig();
@@ -249,6 +270,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		// Organizer will load all category files and will be ready to sort stuff
 		organizer = new JeffChestSortOrganizer(this);
+		
+		settingsGUI = new JeffChestSortSettingsGUI(this);
 
 		// UpdateChecker will check on startup and every 24 hours for new updates (when
 		// enabled)
@@ -486,6 +509,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 			playerConfig.set("sortingEnabled", setting.sortingEnabled);
 			playerConfig.set("hasSeenMessage", setting.hasSeenMessage);
+			playerConfig.set("middleClick",setting.middleClick);
+			playerConfig.set("shiftClick",setting.shiftClick);
+			playerConfig.set("doubleClick",setting.doubleClick);
+			playerConfig.set("shiftRightClick",setting.shiftRightClick);
 			try {
 				playerConfig.save(playerFile);
 			} catch (IOException e) {

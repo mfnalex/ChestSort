@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryEvent;
@@ -65,19 +66,33 @@ public class JeffChestSortListener implements Listener {
 			File playerFile = new File(plugin.getDataFolder() + File.separator + "playerdata",
 					p.getUniqueId().toString() + ".yml");
 			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
+			
+			playerConfig.addDefault("middleClick", plugin.getConfig().getBoolean("hotkeys.middle-click"));
+			playerConfig.addDefault("shiftClick", plugin.getConfig().getBoolean("hotkeys.shift-click"));
+			playerConfig.addDefault("doubleClick", plugin.getConfig().getBoolean("hotkeys.double-click"));
+			playerConfig.addDefault("shiftRightClick", plugin.getConfig().getBoolean("hotkeys.shift-right-click"));
 
 			boolean activeForThisPlayer = false;
+			boolean middleClick, shiftClick, doubleClick, shiftRightClick;
 
 			if (!playerFile.exists()) {
 				// If the player settings file does not exist for this player, set it to the
 				// default value
 				activeForThisPlayer = plugin.getConfig().getBoolean("sorting-enabled-by-default");
+				middleClick = plugin.getConfig().getBoolean("hotkeys.middle-click");
+				shiftClick = plugin.getConfig().getBoolean("hotkeys.shift-click");
+				doubleClick = plugin.getConfig().getBoolean("hotkeys.double-click");
+				shiftRightClick = plugin.getConfig().getBoolean("hotkeys.shift-right-click");
 			} else {
 				// If the file exists, check if the player has sorting enabled
 				activeForThisPlayer = playerConfig.getBoolean("sortingEnabled");
+				middleClick = playerConfig.getBoolean("middleClick");
+				shiftClick = playerConfig.getBoolean("shiftClick");
+				doubleClick = playerConfig.getBoolean("doubleClick");
+				shiftRightClick = playerConfig.getBoolean("shiftRightClick");
 			}
 
-			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer);
+			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick);
 
 			// when "show-message-again-after-logout" is enabled, we don't care if the
 			// player already saw the message
@@ -271,15 +286,17 @@ public class JeffChestSortListener implements Listener {
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 		
-		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
-			return;
-		}
-		
 		if(!(event.getWhoClicked() instanceof Player)) {
 			return;
 		}
 		
 		Player p = (Player) event.getWhoClicked();
+		
+		registerPlayerIfNeeded(p);
+				
+		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
+			return;
+		}
 		
 		// DEBUG START
 //		p.sendMessage("=====================");
@@ -301,14 +318,23 @@ public class JeffChestSortListener implements Listener {
 		
 		boolean sort = false;
 		
+		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
+		
+		// Do not sort the GUI inventory
+		if(event.getClickedInventory() == setting.guiInventory) {
+			return;
+		}
+		
 		switch(event.getClick()) {
 		case MIDDLE:
-			if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
+			//if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
+			if(setting.middleClick) {
 				sort=true;
 			}
 			break;
 		case DOUBLE_CLICK:
-			if(plugin.getConfig().getBoolean("hotkeys.double-click")) {			
+			//if(plugin.getConfig().getBoolean("hotkeys.double-click")) {
+			if(setting.doubleClick) {
 				// We need getCursor() instead of getCurrentItem(), because after picking up the item, it is gone into the cursor
 				if(event.getCursor() == null || (event.getCursor() != null && event.getCursor().getType() == Material.AIR)) {
 					sort=true;
@@ -316,14 +342,16 @@ public class JeffChestSortListener implements Listener {
 			}
 			break;
 		case SHIFT_LEFT: 
-			if(plugin.getConfig().getBoolean("hotkeys.shift-click")) {				
+			//if(plugin.getConfig().getBoolean("hotkeys.shift-click")) {
+			if(setting.shiftClick) {
 				if(event.getCurrentItem() == null || (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.AIR) ){
 					sort=true;
 				}
 			}
 			break;
 		case SHIFT_RIGHT:
-			if(plugin.getConfig().getBoolean("hotkeys.shift-right-click")) {
+			//if(plugin.getConfig().getBoolean("hotkeys.shift-right-click")) {
+			if(setting.shiftRightClick) {
 				if(event.getCurrentItem() == null || ( event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.AIR)) {
 					sort=true;
 				}
@@ -373,6 +401,57 @@ public class JeffChestSortListener implements Listener {
 				playerViewer.updateInventory();
 			}
 		}
+	}
+	
+	@EventHandler
+	void onGUIInteract(InventoryClickEvent event) {
+		if(plugin.hotkeyGUI==false) {
+			return;
+		}
+		if(!(event.getWhoClicked() instanceof Player)) {
+			return;
+		}
+		Player p = (Player) event.getWhoClicked();
+		registerPlayerIfNeeded(p);
+		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
+		
+		if(setting.guiInventory==null) {
+			return;
+		}
+		
+		if(event.getClickedInventory()==null) {
+			return;
+		}
+		
+		if(event.getClickedInventory() != setting.guiInventory) {
+			return;
+		}
+		
+		// We only get this far if the player has clicked inside his GUI inventory
+		event.setCancelled(true);
+		if(event.getClick() != ClickType.LEFT) {
+			return;
+		}
+		
+		if(event.getSlot() == JeffChestSortSettingsGUI.slotMiddleClick) {
+			setting.middleClick = !setting.middleClick;
+			plugin.settingsGUI.openGUI(p);
+			return;
+		}
+		else if(event.getSlot() == JeffChestSortSettingsGUI.slotShiftClick) {
+			setting.shiftClick = !setting.shiftClick;
+			plugin.settingsGUI.openGUI(p);
+			return;
+		} else 	if(event.getSlot() == JeffChestSortSettingsGUI.slotDoubleClick) {
+			setting.doubleClick = !setting.doubleClick;
+			plugin.settingsGUI.openGUI(p);
+			return;
+		} else if(event.getSlot() == JeffChestSortSettingsGUI.slotShiftRightClick) {
+			setting.shiftRightClick = !setting.shiftRightClick;
+			plugin.settingsGUI.openGUI(p);
+			return;
+		}
+		
 	}
 
 }
