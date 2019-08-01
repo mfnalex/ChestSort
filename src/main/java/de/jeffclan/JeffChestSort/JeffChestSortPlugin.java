@@ -235,10 +235,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		mcMinorVersion = Integer.parseInt(tmpVersion.substring(0,tmpVersion.indexOf("_")));
 
 		//getLogger().info("Running MC version 1."+mcMinorVersion);
-		if(mcMinorVersion < 14) {
-			getLogger().info("You are running a Minecraft version below 1.14. Hotkey GUI will be disabled.");
-			hotkeyGUI = false;
-		}
+//		if(mcMinorVersion < 9) {
+//			getLogger().info("You are running a Minecraft version below 1.9. Hotkey GUI will be disabled.");
+//			hotkeyGUI = false;
+//		}
 		
 		// Create the config file, including checks for old config versions, and load
 		// the default values for unset options

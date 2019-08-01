@@ -422,8 +422,7 @@ public class JeffChestSortListener implements Listener {
 		if(event.getClickedInventory()==null) {
 			return;
 		}
-		
-		if(event.getClickedInventory() != setting.guiInventory) {
+		if(!event.getClickedInventory().equals(setting.guiInventory)) {
 			return;
 		}
 		

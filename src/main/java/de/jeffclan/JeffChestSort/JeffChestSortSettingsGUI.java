@@ -18,6 +18,9 @@ public class JeffChestSortSettingsGUI {
 	public static int slotDoubleClick = 5 + 9;
 	public static int slotShiftRightClick = 7 + 9;
 	
+	final static Material red = Material.REDSTONE_BLOCK;
+	final static Material green = Material.EMERALD_BLOCK;
+	
 	enum Hotkey {
 		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick;
 	}
@@ -29,12 +32,17 @@ public class JeffChestSortSettingsGUI {
 	ItemStack getItem(boolean active, Hotkey hotkey) {
 		ItemStack is = null;
 		String suffix;
-		Material green = Material.getMaterial("GREEN_WOOL");
-		Material red = Material.getMaterial("RED_WOOL");
+		//Material green = Material.getMaterial("GREEN_WOOL");
+		//Material red = Material.getMaterial("RED_WOOL");
+		//Material green = Material.GREEN_WOOL;
+		//Material red = Material.RED_WOOL;
 		
-		if(green==null || red==null) {
-			return null;
-		}
+//		if(green==null || red==null) {
+//			//plugin.getLogger().warning("Using unsupported Minecraft version");
+//			green = Material.EMERALD_BLOCK;
+//			red = Material.REDSTONE_BLOCK;
+//			//return null;
+//		}
 		
 		if(active) {
 			is = new ItemStack(green);
@@ -75,10 +83,10 @@ public class JeffChestSortSettingsGUI {
         JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(player.getUniqueId().toString());
         
         // Test if running 1.13 or later
-        if(Material.getMaterial("GREEN_WOOL") == null) {
-        	player.sendMessage(plugin.messages.MSG_ERR_HOTKEYSDISABLED);
-        	return;
-        }
+//        if(Material.getMaterial("GREEN_WOOL") == null) {
+//        	player.sendMessage(plugin.messages.MSG_ERR_HOTKEYSDISABLED);
+//        	return;
+//        }
         
         inventory.setItem(slotMiddleClick, getItem(setting.middleClick,Hotkey.MiddleClick));
         inventory.setItem(slotShiftClick, getItem(setting.shiftClick,Hotkey.ShiftClick));
