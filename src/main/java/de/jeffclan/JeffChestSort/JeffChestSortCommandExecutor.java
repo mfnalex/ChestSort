@@ -41,7 +41,7 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 					plugin.settingsGUI.openGUI(p);
 					
 					return true;
-				}
+				} 
 				
 			}
 			// Settings GUI End

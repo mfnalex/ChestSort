@@ -71,7 +71,7 @@ allow-hotkeys: true
 # You can disable/enable certain hotkeys when you have allow-hotkeys enabled.
 # Hotkeys that could interfere with Minecraft's normal behaviour (e.g.
 # shift+left-click) only work on empty slots, so don't worry about them.
-# Players can also enable/disable all shortcuts individually via /chestsort settings
+# Players can also enable/disable all shortcuts individually via /chestsort hotkeys
 hotkeys:
   # Use middle click (mousewheel) on ANY inventory slot as hotkey
   middle-click: true 
