@@ -29,6 +29,23 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 			// fix for Spigot's stupid /reload function
 			plugin.listener.registerPlayerIfNeeded(p);
 			
+			// Settings GUI
+			if(args.length>0) {
+				if(args[0].equalsIgnoreCase("hotkey") || args[0].equalsIgnoreCase("hotkeys")) {
+					
+//					if(plugin.hotkeyGUI==false) {
+//						p.sendMessage(plugin.messages.MSG_ERR_HOTKEYSDISABLED);
+//						return true;
+//					}
+					
+					plugin.settingsGUI.openGUI(p);
+					
+					return true;
+				}
+				
+			}
+			// Settings GUI End
+			
 			JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
 			setting.sortingEnabled = !setting.sortingEnabled;
 			setting.hasSeenMessage=true;
