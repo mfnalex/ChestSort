@@ -1,3 +1,5 @@
 # Changelog
-## 6.2
-Automatic config update now correctly updates EVERY config setting, including disabled-worlds and the individual hotkey settings.
+## 7.1
+- Removed weapons from armor-and-arrows category.
+- Logs will now get sorted before their stripped variants
+- Enchanted items will be put before their unenchanted equivalents

@@ -14,9 +14,7 @@
 sticky=false
 
 turtle_helmet
-bow
 arrow
-*_sword
 *_helmet
 *_chestplate
 *_leggings
@@ -24,4 +22,3 @@ arrow
 spectral_arrow
 tipped_arrow
 totem_of_undying
-trident

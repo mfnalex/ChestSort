@@ -7,11 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.bukkit.Bukkit;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import de.jeffclan.hooks.CrackShotHook;
 import de.jeffclan.hooks.InventoryPagesHook;
@@ -188,6 +191,7 @@ public class JeffChestSortOrganizer {
 		}
 		// Same for wood, but the wood name can also be in the middle of the item name,
 		// e.g. "stripped_oak_log"
+		
 		for (String woodName : woodNames) {
 			if (typeName.equals(woodName + "_wood")) {
 				typeName = "log_wood";
@@ -203,6 +207,10 @@ public class JeffChestSortOrganizer {
 				typeName = "log_wood_stripped";
 				myColor = woodName;
 			}
+		}
+		// when typeName is exactly "log", change to "log_a" so it gets sorted before the stripped variants
+		if(typeName.equals("log")) {
+			typeName = "log_a";
 		}
 
 		// "egg" has to be put in front to group spawn eggs
@@ -315,6 +323,8 @@ public class JeffChestSortOrganizer {
 			lore = String.join(",", loreArray);
 		}
 		
+		// Put enchanted items before unenchanted ones
+		typeName = typeName + String.format("%05d", 10000-getNumberOfEnchantments(item));
 
 		// Generate the strings that finally are used for sorting.
 		// They are generated according to the config.yml's sorting-method option
@@ -445,6 +455,29 @@ public class JeffChestSortOrganizer {
 			}
 			currentSlot++;
 		}
+		
+
+	}
+	
+	static int getNumberOfEnchantments(ItemStack is) {
+		
+		int totalEnchants = 0;
+		
+		//if(!is.getItemMeta().hasEnchants()) return 0;
+		if(is.getItemMeta() instanceof EnchantmentStorageMeta) {
+			EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) is.getItemMeta();
+			Map<Enchantment,Integer> storedEnchants = storageMeta.getStoredEnchants();
+			for(int level : storedEnchants.values()) {
+				totalEnchants += level;
+			}
+		}
+		
+		Map<Enchantment,Integer> enchants= is.getItemMeta().getEnchants();
+			
+		for(int level : enchants.values()) {
+			totalEnchants += level;
+		}
+		return totalEnchants;
 	}
 
 }
