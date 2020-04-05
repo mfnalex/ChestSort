@@ -13,11 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryEvent;
-import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -284,8 +280,18 @@ public class JeffChestSortListener implements Listener {
 	}
 
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+	public void onInv(InventoryClickEvent e) {
+		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(e.getWhoClicked().getUniqueId().toString());
+
+		if(e.getInventory() == setting.guiInventory) {
+			e.setCancelled(true);
+		}
+	}
+
+
+	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
-		
+
 		if(!(event.getWhoClicked() instanceof Player)) {
 			return;
 		}
