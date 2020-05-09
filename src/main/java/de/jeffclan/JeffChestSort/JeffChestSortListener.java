@@ -7,6 +7,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
+import org.bukkit.block.Hopper;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -19,6 +20,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
@@ -179,15 +181,24 @@ public class JeffChestSortListener implements Listener {
 	}
 
 	private boolean belongsToChestLikeBlock(Inventory inventory) {
+		// Special check if the inventory is an Enderchest,
+		// as for Enderchests getHolder() is null
+		if (inventory.getType() == InventoryType.ENDER_CHEST) {
+			return true;
+		}
+
 		// Possible Fix for https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues/13
 		if (inventory.getHolder() == null) {
 			return false;
 		}
 
-		// System.out.println(inventory.getHolder().getClass().getName());
-
-		// Only continue if the inventory belongs to a chest, double chest, shulkerbox
-		// or barrel
+		// Only continue if the inventory belongs to one of the following:
+		// - a chest,
+		// - double chest,
+		// - shulkerbox (MC 1.11)
+		// - barrel (MC 1.14)
+		// - hopper (MC 1.5)
+		// - Minecart with Chest (MC 1.0)
 		// NOTE: We use .getClass().toString() for new items instead of directly
 		// comparing the ENUM, because we
 		// want to keep compatability between different minecraft versions (e.g. there
@@ -196,6 +207,8 @@ public class JeffChestSortListener implements Listener {
 		// org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
 		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
 		if (!(inventory.getHolder() instanceof Chest) && !(inventory.getHolder() instanceof DoubleChest)
+				&& !(inventory.getHolder() instanceof Hopper)
+				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftMinecartChest"))
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox"))
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
 			return false;
