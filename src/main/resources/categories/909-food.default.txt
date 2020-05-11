@@ -32,6 +32,7 @@ cake
 cookie
 melon_slice
 dried_kelp
+honey_bottle
 cooked_beef
 chicken
 cooked_chicken
