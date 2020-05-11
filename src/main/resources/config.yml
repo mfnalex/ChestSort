@@ -222,21 +222,20 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### Chinese - Thanks to qsefthuopq for translating! -> https://www.spigotmc.org/members/qsefthuopq.339953/
-##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
-#message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
-#message-when-using-chest2: "&7提示: 输入 &6/chestsort&7 来关闭自动整理箱子."
-#message-sorting-disabled: "&7自动整理箱子已 &c关闭&7."
-#message-sorting-enabled: "&7自动整理箱子已 &a启用&7."
-#message-player-inventory-sorted: "&7已成功整理你的背包."
-#message-error-players-only: "&c错误: 指令只能由玩家运行."
-#message-error-invalid-options: "&c错误: 位置选项 %s. 有效选项为 %s."
-#message-gui-enabled: "&aEnabled"
-#message-gui-disabled: "&cDisabled"
-#message-gui-middle-click: "Middle-Click"
-#message-gui-shift-click: "Shift + Click"
-#message-gui-double-click: "Double-Click"
-#message-gui-shift-right-click: "Shift + Right-Click"
+##### Chinese - Thanks to qsefthuopq and Aira-Sakuranomiya for translating!
+#message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理"
+#message-when-using-chest2: "&7提示: 输入 &6/chestsort&7 来关闭自动整理"
+#message-sorting-disabled: "&7自动整理已 &c关闭&7."
+#message-sorting-enabled: "&7自动整理已 &a启用&7."
+#message-player-inventory-sorted: "&7已成功整理你的背包"
+#message-error-players-only: "&c错误: 指令只能由玩家运行"
+#message-error-invalid-options: "&c错误: 位置选项 %s. 有效选项为 %s"
+#message-gui-enabled: "&a已启用"
+#message-gui-disabled: "&c已禁用"
+#message-gui-middle-click: "鼠标中键"
+#message-gui-shift-click: "Shift + 单击"
+#message-gui-double-click: "双击"
+#message-gui-shift-right-click: "Shift + 双击"
 
 ##### Chinese (Traditional) 繁體中文
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -254,7 +253,7 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### Dutch - Thanks to Xeyame for translating! -> https://github.com/Xeyame
+##### Dutch - Thanks to Xeyame for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Hint: Gebruik &6/chestsort&7 om automatische kist sortering aan te zetten."
 #message-when-using-chest2: "&7Hint: Gebruik &6/chestsort&7 om automatische kist sortering uit te zetten."
@@ -270,18 +269,18 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### French - Thanks to automatizer for translating! -> https://www.spigotmc.org/members/automatizer.26188/
+##### French - Thanks to automatizer and demon57730 for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Astuce: Écris &6/chestsort&7 pour activer le classement automatique."
 #message-when-using-chest2: "&7Astuce: Écris &6/chestsort&7 pour désactiver le classement automatique."
 #message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7."
 #message-sorting-enabled: "&7Le classement automatique a été &aactivé&7."
-#message-player-inventory-sorted: "&7Your inventory has been sorted."
+#message-player-inventory-sorted: "&7Votre inventaire a été trié."
 #message-error-players-only: "&cErreur: Cette commande ne peut être utilisée que par des joueurs."
-#message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
-#message-gui-enabled: "&aEnabled"
-#message-gui-disabled: "&cDisabled"
-#message-gui-middle-click: "Middle-Click"
+#message-error-invalid-options: "&cErreur: option inconnue %s. Les options valides sont %s."
+#message-gui-enabled: "&aActivé"
+#message-gui-disabled: "&cDésactivé"
+#message-gui-middle-click: "Clic du milieu"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
@@ -333,7 +332,7 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### Portuguese - Thanks to wildastral for translating! -> https://www.spigotmc.org/members/wildastral.673147/
+##### Portuguese - Thanks to wildastral for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Dica: Digite &6/chestsort&7 para habilitar a organização automática."
 #message-when-using-chest2: "&7Dica: Digite &6/chestsort&7 para desabilitar a organização automática."
@@ -349,7 +348,7 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### Russian - Thanks to Gandon for translating! -> https://www.spigotmc.org/members/gandon.443887/
+##### Russian - Thanks to Gandon for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Подсказка: введите &6/chestsort&7, чтобы включить автоматическую сортировку вещей в сундуках."
 #message-when-using-chest2: "&7Подсказка: введите &6/chestsort&7, чтобы отключить автоматическую сортировку вещей в сундуках."
@@ -365,7 +364,7 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### Spanish - Thanks to Bers_ for translating! ->  https://www.spigotmc.org/members/bers_.146126/
+##### Spanish - Thanks to Bers_ for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Pista: Usa &6/chestsort&7 para activar el orden automático de los cofres."
 #message-when-using-chest2: "&7Pista: Usa &6/chestsort&7 para desactivar el orden automático de los cofres."
@@ -381,7 +380,7 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### Turkish - Thanks to bertek41 for translating!-> https://www.spigotmc.org/members/bertek41.247705/
+##### Turkish - Thanks to bertek41 for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Ipucu: &6/chestsort&7 Yazarak Otomatik Sandık Organizasyon Sistemini Aktif Edebilirsin."
 #message-when-using-chest2: "&7Ipucu: &6/chestsort&7 Yazarak Otomatik Sandık Organizasyon Sistemini Kapatabilirsin."
@@ -402,4 +401,4 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #########################
 
 # please do not change the following line manually!
-config-version: 18
+config-version: 19

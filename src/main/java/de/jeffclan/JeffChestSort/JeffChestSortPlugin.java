@@ -68,7 +68,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortSettingsGUI settingsGUI;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 18;
+	int currentConfigVersion = 19;
 	boolean usingMatchingConfig = true;
 	boolean debug = false;
 	boolean verbose = true;
