@@ -20,6 +20,15 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 		if (command.getName().equalsIgnoreCase("chestsort")) {
 
 			if (!(sender instanceof Player)) {
+				
+				if(args.length!=0) {
+					if(args[0].equalsIgnoreCase("debug")) {
+						plugin.debug=true;
+						sender.sendMessage("ChestSort debug mode enabled.");
+						return true;
+					}
+				}
+				
 				sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
 				return true;
 			}

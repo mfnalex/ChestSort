@@ -15,6 +15,10 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
 
 import de.jeffclan.hooks.CrackShotHook;
 import de.jeffclan.hooks.InventoryPagesHook;
@@ -291,6 +295,22 @@ public class JeffChestSortOrganizer {
 		String[] typeAndColor = getTypeAndColor(item.getType().name());
 		String typeName = typeAndColor[0];
 		String color = typeAndColor[1];
+		String potionEffect = ",";
+		
+		// Potions
+		if(item.getItemMeta()!=null) {
+			ItemMeta meta = item.getItemMeta();
+			if(meta instanceof PotionMeta) {
+				PotionMeta potionMeta = (PotionMeta) meta;
+				if(potionMeta.getBasePotionData()!=null) {
+					PotionData pdata = potionMeta.getBasePotionData();
+					if(pdata != null && pdata.getType()!=null && pdata.getType().getEffectType()!=null) {
+						potionEffect = "|"+pdata.getType().getEffectType().getName();
+					}
+				}
+				//potionEffects = potionEffects.substring(0, potionEffects.length()-1);
+			}
+		}
 		
 		String hookChangedName = item.getType().name();
 		
@@ -331,7 +351,7 @@ public class JeffChestSortOrganizer {
 		String sortableString = plugin.sortingMethod.replaceAll(",", "|");
 		sortableString = sortableString.replace("{itemsFirst}", String.valueOf(itemsFirst));
 		sortableString = sortableString.replace("{blocksFirst}", String.valueOf(blocksFirst));
-		sortableString = sortableString.replace("{name}", typeName);
+		sortableString = sortableString.replace("{name}", typeName+potionEffect);
 		sortableString = sortableString.replace("{color}", color);
 		sortableString = sortableString.replace("{category}", categorySticky);
 		sortableString = sortableString.replace("{keepCategoryOrder}", lineNumber);

@@ -197,8 +197,8 @@ public class JeffChestSortListener implements Listener {
 		// - double chest,
 		// - shulkerbox (MC 1.11)
 		// - barrel (MC 1.14)
-		// - hopper (MC 1.5)
 		// - Minecart with Chest (MC 1.0)
+		// NOTE: Hoppers are NOT included because it may break item sorters like those: https://minecraft.gamepedia.com/Tutorials/Hopper#Item_sorter
 		// NOTE: We use .getClass().toString() for new items instead of directly
 		// comparing the ENUM, because we
 		// want to keep compatability between different minecraft versions (e.g. there
@@ -207,7 +207,6 @@ public class JeffChestSortListener implements Listener {
 		// org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
 		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
 		if (!(inventory.getHolder() instanceof Chest) && !(inventory.getHolder() instanceof DoubleChest)
-				&& !(inventory.getHolder() instanceof Hopper)
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftMinecartChest"))
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox"))
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
