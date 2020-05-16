@@ -288,12 +288,13 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// Register the events for our Listener
 		getServer().getPluginManager().registerEvents(listener, this);
 
-		// Register the /chestsort command and associate it to a new CommandExecutor
+		// Create the CommandExecutor, register commands and set their TabCompleter
 		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
+		JeffChestSortTabCompleter tabCompleter = new JeffChestSortTabCompleter();
 		this.getCommand("chestsort").setExecutor(commandExecutor);
-
-		// Register the /invsort command
+		this.getCommand("chestsort").setTabCompleter(tabCompleter);
 		this.getCommand("invsort").setExecutor(commandExecutor);
+		this.getCommand("invsort").setTabCompleter(tabCompleter);
 
 		// Does anyone actually need this?
 		if (verbose) {

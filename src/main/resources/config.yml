@@ -332,6 +332,21 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
+##### Korean (한국어) - Thanks to kf12 for translating!
+#message-when-using-chest: "&7정보: &6/chestsort&7 명령어로 자동 창고 정리를 활성화 할 수 있습니다."
+#message-when-using-chest2: "&7정보: &6/chestsort&7 명령어로 자동 창고 정리를 비활성화 할 수 있습니다."
+#message-sorting-disabled: "&7자동 창고 정리가 &c비활성화&7 되었습니다."
+#message-sorting-enabled: "&7자동 창고 정리가 &a활성화&7 되었습니다."
+#message-player-inventory-sorted: "&7인벤토리가 정리 되었습니다."
+#message-error-players-only: "&cError: 이 명령은 플레이어만 실행할 수 있습니다."
+#message-error-invalid-options: "&cError: 알 수 없는 옵션 %s. 올바른 옵션은 %s 입니다."
+#message-gui-enabled: "&a활성화"
+#message-gui-disabled: "&c비활성화"
+#message-gui-middle-click: "휠 클릭"
+#message-gui-shift-click: "쉬프트 + 클릭"
+#message-gui-double-click: "더블 클릭"
+#message-gui-shift-right-click: "쉬프트 + 우클릭"
+
 ##### Portuguese - Thanks to wildastral for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Dica: Digite &6/chestsort&7 para habilitar a organização automática."
