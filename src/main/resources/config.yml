@@ -269,7 +269,7 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### French - Thanks to automatizer and demon57730 for translating!
+##### French - Thanks to automatizer, demon57730 and FichdlMaa for translating!
 #message-when-using-chest: "&7Remarque: Écris &6/chestsort&7 pour activer le classement automatique."
 #message-when-using-chest2: "&7Remarque: Écris &6/chestsort&7 pour désactiver le classement automatique."
 #message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7."
