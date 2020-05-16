@@ -181,9 +181,9 @@ public class JeffChestSortListener implements Listener {
 	}
 
 	private boolean belongsToChestLikeBlock(Inventory inventory) {
-		// Special check if the inventory is an Enderchest,
-		// as for Enderchests getHolder() is null
-		if (inventory.getType() == InventoryType.ENDER_CHEST) {
+
+		// Check by InventoryType
+		if (inventory.getType() == InventoryType.ENDER_CHEST || inventory.getType() == InventoryType.SHULKER_BOX) {
 			return true;
 		}
 
@@ -192,10 +192,11 @@ public class JeffChestSortListener implements Listener {
 			return false;
 		}
 
+		// Check by InventoryHolder
 		// Only continue if the inventory belongs to one of the following:
 		// - a chest,
 		// - double chest,
-		// - shulkerbox (MC 1.11)
+		// - shulkerbox (MC 1.11) (obsolete, is checked above by InventoryType
 		// - barrel (MC 1.14)
 		// - Minecart with Chest (MC 1.0)
 		// NOTE: Hoppers are NOT included because it may break item sorters like those: https://minecraft.gamepedia.com/Tutorials/Hopper#Item_sorter
@@ -208,7 +209,7 @@ public class JeffChestSortListener implements Listener {
 		// in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
 		if (!(inventory.getHolder() instanceof Chest) && !(inventory.getHolder() instanceof DoubleChest)
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftMinecartChest"))
-				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox"))
+				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox")) //Obsolete, is checked above by InventoryType
 				&& !(inventory.getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
 			return false;
 		}
