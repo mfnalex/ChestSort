@@ -294,7 +294,7 @@ public class JeffChestSortListener implements Listener {
 			plugin.organizer.sortInventory(event.getInventory());
 		}
 	}
-
+	
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 		
@@ -334,6 +334,12 @@ public class JeffChestSortListener implements Listener {
 		
 		// Do not sort the GUI inventory
 		if(event.getClickedInventory() == setting.guiInventory) {
+			return;
+		}
+		
+		// Prevent player from putting items into GUI inventory
+		if(event.getInventory() == setting.guiInventory) {
+			event.setCancelled(true);
 			return;
 		}
 		
