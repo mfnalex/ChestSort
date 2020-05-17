@@ -1,6 +1,7 @@
 # Changelog
 
-## 7.6-pre1
+## 7.6
+- Added automatic inventory sorting (disabled by default). Can be activated by using /invsort on
 - Added options "toggle", "on", "off" to /chestsort. When no option is specified, "toggle" is assumed
 - Improved the messages sent by the update checker, including links for download, donation and changelog
 - Updated bStats to version 1.6
