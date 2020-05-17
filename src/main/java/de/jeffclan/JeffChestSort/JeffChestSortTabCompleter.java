@@ -10,7 +10,7 @@ import org.bukkit.command.TabCompleter;
 public class JeffChestSortTabCompleter implements TabCompleter {
 	
 	static final String[] chestsortOptions = { "toggle","on","off","hotkeys" };
-	static final String[] invsortOptions = { "all", "hotbar", "inv" };
+	static final String[] invsortOptions = { "toggle","on","off","all", "hotbar", "inv" };
 	
 	private List<String> getMatchingOptions(String entered, String[] options) {
 		List<String> list = new ArrayList<String>();

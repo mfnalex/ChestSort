@@ -68,18 +68,21 @@ public class JeffChestSortListener implements Listener {
 					p.getUniqueId().toString() + ".yml");
 			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 			
+			playerConfig.addDefault("invSortingEnabled", plugin.getConfig().getBoolean("inv-sorting-enabled-by-default"));
 			playerConfig.addDefault("middleClick", plugin.getConfig().getBoolean("hotkeys.middle-click"));
 			playerConfig.addDefault("shiftClick", plugin.getConfig().getBoolean("hotkeys.shift-click"));
 			playerConfig.addDefault("doubleClick", plugin.getConfig().getBoolean("hotkeys.double-click"));
 			playerConfig.addDefault("shiftRightClick", plugin.getConfig().getBoolean("hotkeys.shift-right-click"));
 
 			boolean activeForThisPlayer = false;
+			boolean invActiveForThisPlayer = false;
 			boolean middleClick, shiftClick, doubleClick, shiftRightClick;
 
 			if (!playerFile.exists()) {
 				// If the player settings file does not exist for this player, set it to the
 				// default value
 				activeForThisPlayer = plugin.getConfig().getBoolean("sorting-enabled-by-default");
+				invActiveForThisPlayer = plugin.getConfig().getBoolean("inv-sorting-enabled-by-default");
 				middleClick = plugin.getConfig().getBoolean("hotkeys.middle-click");
 				shiftClick = plugin.getConfig().getBoolean("hotkeys.shift-click");
 				doubleClick = plugin.getConfig().getBoolean("hotkeys.double-click");
@@ -87,13 +90,14 @@ public class JeffChestSortListener implements Listener {
 			} else {
 				// If the file exists, check if the player has sorting enabled
 				activeForThisPlayer = playerConfig.getBoolean("sortingEnabled");
+				invActiveForThisPlayer = playerConfig.getBoolean("invSortingEnabled");
 				middleClick = playerConfig.getBoolean("middleClick");
 				shiftClick = playerConfig.getBoolean("shiftClick");
 				doubleClick = playerConfig.getBoolean("doubleClick");
 				shiftRightClick = playerConfig.getBoolean("shiftRightClick");
 			}
 
-			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick);
+			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer,invActiveForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick);
 
 			// when "show-message-again-after-logout" is enabled, we don't care if the
 			// player already saw the message
@@ -112,9 +116,24 @@ public class JeffChestSortListener implements Listener {
 		plugin.unregisterPlayer(event.getPlayer());
 	}
 
+
 	@EventHandler
-	public void onInventoryEvent(InventoryEvent event) {
-		plugin.getLogger().info("InventoryEvent");
+	public void onPlayerInventoryClose(InventoryCloseEvent event) {
+		if(event.getInventory()==null) return;
+		if(event.getInventory().getHolder()==null) return;
+		if(event.getInventory().getType() == null) return;
+		if(event.getInventory().getType() != InventoryType.CRAFTING) return; // Weird! Returns CRAFTING instead of PLAYER
+		if(!(event.getInventory().getHolder() instanceof Player)) return;
+		Player p = (Player) event.getInventory().getHolder();
+		
+		if(!p.hasPermission("chestsort.use.inventory")) return;
+		registerPlayerIfNeeded(p);
+		
+		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
+		if(!setting.invSortingEnabled) return;
+		
+		plugin.organizer.sortInventory(p.getInventory(),9,35);
+		
 	}
 
 	// This event fires when someone closes an inventory
