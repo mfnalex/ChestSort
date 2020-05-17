@@ -13,7 +13,7 @@ public class JeffChestSortMessages {
 
 	JeffChestSortPlugin plugin;
 
-	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY,
+	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_INVACTIVATED, MSG_INVDEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY,
 			MSG_PLAYERINVSORTED, MSG_INVALIDOPTIONS;
 	
 	final String MSG_GUI_ENABLED, MSG_GUI_DISABLED;
@@ -28,6 +28,12 @@ public class JeffChestSortMessages {
 
 		MSG_DEACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-sorting-disabled", "&7Automatic chest sorting has been &cdisabled&7.&r"));
+		
+		MSG_INVACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+				.getString("message-inv-sorting-enabled", "&7Automatic inventory sorting has been &aenabled&7.&r"));
+
+		MSG_INVDEACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+				.getString("message-inv-sorting-disabled", "&7Automatic inventory sorting has been &cdisabled&7.&r"));
 
 		MSG_COMMANDMESSAGE = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(
 				"message-when-using-chest", "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."));

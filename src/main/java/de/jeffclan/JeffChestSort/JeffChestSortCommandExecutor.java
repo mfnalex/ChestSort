@@ -26,6 +26,11 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 						plugin.debug=true;
 						sender.sendMessage("ChestSort debug mode enabled.");
 						return true;
+					} else if(args[0].equalsIgnoreCase("reload")) {
+						// TODO: EXPERIMENTAL
+						plugin.onDisable();
+						plugin.onEnable();
+					
 					}
 				}
 				
@@ -96,6 +101,8 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 			int start = 9;
 			int end = 35;
 			
+			JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
+			
 			if(args.length>0) {
 				if(args[0].equalsIgnoreCase("all")) {
 					start=0;
@@ -106,8 +113,25 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 				} else if(args[0].equalsIgnoreCase("inv")) {
 					start=9;
 					end=35;
-				} else {
-					p.sendMessage(String.format(plugin.messages.MSG_INVALIDOPTIONS,"\""+args[0]+"\"","\"inv\", \"hotbar\", \"all\""));
+				} else if(args[0].equalsIgnoreCase("on")) {
+					setting.invSortingEnabled = true;
+					p.sendMessage(plugin.messages.MSG_INVACTIVATED);
+					return true;
+				} else if(args[0].equalsIgnoreCase("off")) {
+					setting.invSortingEnabled = false;
+					p.sendMessage(plugin.messages.MSG_INVDEACTIVATED);
+					return true;
+				} else if(args[0].equalsIgnoreCase("toggle")) {
+					setting.invSortingEnabled = !setting.invSortingEnabled;
+					if(setting.invSortingEnabled) {
+						p.sendMessage(plugin.messages.MSG_INVACTIVATED);
+					} else {
+						p.sendMessage(plugin.messages.MSG_INVDEACTIVATED);
+					}
+					return true;
+				}
+				else {
+					p.sendMessage(String.format(plugin.messages.MSG_INVALIDOPTIONS,"\""+args[0]+"\"","\"on\", \"off\", \"toggle\", \"inv\", \"hotbar\", \"all\""));
 					return true;
 				}
 			}
