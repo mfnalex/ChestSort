@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.5
+- Added support for most Shulkerbox/Backpack plugins. Some of those (e.g. [Shulker Backpacks](https://www.spigotmc.org/resources/shulker-backpacks-1-13-1-15.67466/)) are fully compatible, while others (e.g. [BetterShulkerBoxes](https://www.spigotmc.org/resources/bsb-better-shulker-boxes.58837/)) will only work with hotkeys, not automatic sorting.
+- Added Hungarian translation
+- Fixed French translation
+
 ## 7.4
 - Added TabComplete support for /chestsort and /invsort commands
 - Fixed a bug that allowed players to put items into the GUI (/chestsort hotkeys)
