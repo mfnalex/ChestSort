@@ -9,6 +9,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+
 public class JeffChestSortUpdateChecker {
 
 	// This checks for updates. A txt file is downloaded. If the txt file contains a
@@ -28,16 +33,54 @@ public class JeffChestSortUpdateChecker {
 	// This text file always contains a string with the latest version, e.g. 3.7.1
 	String latestVersionLink = "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt";
 
-	String downloadLink = "https://www.chestsort.de";
+	String downloadLink = "https://chestsort.de/download";
+	String changelogLink = "https://chestsort.de/changelog";
+	String donateLink = "https://chestsort.de/donate";
+	
 	private String currentVersion = "undefined";
 	private String latestVersion = "undefined";
+	
+	private TextComponent createLink(String text, String link, net.md_5.bungee.api.ChatColor color) {
+		// Hover text
+		ComponentBuilder hoverCB = new ComponentBuilder(
+                text+" Link: ").bold(true)
+                .append(link).bold(false);
+		
+		TextComponent tc = new TextComponent(text);
+		tc.setBold(true);
+		tc.setColor(color);
+		tc.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL,link));
+		tc.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT,hoverCB.create()));
+		return tc;
+	}
+	
+	private void sendLinks(Player p) {
+		  TextComponent text = new TextComponent("");
+		
+		  TextComponent download = createLink("Download",downloadLink,net.md_5.bungee.api.ChatColor.GOLD); 
+		  TextComponent donate = createLink("Donate",donateLink,net.md_5.bungee.api.ChatColor.GOLD);
+		  TextComponent changelog = createLink("Changelog",changelogLink,net.md_5.bungee.api.ChatColor.GOLD);
+		  
+		  TextComponent placeholder = new TextComponent(" | ");
+		  placeholder.setColor(net.md_5.bungee.api.ChatColor.GRAY);
+		  
+		  text.addExtra(download);
+		  text.addExtra(placeholder);
+		  text.addExtra(donate);
+		  text.addExtra(placeholder);
+		  text.addExtra(changelog);
+	        
+	      p.spigot().sendMessage(text);
+	}
 
 	void sendUpdateMessage(Player p) {
 		if (!latestVersion.equals("undefined")) {
-			if (!currentVersion.equals(latestVersion)) {
+			if (!currentVersion.equals(latestVersion)) {		
 				p.sendMessage(ChatColor.GRAY + "There is a new version of " + ChatColor.GOLD + "ChestSort"
 						+ ChatColor.GRAY + " available.");
-				p.sendMessage(ChatColor.GRAY + "Please download at " + downloadLink);
+				sendLinks(p);
+				p.sendMessage(ChatColor.DARK_GRAY + "Your version: "+currentVersion + " | Latest version: "+ latestVersion);
+				p.sendMessage("");
 			}
 		}
 	}

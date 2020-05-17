@@ -18,7 +18,6 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
-import org.bukkit.potion.PotionEffect;
 
 import de.jeffclan.hooks.CrackShotHook;
 import de.jeffclan.hooks.InventoryPagesHook;

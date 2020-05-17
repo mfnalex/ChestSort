@@ -6,7 +6,7 @@
 
 	<groupId>de.jeffclan</groupId>
 	<artifactId>JeffChestSort</artifactId>
-	<version>7.5</version>
+	<version>7.6-pre1</version>
 	<packaging>jar</packaging>
 
 	<name>JeffChestSort</name>
@@ -87,15 +87,21 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>1.15-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+		<dependency>
 			<groupId>org.bstats</groupId>
 			<artifactId>bstats-bukkit</artifactId>
-			<version>1.4</version>
+			<version>1.6</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.shampaggon.crackshot</groupId>
 			<artifactId>CSUtility</artifactId>
-			<version>latest</version>
+			<version>0.98.9</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/CrackShot.jar</systemPath>
 	</dependency>

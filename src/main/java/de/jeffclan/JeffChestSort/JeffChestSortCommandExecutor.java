@@ -56,7 +56,23 @@ public class JeffChestSortCommandExecutor implements CommandExecutor {
 			// Settings GUI End
 			
 			JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
-			setting.sortingEnabled = !setting.sortingEnabled;
+			
+			if(args.length>0
+					 && !args[0].equalsIgnoreCase("toggle")
+					 && !args[0].equalsIgnoreCase("on")
+					 && !args[0].equalsIgnoreCase("off")) {
+				p.sendMessage(String.format(plugin.messages.MSG_INVALIDOPTIONS,"\""+args[0]+"\"","\"toggle\", \"on\", \"off\", \"hotkeys\""));
+				return true;
+			}
+			if(args.length==0 || args[0].equalsIgnoreCase("toggle")) {
+				setting.sortingEnabled = !setting.sortingEnabled;
+			}
+			else if(args[0].equalsIgnoreCase("on")) {
+				setting.sortingEnabled = true;
+			}
+			else if(args[0].equalsIgnoreCase("off")) {
+				setting.sortingEnabled = false;
+			}
 			setting.hasSeenMessage=true;
 
 			if (setting.sortingEnabled) {

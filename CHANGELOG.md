@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.6-pre1
+- Added options "toggle", "on", "off" to /chestsort. When no option is specified, "toggle" is assumed
+- Improved the messages sent by the update checker, including links for download, donation and changelog
+- Updated bStats to version 1.6
+- Removed some unnecessary imports
+
 ## 7.5
 - Added support for most Shulkerbox/Backpack plugins. Some of those (e.g. [Shulker Backpacks](https://www.spigotmc.org/resources/shulker-backpacks-1-13-1-15.67466/)) are fully compatible, while others (e.g. [BetterShulkerBoxes](https://www.spigotmc.org/resources/bsb-better-shulker-boxes.58837/)) will only work with hotkeys, not automatic sorting.
 - Added Hungarian translation
