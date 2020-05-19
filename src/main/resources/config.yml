@@ -72,7 +72,7 @@ sort-time: close
 # You can disable this by setting this to false.
 allow-hotkeys: true
 
-# You can disable/enable certain hotkeys when you have allow-hotkeys enabled.
+# You can define which hotkeys are enabled by default.
 # Hotkeys that could interfere with Minecraft's normal behaviour (e.g.
 # shift+left-click) only work on empty slots, so don't worry about them.
 # Players can also enable/disable all shortcuts individually via /chestsort hotkeys
@@ -248,23 +248,22 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "双击"
 #message-gui-shift-right-click: "Shift + 双击"
 
-##### Chinese (Traditional) 繁體中文
-##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
+##### Chinese (Traditional) 繁體中文 - Thanks to Command1264 for translating!
 #message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
 #message-when-using-chest2: "&7小提醒: 輸入 &6/chestsort&7 來關閉自動整理箱子"
 #message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
 #message-sorting-enabled: "&7自動整理箱子已 &a開啟&7"
-#message-inv-sorting-disabled: "&7Automatic inventory sorting has been &cdisabled&7."
-#message-inv-sorting-enabled: "&7Automatic inventory sorting has been &aenabled&7."
+#message-inv-sorting-disabled: "&7自動整理背包已 &c關閉&7."
+#message-inv-sorting-enabled: "&7自動整理背包已 &a開啟&7."
 #message-player-inventory-sorted: "&7你的背包已成功整理."
 #message-error-players-only: "&c錯誤: 這個指令只能由玩家使用"
 #message-error-invalid-options: "&c錯誤: 未知選項 %s. 有效的選項為 %s."
-#message-gui-enabled: "&aEnabled"
-#message-gui-disabled: "&cDisabled"
-#message-gui-middle-click: "Middle-Click"
-#message-gui-shift-click: "Shift + Click"
-#message-gui-double-click: "Double-Click"
-#message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-enabled: "&a開啟"
+#message-gui-disabled: "&c關閉"
+#message-gui-middle-click: "中鍵"
+#message-gui-shift-click: "Shift + 左鍵"
+#message-gui-double-click: "雙擊左鍵"
+#message-gui-shift-right-click: "Shift + 右鍵"
 
 ##### Dutch - Thanks to Xeyame for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -468,4 +467,4 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #########################
 
 # please do not change the following line manually!
-config-version: 21
+config-version: 22

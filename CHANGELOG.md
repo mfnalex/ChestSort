@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.7-pre1
+- Changed description for hotkeys in config.yml
+- Updated French translation
+- Updated Chinese (Traditional) translation
+
 ## 7.6
 - Added automatic inventory sorting (disabled by default). Can be activated by using /invsort on
 - Added options "toggle", "on", "off" to /chestsort. When no option is specified, "toggle" is assumed
