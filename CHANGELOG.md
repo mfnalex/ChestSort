@@ -4,6 +4,7 @@
 - Changed description for hotkeys in config.yml
 - Updated French translation
 - Updated Chinese (Traditional) translation
+- Updated bStats to version 1.7
 
 ## 7.6
 - Added automatic inventory sorting (disabled by default). Can be activated by using /invsort on
