@@ -284,15 +284,14 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 
-##### French - Thanks to automatizer, demon57730 and FichdlMaa for translating!
-##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
-#message-when-using-chest: "&7Remarque: Écris &6/chestsort&7 pour activer le classement automatique."
-#message-when-using-chest2: "&7Remarque: Écris &6/chestsort&7 pour désactiver le classement automatique."
+##### French / Français - Thanks to automatizer, demon57730 and FichdlMaa for translating!
+#message-when-using-chest: "&7Remarque: Tape &6/chestsort&7 pour activer le classement automatique."
+#message-when-using-chest2: "&7Remarque: Tape &6/chestsort&7 pour désactiver le classement automatique."
 #message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7."
 #message-sorting-enabled: "&7Le classement automatique a été &aactivé&7."
-#message-inv-sorting-disabled: "&7Automatic inventory sorting has been &cdisabled&7."
-#message-inv-sorting-enabled: "&7Automatic inventory sorting has been &aenabled&7."
-#message-player-inventory-sorted: "&7Votre inventaire a été trié."
+#message-inv-sorting-disabled: "&7Le classement automatique d'inventaire a été &cdésactivé&7."
+#message-inv-sorting-enabled: "&7Le classement automatique d'inventaire a été &aactivé&7."
+#message-player-inventory-sorted: "&7Ton inventaire a été trié."
 #message-error-players-only: "&cErreur: Cette commande ne peut être utilisée que par des joueurs."
 #message-error-invalid-options: "&cErreur: Option inconnue %s. Les options valides sont %s."
 #message-gui-enabled: "&aActivé"
