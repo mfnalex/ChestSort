@@ -2,6 +2,7 @@
 ## 8.1
 - Sort chest's inventory after using the new Fill-Chest-Hotkey
 - Prevent the new hotkeys from being used when allow-hotkeys is set to false
+- Reformatted config.yml a bit (don't worry, you have automatic config updates)
 - Update-Checker now includes Spigot version in User-Agent string
 
 ## 8.0
