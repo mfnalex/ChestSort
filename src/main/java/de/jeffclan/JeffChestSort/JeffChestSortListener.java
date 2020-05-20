@@ -1,13 +1,9 @@
 package de.jeffclan.JeffChestSort;
 
-import java.io.File;
-import java.util.UUID;
-
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -38,11 +34,6 @@ public class JeffChestSortListener implements Listener {
 
 		// DEBUG
 		// To enable debug mode, put debug: true into your config.yml
-		// Checking for my username because I always forget to comment this out before
-		// releases
-		// if (event.getPlayer().getName().equalsIgnoreCase("mfnalex")) {
-		// plugin.debug = true;
-		// }
 
 		// OPs will get an update notice if a new update is available
 		if (event.getPlayer().isOp()) {
@@ -50,65 +41,8 @@ public class JeffChestSortListener implements Listener {
 		}
 
 		// Put player into our perPlayerSettings map
-		registerPlayerIfNeeded(event.getPlayer());
+		plugin.registerPlayerIfNeeded(event.getPlayer());
 
-	}
-
-	// Put player into our perPlayerSettings map
-	void registerPlayerIfNeeded(Player p) {
-		// Players are stored by their UUID, so that name changes don't break player's
-		// settings
-		UUID uniqueId = p.getUniqueId();
-
-		// Add player to map only if they aren't registered already
-		if (!plugin.PerPlayerSettings.containsKey(uniqueId.toString())) {
-
-			// Player settings are stored in a file named after the player's UUID
-			File playerFile = new File(plugin.getDataFolder() + File.separator + "playerdata",
-					p.getUniqueId().toString() + ".yml");
-			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
-			
-			playerConfig.addDefault("invSortingEnabled", plugin.getConfig().getBoolean("inv-sorting-enabled-by-default"));
-			playerConfig.addDefault("middleClick", plugin.getConfig().getBoolean("hotkeys.middle-click"));
-			playerConfig.addDefault("shiftClick", plugin.getConfig().getBoolean("hotkeys.shift-click"));
-			playerConfig.addDefault("doubleClick", plugin.getConfig().getBoolean("hotkeys.double-click"));
-			playerConfig.addDefault("shiftRightClick", plugin.getConfig().getBoolean("hotkeys.shift-right-click"));
-
-			boolean activeForThisPlayer = false;
-			boolean invActiveForThisPlayer = false;
-			boolean middleClick, shiftClick, doubleClick, shiftRightClick;
-
-			if (!playerFile.exists()) {
-				// If the player settings file does not exist for this player, set it to the
-				// default value
-				activeForThisPlayer = plugin.getConfig().getBoolean("sorting-enabled-by-default");
-				invActiveForThisPlayer = plugin.getConfig().getBoolean("inv-sorting-enabled-by-default");
-				middleClick = plugin.getConfig().getBoolean("hotkeys.middle-click");
-				shiftClick = plugin.getConfig().getBoolean("hotkeys.shift-click");
-				doubleClick = plugin.getConfig().getBoolean("hotkeys.double-click");
-				shiftRightClick = plugin.getConfig().getBoolean("hotkeys.shift-right-click");
-			} else {
-				// If the file exists, check if the player has sorting enabled
-				activeForThisPlayer = playerConfig.getBoolean("sortingEnabled");
-				invActiveForThisPlayer = playerConfig.getBoolean("invSortingEnabled");
-				middleClick = playerConfig.getBoolean("middleClick");
-				shiftClick = playerConfig.getBoolean("shiftClick");
-				doubleClick = playerConfig.getBoolean("doubleClick");
-				shiftRightClick = playerConfig.getBoolean("shiftRightClick");
-			}
-
-			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer,invActiveForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick);
-
-			// when "show-message-again-after-logout" is enabled, we don't care if the
-			// player already saw the message
-			if (!plugin.getConfig().getBoolean("show-message-again-after-logout")) {
-				newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
-			}
-
-			// Finally add the PlayerSetting object to the map
-			plugin.PerPlayerSettings.put(uniqueId.toString(), newSettings);
-
-		}
 	}
 
 	@EventHandler
@@ -127,9 +61,9 @@ public class JeffChestSortListener implements Listener {
 		Player p = (Player) event.getInventory().getHolder();
 		
 		if(!p.hasPermission("chestsort.use.inventory")) return;
-		registerPlayerIfNeeded(p);
+		plugin.registerPlayerIfNeeded(p);
 		
-		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
+		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		if(!setting.invSortingEnabled) return;
 		
 		plugin.organizer.sortInventory(p.getInventory(),9,35);
@@ -251,12 +185,12 @@ public class JeffChestSortListener implements Listener {
 		}
 
 		// Fixes exception when using Spigot's stupid /reload command
-		registerPlayerIfNeeded(p);
+		plugin.registerPlayerIfNeeded(p);
 
 		// Get the current player's settings
 		// We do not immediately cancel when sorting is disabled because we might want
 		// to show the hint message
-		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
+		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 
 		// Show "how to enable ChestSort" message when ALL of the following criteria are
 		// met:
@@ -323,7 +257,7 @@ public class JeffChestSortListener implements Listener {
 		
 		Player p = (Player) event.getWhoClicked();
 		
-		registerPlayerIfNeeded(p);
+		plugin.registerPlayerIfNeeded(p);
 				
 		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
 			return;
@@ -349,7 +283,7 @@ public class JeffChestSortListener implements Listener {
 		
 		boolean sort = false;
 		
-		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
+		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		
 		// Do not sort the GUI inventory
 		if(event.getClickedInventory() == setting.guiInventory) {
@@ -438,56 +372,6 @@ public class JeffChestSortListener implements Listener {
 				playerViewer.updateInventory();
 			}
 		}
-	}
-	
-	@EventHandler
-	void onGUIInteract(InventoryClickEvent event) {
-		if(plugin.hotkeyGUI==false) {
-			return;
-		}
-		if(!(event.getWhoClicked() instanceof Player)) {
-			return;
-		}
-		Player p = (Player) event.getWhoClicked();
-		registerPlayerIfNeeded(p);
-		JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(p.getUniqueId().toString());
-		
-		if(setting.guiInventory==null) {
-			return;
-		}
-		
-		if(event.getClickedInventory()==null) {
-			return;
-		}
-		if(!event.getClickedInventory().equals(setting.guiInventory)) {
-			return;
-		}
-		
-		// We only get this far if the player has clicked inside his GUI inventory
-		event.setCancelled(true);
-		if(event.getClick() != ClickType.LEFT) {
-			return;
-		}
-		
-		if(event.getSlot() == JeffChestSortSettingsGUI.slotMiddleClick) {
-			setting.middleClick = !setting.middleClick;
-			plugin.settingsGUI.openGUI(p);
-			return;
-		}
-		else if(event.getSlot() == JeffChestSortSettingsGUI.slotShiftClick) {
-			setting.shiftClick = !setting.shiftClick;
-			plugin.settingsGUI.openGUI(p);
-			return;
-		} else 	if(event.getSlot() == JeffChestSortSettingsGUI.slotDoubleClick) {
-			setting.doubleClick = !setting.doubleClick;
-			plugin.settingsGUI.openGUI(p);
-			return;
-		} else if(event.getSlot() == JeffChestSortSettingsGUI.slotShiftRightClick) {
-			setting.shiftRightClick = !setting.shiftRightClick;
-			plugin.settingsGUI.openGUI(p);
-			return;
-		}
-		
 	}
 
 }

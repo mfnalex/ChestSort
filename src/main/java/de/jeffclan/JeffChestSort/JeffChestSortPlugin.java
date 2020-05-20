@@ -1,6 +1,3 @@
-package de.jeffclan.JeffChestSort;
-
-import java.io.BufferedWriter;
 
 /*
 
@@ -18,9 +15,6 @@ import java.io.BufferedWriter;
 	
 	Please DO NOT post bug reports or feature requests in the review section at SpigotMC.org. Thank you.
 	
-	NOTE: The project has been converted to maven by Azzurite (thanks again). You will need to
-	`mvn install` to create a working .jar.
-	
 	=============================================================================================
 	
 	TECHNICAL INFORMATION:
@@ -32,6 +26,9 @@ import java.io.BufferedWriter;
 	
 */
 
+package de.jeffclan.JeffChestSort;
+
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
@@ -47,7 +44,6 @@ import java.util.UUID;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -59,7 +55,7 @@ import de.jeffclan.utils.Utils;
 public class JeffChestSortPlugin extends JavaPlugin {
 
 	// We need a map to store each player's settings
-	Map<String, JeffChestSortPlayerSetting> PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
+	Map<String, JeffChestSortPlayerSetting> perPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 	JeffChestSortMessages messages;
 	JeffChestSortOrganizer organizer;
 	JeffChestSortUpdateChecker updateChecker;
@@ -69,7 +65,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	ArrayList<String> disabledWorlds;
 	int currentConfigVersion = 22;
 	boolean usingMatchingConfig = true;
-	boolean debug = false;
+	protected boolean debug = false;
 	boolean verbose = true;
 	boolean hotkeyGUI = true;
 	
@@ -163,7 +159,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		
 		getConfig().addDefault("hook-crackshot", true);
 		getConfig().addDefault("hook-crackshot-prefix", "crackshot_weapon");
-		
 		getConfig().addDefault("hook-inventorypages", true);
 		
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
@@ -193,31 +188,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getLogger().warning("==============================================");
 	}
 
-	private void renameConfigIfTooOld() {
-		getLogger().warning("========================================================");
-		getLogger().warning("You are using a config file that has been generated");
-		getLogger().warning("prior to ChestSort version 2.0.0.");
-		getLogger().warning("To allow everyone to use the new features, your config");
-		getLogger().warning("has been renamed to config.old.yml and a new one has");
-		getLogger().warning("been generated. Please examine the new config file to");
-		getLogger().warning("see the new possibilities and adjust your settings.");
-		getLogger().warning("========================================================");
-
-		File configFile = new File(getDataFolder().getAbsolutePath() + File.separator + "config.yml");
-		File oldConfigFile = new File(getDataFolder().getAbsolutePath() + File.separator + "config.old.yml");
-		if (oldConfigFile.getAbsoluteFile().exists()) {
-			oldConfigFile.getAbsoluteFile().delete();
-		}
-		configFile.getAbsoluteFile().renameTo(oldConfigFile.getAbsoluteFile());
-		saveDefaultConfig();
-		try {
-			getConfig().load(configFile.getAbsoluteFile());
-		} catch (IOException | InvalidConfigurationException e) {
-			getLogger().warning("Could not load freshly generated config file!");
-			e.printStackTrace();
-		}
-	}
-
 	@Override
 	public void onDisable() {
 		// We have to unregister every player to save their perPlayerSettings
@@ -233,12 +203,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		mcVersion = tmpVersion.substring(tmpVersion.lastIndexOf('.') + 1);
 		tmpVersion = mcVersion.substring(mcVersion.indexOf("_")+1);
 		mcMinorVersion = Integer.parseInt(tmpVersion.substring(0,tmpVersion.indexOf("_")));
-
-		//getLogger().info("Running MC version 1."+mcMinorVersion);
-//		if(mcMinorVersion < 9) {
-//			getLogger().info("You are running a Minecraft version below 1.9. Hotkey GUI will be disabled.");
-//			hotkeyGUI = false;
-//		}
 		
 		// Create the config file, including checks for old config versions, and load
 		// the default values for unset options
@@ -281,19 +245,25 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// the Organizer to sort inventories when a player closes a chest, shulkerbox or
 		// barrel inventory
 		listener = new JeffChestSortListener(this);
+		
+		//hotbarRefiller = new JeffChestSortHotbarRefiller(this);
 
 		// The sorting method will determine how stuff is sorted
 		sortingMethod = getConfig().getString("sorting-method");
 
 		// Register the events for our Listener
 		getServer().getPluginManager().registerEvents(listener, this);
+		
+		// Register events for the GUI interaction
+		getServer().getPluginManager().registerEvents(settingsGUI, this);
 
 		// Create the CommandExecutor, register commands and set their TabCompleter
-		JeffChestSortCommandExecutor commandExecutor = new JeffChestSortCommandExecutor(this);
+		JeffChestSortChestSortCommand chestsortCommandExecutor = new JeffChestSortChestSortCommand(this);
 		JeffChestSortTabCompleter tabCompleter = new JeffChestSortTabCompleter();
-		this.getCommand("chestsort").setExecutor(commandExecutor);
+		this.getCommand("chestsort").setExecutor(chestsortCommandExecutor);
 		this.getCommand("chestsort").setTabCompleter(tabCompleter);
-		this.getCommand("invsort").setExecutor(commandExecutor);
+		JeffChestSortInvSortCommand invsortCommandExecutor = new JeffChestSortInvSortCommand(this);
+		this.getCommand("invsort").setExecutor(invsortCommandExecutor);
 		this.getCommand("invsort").setTabCompleter(tabCompleter);
 
 		// Does anyone actually need this?
@@ -315,7 +285,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 
 		// Check for updates (async, of course)
-
 		// When set to true, we check for updates right now, and every 24 hours (see
 		// updateCheckInterval)
 		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
@@ -333,6 +302,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		registerMetrics();
 		
+		// When dump is set to true in config.yml, we dump all items with their categories
+		// to find out which items are still missing in the category files
 		if(getConfig().getBoolean("dump")) {
 			try {
 				dump();
@@ -341,7 +312,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	private String getCategoryList() {
@@ -483,13 +453,13 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// server ;) I am sometimes getting stacktraces although it is clearly stated
 		// that /reload is NOT
 		// supported. So, here is a quick fix
-		if (PerPlayerSettings == null) {
-			PerPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
+		if (perPlayerSettings == null) {
+			perPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 		}
-		listener.registerPlayerIfNeeded(p);
+		listener.plugin.registerPlayerIfNeeded(p);
 		// End of quick fix
 
-		return PerPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
+		return perPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
 	}
 
 	// Unregister a player and save their settings in the playerdata folder
@@ -501,8 +471,9 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// When using /reload or some other obscure features, it can happen that players
 		// are online
 		// but not registered. So, we only continue when the player has been registered
-		if (PerPlayerSettings.containsKey(uniqueId.toString())) {
-			JeffChestSortPlayerSetting setting = PerPlayerSettings.get(p.getUniqueId().toString());
+		if (perPlayerSettings.containsKey(uniqueId.toString())) {
+			JeffChestSortPlayerSetting setting = perPlayerSettings.get(p.getUniqueId().toString());
+			
 			File playerFile = new File(getDataFolder() + File.separator + "playerdata",
 					p.getUniqueId().toString() + ".yml");
 			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
@@ -514,12 +485,18 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			playerConfig.set("doubleClick",setting.doubleClick);
 			playerConfig.set("shiftRightClick",setting.shiftRightClick);
 			try {
-				playerConfig.save(playerFile);
+				// Only saved if the config has been changed
+				if(setting.changed) {
+					if(debug) {
+						getLogger().info("PlayerSettings for "+p.getName()+" have changed, saving to file.");
+					}
+					playerConfig.save(playerFile);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			PerPlayerSettings.remove(uniqueId.toString());
+			perPlayerSettings.remove(uniqueId.toString());
 		}
 	}
 	
@@ -533,6 +510,70 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			bw.newLine();
 		}
 		bw.close();
+	}
+
+	void registerPlayerIfNeeded(Player p) {
+		// Players are stored by their UUID, so that name changes don't break player's
+		// settings
+		UUID uniqueId = p.getUniqueId();
+	
+		// Add player to map only if they aren't registered already
+		if (!perPlayerSettings.containsKey(uniqueId.toString())) {
+	
+			// Player settings are stored in a file named after the player's UUID
+			File playerFile = new File(getDataFolder() + File.separator + "playerdata",
+					p.getUniqueId().toString() + ".yml");
+			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
+			
+			playerConfig.addDefault("invSortingEnabled", getConfig().getBoolean("inv-sorting-enabled-by-default"));
+			playerConfig.addDefault("middleClick", getConfig().getBoolean("hotkeys.middle-click"));
+			playerConfig.addDefault("shiftClick", getConfig().getBoolean("hotkeys.shift-click"));
+			playerConfig.addDefault("doubleClick", getConfig().getBoolean("hotkeys.double-click"));
+			playerConfig.addDefault("shiftRightClick", getConfig().getBoolean("hotkeys.shift-right-click"));
+	
+			boolean activeForThisPlayer = false;
+			boolean invActiveForThisPlayer = false;
+			boolean middleClick, shiftClick, doubleClick, shiftRightClick;
+			boolean changed = false;
+	
+			if (!playerFile.exists()) {
+				// If the player settings file does not exist for this player, set it to the
+				// default value
+				activeForThisPlayer = getConfig().getBoolean("sorting-enabled-by-default");
+				invActiveForThisPlayer = getConfig().getBoolean("inv-sorting-enabled-by-default");
+				middleClick = getConfig().getBoolean("hotkeys.middle-click");
+				shiftClick = getConfig().getBoolean("hotkeys.shift-click");
+				doubleClick = getConfig().getBoolean("hotkeys.double-click");
+				shiftRightClick = getConfig().getBoolean("hotkeys.shift-right-click");
+				
+				if(debug) {
+					getLogger().info("Player "+p.getName()+" does not have player settings yet, using default values.");
+				}
+				
+				// Because this is new a file, we have to save it on shutdown/disconnect
+				changed=true;
+			} else {
+				// If the file exists, check if the player has sorting enabled
+				activeForThisPlayer = playerConfig.getBoolean("sortingEnabled");
+				invActiveForThisPlayer = playerConfig.getBoolean("invSortingEnabled");
+				middleClick = playerConfig.getBoolean("middleClick");
+				shiftClick = playerConfig.getBoolean("shiftClick");
+				doubleClick = playerConfig.getBoolean("doubleClick");
+				shiftRightClick = playerConfig.getBoolean("shiftRightClick");
+			}
+	
+			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer,invActiveForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick,changed);
+	
+			// when "show-message-again-after-logout" is enabled, we don't care if the
+			// player already saw the message
+			if (!getConfig().getBoolean("show-message-again-after-logout")) {
+				newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
+			}
+	
+			// Finally add the PlayerSetting object to the map
+			perPlayerSettings.put(uniqueId.toString(), newSettings);
+	
+		}
 	}
 
 }

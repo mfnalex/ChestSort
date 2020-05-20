@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.7-pre1
+- Moved /invsort command to separate class
+- Moved registerPlayerIfNeeded from Listener to main class
+- Save player configs only if they have changed
+
 ## 7.6.1
 - Changed description for hotkeys in config.yml
 - Updated French translation

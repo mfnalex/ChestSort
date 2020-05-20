@@ -4,12 +4,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class JeffChestSortSettingsGUI {
+public class JeffChestSortSettingsGUI implements Listener {
 	
 	JeffChestSortPlugin plugin;
 	
@@ -32,17 +36,6 @@ public class JeffChestSortSettingsGUI {
 	ItemStack getItem(boolean active, Hotkey hotkey) {
 		ItemStack is = null;
 		String suffix;
-		//Material green = Material.getMaterial("GREEN_WOOL");
-		//Material red = Material.getMaterial("RED_WOOL");
-		//Material green = Material.GREEN_WOOL;
-		//Material red = Material.RED_WOOL;
-		
-//		if(green==null || red==null) {
-//			//plugin.getLogger().warning("Using unsupported Minecraft version");
-//			green = Material.EMERALD_BLOCK;
-//			red = Material.REDSTONE_BLOCK;
-//			//return null;
-//		}
 		
 		if(active) {
 			is = new ItemStack(green);
@@ -80,13 +73,7 @@ public class JeffChestSortSettingsGUI {
     void openGUI(Player player) {
         Inventory inventory = createGUI("ChestSort", player);
         
-        JeffChestSortPlayerSetting setting = plugin.PerPlayerSettings.get(player.getUniqueId().toString());
-        
-        // Test if running 1.13 or later
-//        if(Material.getMaterial("GREEN_WOOL") == null) {
-//        	player.sendMessage(plugin.messages.MSG_ERR_HOTKEYSDISABLED);
-//        	return;
-//        }
+        JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(player.getUniqueId().toString());
         
         inventory.setItem(slotMiddleClick, getItem(setting.middleClick,Hotkey.MiddleClick));
         inventory.setItem(slotShiftClick, getItem(setting.shiftClick,Hotkey.ShiftClick));
@@ -101,4 +88,54 @@ public class JeffChestSortSettingsGUI {
         Inventory inventory = Bukkit.createInventory(inventoryHolder, InventoryType.CHEST, name);
         return inventory;
     }
+    
+    @EventHandler
+	void onGUIInteract(InventoryClickEvent event) {
+		if(plugin.hotkeyGUI==false) {
+			return;
+		}
+		if(!(event.getWhoClicked() instanceof Player)) {
+			return;
+		}
+		Player p = (Player) event.getWhoClicked();
+		plugin.listener.plugin.registerPlayerIfNeeded(p);
+		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		
+		if(setting.guiInventory==null) {
+			return;
+		}
+		
+		if(event.getClickedInventory()==null) {
+			return;
+		}
+		if(!event.getClickedInventory().equals(setting.guiInventory)) {
+			return;
+		}
+		
+		// We only get this far if the player has clicked inside his GUI inventory
+		event.setCancelled(true);
+		if(event.getClick() != ClickType.LEFT) {
+			return;
+		}
+		
+		if(event.getSlot() == JeffChestSortSettingsGUI.slotMiddleClick) {
+			setting.toggleMiddleClick();
+			plugin.settingsGUI.openGUI(p);
+			return;
+		}
+		else if(event.getSlot() == JeffChestSortSettingsGUI.slotShiftClick) {
+			setting.toggleShiftClick();
+			plugin.settingsGUI.openGUI(p);
+			return;
+		} else 	if(event.getSlot() == JeffChestSortSettingsGUI.slotDoubleClick) {
+			setting.toggleDoubleClick();
+			plugin.settingsGUI.openGUI(p);
+			return;
+		} else if(event.getSlot() == JeffChestSortSettingsGUI.slotShiftRightClick) {
+			setting.toggleShiftRightClick();
+			plugin.settingsGUI.openGUI(p);
+			return;
+		}
+		
+	}
 }

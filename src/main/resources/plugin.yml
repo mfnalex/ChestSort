@@ -1,6 +1,6 @@
 main: de.jeffclan.JeffChestSort.JeffChestSortPlugin
 name: ChestSort
-version: 7.6.1
+version: 7.7-pre1
 api-version: 1.13
 description: Allows automatic chest sorting
 author: mfnalex
@@ -12,16 +12,22 @@ softdepend: [CrackShot, InventoryPages]
 commands:
   chestsort:
     description: Toggle automatic chest sorting.
-    usage: /<command>
+    usage: /<command> [on|off|toggle]
     aliases: sort
     permission: chestsort.use
   invsort:
-    description: Sorts the player's inventory. When no option is specified, only the regular inventory (excluding the hotbar) is sorted.
-    usage: /<command> [inv|hotbar|all]
+    description: Toggle automatic inventory sorting or sorts the player's inventory. When no option is specified, only the regular inventory (excluding the hotbar) is sorted.
+    usage: /<command> [on|off|toggle|inv|hotbar|all]
     aliases: [isort,inventorysort]
     permission: chestsort.use.inventory
+  refill: 
+    description: Allows auto-refilling items in the hotbar
+    usage: /<command> [on|off|toggle]
+    permission: chestsort.use.refill
 permissions:
   chestsort.use:
     description: Allows chest sorting
   chestsort.use.inventory:
     description: Allows inventory sorting
+  chestsort.use.refill:
+    description: Allows auto-refilling the hotbar
