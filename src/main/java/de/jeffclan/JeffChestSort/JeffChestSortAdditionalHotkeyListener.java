@@ -16,6 +16,9 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 
 	@EventHandler
 	public void onInventoryClickEvent(InventoryClickEvent e) {
+		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
+			return;
+		}
 		if(!(e.getWhoClicked() instanceof Player)) {
 			return;
 		}
