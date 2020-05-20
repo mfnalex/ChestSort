@@ -72,7 +72,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	public boolean hookCrackShot = false;
 	public boolean hookInventoryPages = false;
 	
-	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours
+	private static long updateCheckInterval = 4*60*60; // in seconds. We check on startup and every 4 hours
 	
 	String mcVersion; 	// 1.13.2 = 1_13_R2
 						// 1.14.4 = 1_14_R1
