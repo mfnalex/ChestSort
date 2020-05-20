@@ -226,7 +226,7 @@ message-gui-shift-click: "Shift + Click"
 message-gui-double-click: "Double-Click"
 message-gui-shift-right-click: "Shift + Right-Click"
 message-gui-left-click: "Fill Chest (Left-Click)"
-message-gui-right-click: "Load Chest (Right-Click)"
+message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### English
 #message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
@@ -245,7 +245,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Chinese - Thanks to qsefthuopq and Aira-Sakuranomiya for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -265,7 +265,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "双击"
 #message-gui-shift-right-click: "Shift + 双击"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Chinese (Traditional) 繁體中文 - Thanks to Command1264 for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -285,7 +285,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "雙擊左鍵"
 #message-gui-shift-right-click: "Shift + 右鍵"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Dutch - Thanks to Xeyame for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -305,7 +305,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### French / Français - Thanks to automatizer, demon57730 and FichdlMaa for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -325,7 +325,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Clic"
 #message-gui-shift-right-click: "Shift + Clic droit"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### German
 #message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."
@@ -364,7 +364,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Italian
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -384,7 +384,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Japanese
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -404,7 +404,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Korean (한국어) - Thanks to kf12 for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -424,7 +424,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "더블 클릭"
 #message-gui-shift-right-click: "쉬프트 + 우클릭"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Portuguese - Thanks to wildastral for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -444,7 +444,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Russian - Thanks to Gandon for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -464,7 +464,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Spanish - Thanks to Bers_ for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -484,7 +484,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ##### Turkish - Thanks to bertek41 for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -504,7 +504,7 @@ message-gui-right-click: "Load Chest (Right-Click)"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Load Chest (Right-Click)"
+#message-gui-right-click: "Empty Chest (Right-Click)"
 
 ############################
 ##### Technical stuff! #####

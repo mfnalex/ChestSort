@@ -23,7 +23,12 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 		if(e.getClickedInventory()!=null) {
 			return;
 		}
-		if(e.getInventory().getType() != InventoryType.CHEST) {
+		if(e.getInventory().getType() != InventoryType.CHEST
+				&& e.getInventory().getType() != InventoryType.DISPENSER
+				&& e.getInventory().getType() != InventoryType.DROPPER
+				&& e.getInventory().getType() != InventoryType.ENDER_CHEST
+				&& e.getInventory().getType() != InventoryType.SHULKER_BOX
+				&& !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel")) {
 			return;
 		}
 		Player p = (Player) e.getWhoClicked();
@@ -36,7 +41,7 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 		if(e.isLeftClick() && setting.leftClick) {
 			de.jeffclan.utils.InventoryHelper.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory());
 		} else if(e.isRightClick() && setting.rightClick) {
-			de.jeffclan.utils.InventoryHelper.stuffInventoryIntoAnother(e.getInventory(), p.getInventory());
+			de.jeffclan.utils.InventoryHelper.stuffInventoryIntoAnother(e.getInventory(), p.getInventory(),e.getInventory());
 		}
 	}
 
