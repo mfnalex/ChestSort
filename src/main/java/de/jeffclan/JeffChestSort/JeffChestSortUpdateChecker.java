@@ -91,7 +91,7 @@ public class JeffChestSortUpdateChecker {
 
 				plugin.getLogger().info("Checking for available updates...");
 				try {
-					String userAgent = "ChestSort/"+plugin.getDescription().getVersion()+"@MC/"+plugin.getServer().getClass().getPackage().getName();
+					String userAgent = "ChestSort/"+plugin.getDescription().getVersion()+" (MC "+plugin.mcVersion+")";
 					HttpURLConnection httpcon = (HttpURLConnection) new URL(latestVersionLink).openConnection();
 					httpcon.addRequestProperty("User-Agent", userAgent);
 					BufferedReader reader = new BufferedReader(new InputStreamReader(httpcon.getInputStream()));
