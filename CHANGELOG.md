@@ -110,3 +110,111 @@ You can now sort any inventory by middle-clicking any slot within that inventory
 - The config file will update itself automatically when a new version is released. Your old changes will be kept, so you always see the new config options without having to redo all your changes.
 - Categories can be set to sticky in the category file. That means that the items in this category will be ordered exactly as in the file. Without setting sticky, the items in one category will only be grouped together and sorted according to the other variables in your sorting-method.
 - New placeholders for your sorting-method including custom item name (e.g. when renamed with an anvil) and lore. You can also use {keepCategoryOrder} behind {category}. This will have the same effect as when you set all categories to sticky.
+
+## 4.2
+- Added sort-time option. Available options: open, close, both
+
+## 4.1.2
+- Fixed compatability for Spigot and Paper from 1.8 to 1.14 (again...)
+
+## 4.1.1
+- Reverting to 1.13.2 API to fix exception when using certain paper und Spigot versions
+
+## 4.1
+- Sorting EnderChests is now possible! Your loot is finally safe and tidy.
+- More options for /invsort: /invsort aka /isort now understands three options:
+/invsort inv (default) will sort only the regular inventory, excluding hotbar
+/invsort hotbar will only sort the hotbar
+/invsort all will sort both
+- Changed order of default category files. The valuables and tools category have switched places, so that tools is now the first category.
+- Update Spigot-API to 1.14. ChestSort already worked with 1.14, but now it uses the new API natively.
+
+## 4.0
+- Player Inventory sorting! Players can sort their inventory using /invsort or /isort. This requires the chestsort.use.inventory permission
+- Support for all major Minecraft versions! This version has been tested with 1.8, 1.11, 1.13.2 and 1.14, so it should work with every version between 1.8 and 1.14
+
+## 3.7.1
+- Added Russian translation
+- Fixes exception when opening inventories without associated InventoryHolder
+
+## 3.7
+- Added sorting support for barrels
+- Improved async update checker
+
+## 3.6
+- Fixed missing plugin.yml
+- Added API function: boolean sortingEnabled = chestSort.sortingEnabled(Player player);
+
+## 3.5
+- Supports all Spigot versions from 1.11 to 1.14
+
+## 3.4
+- Added disabled-worlds option
+
+## 3.3
+- Fixed API function: chestSort.sortInventory(Inventory inventory, int startSlot, int endSlot) now works correctly
+
+## 3.2
+- Fixed bug when sorting custom player heads
+- Revamped sorting algorithm, it is now even faster!
+
+## 3.1
+- Added API function: chestSort.sortInventory(Inventory inv, int startSlot, int endSlot)
+
+## 3.0
+- Added ChestSort API
+
+## 2.0.3
+- Added Chinese (Traditional) and Japanese translation
+
+## 2.0.2
+- Updated Spigot API to 1.13.2
+- Players in adventure mode will no longer be able to sort chests
+
+## 2.0.1
+- Updated Spigot API to 1.13.1
+- Added re-initialization of the PerPlayerSettings object to avoid problems with /reload
+- Added ChestSort version to user agent for auto update
+- Added show-message-when-using-chest-and-sorting-is-enabled to Metrics
+
+## 2.0.0
+- ChestSort now supports categories for sorting! There are pregenerated category files that you can adjust. Wildcards are supported!
+- The default config now uses this sorting method: {category},{itemsFirst},{name},{color}
+- Sorting has been improved for many things, like corals, stripped_log and many more
+- Automatic update checker integrated. On Server startup and every 24 hours there will be a check if a new version is available. If yes, it is displayed in the console and to OPs on logging in. You can toggle this in the config.yml (check every 24 hours, check only on startup or don't check at all)
+- Bugfixes and improvements
+- Your old config file will be renamed, so that you can use the new features and start off with a freshly generated 2.0.0 config
+- Some debug infos on server startup. You can disable this by setting verbose: false in your config.yml
+- ChestSort now survives /reload (which is still UNSUPPORTED!)
+
+## 1.7.4
+- Added Spanish translation
+
+## 1.7.3
+- Fixed "using old config" message being shown when using freshly generated config
+
+## 1.7.2
+- Fixed debug mode being enabled by default
+
+## 1.7.1
+- Added color sorting for all blocks
+
+## 1.6
+- You can now customize the way ChestSort will sort your stuff. By default, everything is sorted alphabetically, but items will be put before blocks. See the new config.yml
+- Bugfix: Players in spectator mode can no longer sort chest
+
+## 1.5.8
+- Added Chinese language support, thanks qsefthuopq for translating!
+- The message on how to use /chestsort when accessing a chest for the first time is not shown anymore when a player already entered the command before
+
+## 1.5.7
+- Bugfix: Corrected default config file to use English as default. Since 1.5.6, it was accidentally set to Italian.
+
+## 1.5.6
+- Added Italien translation
+
+## 1.5
+- Added permissions
+
+## 1.4
+- Added bStats
