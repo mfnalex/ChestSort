@@ -25,5 +25,3 @@ permissions:
     description: Allows chest sorting
   chestsort.use.inventory:
     description: Allows inventory sorting
-  chestsort.use.refill:
-    description: Allows auto-refilling the hotbar
