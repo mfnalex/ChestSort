@@ -36,8 +36,6 @@ public class JeffChestSortUpdateChecker {
 	final static String changelogLink = "https://chestsort.de/changelog";
 	final static String donateLink = "https://chestsort.de/donate";
 	
-	final String userAgent = "ChestSort/"+plugin.getDescription().getVersion()+"@MC/"+plugin.getServer().getClass().getPackage().getName();
-	
 	private String currentVersion = "undefined";
 	private String latestVersion = "undefined";
 	
@@ -93,6 +91,7 @@ public class JeffChestSortUpdateChecker {
 
 				plugin.getLogger().info("Checking for available updates...");
 				try {
+					String userAgent = "ChestSort/"+plugin.getDescription().getVersion()+"@MC/"+plugin.getServer().getClass().getPackage().getName();
 					HttpURLConnection httpcon = (HttpURLConnection) new URL(latestVersionLink).openConnection();
 					httpcon.addRequestProperty("User-Agent", userAgent);
 					BufferedReader reader = new BufferedReader(new InputStreamReader(httpcon.getInputStream()));
