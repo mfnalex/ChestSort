@@ -8,6 +8,8 @@
 [FONT=Trebuchet MS][SIZE=4][COLOR=rgb(0, 179, 0)]See ChestSort in Action![/COLOR][/SIZE]
 [SIZE=5][COLOR=rgb(0, 179, 0)][B]> Join one of our demo servers! <[/B][/COLOR][/SIZE]
 [COLOR=rgb(0, 179, 0)][SIZE=4][B]See below for server details[/B][/SIZE][/COLOR][/FONT]
+
+[IMG]http://api.jeff-media.de/chestsort/spigotmc/img/chestsort7.6.gif[/IMG]
 [/CENTER]
 [SIZE=4][B]ChestSort can automatically sort every chest, barrel, etc. after you have used it.[/B] Every player can enable or disable this feature if desired with the simple command [B]/chestsort[/B]. Players can also [B]sort their own inventory[/B] using the command [B]/invsort[/B], or automatically using [B]/invsort on|off[/B]. You can also use hotkeys (middle-click, double-click, shift-click and shift+right-click) within player inventories, chests etc. to have them sorted, if you do not wish automatic sorting.[/SIZE]
 
@@ -59,10 +61,13 @@ Allows usage of automatic chest sorting and the /chestsort command.[/SIZE]
 Allows usage of automatic inventory sorting and the /invsort command.[/SIZE]
 
 [SIZE=6]Hotkeys[/SIZE]
-You can use hotkeys to sort inventories without having to enter commands. This is useful if you only want to sort chests from time to time without having to enable the automatic sorting, or if you quickly want to sort your player inventory. Each hotkey can be enabled/disabled in the config.yml. By default, all hotkeys are enabled. Additionally, players can enable/disable each hotkey individually by running [I]/chestsort hotkeys[/I]
+You can use hotkeys to sort inventories without having to enter commands. This is useful if you only want to sort chests from time to time without having to enable the automatic sorting, or if you quickly want to sort your player inventory. Each hotkey can be enabled/disabled in the config.yml. By default, all hotkeys are enabled. Additionally, players can enable/disable each hotkey individually by running [I]/chestsort hotkeys
+[/I]
+There are also two hotkeys to quickly fill/empty a chest/barrel/etc. from your inventory by left-clicking (filling) or right-clicking (emptying) outside of the chest's inventory.
 
 [ATTACH=full]444785[/ATTACH]
 
+[SIZE=5]Sorting Hotkeys[/SIZE]
 [SIZE=4][B]Middle click[/B]
 Middle click (mousewheel) on ANY inventory slot[/SIZE]
 
@@ -73,22 +78,31 @@ Shift + left click on any EMPTY inventory slot[/SIZE]
 Double click on any EMPTY inventory slot[/SIZE]
 
 [SIZE=4][B]Shift + right click[/B]
-Shift + right click on any EMPTY inventory slot[/SIZE]
+Shift + right click on any EMPTY inventory slot
+[/SIZE]
+[SIZE=5]Additional Hotkeys[/SIZE]
+[SIZE=4][B]Left-Click outside inventory[/B]
+Puts your stuff (except hotbar) into the chest, barrel etc.
 
-[SIZE=4][SIZE=6]Video & Screenshots[/SIZE][/SIZE]
+[B]Right-Click outside inventory[/B]
+Empties the chest, barrel etc. into your inventory
+
+[IMG]http://api.jeff-media.de/chestsort/spigotmc/img/fillchest.gif[/IMG] 
+
+[SIZE=4][SIZE=6][COLOR=rgb(89, 179, 0)]Demo Servers[/COLOR][/SIZE][/SIZE][/SIZE]
+[SIZE=4][SIZE=4][COLOR=rgb(89, 179, 0)][FONT=Trebuchet MS][B][I]Join one of our demo servers. You will be in creative mode. Take a chest and lots of random stuff. [/I][/B][/FONT][B][FONT=Trebuchet MS][I]Then toggle automatic chest sorting with /chestsort. Place the chest anywhere [/I][/FONT][/B][FONT=Trebuchet MS][B][I]and fill it[/I][/B][/FONT][B][FONT=Trebuchet MS][I]. It will be magically sorted when you close it. You can disable sorting by using /chestsort again. You can also use hotkeys (middle-click, shift-click, double-click and shift+right-click).[/I][/FONT][/B][/COLOR][/SIZE]
+[/SIZE]
+[CENTER][SIZE=4][SIZE=4][FONT=Trebuchet MS][SIZE=5][COLOR=rgb(89, 179, 0)]> 1.15.2: demo15.chestsort.de <[/COLOR][/SIZE][/FONT][/SIZE][/SIZE]
+[SIZE=4][SIZE=4][FONT=Trebuchet MS][SIZE=5][COLOR=rgb(89, 179, 0)]> 1.14.4: demo14.chestsort.de <[/COLOR][/SIZE][/FONT][/SIZE][/SIZE]
+[SIZE=4][SIZE=4][FONT=Trebuchet MS][SIZE=5][COLOR=rgb(89, 179, 0)]> 1.13.2: demo13.chestsort.de <[/COLOR][/SIZE][/FONT][/SIZE][/SIZE]
+[SIZE=4][SIZE=4][FONT=Trebuchet MS][SIZE=5][COLOR=rgb(89, 179, 0)]> 1.12.2: demo12.chestsort.de <[/COLOR][/SIZE][/FONT][/SIZE][/SIZE]
+[SIZE=4]
+[I]Please note that using hotkeys in the player inventory is only possible in survival game mode.[/I][/SIZE][/CENTER]
+[SIZE=4]
+[SIZE=6]Video & Screenshots[/SIZE][/SIZE]
 
 [CENTER][SIZE=4][MEDIA=youtube]SkPcUtOos9o[/MEDIA]
-[ATTACH=full]382332[/ATTACH][/SIZE][/CENTER]
-
-[SIZE=4][SIZE=6]Demo Servers[/SIZE][/SIZE]
-[SIZE=4][COLOR=rgb(89, 179, 0)][FONT=Trebuchet MS][B][I]Join one of our demo servers. You will be in creative mode. Take a chest and lots of random stuff. [/I][/B][/FONT][B][FONT=Trebuchet MS][I]Then toggle automatic chest sorting with /chestsort. Place the chest anywhere [/I][/FONT][/B][FONT=Trebuchet MS][B][I]and fill it[/I][/B][/FONT][B][FONT=Trebuchet MS][I]. It will be magically sorted when you close it. You can disable sorting by using /chestsort again. You can also use hotkeys (middle-click, shift-click, double-click and shift+right-click).[/I][/FONT][/B][/COLOR][/SIZE]
-
-[CENTER][SIZE=4][FONT=Trebuchet MS][SIZE=5][COLOR=rgb(89, 179, 0)]> 1.15.2: demo15.chestsort.de <[/COLOR][/SIZE][/FONT][/SIZE]
-[SIZE=4][FONT=Trebuchet MS][SIZE=5][COLOR=rgb(89, 179, 0)]> 1.14.4: demo14.chestsort.de <[/COLOR][/SIZE][/FONT][/SIZE]
-[SIZE=4][FONT=Trebuchet MS][SIZE=5][COLOR=rgb(89, 179, 0)]> 1.13.2: demo13.chestsort.de <[/COLOR][/SIZE][/FONT][/SIZE]
-[SIZE=4][FONT=Trebuchet MS][SIZE=5][COLOR=rgb(89, 179, 0)]> 1.12.2: demo12.chestsort.de <[/COLOR][/SIZE][/FONT][/SIZE]
-
-[I]Please note that using hotkeys in the player inventory is only possible in survival game mode.[/I]
+[ATTACH=full]382332[/ATTACH][/SIZE]
 [/CENTER]
 [SIZE=4][SIZE=6]WorldGuard and other protection plugins[/SIZE][/SIZE]
 [SIZE=4]ChestSort will only sort chests that the player has access to. In other words: when some other plugin like WorldGuard prevents access to the chest, then ChestSort will not sort this chest.
