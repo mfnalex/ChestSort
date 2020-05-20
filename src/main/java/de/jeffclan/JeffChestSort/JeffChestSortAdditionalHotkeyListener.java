@@ -40,6 +40,7 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 		
 		if(e.isLeftClick() && setting.leftClick) {
 			de.jeffclan.utils.InventoryHelper.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory());
+			plugin.sortInventory(e.getInventory());
 		} else if(e.isRightClick() && setting.rightClick) {
 			de.jeffclan.utils.InventoryHelper.stuffInventoryIntoAnother(e.getInventory(), p.getInventory(),e.getInventory());
 		}
