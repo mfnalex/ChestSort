@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.7-pre1
+## 7.6.1
 - Changed description for hotkeys in config.yml
 - Updated French translation
 - Updated Chinese (Traditional) translation
