@@ -20,10 +20,6 @@ commands:
     usage: /<command> [on|off|toggle|inv|hotbar|all]
     aliases: [isort,inventorysort]
     permission: chestsort.use.inventory
-  refill: 
-    description: Allows auto-refilling items in the hotbar
-    usage: /<command> [on|off|toggle]
-    permission: chestsort.use.refill
 permissions:
   chestsort.use:
     description: Allows chest sorting
