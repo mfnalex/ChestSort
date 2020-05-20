@@ -519,7 +519,7 @@ message-gui-right-click: "Empty Chest (Right-Click)"
 ############################
 
 # If you want to reorganize your category files, you can temporarily enable
-# the dump option to get a .txt file that includes EVERY available material
+# the dump option to get a .csv file that includes EVERY available material
 # with its associated category. This way, you can easily find items that
 # have not yet been assigned to a category.
 dump: false
