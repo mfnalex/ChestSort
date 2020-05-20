@@ -27,6 +27,14 @@ public class JeffChestSortConfigUpdater {
 	// Don't worry! Your changes will be kept
 
 	void updateConfig() {
+		
+		// hotkeys has been renamed to sorting-hotkeys
+		if(plugin.getConfig().isSet("hotkeys.middle-click")) {
+			plugin.getConfig().set("sorting-hotkeys.middle-click", plugin.getConfig().getBoolean("hotkeys.middle-click"));
+			plugin.getConfig().set("sorting-hotkeys.shift-click", plugin.getConfig().getBoolean("hotkeys.shift-click"));
+			plugin.getConfig().set("sorting-hotkeys.double-click", plugin.getConfig().getBoolean("hotkeys.double-click"));
+			plugin.getConfig().set("sorting-hotkeys.shift-right-click", plugin.getConfig().getBoolean("hotkeys.shift-right-click"));
+		}
 
 		if (plugin.debug)
 			plugin.getLogger().info("rename config.yml -> config.old.yml");
@@ -73,14 +81,20 @@ public class JeffChestSortConfigUpdater {
 						newLines.add("- " + disabledWorld);
 					}
 				}
-			} else if (line.startsWith("hotkeys:")) {
+			} else if (line.startsWith("sorting-hotkeys:") || line.startsWith("additional-hotkeys:")) {
 				// dont replace hotkeys root part
 			} else if (line.startsWith("  middle-click:")) {
-				newline = "  middle-click: " + plugin.getConfig().getBoolean("hotkeys.middle-click");
+				newline = "  middle-click: " + plugin.getConfig().getBoolean("sorting-hotkeys.middle-click");
 			} else if (line.startsWith("  shift-click:")) {
-				newline = "  shift-click: " + plugin.getConfig().getBoolean("hotkeys.shift-click");
+				newline = "  shift-click: " + plugin.getConfig().getBoolean("sorting-hotkeys.shift-click");
 			} else if (line.startsWith("  double-click:")) {
-				newline = "  double-click: " + plugin.getConfig().getBoolean("hotkeys.double-click");
+				newline = "  double-click: " + plugin.getConfig().getBoolean("sorting-hotkeys.double-click");
+			} else if (line.startsWith("  shift-right-click:")) {
+				newline = "  shift-right-click: " + plugin.getConfig().getBoolean("sorting-hotkeys.shift-right-click");
+			} else if (line.startsWith("  left-click:")) {
+				newline = "  left-click: " + plugin.getConfig().getBoolean("additional-hotkeys.left-click");
+			} else if (line.startsWith("  right-click:")) {
+				newline = "  right-click: " + plugin.getConfig().getBoolean("additional-hotkeys.right-click");
 			} else {
 				for (String node : oldValues.keySet()) {
 					if (line.startsWith(node + ":")) {

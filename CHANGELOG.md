@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.0
+- Added two new hotkeys (disabled by default): Left-Click outside of chest's inventory will load all your stuff except hotbar into the chest, Right-Click outside of the chest's inventory will unload the chest into your inventory. The hotkeys can be enabled using /chestsort hotkeys and need the chestsort.use permission
+- Added debug and dump option to config (you will probably not need those)
+- Note: This version includes two new messages, so please send me your new translations :)
+
 ## 7.7-pre1
 - Moved /invsort command to separate class
 - Moved registerPlayerIfNeeded from Listener to main class

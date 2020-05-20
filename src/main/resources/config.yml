@@ -67,16 +67,20 @@ auto-generate-category-files: true
 # Available options: open, close, both
 sort-time: close
 
+###################
+##### Hotkeys #####
+###################
+
 # Instead of automatic sorting, you can also use hotkeys (see below)
 # when using an inventory to have it sorted immediately.
 # You can disable this by setting this to false.
 allow-hotkeys: true
 
-# You can define which hotkeys are enabled by default.
+# You can define which sorting hotkeys are enabled by default.
 # Hotkeys that could interfere with Minecraft's normal behaviour (e.g.
 # shift+left-click) only work on empty slots, so don't worry about them.
-# Players can also enable/disable all shortcuts individually via /chestsort hotkeys
-hotkeys:
+# Players can also enable/disable these shortcuts individually via /chestsort hotkeys
+sorting-hotkeys:
   # Use middle click (mousewheel) on ANY inventory slot as hotkey
   middle-click: true 
   # Use shift + left-click on any EMPTY inventory slot as hotkey
@@ -85,6 +89,15 @@ hotkeys:
   double-click: true 
   # Use shift + right-click on any EMPTY inventory slot as hotkey
   shift-right-click: true
+
+# Additionally to sorting hotkeys, you can quickly unload your inventory into a chest and vice versa
+# using left-click or richt-click outside of a chest's inventory.
+# Players can also enable/disable these shortcuts individually via /chestsort hotkeys
+additional-hotkeys:
+  # Use left-click outside inventory to quickly put your inventory (except hotbar) into the chest
+  left-click: false
+  # Use right-click outside inventory to quickly take all items out of the chest and into your inventory
+  right-click: false
 
 # should we check for updates?
 # when enabled, a message is printed in the console if a new
@@ -174,7 +187,7 @@ hook-inventorypages: true
 #   sort by category, but keep exactly the same order as defined in each category file, then sort any undefined items by name and color
 #      '{category},{keepCategoryOrder},{name},{color}
 #
-sorting-method: '{category},{itemsFirst},{name},{color}'
+sorting-method: '{category},{itemsFirst},{name},{color},{customName}'
 
 #########################
 ##### localization ######
@@ -212,6 +225,8 @@ message-gui-middle-click: "Middle-Click"
 message-gui-shift-click: "Shift + Click"
 message-gui-double-click: "Double-Click"
 message-gui-shift-right-click: "Shift + Right-Click"
+message-gui-left-click: "Fill Chest (Left-Click)"
+message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### English
 #message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
@@ -229,6 +244,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Chinese - Thanks to qsefthuopq and Aira-Sakuranomiya for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -247,8 +264,11 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + 单击"
 #message-gui-double-click: "双击"
 #message-gui-shift-right-click: "Shift + 双击"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Chinese (Traditional) 繁體中文 - Thanks to Command1264 for translating!
+##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
 #message-when-using-chest2: "&7小提醒: 輸入 &6/chestsort&7 來關閉自動整理箱子"
 #message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
@@ -264,6 +284,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + 左鍵"
 #message-gui-double-click: "雙擊左鍵"
 #message-gui-shift-right-click: "Shift + 右鍵"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Dutch - Thanks to Xeyame for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -282,8 +304,11 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### French / Français - Thanks to automatizer, demon57730 and FichdlMaa for translating!
+##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Remarque: Tape &6/chestsort&7 pour activer le classement automatique."
 #message-when-using-chest2: "&7Remarque: Tape &6/chestsort&7 pour désactiver le classement automatique."
 #message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7."
@@ -298,7 +323,9 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-middle-click: "Clic du milieu"
 #message-gui-shift-click: "Maj. + Clic"
 #message-gui-double-click: "Double-Clic"
-#message-gui-shift-right-click: "Shift + Clic droit" 
+#message-gui-shift-right-click: "Shift + Clic droit"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### German
 #message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."
@@ -316,6 +343,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Klick"
 #message-gui-double-click: "Doppelklick"
 #message-gui-shift-right-click: "Shift + Rechtsklick"
+#message-gui-left-click: "Kiste füllen (Linksklick)"
+#message-gui-right-click: "Kiste leeren (Rechtsklick)"
 
 ##### Hungarian - Thanks to Letter for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -334,6 +363,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Italian
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -352,6 +383,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Japanese
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -370,6 +403,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Korean (한국어) - Thanks to kf12 for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -388,6 +423,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "쉬프트 + 클릭"
 #message-gui-double-click: "더블 클릭"
 #message-gui-shift-right-click: "쉬프트 + 우클릭"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Portuguese - Thanks to wildastral for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -406,6 +443,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Russian - Thanks to Gandon for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -424,6 +463,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Spanish - Thanks to Bers_ for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -442,6 +483,8 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
 ##### Turkish - Thanks to bertek41 for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -460,10 +503,22 @@ message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-shift-click: "Shift + Click"
 #message-gui-double-click: "Double-Click"
 #message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Fill Chest (Left-Click)"
+#message-gui-right-click: "Load Chest (Right-Click)"
 
-#########################
-#####     Done!     #####
-#########################
+############################
+##### Technical stuff! #####
+############################
 
-# please do not change the following line manually!
-config-version: 22
+# If you want to reorganize your category files, you can temporarily enable
+# the dump option to get a .txt file that includes EVERY available material
+# with its associated category. This way, you can easily find items that
+# have not yet been assigned to a category.
+dump: false
+
+# You should not use this unless for debugging purposes
+debug: false
+
+# Please DO NOT change the following line manually!
+# It is used by the automatic config updater.
+config-version: 26

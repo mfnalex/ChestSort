@@ -18,7 +18,7 @@ public class JeffChestSortMessages {
 	
 	final String MSG_GUI_ENABLED, MSG_GUI_DISABLED;
 	
-	final String MSG_GUI_MIDDLECLICK, MSG_GUI_SHIFTCLICK, MSG_GUI_DOUBLECLICK, MSG_GUI_SHIFTRIGHTCLICK;
+	final String MSG_GUI_MIDDLECLICK, MSG_GUI_SHIFTCLICK, MSG_GUI_DOUBLECLICK, MSG_GUI_SHIFTRIGHTCLICK, MSG_GUI_LEFTCLICK, MSG_GUI_RIGHTCLICK;
 
 	JeffChestSortMessages(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
@@ -67,6 +67,10 @@ public class JeffChestSortMessages {
 		
 		MSG_GUI_SHIFTRIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-gui-shift-right-click","Shift + Right-Click"));
+		
+		MSG_GUI_LEFTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-left-click","Fill Chest (Left-Click)"));
+		
+		MSG_GUI_RIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-right-click","Unload Chest (Right-Click)"));
 		
 		//MSG_ERR_HOTKEYSDISABLED = ChatColor.RED + "[ChestSort] Hotkeys are only available for Minecraft 1.9 and later.";
 	}

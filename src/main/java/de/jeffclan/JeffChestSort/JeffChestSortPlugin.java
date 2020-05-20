@@ -54,16 +54,16 @@ import de.jeffclan.utils.Utils;
 
 public class JeffChestSortPlugin extends JavaPlugin {
 
-	// We need a map to store each player's settings
 	Map<String, JeffChestSortPlayerSetting> perPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 	JeffChestSortMessages messages;
 	JeffChestSortOrganizer organizer;
 	JeffChestSortUpdateChecker updateChecker;
 	JeffChestSortListener listener;
+	JeffChestSortAdditionalHotkeyListener additionalHotkeys;
 	JeffChestSortSettingsGUI settingsGUI;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 22;
+	int currentConfigVersion = 26;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -72,15 +72,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	public boolean hookCrackShot = false;
 	public boolean hookInventoryPages = false;
 	
-	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours (if you never
-												// restart your server)
+	private long updateCheckInterval = 86400; // in seconds. We check on startup and every 24 hours
 	
 	String mcVersion; 	// 1.13.2 = 1_13_R2
 						// 1.14.4 = 1_14_R1
 						// 1.8.0  = 1_8_R1
 	int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
-
-
 
 	// Public API method to sort any given inventory
 	public void sortInventory(Inventory inv) {
@@ -90,6 +87,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	// Public API method to sort any given inventory inbetween startSlot and endSlot
 	public void sortInventory(Inventory inv, int startSlot, int endSlot) {
 		this.organizer.sortInventory(inv, startSlot, endSlot);
+	}
+	
+	// Check whether sorting is enabled for a player. Public because it can be
+	// accessed as part of the API
+	public boolean sortingEnabled(Player p) {
+		if (perPlayerSettings == null) {
+			perPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
+		}
+		listener.plugin.registerPlayerIfNeeded(p);
+		return perPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
 	}
 
 	// Creates the default configuration file
@@ -151,10 +158,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("auto-generate-category-files", true);
 		getConfig().addDefault("sort-time", "close");
 		getConfig().addDefault("allow-hotkeys", true);
-		getConfig().addDefault("hotkeys.middle-click", true);
-		getConfig().addDefault("hotkeys.shift-click", true);
-		getConfig().addDefault("hotkeys.double-click", true);
-		getConfig().addDefault("hotkeys.shift-right-click", true);
+		getConfig().addDefault("sorting-hotkeys.middle-click", true);
+		getConfig().addDefault("sorting-hotkeys.shift-click", true);
+		getConfig().addDefault("sorting-hotkeys.double-click", true);
+		getConfig().addDefault("sorting-hotkeys.shift-right-click", true);
+		getConfig().addDefault("additional-hotkeys.left-click", false);
+		getConfig().addDefault("additional-hotkeys.right-click", false);
 		getConfig().addDefault("dump", false);
 		
 		getConfig().addDefault("hook-crackshot", true);
@@ -245,14 +254,14 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// the Organizer to sort inventories when a player closes a chest, shulkerbox or
 		// barrel inventory
 		listener = new JeffChestSortListener(this);
-		
-		//hotbarRefiller = new JeffChestSortHotbarRefiller(this);
+		additionalHotkeys = new JeffChestSortAdditionalHotkeyListener(this);
 
 		// The sorting method will determine how stuff is sorted
 		sortingMethod = getConfig().getString("sorting-method");
 
 		// Register the events for our Listener
 		getServer().getPluginManager().registerEvents(listener, this);
+		getServer().getPluginManager().registerEvents(additionalHotkeys, this);
 		
 		// Register events for the GUI interaction
 		getServer().getPluginManager().registerEvents(settingsGUI, this);
@@ -275,10 +284,15 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
 			getLogger().info("Allow hotkeys: " + getConfig().getBoolean("allow-hotkeys"));
 			if(getConfig().getBoolean("allow-hotkeys")) {
-				getLogger().info("|- Middle-Click: " + getConfig().getBoolean("hotkeys.middle-click"));
-				getLogger().info("|- Shift-Click: " + getConfig().getBoolean("hotkeys.shift-click"));
-				getLogger().info("|- Double-Click: " + getConfig().getBoolean("hotkeys.double-click"));
-				getLogger().info("|- Shift-Right-Click: " + getConfig().getBoolean("hotkeys.shift-right-click"));
+				getLogger().info("Hotkeys enabled by default:");
+				getLogger().info("- Sorting hotkeys:");
+				getLogger().info("  |- Middle-Click: " + getConfig().getBoolean("sorting-hotkeys.middle-click"));
+				getLogger().info("  |- Shift-Click: " + getConfig().getBoolean("sorting-hotkeys.shift-click"));
+				getLogger().info("  |- Double-Click: " + getConfig().getBoolean("sorting-hotkeys.double-click"));
+				getLogger().info("  |- Shift-Right-Click: " + getConfig().getBoolean("sorting-hotkeys.shift-right-click"));
+				getLogger().info("- Additional hotkeys:");
+				getLogger().info("  |- Left-Click: " + getConfig().getBoolean("additional-hotkeys.left-click"));
+				getLogger().info("  |- Right-Click: " + getConfig().getBoolean("additional-hotkeys.right-click"));
 			}
 			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
 			getLogger().info("Categories: " + getCategoryList());
@@ -354,13 +368,17 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		bStats.addCustomChart(new Metrics.SimplePie("allow_hotkeys",
 				() -> Boolean.toString(getConfig().getBoolean("allow-hotkeys"))));
 		bStats.addCustomChart(new Metrics.SimplePie("hotkey_middle_click",
-				() -> Boolean.toString(getConfig().getBoolean("hotkeys.middle-click"))));
+				() -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.middle-click"))));
 		bStats.addCustomChart(new Metrics.SimplePie("hotkey_shift_click",
-				() -> Boolean.toString(getConfig().getBoolean("hotkeys.shift-click"))));
+				() -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.shift-click"))));
 		bStats.addCustomChart(new Metrics.SimplePie("hotkey_double_click",
-				() -> Boolean.toString(getConfig().getBoolean("hotkeys.double-click"))));
+				() -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.double-click"))));
 		bStats.addCustomChart(new Metrics.SimplePie("hotkey_shift_right_click",
-				() -> Boolean.toString(getConfig().getBoolean("hotkeys.shift-right-click"))));
+				() -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.shift-right-click"))));
+		bStats.addCustomChart(new Metrics.SimplePie("hotkey_left_click",
+				() -> Boolean.toString(getConfig().getBoolean("additional-hotkeys.left-click"))));
+		bStats.addCustomChart(new Metrics.SimplePie("hotkey_right_click",
+				() -> Boolean.toString(getConfig().getBoolean("additional-hotkeys.right-click"))));
 		
 	}
 
@@ -444,24 +462,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		}
 	}
 
-	// Check whether sorting is enabled for a player. Public because it can be
-	// accessed as part of the API
-	public boolean sortingEnabled(Player p) {
-
-		// The following is for all the lazy server admins who use /reload instead of
-		// properly restarting their
-		// server ;) I am sometimes getting stacktraces although it is clearly stated
-		// that /reload is NOT
-		// supported. So, here is a quick fix
-		if (perPlayerSettings == null) {
-			perPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
-		}
-		listener.plugin.registerPlayerIfNeeded(p);
-		// End of quick fix
-
-		return perPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
-	}
-
 	// Unregister a player and save their settings in the playerdata folder
 	void unregisterPlayer(Player p) {
 		// File will be named by the player's uuid. This will prevent problems on player
@@ -484,6 +484,8 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			playerConfig.set("shiftClick",setting.shiftClick);
 			playerConfig.set("doubleClick",setting.doubleClick);
 			playerConfig.set("shiftRightClick",setting.shiftRightClick);
+			playerConfig.set("leftClick",setting.leftClick);
+			playerConfig.set("rightClick",setting.rightClick);
 			try {
 				// Only saved if the config has been changed
 				if(setting.changed) {
@@ -526,14 +528,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 			
 			playerConfig.addDefault("invSortingEnabled", getConfig().getBoolean("inv-sorting-enabled-by-default"));
-			playerConfig.addDefault("middleClick", getConfig().getBoolean("hotkeys.middle-click"));
-			playerConfig.addDefault("shiftClick", getConfig().getBoolean("hotkeys.shift-click"));
-			playerConfig.addDefault("doubleClick", getConfig().getBoolean("hotkeys.double-click"));
-			playerConfig.addDefault("shiftRightClick", getConfig().getBoolean("hotkeys.shift-right-click"));
+			playerConfig.addDefault("middleClick", getConfig().getBoolean("sorting-hotkeys.middle-click"));
+			playerConfig.addDefault("shiftClick", getConfig().getBoolean("sorting-hotkeys.shift-click"));
+			playerConfig.addDefault("doubleClick", getConfig().getBoolean("sorting-hotkeys.double-click"));
+			playerConfig.addDefault("shiftRightClick", getConfig().getBoolean("sorting-hotkeys.shift-right-click"));
+			playerConfig.addDefault("leftClick", getConfig().getBoolean("additional-hotkeys.left-click"));
+			playerConfig.addDefault("rightClick", getConfig().getBoolean("additional-hotkeys.right-click"));
 	
 			boolean activeForThisPlayer = false;
 			boolean invActiveForThisPlayer = false;
-			boolean middleClick, shiftClick, doubleClick, shiftRightClick;
+			boolean middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick;
 			boolean changed = false;
 	
 			if (!playerFile.exists()) {
@@ -541,10 +545,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				// default value
 				activeForThisPlayer = getConfig().getBoolean("sorting-enabled-by-default");
 				invActiveForThisPlayer = getConfig().getBoolean("inv-sorting-enabled-by-default");
-				middleClick = getConfig().getBoolean("hotkeys.middle-click");
-				shiftClick = getConfig().getBoolean("hotkeys.shift-click");
-				doubleClick = getConfig().getBoolean("hotkeys.double-click");
-				shiftRightClick = getConfig().getBoolean("hotkeys.shift-right-click");
+				middleClick = getConfig().getBoolean("sorting-hotkeys.middle-click");
+				shiftClick = getConfig().getBoolean("sorting-hotkeys.shift-click");
+				doubleClick = getConfig().getBoolean("sorting-hotkeys.double-click");
+				shiftRightClick = getConfig().getBoolean("sorting-hotkeys.shift-right-click");
+				leftClick = getConfig().getBoolean("additional-hotkeys.left-click");
+				rightClick = getConfig().getBoolean("additional-hotkeys.right-click");
 				
 				if(debug) {
 					getLogger().info("Player "+p.getName()+" does not have player settings yet, using default values.");
@@ -555,14 +561,16 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			} else {
 				// If the file exists, check if the player has sorting enabled
 				activeForThisPlayer = playerConfig.getBoolean("sortingEnabled");
-				invActiveForThisPlayer = playerConfig.getBoolean("invSortingEnabled");
+				invActiveForThisPlayer = playerConfig.getBoolean("invSortingEnabled",getConfig().getBoolean("inv-sorting-enabled-by-default"));
 				middleClick = playerConfig.getBoolean("middleClick");
 				shiftClick = playerConfig.getBoolean("shiftClick");
 				doubleClick = playerConfig.getBoolean("doubleClick");
 				shiftRightClick = playerConfig.getBoolean("shiftRightClick");
+				leftClick = playerConfig.getBoolean("leftClick",getConfig().getBoolean("additional-hotkeys.left-click"));
+				rightClick = playerConfig.getBoolean("rightClick",getConfig().getBoolean("additional-hotkeys.right-click"));
 			}
 	
-			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer,invActiveForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick,changed);
+			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer,invActiveForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick,leftClick,rightClick,changed);
 	
 			// when "show-message-again-after-logout" is enabled, we don't care if the
 			// player already saw the message

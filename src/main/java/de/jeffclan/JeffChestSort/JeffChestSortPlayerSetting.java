@@ -16,7 +16,7 @@ public class JeffChestSortPlayerSetting {
 	boolean invSortingEnabled;
 	
 	// Hotkey settings
-	boolean middleClick, shiftClick, doubleClick, shiftRightClick;
+	boolean middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick;
 	
 	Inventory guiInventory = null;
 
@@ -26,13 +26,15 @@ public class JeffChestSortPlayerSetting {
 	// Do we have to save these settings?
 	boolean changed = false;
 
-	JeffChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean changed) {
+	JeffChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean changed) {
 		this.sortingEnabled = sortingEnabled;
 		this.middleClick = middleClick;
 		this.shiftClick = shiftClick;
 		this.doubleClick = doubleClick;
 		this.shiftRightClick = shiftRightClick;
 		this.invSortingEnabled = invSortingEnabled;
+		this.leftClick = leftClick;
+		this.rightClick = rightClick;
 		this.changed = changed;
 	}
 	
@@ -50,6 +52,14 @@ public class JeffChestSortPlayerSetting {
 	}
 	void toggleShiftRightClick() {
 		shiftRightClick = !shiftRightClick;
+		changed = true;
+	}
+	void toggleLeftClick() {
+		leftClick = !leftClick;
+		changed = true;
+	}
+	void toggleRightClick() {
+		rightClick = !rightClick;
 		changed = true;
 	}
 	void enableChestSorting() {

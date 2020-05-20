@@ -17,16 +17,18 @@ public class JeffChestSortSettingsGUI implements Listener {
 	
 	JeffChestSortPlugin plugin;
 	
-	public static int slotMiddleClick = 1 + 9;
-	public static int slotShiftClick = 3 + 9;
-	public static int slotDoubleClick = 5 + 9;
-	public static int slotShiftRightClick = 7 + 9;
+	public static int slotMiddleClick = 1;
+	public static int slotShiftClick = 3 ;
+	public static int slotDoubleClick = 5 ;
+	public static int slotShiftRightClick = 7 ;
+	public static int slotLeftClick = 2+18;
+	public static int slotRightClick = 6+18;
 	
 	final static Material red = Material.REDSTONE_BLOCK;
 	final static Material green = Material.EMERALD_BLOCK;
 	
 	enum Hotkey {
-		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick;
+		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick, LeftClick, RightClick;
 	}
 	
 	JeffChestSortSettingsGUI(JeffChestSortPlugin plugin) {
@@ -61,6 +63,12 @@ public class JeffChestSortSettingsGUI implements Listener {
 		case ShiftRightClick:
 			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_SHIFTRIGHTCLICK + ": " + suffix);
 			break;
+		case LeftClick:
+			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_LEFTCLICK + ": "+ suffix);
+			break;
+		case RightClick:
+			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_RIGHTCLICK + ": "+ suffix);
+			break;
 		default:
 			break;
 		}
@@ -79,6 +87,8 @@ public class JeffChestSortSettingsGUI implements Listener {
         inventory.setItem(slotShiftClick, getItem(setting.shiftClick,Hotkey.ShiftClick));
         inventory.setItem(slotDoubleClick, getItem(setting.doubleClick,Hotkey.DoubleClick));
         inventory.setItem(slotShiftRightClick, getItem(setting.shiftRightClick,Hotkey.ShiftRightClick));
+        inventory.setItem(slotLeftClick, getItem(setting.leftClick,Hotkey.LeftClick));
+        inventory.setItem(slotRightClick, getItem(setting.rightClick,Hotkey.RightClick));
         
         setting.guiInventory = inventory;
         player.openInventory(inventory);
@@ -133,6 +143,14 @@ public class JeffChestSortSettingsGUI implements Listener {
 			return;
 		} else if(event.getSlot() == JeffChestSortSettingsGUI.slotShiftRightClick) {
 			setting.toggleShiftRightClick();
+			plugin.settingsGUI.openGUI(p);
+			return;
+		} else if(event.getSlot() == JeffChestSortSettingsGUI.slotLeftClick) {
+			setting.toggleLeftClick();
+			plugin.settingsGUI.openGUI(p);
+			return;
+		} else if(event.getSlot() == JeffChestSortSettingsGUI.slotRightClick) {
+			setting.toggleRightClick();
 			plugin.settingsGUI.openGUI(p);
 			return;
 		}
