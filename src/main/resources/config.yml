@@ -16,6 +16,10 @@
 # To use /invsort, the permission chestsort.use.inventory is required.
 #
 
+############################
+##### Default settings #####
+############################
+
 # when set to false, new players will have to run /chestsort
 # once to enable automatic chest sorting.
 sorting-enabled-by-default: false
@@ -67,9 +71,9 @@ auto-generate-category-files: true
 # Available options: open, close, both
 sort-time: close
 
-###################
-##### Hotkeys #####
-###################
+###########################
+##### Default Hotkeys #####
+###########################
 
 # Instead of automatic sorting, you can also use hotkeys (see below)
 # when using an inventory to have it sorted immediately.
@@ -99,11 +103,15 @@ additional-hotkeys:
   # Use right-click outside inventory to quickly take all items out of the chest and into your inventory
   right-click: false
 
-# should we check for updates?
-# when enabled, a message is printed in the console if a new
-# version has been found, and OPs will be notified when they join the server
-# When set to true, we will check for updates on startup and every 24 hours
-# When set to on-startup, we will only check on startup
+##########################
+##### Update Checker #####
+##########################
+
+# Checks for updates (asynchronously).
+# When enabled, a message is printed in the console if a new
+# version has been found, and OPs will be notified when they join the server 
+# When set to true, check for updates on startup and every 4 hours
+# When set to on-startup, only check on server startup
 # When set to false, don't check for updates
 check-for-updates: true
 
@@ -111,10 +119,10 @@ check-for-updates: true
 verbose: true
 
 #########################
-#### disabled worlds ####
+#### Disabled Worlds ####
 #########################
 
-# You can disable ChestSort for certain worlds. Each world's name has to
+# You can disable automatic chest sorting for certain worlds. Each world's name has to
 # be on a separate line, starting with a hyphen and followed by a space.
 # You can also use the YAML array notation: [world1, world2, world3]
 
@@ -190,7 +198,7 @@ hook-inventorypages: true
 sorting-method: '{category},{itemsFirst},{name},{color},{customName}'
 
 #########################
-##### localization ######
+##### Localization ######
 #########################
 
 # Available color codes:
@@ -516,9 +524,9 @@ message-gui-right-click: "Empty Chest (Right-Click)"
 # have not yet been assigned to a category.
 dump: false
 
-# You should not use this unless for debugging purposes
+# Debug mode - you probably do not want this.
 debug: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 26
+config-version: 27
