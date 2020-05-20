@@ -2,6 +2,7 @@
 ## 8.1
 - Sort chest's inventory after using the new Fill-Chest-Hotkey
 - Prevent the new hotkeys from being used when allow-hotkeys is set to false
+- Update-Checker now includes Spigot version in User-Agent string
 
 ## 8.0
 - Added two new hotkeys (disabled by default): Left-Click outside of a chest's (or barrel, ...) inventory will load all your stuff except hotbar into the chest, Right-Click outside of the chest's inventory will unload the chest into your inventory. The hotkeys can be enabled using /chestsort hotkeys and need the chestsort.use permission
