@@ -12,13 +12,21 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import de.jeffclan.JeffChestSort.JeffChestSortPlugin;
+
 public class InventoryHelper {
+	
+	private JeffChestSortPlugin plugin;
 	
 	private static final int maxInventorySize=54;
 	private static final int playerInvStartSlot=9; // Inclusive
 	private static final int playerInvEndSlot=35; // Inclusive
 	
-	public static void updateInventoryView(InventoryClickEvent event) {
+	public InventoryHelper(JeffChestSortPlugin jeffChestSortPlugin) {
+		this.plugin = jeffChestSortPlugin;
+	}
+
+	public void updateInventoryView(InventoryClickEvent event) {
 		for(HumanEntity viewer : event.getViewers()) {
 			if(viewer instanceof Player) {
 				Player playerViewer = (Player) viewer;
@@ -27,7 +35,7 @@ public class InventoryHelper {
 		}
 	}
 	
-	public static void updateInventoryView(Inventory inventory) {
+	public void updateInventoryView(Inventory inventory) {
 		for(HumanEntity viewer : inventory.getViewers()) {
 			if(viewer instanceof Player) {
 				Player playerViewer = (Player) viewer;
@@ -36,7 +44,7 @@ public class InventoryHelper {
 		}
 	}
 	
-	public static void stuffInventoryIntoAnother(Inventory source, Inventory destination,Inventory origSource) {
+	public void stuffInventoryIntoAnother(Inventory source, Inventory destination,Inventory origSource) {
 		
 		ArrayList<ItemStack> leftovers = new ArrayList<ItemStack>();
 		
@@ -60,12 +68,13 @@ public class InventoryHelper {
 		
 	}
 
-	public static void stuffPlayerInventoryIntoAnother(PlayerInventory source,
+	public void stuffPlayerInventoryIntoAnother(PlayerInventory source,
 			Inventory destination) {
 		boolean destinationIsShulkerBox = destination.getType() == InventoryType.SHULKER_BOX;
 		Inventory temp = Bukkit.createInventory(null, maxInventorySize);
 		for(int i = playerInvStartSlot;i<=playerInvEndSlot;i++) {
 			if(source.getItem(i)==null) continue;
+			if(plugin.hookInventoryPages && plugin.organizer.inventoryPagesHook.isButton(source.getItem(i), i, source)) continue;
 			if(destinationIsShulkerBox && source.getItem(i).getType().name().endsWith("SHULKER_BOX")) continue;
 			temp.addItem(source.getItem(i));
 			source.clear(i);

@@ -1,4 +1,7 @@
 # Changelog
+## 8.4
+- Fixes InventoryPages support for the new hotkeys
+
 ## 8.3
 - This should fix a problem where the player was able to sort inventories belonging to 3rd party plugins' GUIs using hotkeys
 

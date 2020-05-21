@@ -39,7 +39,7 @@ public class JeffChestSortOrganizer {
 
 	JeffChestSortPlugin plugin;
 	CrackShotHook crackShotHook;
-	InventoryPagesHook inventoryPagesHook;
+	public InventoryPagesHook inventoryPagesHook; // public for InventoryHelper
 
 	// All available colors in the game. We will strip this from the item names and
 	// keep the color in a separate variable
