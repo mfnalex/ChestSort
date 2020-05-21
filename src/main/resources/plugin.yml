@@ -1,6 +1,6 @@
 main: de.jeffclan.JeffChestSort.JeffChestSortPlugin
 name: ChestSort
-version: 8.1
+version: 8.2
 api-version: 1.13
 description: Allows automatic chest sorting
 author: mfnalex

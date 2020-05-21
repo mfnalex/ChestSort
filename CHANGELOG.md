@@ -1,4 +1,7 @@
 # Changelog
+## 8.2
+- Possibly fixes exception when using hotkeys in Inventories with a null-holder
+
 ## 8.1
 - Sort chest's inventory after using the new Fill-Chest-Hotkey
 - Prevent the new hotkeys from being used when allow-hotkeys is set to false

@@ -31,7 +31,7 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 				&& e.getInventory().getType() != InventoryType.DROPPER
 				&& e.getInventory().getType() != InventoryType.ENDER_CHEST
 				&& e.getInventory().getType() != InventoryType.SHULKER_BOX
-				&& !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel")) {
+				&& (e.getInventory().getHolder() == null || !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
 			return;
 		}
 		Player p = (Player) e.getWhoClicked();
