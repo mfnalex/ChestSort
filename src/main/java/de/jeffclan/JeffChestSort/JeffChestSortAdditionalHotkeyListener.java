@@ -1,5 +1,6 @@
 package de.jeffclan.JeffChestSort;
 
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -26,6 +27,10 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 		if(e.getClickedInventory()!=null) {
 			return;
 		}
+		// Possible fix for #57
+		if(e.getInventory().getHolder()==null) return;
+		if(!(e.getInventory().getHolder() instanceof Block)) return;
+		// End Possible fix for #57
 		if(e.getInventory().getType() != InventoryType.CHEST
 				&& e.getInventory().getType() != InventoryType.DISPENSER
 				&& e.getInventory().getType() != InventoryType.DROPPER
@@ -34,6 +39,7 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 				&& (e.getInventory().getHolder() == null || !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
 			return;
 		}
+		
 		Player p = (Player) e.getWhoClicked();
 		
 		if(!p.hasPermission("chestsort.use")) return;
