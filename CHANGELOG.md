@@ -1,4 +1,7 @@
 # Changelog
+## 8.3
+- This should fix a problem where the player was able to sort inventories belonging to 3rd party plugins' GUIs using hotkeys
+
 ## 8.2
 - Possibly fixes exception when using hotkeys in Inventories with a null-holder
 
