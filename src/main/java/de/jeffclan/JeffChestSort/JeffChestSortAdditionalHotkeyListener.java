@@ -23,13 +23,14 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 		if(!(e.getWhoClicked() instanceof Player)) {
 			return;
 		}
+		Player p = (Player) e.getWhoClicked();
 		// Only continue if clicked outside of the chest
 		if(e.getClickedInventory()!=null) {
 			return;
 		}
 		// Possible fix for #57
 		if(e.getInventory().getHolder()==null) return;
-		if(!(e.getInventory().getHolder() instanceof Block)) return;
+		if(e.getInventory().getHolder() == p && e.getInventory() != p.getInventory()) return;
 		// End Possible fix for #57
 		if(e.getInventory().getType() != InventoryType.CHEST
 				&& e.getInventory().getType() != InventoryType.DISPENSER
@@ -39,8 +40,6 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 				&& (e.getInventory().getHolder() == null || !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
 			return;
 		}
-		
-		Player p = (Player) e.getWhoClicked();
 		
 		if(!p.hasPermission("chestsort.use")) return;
 		
