@@ -279,6 +279,11 @@ public class JeffChestSortListener implements Listener {
 		if(event.getClickedInventory() == null) {
 			return;
 		}
+		// Possible fix for #57
+		if(event.getClickedInventory().getHolder() != null
+				&& event.getClickedInventory().getHolder() == p
+				&& event.getClickedInventory() != p.getInventory()) return;
+		// End Possible fix for #57
 		InventoryHolder holder = event.getClickedInventory().getHolder();
 		
 		boolean sort = false;
