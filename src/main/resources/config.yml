@@ -144,21 +144,42 @@ disabled-worlds:
 # installed. ChestSort will automatically check if the plugins
 # are installed.
 
-##### CrackShot #####
+##### CrackShot ##### -> https://www.spigotmc.org/resources/crackshot-guns.48301/
 # When CrackShot is installed, all CrackShot weapons will be
 # grouped together and sorted by their name
 hook-crackshot: true
+
 # You can define a custom name that will be used as prefix
 # for all CrackShot weapon names.
 # E.g. when you set this to "crackshot_weapon", an AK-47
 # will be called "crackshot_weapon_AK-47"
 hook-crackshot-prefix: "crackshot_weapon"
 
-##### InventoryPages #####
+##### InventoryPages ##### -> https://www.spigotmc.org/resources/inventorypages.32432/
 # When InventoryPages is installed, ChestSort will not sort
 # the "Next Page" and "Prev Page" buttons. You should not
 # disable this behaviour unless you know what you are doing!
 hook-inventorypages: true
+
+##### Minepacks ##### -> https://www.spigotmc.org/resources/minepacks-backpack-plugin-mc-1-7-1-15.19286/
+# When Minepacks is installed, ChestSort can detect your
+# backpacks and sort them like a regular chest. Please note
+# that the left-click and right-click hotkey will not work
+# with a Minepack backpack to avoid the possibility of
+# putting a backpack inside of itself.
+hook-minepacks: true
+
+##### Other backpack plugins #####
+# ChestSort is able to detect backpacks from most backpack
+# plugins like ShulkerPacks or Better Shulker Boxes.
+# This detection is always enabled, you cannot turn it off.
+
+##### Other GUI plugins #####
+# ChestSort tries to detect if an inventory belongs to a
+# 3rd party plugin's GUI and then prevents it from being sorted.
+# If you encounter any problems, like a sortable GUI inventory,
+# please open a new issue at Github:
+# https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues 
 
 ##########################
 ##### Sorting Method #####
@@ -526,4 +547,4 @@ debug: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 27
+config-version: 28

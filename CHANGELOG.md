@@ -1,4 +1,7 @@
 # Changelog
+## 8.6
+- Added support for Minepacks
+
 ## 8.5
 - Prevent Right-Click-Hotkey from putting items in the hotbar
 - Fixed InventoryPages support: when using &f at the beginning of button names, it was not detected by ChestSort as button

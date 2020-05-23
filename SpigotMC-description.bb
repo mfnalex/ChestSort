@@ -131,6 +131,12 @@ All CrackShot weapons will be grouped together and will be put into the default 
 [B]InventoryPages[/B]
 ChestSort will ignore the "Next Page" and "Prev. Page" buttons when you have InventoryPages installed, so that your GUI does not get messed up.
 
+[B]Better Shulker Boxes / Minepacks / ShulkerPacks[/B][/SIZE]
+[SIZE=4]Sort your backpacks just like every other chest! Should work with almost every backpack plugin.
+
+[B]Plugins using GUI inventories[/B]
+ChestSort tries to detect GUI inventories created by 3rd party plugins. If this detection fails, please message me at GitHub so that I can add support for that plugin.
+
 [SIZE=6]API for plugin developers[/SIZE][/SIZE]
 [SIZE=4]ChestSort provides a method to sort any Inventory instance, using the advanced grouping features that ChestSort provides! Read more about the API [URL='https://github.com/JEFF-Media-GbR/Spigot-ChestSort/blob/master/HOW_TO_USE_API.md']here[/URL].
 

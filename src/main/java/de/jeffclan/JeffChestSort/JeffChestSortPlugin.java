@@ -50,6 +50,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
 import de.jeffclan.utils.Utils;
 
 public class JeffChestSortPlugin extends JavaPlugin {
@@ -59,11 +60,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortOrganizer organizer;
 	JeffChestSortUpdateChecker updateChecker;
 	JeffChestSortListener listener;
-	JeffChestSortAdditionalHotkeyListener additionalHotkeys;
 	JeffChestSortSettingsGUI settingsGUI;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 27;
+	int currentConfigVersion = 28;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -71,6 +71,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	
 	public boolean hookCrackShot = false;
 	public boolean hookInventoryPages = false;
+	public boolean hookMinepacks = false;
 	
 	private static long updateCheckInterval = 4*60*60; // in seconds. We check on startup and every 4 hours
 	
@@ -169,6 +170,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("hook-crackshot", true);
 		getConfig().addDefault("hook-crackshot-prefix", "crackshot_weapon");
 		getConfig().addDefault("hook-inventorypages", true);
+		getConfig().addDefault("hook-minepacks", true);
 		
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
 	}
@@ -227,6 +229,11 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				hookInventoryPages=true;
 			}
 		}
+		if(getConfig().getBoolean("hook-minepacks")) {
+			if(Bukkit.getPluginManager().getPlugin("Minepacks") instanceof MinepacksPlugin) {
+				hookMinepacks=true;
+			}
+		}
 
 		debug = getConfig().getBoolean("debug");
 
@@ -254,14 +261,12 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// the Organizer to sort inventories when a player closes a chest, shulkerbox or
 		// barrel inventory
 		listener = new JeffChestSortListener(this);
-		additionalHotkeys = new JeffChestSortAdditionalHotkeyListener(this);
 
 		// The sorting method will determine how stuff is sorted
 		sortingMethod = getConfig().getString("sorting-method");
 
 		// Register the events for our Listener
 		getServer().getPluginManager().registerEvents(listener, this);
-		getServer().getPluginManager().registerEvents(additionalHotkeys, this);
 		
 		// Register events for the GUI interaction
 		getServer().getPluginManager().registerEvents(settingsGUI, this);
