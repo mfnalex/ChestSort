@@ -2,7 +2,7 @@
 name: Problems with other plugins
 about: Create a report to help us improve compatability with 3rd party plugins
 title: ''
-labels: ''
+labels: '3rd party plugin'
 assignees: ''
 
 ---
