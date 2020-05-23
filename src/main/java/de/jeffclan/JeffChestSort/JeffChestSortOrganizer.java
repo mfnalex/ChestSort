@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -538,16 +539,28 @@ public class JeffChestSortOrganizer {
 	
 	public void stuffInventoryIntoAnother(Inventory source, Inventory destination,Inventory origSource) {
 		
+		Material placeholderMaterial = Material.DIRT;
+		ItemStack[] hotbarStuff = new ItemStack[9];
+		boolean destinationIsPlayerInventory = true;
+		if(destination.getHolder()==null || !(destination.getHolder() instanceof Player) || destination.getType() != InventoryType.PLAYER) {
+			destinationIsPlayerInventory = false;
+		}
+		if(destinationIsPlayerInventory) {
+		for(int i = 0; i<9;i++) {
+			hotbarStuff[i] = destination.getItem(i);
+			destination.setItem(i, new ItemStack(placeholderMaterial,64));
+		}
+		}
+		
 		ArrayList<ItemStack> leftovers = new ArrayList<ItemStack>();
 		
 		for(int i = 0;i<source.getSize();i++) {
 			
 			ItemStack current = source.getItem(i);
-			
 			if(current == null) continue;
-			
 			source.clear(i);
 			HashMap<Integer,ItemStack> currentLeftovers = destination.addItem(current);
+			
 			
 			for(ItemStack currentLeftover : currentLeftovers.values()) {
 				leftovers.add(currentLeftover);
@@ -555,6 +568,10 @@ public class JeffChestSortOrganizer {
 		}
 		
 		origSource.addItem(leftovers.toArray(new ItemStack[leftovers.size()]));
+		if(destinationIsPlayerInventory) { for(int i=0;i<9;i++) {
+			destination.setItem(i, hotbarStuff[i]);
+		}
+		}
 		updateInventoryView(destination);
 		updateInventoryView(source);
 		
@@ -562,7 +579,7 @@ public class JeffChestSortOrganizer {
 
 	public void stuffPlayerInventoryIntoAnother(PlayerInventory source,
 			Inventory destination) {
-		boolean destinationIsShulkerBox = destination.getType() == InventoryType.SHULKER_BOX;
+		boolean destinationIsShulkerBox = destination.getType().name().equalsIgnoreCase("SHULKER_BOX");
 		Inventory temp = Bukkit.createInventory(null, maxInventorySize);
 		for(int i = playerInvStartSlot;i<=playerInvEndSlot;i++) {
 			if(source.getItem(i)==null) continue;

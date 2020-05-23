@@ -1,6 +1,8 @@
 # Changelog
 ## 8.5
+- Prevent Right-Click-Hotkey from putting items in the hotbar
 - Fixed InventoryPages support: when using &f at the beginning of button names, it was not detected by ChestSort as button
+- Fixed possible problems with Spigot versions prior to 1.11
 - Updated French, Chinese and Chinese (Traditional) translation
 
 ## 8.4

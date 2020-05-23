@@ -135,7 +135,7 @@ public class JeffChestSortListener implements Listener {
 	private boolean belongsToChestLikeBlock(Inventory inventory) {
 
 		// Check by InventoryType
-		if (inventory.getType() == InventoryType.ENDER_CHEST || inventory.getType() == InventoryType.SHULKER_BOX) {
+		if (inventory.getType() == InventoryType.ENDER_CHEST || inventory.getType().name().equalsIgnoreCase("SHULKER_BOX")) {
 			return true;
 		}
 
