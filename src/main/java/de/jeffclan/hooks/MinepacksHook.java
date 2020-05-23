@@ -16,7 +16,6 @@ public class MinepacksHook {
 		this.plugin = plugin;
 	    Plugin bukkitPlugin = Bukkit.getPluginManager().getPlugin("Minepacks");
 	    if(plugin.hookMinepacks && bukkitPlugin instanceof MinepacksPlugin) {
-	    	// Do something if Minepacks is not available
 	        minepacks = (MinepacksPlugin) bukkitPlugin;
 	    }
 	}

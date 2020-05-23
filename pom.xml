@@ -105,6 +105,13 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/CrackShot.jar</systemPath>
 		</dependency>
+				<dependency>
+			<groupId>com.jojodmo.customitems</groupId>
+			<artifactId>CustomItems</artifactId>
+			<version>LATEST</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/lib/CustomItemsAPI_PLACEHOLDER.jar</systemPath>
+		</dependency>
 		<dependency>
 			<groupId>at.pcgamingfreaks</groupId>
 			<artifactId>Minepacks-API</artifactId>
