@@ -398,13 +398,14 @@ public class JeffChestSortOrganizer {
 			items[i] = null;
 		}
 		// Get rid of all stuff that contains more than maxStackSize
-		for(int i = 0; i<endSlot; i++) {
+		// We do not need this as ChestSort will keep the "overstacked" stacks intact
+		/*for(int i = 0; i<endSlot; i++) {
 			if(inv.getItem(i) != null && inv.getItem(i).getAmount() > inv.getItem(i).getMaxStackSize()) {
 				//System.out.println("Debug: "+inv.getItem(i).getMaxStackSize());
 				//items[i] = null;
 				//unsortableSlots.add(i);
 			}
-		}
+		}*/
 		// If InventoryPages is installed: get rid of the buttons
 		if(plugin.hookInventoryPages) {
 			for(int i = startSlot; i<= endSlot; i++) {
@@ -461,7 +462,7 @@ public class JeffChestSortOrganizer {
 
 		// Create the temporary inventory with a null holder. 54 slots is enough for
 		// every inventory
-		Inventory tempInventory = Bukkit.createInventory(null, 54); // cannot be bigger than 54 as of 1.14
+		Inventory tempInventory = Bukkit.createInventory(null, maxInventorySize); // cannot be bigger than 54 as of 1.14
 
 		for (ItemStack item : nonNullItems) {
 			if (plugin.debug)

@@ -1,7 +1,7 @@
 # Changelog
 ## 8.5
-- Updated French translation
 - Fixed InventoryPages support: when using &f at the beginning of button names, it was not detected by ChestSort as button
+- Updated French, Chinese and Chinese (Traditional) translation
 
 ## 8.4
 - Fixes InventoryPages support for the new hotkeys
