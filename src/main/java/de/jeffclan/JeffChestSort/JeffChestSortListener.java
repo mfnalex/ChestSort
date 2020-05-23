@@ -4,15 +4,12 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.inventory.InventoryType;
@@ -21,12 +18,16 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
+import de.jeffclan.hooks.MinepacksHook;
+
 public class JeffChestSortListener implements Listener {
 
 	JeffChestSortPlugin plugin;
+	MinepacksHook minepacksHook;
 
 	JeffChestSortListener(JeffChestSortPlugin plugin) {
 		this.plugin = plugin;
+		this.minepacksHook = new MinepacksHook(plugin);
 	}
 
 	@EventHandler
@@ -52,12 +53,36 @@ public class JeffChestSortListener implements Listener {
 
 
 	@EventHandler
+	public void onBackPackClose(InventoryCloseEvent event) {
+		if(plugin.getConfig().getString("sort-time").equalsIgnoreCase("close")
+				 || plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))
+		onBackPackUse(event.getInventory(),(Player)event.getPlayer());
+	}
+	
+	@EventHandler
+	public void onBackPackOpen(InventoryOpenEvent event) {
+		if(plugin.getConfig().getString("sort-time").equalsIgnoreCase("open")
+				 || plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))
+		onBackPackUse(event.getInventory(),(Player)event.getPlayer());
+	}
+	
+	void onBackPackUse(Inventory inv, Player p) {
+		if(!minepacksHook.isMinepacksBackpack(inv)) return;
+		if(!p.hasPermission("chestsort.use")) return;
+		plugin.registerPlayerIfNeeded(p);
+		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		if(!setting.sortingEnabled) return;
+		plugin.organizer.sortInventory(inv);
+	}
+	
+	@EventHandler
 	public void onPlayerInventoryClose(InventoryCloseEvent event) {
 		if(event.getInventory()==null) return;
 		if(event.getInventory().getHolder()==null) return;
 		if(event.getInventory().getType() == null) return;
 		if(event.getInventory().getType() != InventoryType.CRAFTING) return; // Weird! Returns CRAFTING instead of PLAYER
 		if(!(event.getInventory().getHolder() instanceof Player)) return;
+
 		Player p = (Player) event.getInventory().getHolder();
 		
 		if(!p.hasPermission("chestsort.use.inventory")) return;
@@ -270,7 +295,7 @@ public class JeffChestSortListener implements Listener {
 //		p.sendMessage("Shift click: " + event.isShiftClick());
 //		p.sendMessage("=====================");
 		// DEBUG END
-		
+				
 		if(!p.hasPermission("chestsort.use") && !p.hasPermission("chestsort.use.inventory")) {
 			return;
 		}
@@ -294,13 +319,11 @@ public class JeffChestSortListener implements Listener {
 		if(event.getClickedInventory() == setting.guiInventory) {
 			return;
 		}
-		
 		// Prevent player from putting items into GUI inventory
 		if(event.getInventory() == setting.guiInventory) {
 			event.setCancelled(true);
 			return;
 		}
-		
 		switch(event.getClick()) {
 		case MIDDLE:
 			//if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
@@ -340,18 +363,17 @@ public class JeffChestSortListener implements Listener {
 		if(!sort) {
 			return;
 		}
-		
-		if(belongsToChestLikeBlock(event.getClickedInventory())) {
+		if(belongsToChestLikeBlock(event.getClickedInventory()) || minepacksHook.isMinepacksBackpack(event.getClickedInventory())) {
 			
 			if(!p.hasPermission("chestsort.use")) {
 				return;
 			}
 			
+			
 			plugin.organizer.sortInventory(event.getClickedInventory());
 			plugin.organizer.updateInventoryView(event);
 			return;
 		} else if(holder instanceof Player) {
-			
 			if(!p.hasPermission("chestsort.use.inventory")) {
 				return;
 			}
@@ -367,6 +389,49 @@ public class JeffChestSortListener implements Listener {
 				return;
 			}
 			return;
+		}
+	}
+	
+	@EventHandler
+	public void onAdditionalHotkeys(InventoryClickEvent e) {
+		// Backpacks must not go into backpacks, however I am unsure on how to
+		// check if something is a backpack, so will just disable the fill-chest hotkey
+		if(minepacksHook.isMinepacksBackpack(e.getInventory())) return;
+		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
+			return;
+		}
+		if(!(e.getWhoClicked() instanceof Player)) {
+			return;
+		}
+		Player p = (Player) e.getWhoClicked();
+		// Only continue if clicked outside of the chest
+		if(e.getClickedInventory()!=null) {
+			return;
+		}
+		// Possible fix for #57
+		if(e.getInventory().getHolder()==null) return;
+		if(e.getInventory().getHolder() == p && e.getInventory() != p.getInventory()) return;
+		// End Possible fix for #57
+		if(e.getInventory().getType() != InventoryType.CHEST
+				&& e.getInventory().getType() != InventoryType.DISPENSER
+				&& e.getInventory().getType() != InventoryType.DROPPER
+				&& e.getInventory().getType() != InventoryType.ENDER_CHEST
+				&& !e.getInventory().getType().name().equalsIgnoreCase("SHULKER_BOX")
+				&& (e.getInventory().getHolder() == null || !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
+			return;
+		}
+		
+		if(!p.hasPermission("chestsort.use")) return;
+		
+		plugin.registerPlayerIfNeeded(p);
+		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		
+		if(e.isLeftClick() && setting.leftClick) {
+			plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory());
+			plugin.sortInventory(e.getInventory());
+			plugin.organizer.updateInventoryView(e.getInventory());
+		} else if(e.isRightClick() && setting.rightClick) {
+			plugin.organizer.stuffInventoryIntoAnother(e.getInventory(), p.getInventory(),e.getInventory());
 		}
 	}
 	

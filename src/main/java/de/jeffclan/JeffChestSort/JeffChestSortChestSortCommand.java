@@ -5,9 +5,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import de.jeffclan.JeffChestSort.JeffChestSortPlayerSetting;
-import de.jeffclan.JeffChestSort.JeffChestSortPlugin;
-
 public class JeffChestSortChestSortCommand implements CommandExecutor {
 
 	JeffChestSortPlugin plugin;
