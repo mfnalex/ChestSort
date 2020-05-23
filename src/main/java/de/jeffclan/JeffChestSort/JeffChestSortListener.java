@@ -348,7 +348,7 @@ public class JeffChestSortListener implements Listener {
 			}
 			
 			plugin.organizer.sortInventory(event.getClickedInventory());
-			plugin.invhelper.updateInventoryView(event);
+			plugin.organizer.updateInventoryView(event);
 			return;
 		} else if(holder instanceof Player) {
 			
@@ -358,12 +358,12 @@ public class JeffChestSortListener implements Listener {
 			
 			if(event.getSlotType() == SlotType.QUICKBAR) {
 				plugin.organizer.sortInventory(p.getInventory(),0,8);
-				plugin.invhelper.updateInventoryView(event);
+				plugin.organizer.updateInventoryView(event);
 				return;
 			}
 			else if(event.getSlotType() == SlotType.CONTAINER) {
 				plugin.organizer.sortInventory(p.getInventory(),9,35);
-				plugin.invhelper.updateInventoryView(event);
+				plugin.organizer.updateInventoryView(event);
 				return;
 			}
 			return;

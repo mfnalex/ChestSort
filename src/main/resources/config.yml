@@ -315,25 +315,24 @@ message-gui-right-click: "Empty Chest (Right-Click)"
 #message-gui-left-click: "Fill Chest (Left-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click)"
 
-##### French / Français - Thanks to automatizer, demon57730 and FichdlMaa for translating!
-##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
-#message-when-using-chest: "&7Remarque: Tape &6/chestsort&7 pour activer le classement automatique."
-#message-when-using-chest2: "&7Remarque: Tape &6/chestsort&7 pour désactiver le classement automatique."
+##### French / Français - Thanks to automatizer, demon57730, FichdlMaa and Stalk3r77 for translating!
+#message-when-using-chest: "&7Astuce : Tape &6/chestsort&7 pour activer le classement automatique."
+#message-when-using-chest2: "&7Astuce : Tape &6/chestsort&7 pour désactiver le classement automatique."
 #message-sorting-disabled: "&7Le classement automatique a été &cdésactivé&7."
 #message-sorting-enabled: "&7Le classement automatique a été &aactivé&7."
 #message-inv-sorting-disabled: "&7Le classement automatique d'inventaire a été &cdésactivé&7."
 #message-inv-sorting-enabled: "&7Le classement automatique d'inventaire a été &aactivé&7."
 #message-player-inventory-sorted: "&7Ton inventaire a été trié."
-#message-error-players-only: "&cErreur: Cette commande ne peut être utilisée que par des joueurs."
-#message-error-invalid-options: "&cErreur: Option inconnue %s. Les options valides sont %s."
+#message-error-players-only: "&cErreur : Cette commande ne peut être utilisée que par des joueurs."
+#message-error-invalid-options: "&cErreur : Option inconnue %s. Les options valides sont %s."
 #message-gui-enabled: "&aActivé"
 #message-gui-disabled: "&cDésactivé"
-#message-gui-middle-click: "Clic du milieu"
+#message-gui-middle-click: "Clic molette"
 #message-gui-shift-click: "Maj. + Clic"
 #message-gui-double-click: "Double-Clic"
 #message-gui-shift-right-click: "Shift + Clic droit"
-#message-gui-left-click: "Fill Chest (Left-Click)"
-#message-gui-right-click: "Empty Chest (Right-Click)"
+#message-gui-left-click: "Remplir le coffre (Clic-gauche)"
+#message-gui-right-click: "Vider le coffre (Clic-droit)"
 
 ##### German
 #message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."

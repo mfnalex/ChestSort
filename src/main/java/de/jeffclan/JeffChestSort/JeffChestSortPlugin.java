@@ -50,15 +50,13 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import de.jeffclan.utils.InventoryHelper;
 import de.jeffclan.utils.Utils;
 
 public class JeffChestSortPlugin extends JavaPlugin {
 
 	Map<String, JeffChestSortPlayerSetting> perPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
 	JeffChestSortMessages messages;
-	public JeffChestSortOrganizer organizer;
-	InventoryHelper invhelper;
+	JeffChestSortOrganizer organizer;
 	JeffChestSortUpdateChecker updateChecker;
 	JeffChestSortListener listener;
 	JeffChestSortAdditionalHotkeyListener additionalHotkeys;
@@ -245,7 +243,6 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		// Organizer will load all category files and will be ready to sort stuff
 		organizer = new JeffChestSortOrganizer(this);
-		invhelper = new InventoryHelper(this);
 		
 		settingsGUI = new JeffChestSortSettingsGUI(this);
 

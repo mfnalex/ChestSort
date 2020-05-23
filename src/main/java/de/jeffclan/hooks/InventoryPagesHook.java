@@ -38,7 +38,7 @@ public class InventoryPagesHook {
 		prevMat = Material.valueOf(inventoryPagesConfig.getString("items.prev.id"));
 		nextMat = Material.valueOf(inventoryPagesConfig.getString("items.next.id"));
 		noPageMat = Material.valueOf(inventoryPagesConfig.getString("items.noPage.id"));
-		
+				
 		prevName = ChatColor.translateAlternateColorCodes('&', inventoryPagesConfig.getString("items.prev.name"));
 		nextName = ChatColor.translateAlternateColorCodes('&', inventoryPagesConfig.getString("items.next.name"));
 		noPageName = ChatColor.translateAlternateColorCodes('&', inventoryPagesConfig.getString("items.noPage.name"));
@@ -62,9 +62,13 @@ public class InventoryPagesHook {
 		
 		//System.out.println("Checking if slot " + slot + " "+ item.toString() + " is button");
 		
+		// When using &f as color, we manually have to add this to the string because it gets removed by InventoryPages
+		if(prevName.startsWith("§f")) prevName = prevName.substring(2,prevName.length());
+		if(nextName.startsWith("§f")) nextName = nextName.substring(2,nextName.length());
+		if(noPageName.startsWith("§f")) noPageName = noPageName.substring(2,noPageName.length());
 		
 		if(slot == prevSlot ) { 
-			if(item.getType() == prevMat && item.getItemMeta().getDisplayName().equals(prevName)) {
+			if(item.getType() == prevMat && (item.getItemMeta().getDisplayName().equals(prevName))) {
 				return true;
 			} else if(item.getType() == noPageMat && item.getItemMeta().getDisplayName().equals(noPageName)) {
 				return true;

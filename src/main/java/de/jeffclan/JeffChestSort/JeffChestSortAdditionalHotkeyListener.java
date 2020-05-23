@@ -47,11 +47,11 @@ public class JeffChestSortAdditionalHotkeyListener implements Listener {
 		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		
 		if(e.isLeftClick() && setting.leftClick) {
-			plugin.invhelper.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory());
+			plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory());
 			plugin.sortInventory(e.getInventory());
-			plugin.invhelper.updateInventoryView(e.getInventory());
+			plugin.organizer.updateInventoryView(e.getInventory());
 		} else if(e.isRightClick() && setting.rightClick) {
-			plugin.invhelper.stuffInventoryIntoAnother(e.getInventory(), p.getInventory(),e.getInventory());
+			plugin.organizer.stuffInventoryIntoAnother(e.getInventory(), p.getInventory(),e.getInventory());
 		}
 	}
 
