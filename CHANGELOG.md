@@ -1,4 +1,6 @@
 # Changelog
+## 8.8-pre1
+- Changed class names and moved API to its own class - can be accessed via ChestSortPlugin#getAPI()
 ## 8.7
 - When using Minepacks, the backpack item in the inventory will not be moved
 - Added use-permissions option. If you do not use a permissions plugin, you can set this to false to allow every player to use ChestSort

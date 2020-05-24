@@ -1,4 +1,4 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -14,7 +14,7 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class JeffChestSortUpdateChecker {
+public class ChestSortUpdateChecker {
 
 	// This checks for updates. A txt file is downloaded. If the txt file contains a
 	// string that is unequal to the currently used plugin's version, a message is
@@ -24,9 +24,9 @@ public class JeffChestSortUpdateChecker {
 	// Media GbR API server is offline, or if you have no internet connection, a
 	// warning will be printed in the console.
 
-	private JeffChestSortPlugin plugin;
+	private ChestSortPlugin plugin;
 
-	JeffChestSortUpdateChecker(JeffChestSortPlugin plugin) {
+	ChestSortUpdateChecker(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 	}
 

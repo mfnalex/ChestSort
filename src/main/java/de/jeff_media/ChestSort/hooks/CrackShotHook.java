@@ -1,17 +1,17 @@
-package de.jeffclan.hooks;
+package de.jeff_media.ChestSort.hooks;
 
 import org.bukkit.inventory.ItemStack;
 
 import com.shampaggon.crackshot.CSUtility;
 
-import de.jeffclan.JeffChestSort.JeffChestSortPlugin;
+import de.jeff_media.ChestSort.ChestSortPlugin;
 
 public class CrackShotHook {
 	
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 	CSUtility crackShotUtility = null;
 
-	public CrackShotHook(JeffChestSortPlugin plugin) {
+	public CrackShotHook(ChestSortPlugin plugin) {
 		this.plugin=plugin;
 		
 		if(plugin.hookCrackShot) {

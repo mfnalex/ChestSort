@@ -1,15 +1,15 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class JeffChestSortInvSortCommand implements CommandExecutor {
+public class ChestSortInvSortCommand implements CommandExecutor {
 	
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 	
-	JeffChestSortInvSortCommand(JeffChestSortPlugin plugin) {
+	ChestSortInvSortCommand(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -31,7 +31,7 @@ public class JeffChestSortInvSortCommand implements CommandExecutor {
 		int start = 9;
 		int end = 35;
 		
-		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		
 		if(args.length>0) {
 			if(args[0].equalsIgnoreCase("all")) {
@@ -66,7 +66,7 @@ public class JeffChestSortInvSortCommand implements CommandExecutor {
 			}
 		}
 		
-		plugin.sortInventory(p.getInventory(), start, end);
+		plugin.organizer.sortInventory(p.getInventory(), start, end);
 		p.sendMessage(plugin.messages.MSG_PLAYERINVSORTED);
 		
 		return true;

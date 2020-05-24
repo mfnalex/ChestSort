@@ -1,8 +1,8 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
-import de.jeffclan.utils.TypeMatchPositionPair;
+import de.jeff_media.ChestSort.utils.TypeMatchPositionPair;
 
-public class JeffChestSortCategory implements Comparable<JeffChestSortCategory>{
+public class ChestSortCategory implements Comparable<ChestSortCategory>{
 
 	// Represents a sorting category
 	// Includes an array of strings called typeMatches
@@ -16,7 +16,7 @@ public class JeffChestSortCategory implements Comparable<JeffChestSortCategory>{
 	boolean sticky = false;
 	TypeMatchPositionPair[] typeMatches;
 
-	JeffChestSortCategory(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
+	ChestSortCategory(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
 		this.name = name;
 		this.typeMatches = typeMatchPositionPairs;
 	}
@@ -70,7 +70,7 @@ public class JeffChestSortCategory implements Comparable<JeffChestSortCategory>{
 		return 0;
 	}
 	
-	public int compareTo(JeffChestSortCategory compareCategory) {
+	public int compareTo(ChestSortCategory compareCategory) {
 		return this.name.compareTo(compareCategory.name);
 	}
 

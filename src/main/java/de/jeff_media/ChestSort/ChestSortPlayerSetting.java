@@ -1,8 +1,8 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import org.bukkit.inventory.Inventory;
 
-public class JeffChestSortPlayerSetting {
+public class ChestSortPlayerSetting {
 	
 	// Represents the information regarding a player
 	// That includes:
@@ -26,7 +26,7 @@ public class JeffChestSortPlayerSetting {
 	// Do we have to save these settings?
 	boolean changed = false;
 
-	JeffChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean changed) {
+	ChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean changed) {
 		this.sortingEnabled = sortingEnabled;
 		this.middleClick = middleClick;
 		this.shiftClick = shiftClick;

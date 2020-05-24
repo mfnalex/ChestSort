@@ -1,4 +1,4 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
-public class JeffChestSortTabCompleter implements TabCompleter {
+public class ChestSortTabCompleter implements TabCompleter {
 	
 	static final String[] chestsortOptions = { "toggle","on","off","hotkeys" };
 	static final String[] invsortOptions = { "toggle","on","off","all", "hotbar", "inv" };

@@ -1,4 +1,4 @@
-package de.jeffclan.utils;
+package de.jeff_media.ChestSort.utils;
 
 public class TypeMatchPositionPair {
 	

@@ -1,8 +1,8 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import org.bukkit.ChatColor;
 
-public class JeffChestSortMessages {
+public class ChestSortMessages {
 
 	// Messages can be customized in the config.yml
 	// To avoid problems with missing messages in the config, the default messages
@@ -11,7 +11,7 @@ public class JeffChestSortMessages {
 	// When creating pull requests that feature a message to the player, please
 	// stick to this scheme
 
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 
 	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_INVACTIVATED, MSG_INVDEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY,
 			MSG_PLAYERINVSORTED, MSG_INVALIDOPTIONS;
@@ -20,7 +20,7 @@ public class JeffChestSortMessages {
 	
 	final String MSG_GUI_MIDDLECLICK, MSG_GUI_SHIFTCLICK, MSG_GUI_DOUBLECLICK, MSG_GUI_SHIFTRIGHTCLICK, MSG_GUI_LEFTCLICK, MSG_GUI_RIGHTCLICK;
 
-	JeffChestSortMessages(JeffChestSortPlugin plugin) {
+	ChestSortMessages(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 
 		MSG_ACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()

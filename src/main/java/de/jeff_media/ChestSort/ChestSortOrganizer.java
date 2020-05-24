@@ -1,4 +1,4 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,12 +26,12 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 
-import de.jeffclan.hooks.CrackShotHook;
-import de.jeffclan.hooks.InventoryPagesHook;
-import de.jeffclan.utils.CategoryLinePair;
-import de.jeffclan.utils.TypeMatchPositionPair;
+import de.jeff_media.ChestSort.hooks.CrackShotHook;
+import de.jeff_media.ChestSort.hooks.InventoryPagesHook;
+import de.jeff_media.ChestSort.utils.CategoryLinePair;
+import de.jeff_media.ChestSort.utils.TypeMatchPositionPair;
 
-public class JeffChestSortOrganizer {
+public class ChestSortOrganizer {
 
 	// This is the heart of ChestSort!
 	// All of the sorting stuff happens here.
@@ -44,7 +44,7 @@ public class JeffChestSortOrganizer {
 	 * they are already alphabetically in the right order
 	 */
 
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 	CrackShotHook crackShotHook;
 	InventoryPagesHook inventoryPagesHook;
 	
@@ -64,10 +64,10 @@ public class JeffChestSortOrganizer {
 	private static final String emptyPlaceholderString = "~";
 
 	// We store a list of all Category objects
-	ArrayList<JeffChestSortCategory> categories = new ArrayList<JeffChestSortCategory>();
+	ArrayList<ChestSortCategory> categories = new ArrayList<ChestSortCategory>();
 	ArrayList<String> stickyCategoryNames = new ArrayList<String>();
 
-	JeffChestSortOrganizer(JeffChestSortPlugin plugin) {
+	ChestSortOrganizer(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 
 		// Load Categories
@@ -95,7 +95,7 @@ public class JeffChestSortOrganizer {
 					plugin.getLogger().info("Loading category file " + file.getName());
 				}
 				try {
-					JeffChestSortCategory category = new JeffChestSortCategory(categoryName, loadCategoryFile(file));
+					ChestSortCategory category = new ChestSortCategory(categoryName, loadCategoryFile(file));
 					categories.add(category);
 					if (plugin.debug) {
 						plugin.getLogger().info("Loaded category file " + file.getName() + " ("
@@ -110,7 +110,7 @@ public class JeffChestSortOrganizer {
 		
 		// Make categories sticky
 		for(String catName : stickyCategoryNames) {
-			for(JeffChestSortCategory cat : categories) {
+			for(ChestSortCategory cat : categories) {
 				if(catName.equalsIgnoreCase(cat.name)) {
 					cat.setSticky();
 				}
@@ -280,7 +280,7 @@ public class JeffChestSortOrganizer {
 	// items when sorting by category)
 	CategoryLinePair getCategoryLinePair(String typeName) {
 		typeName = typeName.toLowerCase();
-		for (JeffChestSortCategory cat : categories) {
+		for (ChestSortCategory cat : categories) {
 			short matchingLineNumber = cat.matches(typeName);
 			if (matchingLineNumber != 0) {
 				return new CategoryLinePair(cat.name, matchingLineNumber);

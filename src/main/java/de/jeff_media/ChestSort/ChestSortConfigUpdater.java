@@ -1,4 +1,4 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,13 +12,13 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import de.jeffclan.utils.Utils;
+import de.jeff_media.ChestSort.utils.Utils;
 
-public class JeffChestSortConfigUpdater {
+public class ChestSortConfigUpdater {
 
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 
-	public JeffChestSortConfigUpdater(JeffChestSortPlugin jeffChestSortPlugin) {
+	public ChestSortConfigUpdater(ChestSortPlugin jeffChestSortPlugin) {
 		this.plugin = jeffChestSortPlugin;
 	}
 

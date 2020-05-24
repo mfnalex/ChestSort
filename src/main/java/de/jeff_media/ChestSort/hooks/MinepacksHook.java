@@ -1,4 +1,4 @@
-package de.jeffclan.hooks;
+package de.jeff_media.ChestSort.hooks;
 
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
@@ -7,14 +7,14 @@ import org.bukkit.plugin.Plugin;
 
 import at.pcgamingfreaks.Minepacks.Bukkit.API.Backpack;
 import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
-import de.jeffclan.JeffChestSort.JeffChestSortPlugin;
+import de.jeff_media.ChestSort.ChestSortPlugin;
 
 public class MinepacksHook {
 	
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 	MinepacksPlugin minepacks = null;
 
-	public MinepacksHook(JeffChestSortPlugin plugin) {
+	public MinepacksHook(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 	    Plugin bukkitPlugin = Bukkit.getPluginManager().getPlugin("Minepacks");
 	    if(plugin.hookMinepacks && bukkitPlugin instanceof MinepacksPlugin) {

@@ -1,4 +1,4 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -18,14 +18,14 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import de.jeffclan.hooks.MinepacksHook;
+import de.jeff_media.ChestSort.hooks.MinepacksHook;
 
-public class JeffChestSortListener implements Listener {
+public class ChestSortListener implements Listener {
 
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 	MinepacksHook minepacksHook;
 
-	JeffChestSortListener(JeffChestSortPlugin plugin) {
+	ChestSortListener(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 		this.minepacksHook = new MinepacksHook(plugin);
 	}
@@ -73,7 +73,7 @@ public class JeffChestSortListener implements Listener {
 		if(!minepacksHook.isMinepacksBackpack(inv)) return;
 		if( !p.hasPermission("chestsort.use")) return;
 		plugin.registerPlayerIfNeeded(p);
-		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		if(!setting.sortingEnabled) return;
 		plugin.organizer.sortInventory(inv);
 	}
@@ -91,7 +91,7 @@ public class JeffChestSortListener implements Listener {
 		if( !p.hasPermission("chestsort.use.inventory")) return;
 		plugin.registerPlayerIfNeeded(p);
 		
-		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		if(!setting.invSortingEnabled) return;
 		
 		plugin.organizer.sortInventory(p.getInventory(),9,35);
@@ -218,7 +218,7 @@ public class JeffChestSortListener implements Listener {
 		// Get the current player's settings
 		// We do not immediately cancel when sorting is disabled because we might want
 		// to show the hint message
-		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 
 		// Show "how to enable ChestSort" message when ALL of the following criteria are
 		// met:
@@ -227,7 +227,7 @@ public class JeffChestSortListener implements Listener {
 		// logout
 		// is defined by the config setting "show-message-again-after-logout")
 		// - "show-message-when-using-chest" is set to true in the config.yml
-		if (!plugin.sortingEnabled(p)) {
+		if (!plugin.isSortingEnabled(p)) {
 			if (!setting.hasSeenMessage) {
 				setting.hasSeenMessage = true;
 				if (plugin.getConfig().getBoolean("show-message-when-using-chest")) {
@@ -316,7 +316,7 @@ public class JeffChestSortListener implements Listener {
 		
 		boolean sort = false;
 		
-		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		
 		// Do not sort the GUI inventory
 		if(event.getClickedInventory() == setting.guiInventory) {
@@ -424,11 +424,11 @@ public class JeffChestSortListener implements Listener {
 		if( !p.hasPermission("chestsort.use")) return;
 		
 		plugin.registerPlayerIfNeeded(p);
-		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		
 		if(e.isLeftClick() && setting.leftClick) {
 			plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory());
-			plugin.sortInventory(e.getInventory());
+			plugin.organizer.sortInventory(e.getInventory());
 			plugin.organizer.updateInventoryView(e.getInventory());
 		} else if(e.isRightClick() && setting.rightClick) {
 			plugin.organizer.stuffInventoryIntoAnother(e.getInventory(), p.getInventory(),e.getInventory());

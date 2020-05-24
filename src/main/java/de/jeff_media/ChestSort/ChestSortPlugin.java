@@ -26,7 +26,7 @@
 	
 */
 
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -47,24 +47,24 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
-import de.jeffclan.utils.Utils;
+import de.jeff_media.ChestSort.utils.Utils;
 
-public class JeffChestSortPlugin extends JavaPlugin {
+public class ChestSortPlugin extends JavaPlugin {
 
-	Map<String, JeffChestSortPlayerSetting> perPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
-	JeffChestSortMessages messages;
-	JeffChestSortOrganizer organizer;
-	JeffChestSortUpdateChecker updateChecker;
-	JeffChestSortListener listener;
-	JeffChestSortSettingsGUI settingsGUI;
-	JeffChestSortPermissionsHandler permissionsHandler;
+	Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<String, ChestSortPlayerSetting>();
+	ChestSortMessages messages;
+	ChestSortOrganizer organizer;
+	ChestSortUpdateChecker updateChecker;
+	ChestSortListener listener;
+	ChestSortSettingsGUI settingsGUI;
+	ChestSortPermissionsHandler permissionsHandler;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
+	ChestSortAPI api;
 	int currentConfigVersion = 30;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
@@ -82,22 +82,32 @@ public class JeffChestSortPlugin extends JavaPlugin {
 						// 1.14.4 = 1_14_R1
 						// 1.8.0  = 1_8_R1
 	int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
+	
+	public ChestSortAPI getAPI() {
+		return this.api;
+	}
 
 	// Public API method to sort any given inventory
+	@Deprecated
 	public void sortInventory(Inventory inv) {
-		this.organizer.sortInventory(inv);
+		api.sortInventory(inv);
 	}
 
 	// Public API method to sort any given inventory inbetween startSlot and endSlot
+	@Deprecated
 	public void sortInventory(Inventory inv, int startSlot, int endSlot) {
-		this.organizer.sortInventory(inv, startSlot, endSlot);
+		api.sortInventory(inv, startSlot, endSlot);
 	}
 	
-	// Check whether sorting is enabled for a player. Public because it can be
-	// accessed as part of the API
+	// Public API method to check if player has automatic chest sorting enabled
+	@Deprecated
 	public boolean sortingEnabled(Player p) {
+		return isSortingEnabled(p);
+	}
+	
+	boolean isSortingEnabled(Player p) {
 		if (perPlayerSettings == null) {
-			perPlayerSettings = new HashMap<String, JeffChestSortPlayerSetting>();
+			perPlayerSettings = new HashMap<String, ChestSortPlayerSetting>();
 		}
 		listener.plugin.registerPlayerIfNeeded(p);
 		return perPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
@@ -133,7 +143,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 			// use the default values later on
 		} else*/ if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
 			showOldConfigWarning();
-			JeffChestSortConfigUpdater configUpdater = new JeffChestSortConfigUpdater(this);
+			ChestSortConfigUpdater configUpdater = new ChestSortConfigUpdater(this);
 			configUpdater.updateConfig();
 			configUpdater = null;
 			usingMatchingConfig = true;
@@ -251,23 +261,25 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		// Messages class will load messages from config, fallback to hardcoded default
 		// messages
-		messages = new JeffChestSortMessages(this);
+		messages = new ChestSortMessages(this);
 
 		// Organizer will load all category files and will be ready to sort stuff
-		organizer = new JeffChestSortOrganizer(this);
+		organizer = new ChestSortOrganizer(this);
 		
-		settingsGUI = new JeffChestSortSettingsGUI(this);
+		settingsGUI = new ChestSortSettingsGUI(this);
 
 		// UpdateChecker will check on startup and every 24 hours for new updates (when
 		// enabled)
-		updateChecker = new JeffChestSortUpdateChecker(this);
+		updateChecker = new ChestSortUpdateChecker(this);
 
 		// The listener will register joining (and unregister leaving) players, and call
 		// the Organizer to sort inventories when a player closes a chest, shulkerbox or
 		// barrel inventory
-		listener = new JeffChestSortListener(this);
+		listener = new ChestSortListener(this);
 		
-		permissionsHandler = new JeffChestSortPermissionsHandler(this);
+		api = new ChestSortAPI(this);
+		
+		permissionsHandler = new ChestSortPermissionsHandler(this);
 		
 		usePermissions = getConfig().getBoolean("use-permissions");
 
@@ -281,11 +293,11 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(settingsGUI, this);
 
 		// Create the CommandExecutor, register commands and set their TabCompleter
-		JeffChestSortChestSortCommand chestsortCommandExecutor = new JeffChestSortChestSortCommand(this);
-		JeffChestSortTabCompleter tabCompleter = new JeffChestSortTabCompleter();
+		ChestSortChestSortCommand chestsortCommandExecutor = new ChestSortChestSortCommand(this);
+		ChestSortTabCompleter tabCompleter = new ChestSortTabCompleter();
 		this.getCommand("chestsort").setExecutor(chestsortCommandExecutor);
 		this.getCommand("chestsort").setTabCompleter(tabCompleter);
-		JeffChestSortInvSortCommand invsortCommandExecutor = new JeffChestSortInvSortCommand(this);
+		ChestSortInvSortCommand invsortCommandExecutor = new ChestSortInvSortCommand(this);
 		this.getCommand("invsort").setExecutor(invsortCommandExecutor);
 		this.getCommand("invsort").setTabCompleter(tabCompleter);
 
@@ -349,9 +361,9 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 	private String getCategoryList() {
 		String list = "";
-		JeffChestSortCategory[] categories = organizer.categories.toArray(new JeffChestSortCategory[organizer.categories.size()]);
+		ChestSortCategory[] categories = organizer.categories.toArray(new ChestSortCategory[organizer.categories.size()]);
 		Arrays.sort(categories);
-		for(JeffChestSortCategory category : categories) {
+		for(ChestSortCategory category : categories) {
 			list = list + category.name + " (";
 			list = list + category.typeMatches.length + "), ";
 		}
@@ -491,7 +503,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// are online
 		// but not registered. So, we only continue when the player has been registered
 		if (perPlayerSettings.containsKey(uniqueId.toString())) {
-			JeffChestSortPlayerSetting setting = perPlayerSettings.get(p.getUniqueId().toString());
+			ChestSortPlayerSetting setting = perPlayerSettings.get(p.getUniqueId().toString());
 			
 			File playerFile = new File(getDataFolder() + File.separator + "playerdata",
 					p.getUniqueId().toString() + ".yml");
@@ -589,7 +601,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				rightClick = playerConfig.getBoolean("rightClick",getConfig().getBoolean("additional-hotkeys.right-click"));
 			}
 	
-			JeffChestSortPlayerSetting newSettings = new JeffChestSortPlayerSetting(activeForThisPlayer,invActiveForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick,leftClick,rightClick,changed);
+			ChestSortPlayerSetting newSettings = new ChestSortPlayerSetting(activeForThisPlayer,invActiveForThisPlayer,middleClick,shiftClick,doubleClick,shiftRightClick,leftClick,rightClick,changed);
 	
 			// when "show-message-again-after-logout" is enabled, we don't care if the
 			// player already saw the message

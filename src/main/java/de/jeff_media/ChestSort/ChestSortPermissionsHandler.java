@@ -1,4 +1,4 @@
-package de.jeffclan.JeffChestSort;
+package de.jeff_media.ChestSort;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -6,12 +6,12 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.PermissionAttachment;
 
-public class JeffChestSortPermissionsHandler {
+public class ChestSortPermissionsHandler {
 	
 	HashMap<UUID,PermissionAttachment> permissions;
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 	
-	JeffChestSortPermissionsHandler(JeffChestSortPlugin plugin) {
+	ChestSortPermissionsHandler(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 		this.permissions = new HashMap<UUID,PermissionAttachment>();
 	}

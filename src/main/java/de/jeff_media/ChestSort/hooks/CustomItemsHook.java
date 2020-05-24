@@ -1,4 +1,4 @@
-package de.jeffclan.hooks;
+package de.jeff_media.ChestSort.hooks;
 
 import org.bukkit.inventory.ItemStack;
 

@@ -1,4 +1,4 @@
-package de.jeffclan.hooks;
+package de.jeff_media.ChestSort.hooks;
 
 import java.io.File;
 
@@ -8,19 +8,19 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import de.jeffclan.JeffChestSort.JeffChestSortPlugin;
+import de.jeff_media.ChestSort.ChestSortPlugin;
 import net.md_5.bungee.api.ChatColor;
 
 public class InventoryPagesHook {
 
-	JeffChestSortPlugin plugin;
+	ChestSortPlugin plugin;
 	YamlConfiguration inventoryPagesConfig;
 	
 	int prevSlot, nextSlot;
 	Material prevMat, nextMat, noPageMat;
 	String prevName, nextName, noPageName;
 	
-	public InventoryPagesHook(JeffChestSortPlugin plugin) {
+	public InventoryPagesHook(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 		
 		if(!plugin.hookInventoryPages) {
