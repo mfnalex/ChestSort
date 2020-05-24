@@ -407,6 +407,15 @@ public class JeffChestSortOrganizer {
 				//unsortableSlots.add(i);
 			}
 		}*/
+		// Do not move Minepacks' backpacks
+		if(plugin.hookMinepacks) {
+			for(int i = startSlot; i<= endSlot; i++) {
+				if(plugin.listener.minepacksHook.isMinepacksBackpack(items[i])) {
+					items[i] = null;
+					unsortableSlots.add(i);
+				}
+			}
+		}
 		// If InventoryPages is installed: get rid of the buttons
 		if(plugin.hookInventoryPages) {
 			for(int i = startSlot; i<= endSlot; i++) {

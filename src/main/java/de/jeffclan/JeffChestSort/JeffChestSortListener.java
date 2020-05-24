@@ -32,6 +32,8 @@ public class JeffChestSortListener implements Listener {
 
 	@EventHandler
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		
+		plugin.permissionsHandler.addPermissions(event.getPlayer());
 
 		// DEBUG
 		// To enable debug mode, put debug: true into your config.yml
@@ -48,6 +50,7 @@ public class JeffChestSortListener implements Listener {
 
 	@EventHandler
 	public void onPlayerQuit(PlayerQuitEvent event) {
+		plugin.permissionsHandler.removePermissions(event.getPlayer());
 		plugin.unregisterPlayer(event.getPlayer());
 	}
 
@@ -68,7 +71,7 @@ public class JeffChestSortListener implements Listener {
 	
 	void onBackPackUse(Inventory inv, Player p) {
 		if(!minepacksHook.isMinepacksBackpack(inv)) return;
-		if(!p.hasPermission("chestsort.use")) return;
+		if( !p.hasPermission("chestsort.use")) return;
 		plugin.registerPlayerIfNeeded(p);
 		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		if(!setting.sortingEnabled) return;
@@ -85,7 +88,7 @@ public class JeffChestSortListener implements Listener {
 
 		Player p = (Player) event.getInventory().getHolder();
 		
-		if(!p.hasPermission("chestsort.use.inventory")) return;
+		if( !p.hasPermission("chestsort.use.inventory")) return;
 		plugin.registerPlayerIfNeeded(p);
 		
 		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
@@ -127,7 +130,7 @@ public class JeffChestSortListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
-	public void onChestClose(InventoryOpenEvent event) {
+	public void onChestOpen(InventoryOpenEvent event) {
 
 		if (!(plugin.getConfig().getString("sort-time").equalsIgnoreCase("open")
 				|| plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))) {
@@ -194,7 +197,7 @@ public class JeffChestSortListener implements Listener {
 	}
 
 	private boolean isReadyToSort(Player p) {
-		if (!p.hasPermission("chestsort.use")) {
+		if ( !p.hasPermission("chestsort.use")) {
 			return false;
 		}
 
@@ -296,7 +299,7 @@ public class JeffChestSortListener implements Listener {
 //		p.sendMessage("=====================");
 		// DEBUG END
 				
-		if(!p.hasPermission("chestsort.use") && !p.hasPermission("chestsort.use.inventory")) {
+		if( !p.hasPermission("chestsort.use") && !p.hasPermission("chestsort.use.inventory")) {
 			return;
 		}
 		
@@ -365,7 +368,7 @@ public class JeffChestSortListener implements Listener {
 		}
 		if(belongsToChestLikeBlock(event.getClickedInventory()) || minepacksHook.isMinepacksBackpack(event.getClickedInventory())) {
 			
-			if(!p.hasPermission("chestsort.use")) {
+			if( !p.hasPermission("chestsort.use")) {
 				return;
 			}
 			
@@ -374,7 +377,7 @@ public class JeffChestSortListener implements Listener {
 			plugin.organizer.updateInventoryView(event);
 			return;
 		} else if(holder instanceof Player) {
-			if(!p.hasPermission("chestsort.use.inventory")) {
+			if( !p.hasPermission("chestsort.use.inventory")) {
 				return;
 			}
 			
@@ -394,9 +397,6 @@ public class JeffChestSortListener implements Listener {
 	
 	@EventHandler
 	public void onAdditionalHotkeys(InventoryClickEvent e) {
-		// Backpacks must not go into backpacks, however I am unsure on how to
-		// check if something is a backpack, so will just disable the fill-chest hotkey
-		if(minepacksHook.isMinepacksBackpack(e.getInventory())) return;
 		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
 			return;
 		}
@@ -421,7 +421,7 @@ public class JeffChestSortListener implements Listener {
 			return;
 		}
 		
-		if(!p.hasPermission("chestsort.use")) return;
+		if( !p.hasPermission("chestsort.use")) return;
 		
 		plugin.registerPlayerIfNeeded(p);
 		JeffChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());

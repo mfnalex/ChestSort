@@ -20,6 +20,14 @@
 ##### Default settings #####
 ############################
 
+# If you don't want to use a permission plugin, you can set
+# this to false to allow every player to use ChestSort.
+# If you use a permissions plugin, set this to true.
+# There are two permissions used by ChestSort:
+# - chestsort.use (allow chest sorting by hotkeys and via /chestsort)
+# - chestsort.use.inventory (allow inventory sorting by hotkeys and via /invsort)
+use-permissions: true
+
 # when set to false, new players will have to run /chestsort
 # once to enable automatic chest sorting.
 sorting-enabled-by-default: false
@@ -162,11 +170,8 @@ hook-crackshot-prefix: "crackshot_weapon"
 hook-inventorypages: true
 
 ##### Minepacks ##### -> https://www.spigotmc.org/resources/minepacks-backpack-plugin-mc-1-7-1-15.19286/
-# When Minepacks is installed, ChestSort can detect your
-# backpacks and sort them like a regular chest. Please note
-# that the left-click and right-click hotkey will not work
-# with a Minepack backpack to avoid the possibility of
-# putting a backpack inside of itself.
+# When Minepacks version 2.3.8+ is installed, ChestSort can detect your
+# backpacks and sort them like a regular chest.
 hook-minepacks: true
 
 ##### Other backpack plugins #####
@@ -547,4 +552,4 @@ debug: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 28
+config-version: 30

@@ -1,4 +1,8 @@
 # Changelog
+## 8.7
+- When using Minepacks, the backpack item in the inventory will not be moved
+- Added use-permissions option. If you do not use a permissions plugin, you can set this to false to allow every player to use ChestSort
+
 ## 8.6
 - Added support for Minepacks
 

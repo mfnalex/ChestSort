@@ -47,6 +47,7 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -61,13 +62,15 @@ public class JeffChestSortPlugin extends JavaPlugin {
 	JeffChestSortUpdateChecker updateChecker;
 	JeffChestSortListener listener;
 	JeffChestSortSettingsGUI settingsGUI;
+	JeffChestSortPermissionsHandler permissionsHandler;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	int currentConfigVersion = 28;
+	int currentConfigVersion = 30;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
 	boolean hotkeyGUI = true;
+	boolean usePermissions;
 	
 	public boolean hookCrackShot = false;
 	public boolean hookInventoryPages = false;
@@ -148,6 +151,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// values will be used instead
 		// for every missing option.
 		// By default, sorting is disabled. Every player has to run /chestsort once
+		getConfig().addDefault("use-permissions", true);
 		getConfig().addDefault("sorting-enabled-by-default", false);
 		getConfig().addDefault("inv-sorting-enabled-by-default", false);
 		getConfig().addDefault("show-message-when-using-chest", true);
@@ -204,6 +208,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// We have to unregister every player to save their perPlayerSettings
 		for (Player p : getServer().getOnlinePlayers()) {
 			unregisterPlayer(p);
+			permissionsHandler.removePermissions(p);
 		}
 	}
 
@@ -261,6 +266,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 		// the Organizer to sort inventories when a player closes a chest, shulkerbox or
 		// barrel inventory
 		listener = new JeffChestSortListener(this);
+		
+		permissionsHandler = new JeffChestSortPermissionsHandler(this);
+		
+		usePermissions = getConfig().getBoolean("use-permissions");
 
 		// The sorting method will determine how stuff is sorted
 		sortingMethod = getConfig().getString("sorting-method");
@@ -282,6 +291,7 @@ public class JeffChestSortPlugin extends JavaPlugin {
 
 		// Does anyone actually need this?
 		if (verbose) {
+			getLogger().info("Use permissions: " + usePermissions);
 			getLogger().info("Current sorting method: " + sortingMethod);
 			getLogger().info("Chest sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
 			getLogger().info("Inventory sorting enabled by default: " + getConfig().getBoolean("inv-sorting-enabled-by-default"));
@@ -330,6 +340,10 @@ public class JeffChestSortPlugin extends JavaPlugin {
 				System.out.println("Error while writing dump file.");
 				e.printStackTrace();
 			}
+		}
+		
+		for(Player p : getServer().getOnlinePlayers()) {
+			permissionsHandler.addPermissions(p);
 		}
 	}
 

@@ -6,7 +6,7 @@
 
 	<groupId>de.jeffclan</groupId>
 	<artifactId>JeffChestSort</artifactId>
-	<version>8.6</version>
+	<version>8.7</version>
 	<packaging>jar</packaging>
 
 	<name>JeffChestSort</name>
@@ -105,17 +105,17 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/CrackShot.jar</systemPath>
 		</dependency>
-				<dependency>
+				<!-- <dependency>
 			<groupId>com.jojodmo.customitems</groupId>
 			<artifactId>CustomItems</artifactId>
 			<version>LATEST</version>
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/CustomItemsAPI_PLACEHOLDER.jar</systemPath>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>at.pcgamingfreaks</groupId>
 			<artifactId>Minepacks-API</artifactId>
-			<version>2.2</version><!-- Check api-version shield for newest version -->
+			<version>2.3.8</version><!-- Check api-version shield for newest version -->
 		</dependency>
 
 	</dependencies>
