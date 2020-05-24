@@ -20,6 +20,8 @@ public class ChestSortMessages {
 	
 	final String MSG_GUI_MIDDLECLICK, MSG_GUI_SHIFTCLICK, MSG_GUI_DOUBLECLICK, MSG_GUI_SHIFTRIGHTCLICK, MSG_GUI_LEFTCLICK, MSG_GUI_RIGHTCLICK;
 
+	final String MSG_ERR_HOTKEYSDISABLED;
+
 	ChestSortMessages(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 
@@ -72,7 +74,7 @@ public class ChestSortMessages {
 		
 		MSG_GUI_RIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-right-click","Unload Chest (Right-Click)"));
 		
-		//MSG_ERR_HOTKEYSDISABLED = ChatColor.RED + "[ChestSort] Hotkeys are only available for Minecraft 1.9 and later.";
+		MSG_ERR_HOTKEYSDISABLED = ChatColor.RED + "[ChestSort] Hotkeys have been disabled by the admin.";
 	}
 
 }

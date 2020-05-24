@@ -44,10 +44,10 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 			if(args.length>0) {
 				if(args[0].equalsIgnoreCase("hotkey") || args[0].equalsIgnoreCase("hotkeys")) {
 					
-//					if(plugin.hotkeyGUI==false) {
-//						p.sendMessage(plugin.messages.MSG_ERR_HOTKEYSDISABLED);
-//						return true;
-//					}
+					if(plugin.hotkeyGUI==false) {
+						p.sendMessage(plugin.messages.MSG_ERR_HOTKEYSDISABLED);
+						return true;
+					}
 					
 					plugin.settingsGUI.openGUI(p);
 					

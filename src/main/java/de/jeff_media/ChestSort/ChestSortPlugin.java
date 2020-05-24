@@ -65,7 +65,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPI api;
-	int currentConfigVersion = 30;
+	int currentConfigVersion = 31;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -170,6 +170,7 @@ public class ChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("sorting-method", "{category},{itemsFirst},{name},{color}");
 		getConfig().addDefault("allow-player-inventory-sorting", false);
 		getConfig().addDefault("check-for-updates", "true");
+		getConfig().addDefault("check-interval", 4);
 		getConfig().addDefault("auto-generate-category-files", true);
 		getConfig().addDefault("sort-time", "close");
 		getConfig().addDefault("allow-hotkeys", true);
@@ -282,6 +283,8 @@ public class ChestSortPlugin extends JavaPlugin {
 		permissionsHandler = new ChestSortPermissionsHandler(this);
 		
 		usePermissions = getConfig().getBoolean("use-permissions");
+		
+		updateCheckInterval = (int) (getConfig().getDouble("check-interval")*60*60);
 
 		// The sorting method will determine how stuff is sorted
 		sortingMethod = getConfig().getString("sorting-method");
@@ -322,11 +325,14 @@ public class ChestSortPlugin extends JavaPlugin {
 				getLogger().info("  |- Right-Click: " + getConfig().getBoolean("additional-hotkeys.right-click"));
 			}
 			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
+			if(getConfig().getString("check-for-updates").equalsIgnoreCase("true")) {
+				getLogger().info("Check interval: " + getConfig().getString("check-interval") + " hours ("+updateCheckInterval+" seconds)");
+			}
 			getLogger().info("Categories: " + getCategoryList());
 		}
 
 		// Check for updates (async, of course)
-		// When set to true, we check for updates right now, and every 24 hours (see
+		// When set to true, we check for updates right now, and every X hours (see
 		// updateCheckInterval)
 		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
 			Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
@@ -381,6 +387,8 @@ public class ChestSortPlugin extends JavaPlugin {
 				() -> Integer.toString(getConfig().getInt("config-version", 0))));
 		bStats.addCustomChart(
 				new Metrics.SimplePie("check_for_updates", () -> getConfig().getString("check-for-updates", "true")));
+		bStats.addCustomChart(
+				new Metrics.SimplePie("update_interval", () -> Long.toString(updateCheckInterval)));
 		bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest",
 				() -> Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
 		bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest_and_sorting_is_enabl", () -> Boolean

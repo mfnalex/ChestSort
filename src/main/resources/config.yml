@@ -79,6 +79,9 @@ auto-generate-category-files: true
 # Available options: open, close, both
 sort-time: close
 
+# when set to true, show some verbose information on startup
+verbose: true
+
 ###########################
 ##### Default Hotkeys #####
 ###########################
@@ -118,14 +121,14 @@ additional-hotkeys:
 # Checks for updates (asynchronously).
 # When enabled, a message is printed in the console if a new
 # version has been found, and OPs will be notified when they join the server 
-# When set to true, check for updates on startup and every 4 hours
+# When set to true, check for updates on startup and every X hours (see "check-interval" below)
 # When set to on-startup, only check on server startup
 # When set to false, don't check for updates
 check-for-updates: true
 
-# when set to true, show some verbose information on startup
-verbose: true
-
+# When you set "check-for-updates" to true, you can define the amount
+# of hours inbetween each update check.
+check-interval: 4
 #########################
 #### Disabled Worlds ####
 #########################
@@ -552,4 +555,4 @@ debug: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 30
+config-version: 31
