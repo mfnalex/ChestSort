@@ -426,6 +426,13 @@ public class ChestSortOrganizer {
 				}
 			}
 		}
+		// Do not move ItemStacks with more than 64 items
+		for(int i = startSlot; i<= endSlot; i++) {
+			if(isOversizedStack(items[i])) {
+				items[i] = null;
+				unsortableSlots.add(i);
+			}
+		}
 
 		// Remove the stuff from the original inventory
 		for (int i = startSlot; i <= endSlot; i++) {
@@ -546,6 +553,11 @@ public class ChestSortOrganizer {
 		}
 	}
 	
+	public boolean isOversizedStack(ItemStack item) {
+		if(item!=null && item.getAmount()>64) return true;
+		return false;
+	}
+	
 	public void stuffInventoryIntoAnother(Inventory source, Inventory destination,Inventory origSource) {
 		
 		Material placeholderMaterial = Material.DIRT;
@@ -567,6 +579,7 @@ public class ChestSortOrganizer {
 			
 			ItemStack current = source.getItem(i);
 			if(current == null) continue;
+			if(isOversizedStack(current)) continue;
 			source.clear(i);
 			HashMap<Integer,ItemStack> currentLeftovers = destination.addItem(current);
 			
@@ -592,8 +605,17 @@ public class ChestSortOrganizer {
 		Inventory temp = Bukkit.createInventory(null, maxInventorySize);
 		for(int i = playerInvStartSlot;i<=playerInvEndSlot;i++) {
 			if(source.getItem(i)==null) continue;
-			if(plugin.hookInventoryPages && plugin.organizer.inventoryPagesHook.isButton(source.getItem(i), i, source)) continue;
+			
+			if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(destination)
+					&& plugin.listener.minepacksHook.isMinepacksBackpack(source.getItem(i))) continue;
+			
+			if(plugin.hookInventoryPages
+					&& plugin.organizer.inventoryPagesHook.isButton(source.getItem(i), i, source)) continue;
+			
 			if(destinationIsShulkerBox && source.getItem(i).getType().name().endsWith("SHULKER_BOX")) continue;
+			
+			if(isOversizedStack(source.getItem(i))) continue;
+			
 			temp.addItem(source.getItem(i));
 			source.clear(i);
 		}

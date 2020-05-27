@@ -1,7 +1,9 @@
 # Changelog
-## 8.8-pre1
-- Improved Minepacks hook
+## 8.8
+- Improved Minepacks hook and prevents backpacks from being put into itself
+- Prevent ItemStacks > 64 slots from being sorted at all
 - Update Checker interval is now configurable (default: every 4 hours)
+- Updated French, Hungarian and Japanese translation
 - Changed class names and moved API to its own class - can be accessed via ChestSortPlugin#getAPI()
 
 ## 8.7
