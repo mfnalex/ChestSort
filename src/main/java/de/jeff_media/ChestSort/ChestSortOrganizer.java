@@ -308,20 +308,27 @@ public class ChestSortOrganizer {
 		String potionEffect = ",";
 		
 		// Potions
-		if(item.getItemMeta()!=null) {
+		if (item.getItemMeta() != null) {
 			ItemMeta meta = item.getItemMeta();
-			if(meta instanceof PotionMeta) {
+			if (meta instanceof PotionMeta) {
 				PotionMeta potionMeta = (PotionMeta) meta;
-				if(potionMeta.getBasePotionData()!=null) {
-					PotionData pdata = potionMeta.getBasePotionData();
-					if(pdata != null && pdata.getType()!=null && pdata.getType().getEffectType()!=null) {
-						potionEffect = "|"+pdata.getType().getEffectType().getName();
+				// Only continue if Method "getBasePotionData" exists
+				Class<? extends PotionMeta> potionMetaClass = potionMeta.getClass();
+				try {
+					if (potionMetaClass.getDeclaredMethod("getBasePotionData", null) != null) {
+						if (potionMeta.getBasePotionData() != null) {
+							PotionData pdata = potionMeta.getBasePotionData();
+							if (pdata != null && pdata.getType() != null && pdata.getType().getEffectType() != null) {
+								potionEffect = "|" + pdata.getType().getEffectType().getName();
+							}
+						}
 					}
-				}
-				//potionEffects = potionEffects.substring(0, potionEffects.length()-1);
+				} catch (NoSuchMethodException | SecurityException e) {		}
+
+				// potionEffects = potionEffects.substring(0, potionEffects.length()-1);
 			}
 		}
-		
+
 		String hookChangedName = item.getType().name();
 		
 		// CrackShot Support Start

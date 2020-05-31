@@ -1,4 +1,10 @@
 # Changelog
+## 8.8.2
+- Fixes exception when sorting inventories containing potions in ancient Minecraft versions like 1.8
+
+## 8.8.1
+- Changed config-version, because I forgot that in 8.8. You can now use the new config option and translations.
+
 ## 8.8
 - Improved Minepacks hook and prevents backpacks from being put into itself
 - Prevent ItemStacks > 64 slots from being sorted at all
