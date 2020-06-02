@@ -1,5 +1,6 @@
 package de.jeff_media.ChestSort;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
@@ -397,6 +398,15 @@ public class ChestSortListener implements Listener {
 	
 	@EventHandler
 	public void onAdditionalHotkeys(InventoryClickEvent e) {
+		
+		if(e.getClickedInventory() != null && e.getClickedInventory().getLocation()!=null) {
+			ChestSortEvent chestSortEvent = new ChestSortEvent(e.getClickedInventory().getLocation());
+			Bukkit.getPluginManager().callEvent(chestSortEvent);
+			if (chestSortEvent.isCancelled()) {
+			    return;
+			}
+		}
+		
 		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
 			return;
 		}

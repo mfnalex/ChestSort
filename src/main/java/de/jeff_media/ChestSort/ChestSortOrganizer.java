@@ -386,6 +386,14 @@ public class ChestSortOrganizer {
 
 	// Sort an inventory only between startSlot and endSlot
 	void sortInventory(Inventory inv, int startSlot, int endSlot) {
+		
+		if(inv.getLocation() != null) {
+			ChestSortEvent chestSortEvent = new ChestSortEvent(inv.getLocation());
+			Bukkit.getPluginManager().callEvent(chestSortEvent);
+			if (chestSortEvent.isCancelled()) {
+			    return;
+			}
+		}
 
 		if (plugin.debug) {
 			System.out.println(" ");
