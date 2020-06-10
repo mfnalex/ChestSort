@@ -1,4 +1,9 @@
 # Changelog
+## 8.9
+- Prevent BossShopPro's GUI from being sorted
+- Added custom event to let 3rd party plugins cancel sorting an inventory, see updated API doc for more information
+- Published ChestSort in public maven repository repo.jeff-media.de/maven2, see updated API doc for more information
+
 ## 8.8.2
 - Fixes exception when sorting inventories containing potions in ancient Minecraft versions like 1.8
 

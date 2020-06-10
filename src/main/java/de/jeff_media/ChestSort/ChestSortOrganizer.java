@@ -388,7 +388,8 @@ public class ChestSortOrganizer {
 	void sortInventory(Inventory inv, int startSlot, int endSlot) {
 		
 		if(inv.getLocation() != null) {
-			ChestSortEvent chestSortEvent = new ChestSortEvent(inv.getLocation());
+			ChestSortEvent chestSortEvent = new ChestSortEvent(inv);
+			chestSortEvent.loc = inv.getLocation();
 			Bukkit.getPluginManager().callEvent(chestSortEvent);
 			if (chestSortEvent.isCancelled()) {
 			    return;

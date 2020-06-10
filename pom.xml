@@ -4,13 +4,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.jeffclan</groupId>
-	<artifactId>JeffChestSort</artifactId>
-	<version>8.8.3-pre1</version>
-	<packaging>jar</packaging>
-
+	<groupId>de.jeff_media</groupId>
+	<artifactId>ChestSort</artifactId>
 	<name>JeffChestSort</name>
 	<url>https://www.chestsort.de</url>
+	<description>Automatically sorts your chests!</description>
+	<version>8.9</version>
+	<packaging>jar</packaging>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -18,6 +18,7 @@
 	</properties>
 
 	<build>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -34,11 +35,8 @@
 				<version>3.1.0</version>
 				<configuration>
 					<finalName>ChestSort</finalName>
-
 				</configuration>
-
 			</plugin>
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
@@ -60,8 +58,16 @@
 					</execution>
 				</executions>
 			</plugin>
-
 		</plugins>
+
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>3.4.1</version>
+			</extension>
+		</extensions>
+
 	</build>
 
 	<repositories>
@@ -90,8 +96,6 @@
 			<version>1.15.2-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
-		<!-- <dependency> <groupId>net.md-5</groupId> <artifactId>bungeecord-api</artifactId> 
-			<version>1.15-SNAPSHOT</version> <scope>compile</scope> </dependency> -->
 		<dependency>
 			<groupId>org.bstats</groupId>
 			<artifactId>bstats-bukkit</artifactId>
@@ -105,19 +109,18 @@
 			<scope>system</scope>
 			<systemPath>${project.basedir}/lib/CrackShot.jar</systemPath>
 		</dependency>
-				<!-- <dependency>
-			<groupId>com.jojodmo.customitems</groupId>
-			<artifactId>CustomItems</artifactId>
-			<version>LATEST</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/CustomItemsAPI_PLACEHOLDER.jar</systemPath>
-		</dependency>-->
 		<dependency>
 			<groupId>at.pcgamingfreaks</groupId>
 			<artifactId>Minepacks-API</artifactId>
 			<version>2.3.8</version><!-- Check api-version shield for newest version -->
 		</dependency>
-
 	</dependencies>
-	<description>Automatically sorts your chests!</description>
+
+	<distributionManagement>
+		<repository>
+			<id>jeff-ftp</id>
+			<url>ftps://ftp.jeff-media.de/maven2</url>
+		</repository>
+	</distributionManagement>
+
 </project>

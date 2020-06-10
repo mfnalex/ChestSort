@@ -399,12 +399,10 @@ public class ChestSortListener implements Listener {
 	@EventHandler
 	public void onAdditionalHotkeys(InventoryClickEvent e) {
 		
-		if(e.getClickedInventory() != null && e.getClickedInventory().getLocation()!=null) {
-			ChestSortEvent chestSortEvent = new ChestSortEvent(e.getClickedInventory().getLocation());
-			Bukkit.getPluginManager().callEvent(chestSortEvent);
-			if (chestSortEvent.isCancelled()) {
-			    return;
-			}
+		// Debug
+		if(plugin.debug) {
+			System.out.println(e.getInventory().getHolder());
+			System.out.println(e.getInventory().getHolder().getClass().getName());
 		}
 		
 		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
@@ -431,12 +429,26 @@ public class ChestSortListener implements Listener {
 			return;
 		}
 		
+		// Don't sort inventories belonging to BossShopPro
+		if(e.getInventory()!=null && e.getInventory().getHolder()!=null && e.getInventory().getHolder().getClass().getName().equalsIgnoreCase("org.black_ixx.bossshop.core.BSShopHolder")) {
+			return;
+		}
+		
 		if( !p.hasPermission("chestsort.use")) return;
 		
 		plugin.registerPlayerIfNeeded(p);
 		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		
+		
+		ChestSortEvent chestSortEvent = new ChestSortEvent(e.getInventory());
+		chestSortEvent.loc=e.getWhoClicked().getLocation();
+			Bukkit.getPluginManager().callEvent(chestSortEvent);
+			if (chestSortEvent.isCancelled()) {
+			    return;
+			}
+		
 		if(e.isLeftClick() && setting.leftClick) {
+			
 			plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory());
 			plugin.organizer.sortInventory(e.getInventory());
 			plugin.organizer.updateInventoryView(e.getInventory());
