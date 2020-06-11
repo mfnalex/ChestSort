@@ -1,4 +1,7 @@
 # Changelog
+## 8.10-SNAPSHOT1
+- Removed "checking for updates" message
+
 ## 8.9
 - Prevent BossShopPro's GUI from being sorted
 - Added custom event to let 3rd party plugins cancel sorting an inventory, see updated API doc for more information

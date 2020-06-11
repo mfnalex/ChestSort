@@ -90,7 +90,7 @@ public class ChestSortUpdateChecker {
 			public void run() {
 
 				try {
-					plugin.getLogger().info("Checking for available updates...");
+					//plugin.getLogger().info("Checking for available updates...");
 					String userAgent = "ChestSort/"+plugin.getDescription().getVersion()+" (MC "+plugin.mcVersion+", "+plugin.getServer().getOnlinePlayers().size()+"/"+plugin.getServer().getOfflinePlayers().length+")";
 					HttpURLConnection httpcon = (HttpURLConnection) new URL(latestVersionLink).openConnection();
 					httpcon.addRequestProperty("User-Agent", userAgent);
