@@ -129,6 +129,7 @@ check-for-updates: true
 # When you set "check-for-updates" to true, you can define the amount
 # of hours inbetween each update check.
 check-interval: 4
+
 #########################
 #### Disabled Worlds ####
 #########################
