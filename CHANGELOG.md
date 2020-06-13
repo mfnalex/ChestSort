@@ -1,7 +1,8 @@
 # Changelog
-## 8.10-SNAPSHOT1
+## 8.10
+- Left-Click/Right-Click-Hotkey only works with empty hand now
+- Made llama, donkey and mule chests sortable via hotkeys and automatic chest sorting
 - Removed "checking for updates" message
-- Left-Click/Right-Click-Hotkey only work with empty hand now
 
 ## 8.9
 - Prevent BossShopPro's GUI from being sorted

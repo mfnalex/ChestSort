@@ -29,6 +29,7 @@ import org.bukkit.potion.PotionData;
 import de.jeff_media.ChestSort.hooks.CrackShotHook;
 import de.jeff_media.ChestSort.hooks.InventoryPagesHook;
 import de.jeff_media.ChestSort.utils.CategoryLinePair;
+import de.jeff_media.ChestSort.utils.LlamaUtils;
 import de.jeff_media.ChestSort.utils.TypeMatchPositionPair;
 
 public class ChestSortOrganizer {
@@ -582,12 +583,15 @@ public class ChestSortOrganizer {
 		if(destination.getHolder()==null || !(destination.getHolder() instanceof Player) || destination.getType() != InventoryType.PLAYER) {
 			destinationIsPlayerInventory = false;
 		}
+		
+		// Dont fill hotbar
 		if(destinationIsPlayerInventory) {
-		for(int i = 0; i<9;i++) {
-			hotbarStuff[i] = destination.getItem(i);
-			destination.setItem(i, new ItemStack(placeholderMaterial,64));
+			for(int i = 0; i<9;i++) {
+				hotbarStuff[i] = destination.getItem(i);
+				destination.setItem(i, new ItemStack(placeholderMaterial,64));
+			}
 		}
-		}
+		
 		
 		ArrayList<ItemStack> leftovers = new ArrayList<ItemStack>();
 		
@@ -606,10 +610,14 @@ public class ChestSortOrganizer {
 		}
 		
 		origSource.addItem(leftovers.toArray(new ItemStack[leftovers.size()]));
-		if(destinationIsPlayerInventory) { for(int i=0;i<9;i++) {
-			destination.setItem(i, hotbarStuff[i]);
+		
+		// Restore hotbar
+		if(destinationIsPlayerInventory) {
+			for(int i=0;i<9;i++) {
+				destination.setItem(i, hotbarStuff[i]);
+			}
 		}
-		}
+		
 		updateInventoryView(destination);
 		updateInventoryView(source);
 		

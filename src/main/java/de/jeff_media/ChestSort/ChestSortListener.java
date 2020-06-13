@@ -5,6 +5,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.block.DoubleChest;
+import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
 import de.jeff_media.ChestSort.hooks.MinepacksHook;
+import de.jeff_media.ChestSort.utils.LlamaUtils;
 
 public class ChestSortListener implements Listener {
 
@@ -35,9 +37,6 @@ public class ChestSortListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		
 		plugin.permissionsHandler.addPermissions(event.getPlayer());
-
-		// DEBUG
-		// To enable debug mode, put debug: true into your config.yml
 
 		// OPs will get an update notice if a new update is available
 		if (event.getPlayer().isOp()) {
@@ -118,15 +117,25 @@ public class ChestSortListener implements Listener {
 		Player p = (Player) event.getPlayer();
 		Inventory inventory = event.getInventory();
 
-		if (!belongsToChestLikeBlock(inventory)) {
+		if (!belongsToChestLikeBlock(inventory) && !LlamaUtils.belongsToLlama(inventory)) {
 			return;
 		}
 
-		if (isReadyToSort(p)) {
-
-			// Finally call the Organizer to sort the inventory
-			plugin.organizer.sortInventory(event.getInventory());
+		if (!isReadyToSort(p)) {
+			return;
 		}
+
+		// Finally call the Organizer to sort the inventory
+		
+		// Llama inventories need special start/end slots
+		if(LlamaUtils.belongsToLlama(event.getInventory())) {
+			ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
+			plugin.organizer.sortInventory(event.getInventory(), 2, LlamaUtils.getLlamaChestSize(llama)+1);
+			return;
+		}
+		
+		// Normal container inventories can be sorted completely
+		plugin.organizer.sortInventory(event.getInventory());
 
 	}
 
@@ -149,15 +158,25 @@ public class ChestSortListener implements Listener {
 		Player p = (Player) event.getPlayer();
 		Inventory inventory = event.getInventory();
 
-		if (!belongsToChestLikeBlock(inventory)) {
+		if (!belongsToChestLikeBlock(inventory) && !LlamaUtils.belongsToLlama(inventory)) {
 			return;
 		}
 
-		if (isReadyToSort(p)) {
-
-			// Finally call the Organizer to sort the inventory
-			plugin.organizer.sortInventory(event.getInventory());
+		if (!isReadyToSort(p)) {
+			return;
 		}
+
+		// Finally call the Organizer to sort the inventory
+		
+		// Llama inventories need special start/end slots
+		if(LlamaUtils.belongsToLlama(event.getInventory())) {
+			ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
+			plugin.organizer.sortInventory(event.getInventory(), 2, LlamaUtils.getLlamaChestSize(llama)+1);
+			return;
+		}
+		
+		// Normal container inventories can be sorted completely
+		plugin.organizer.sortInventory(event.getInventory());
 
 	}
 
@@ -367,12 +386,19 @@ public class ChestSortListener implements Listener {
 		if(!sort) {
 			return;
 		}
-		if(belongsToChestLikeBlock(event.getClickedInventory()) || minepacksHook.isMinepacksBackpack(event.getClickedInventory())) {
+		
+		if(belongsToChestLikeBlock(event.getClickedInventory()) || LlamaUtils.belongsToLlama(event.getClickedInventory()) || minepacksHook.isMinepacksBackpack(event.getClickedInventory())) {
 			
 			if( !p.hasPermission("chestsort.use")) {
 				return;
 			}
 			
+			if(LlamaUtils.belongsToLlama(event.getClickedInventory())) {
+				ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
+				plugin.organizer.sortInventory(event.getClickedInventory(), 2, LlamaUtils.getLlamaChestSize(llama)+1);
+				plugin.organizer.updateInventoryView(event);
+				return;
+			}
 			
 			plugin.organizer.sortInventory(event.getClickedInventory());
 			plugin.organizer.updateInventoryView(event);
@@ -381,7 +407,7 @@ public class ChestSortListener implements Listener {
 			if( !p.hasPermission("chestsort.use.inventory")) {
 				return;
 			}
-			
+
 			if(event.getSlotType() == SlotType.QUICKBAR) {
 				plugin.organizer.sortInventory(p.getInventory(),0,8);
 				plugin.organizer.updateInventoryView(event);
@@ -399,10 +425,8 @@ public class ChestSortListener implements Listener {
 	@EventHandler
 	public void onAdditionalHotkeys(InventoryClickEvent e) {
 		
-		// Debug
-		if(plugin.debug) {
-			System.out.println(e.getInventory().getHolder());
-			System.out.println(e.getInventory().getHolder().getClass().getName());
+		if(LlamaUtils.belongsToLlama(e.getInventory()) || LlamaUtils.belongsToLlama(e.getClickedInventory())) {
+			return;
 		}
 		
 		if(!plugin.getConfig().getBoolean("allow-hotkeys")) {
