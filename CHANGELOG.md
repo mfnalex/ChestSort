@@ -1,4 +1,10 @@
 # Changelog
+## 8.10.2
+- Fixed exception on versions prior to 1.11
+
+## 8.10.1
+- Minor bugfixes
+
 ## 8.10
 - Made llama, donkey and mule chests sortable via hotkeys and automatic chest sorting
 - Left-Click/Right-Click-Hotkey only works with empty hand now

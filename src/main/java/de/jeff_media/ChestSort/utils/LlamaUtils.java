@@ -21,7 +21,7 @@ public class LlamaUtils {
 		}
 		
 		public static boolean belongsToLlama(Inventory inv) {
-			if(inv.getHolder() instanceof ChestedHorse) {
+			if(inv.getHolder() != null && inv.getHolder().getClass().getName().endsWith("CraftLlama")) {
 				return true;
 			}
 			return false;
