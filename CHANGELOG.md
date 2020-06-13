@@ -1,7 +1,7 @@
 # Changelog
 ## 8.10
-- Left-Click/Right-Click-Hotkey only works with empty hand now
 - Made llama, donkey and mule chests sortable via hotkeys and automatic chest sorting
+- Left-Click/Right-Click-Hotkey only works with empty hand now
 - Removed "checking for updates" message
 
 ## 8.9
