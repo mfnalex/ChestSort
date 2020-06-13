@@ -22,10 +22,8 @@ public class LlamaUtils {
 		
 		public static boolean belongsToLlama(Inventory inv) {
 			if(inv.getHolder() instanceof ChestedHorse) {
-				System.out.println("This inventory belongs to a llama");
 				return true;
 			}
-			System.out.println("This inventory does NOT belong to a llama");
 			return false;
 		}
 		
