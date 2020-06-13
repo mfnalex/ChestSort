@@ -1,6 +1,7 @@
 # Changelog
 ## 8.10-SNAPSHOT1
 - Removed "checking for updates" message
+- Left-Click/Right-Click-Hotkey only work with empty hand now
 
 ## 8.9
 - Prevent BossShopPro's GUI from being sorted

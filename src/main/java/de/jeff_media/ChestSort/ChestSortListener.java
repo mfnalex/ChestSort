@@ -416,6 +416,10 @@ public class ChestSortListener implements Listener {
 		if(e.getClickedInventory()!=null) {
 			return;
 		}
+		// Only continue if hand is empty
+		if(e.getCursor() != null && e.getCursor().getType() != null && e.getCursor().getType() != Material.AIR) {
+			return;
+		}
 		// Possible fix for #57
 		if(e.getInventory().getHolder()==null) return;
 		if(e.getInventory().getHolder() == p && e.getInventory() != p.getInventory()) return;
