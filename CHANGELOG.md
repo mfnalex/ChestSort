@@ -1,4 +1,7 @@
 # Changelog
+## 8.10.3
+- Fixed exception when using the left-/right-click hotkey while using PaperMC instead of Spigot
+ 
 ## 8.10.2
 - Fixed exception on versions prior to 1.11
 
