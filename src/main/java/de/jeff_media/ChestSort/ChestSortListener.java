@@ -297,7 +297,7 @@ public class ChestSortListener implements Listener {
 	}
 	
 	@EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
-	public void onInventoryClickEvent(InventoryClickEvent event) {
+	public void onHotkey(InventoryClickEvent event) {
 		
 		if(!(event.getWhoClicked() instanceof Player)) {
 			return;
@@ -351,7 +351,13 @@ public class ChestSortListener implements Listener {
 		case MIDDLE:
 			//if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
 			if(setting.middleClick) {
-				sort=true;
+				if(event.getWhoClicked().getGameMode() != GameMode.CREATIVE) {
+					sort=true;
+				} else {
+					if(event.getCurrentItem()==null || event.getCurrentItem().getType()==Material.AIR) {
+						sort=false;
+					}
+				}
 			}
 			break;
 		case DOUBLE_CLICK:

@@ -24,8 +24,10 @@ public class ChestSortDebugger implements @NotNull Listener {
 			System.out.println(" ");
 			System.out.println("InventoryClickEvent:");
 			System.out.println("- Holder: " + e.getInventory().getHolder());
-			//System.out.println("- Holder (Class): "+e.getInventory().getHolder().getClass().getName());
 			System.out.println("- Slot: "+e.getRawSlot());
+			System.out.println("- Left-Click: "+e.isLeftClick());
+			System.out.println("- Right-Click: "+e.isRightClick());
+			System.out.println("- Shift-Click: "+e.isShiftClick());
 			System.out.println(" ");
 		}
 	}

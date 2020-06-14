@@ -2,6 +2,7 @@
 ## 8.10.5
 - ChestSort checks if Minepacks version is recent enough and, if not, disable the Minepacks hook.
 - Backpacks from Minepacks will no longer be moved into chests with the left-/right-click hotkeys
+- Middle-Click hotkey is now disabled in Creative mode unless the clicked slot is empty, to allow players to duplicate items just like in vanilla
 
 ## 8.10.4
 - Fixed exception when sorting inventories in 1.8 because Inventory.getLocation() did not exist yet
