@@ -1,4 +1,7 @@
 # Changelog
+## 8.10.4
+- Fixed exception when sorting inventories in 1.8 because Inventory.getLocation() did not exist yet
+
 ## 8.10.3
 - Fixed exception when using the left-/right-click hotkey while using PaperMC instead of Spigot
  
