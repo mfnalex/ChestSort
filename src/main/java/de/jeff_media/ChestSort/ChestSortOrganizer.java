@@ -639,8 +639,11 @@ public class ChestSortOrganizer {
 		for(int i = playerInvStartSlot;i<=playerInvEndSlot;i++) {
 			if(source.getItem(i)==null) continue;
 			
-			if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(destination)
-					&& plugin.listener.minepacksHook.isMinepacksBackpack(source.getItem(i))) continue;
+			// This prevents Minepacks from being put into Minepacks
+			/*if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(destination)
+					&& plugin.listener.minepacksHook.isMinepacksBackpack(source.getItem(i))) continue;*/
+			// This prevents Minepacks from being moved at all
+			if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(source.getItem(i))) continue;
 			
 			if(plugin.hookInventoryPages
 					&& plugin.organizer.inventoryPagesHook.isButton(source.getItem(i), i, source)) continue;

@@ -1,4 +1,8 @@
 # Changelog
+## 8.10.5
+- ChestSort checks if Minepacks version is recent enough and, if not, disable the Minepacks hook.
+- Backpacks from Minepacks will no longer be moved into chests with the left-/right-click hotkeys
+
 ## 8.10.4
 - Fixed exception when sorting inventories in 1.8 because Inventory.getLocation() did not exist yet
 

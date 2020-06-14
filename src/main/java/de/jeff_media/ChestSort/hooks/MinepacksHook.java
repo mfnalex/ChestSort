@@ -26,7 +26,15 @@ public class MinepacksHook {
 	public boolean isMinepacksBackpack(ItemStack item) {
 		if(minepacks == null) return false;
 		
-		if(minepacks.isBackpackItem(item)) return true;
+		try {
+			if(minepacks.getClass().getMethod("isBackpackItem", ItemStack.class) != null) {
+				if(minepacks.isBackpackItem(item)) return true;
+			}
+		} catch (NoSuchMethodException | SecurityException e) {
+			plugin.getLogger().warning("You are using a version of Minepacks that is too old and does not implement every API method needed by ChestSort. Minepacks hook will be disabled.");
+			minepacks = null;
+			plugin.hookMinepacks=false;
+		}
 		
 		return false;
 	}
