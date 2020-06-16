@@ -4,10 +4,14 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
 
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -85,12 +89,10 @@ public class ChestSortUpdateChecker {
 	}
 
 	void checkForUpdate() {
-		Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+		Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {		
 			@Override
 			public void run() {
-
 				try {
-					//plugin.getLogger().info("Checking for available updates...");
 					String userAgent = "ChestSort/"+plugin.getDescription().getVersion()+" (MC "+plugin.mcVersion+", "+plugin.getServer().getOnlinePlayers().size()+"/"+plugin.getServer().getOfflinePlayers().length+")";
 					HttpURLConnection httpcon = (HttpURLConnection) new URL(latestVersionLink).openConnection();
 					httpcon.addRequestProperty("User-Agent", userAgent);
@@ -110,15 +112,11 @@ public class ChestSortUpdateChecker {
 						plugin.getLogger().warning(downloadLink);
 						plugin.getLogger().warning("=================================================");
 					}
-
 					reader.close();
 				} catch (Exception e) {
 					plugin.getLogger().warning("Could not check for updates.");
 				}
-
 			}
 		});
-
 	}
-
 }

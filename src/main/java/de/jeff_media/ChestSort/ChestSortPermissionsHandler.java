@@ -17,7 +17,7 @@ public class ChestSortPermissionsHandler {
 	}
 	
 	void addPermissions(Player p) {
-		if(plugin.usePermissions) return;
+		if(plugin.getConfig().getBoolean("use-permissions")) return;
 		if(permissions.containsKey(p.getUniqueId())) return;
 		PermissionAttachment attachment = p.addAttachment(plugin);
 		attachment.setPermission("chestsort.use", true);
@@ -26,7 +26,7 @@ public class ChestSortPermissionsHandler {
 	}
 	
 	void removePermissions(Player p) {
-		if(plugin.usePermissions) return;
+		if(plugin.getConfig().getBoolean("use-permissions")) return;
 		if(!permissions.containsKey(p.getUniqueId())) return;
 		PermissionAttachment attachment = permissions.get(p.getUniqueId());
 		attachment.unsetPermission("chestsort.use");

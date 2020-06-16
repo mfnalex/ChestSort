@@ -38,6 +38,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
@@ -46,6 +47,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -59,6 +61,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	ChestSortMessages messages;
 	ChestSortOrganizer organizer;
 	ChestSortUpdateChecker updateChecker;
+	Integer updateCheckerTask;
 	ChestSortListener listener;
 	ChestSortSettingsGUI settingsGUI;
 	ChestSortPermissionsHandler permissionsHandler;
@@ -70,7 +73,6 @@ public class ChestSortPlugin extends JavaPlugin {
 	protected boolean debug = false;
 	boolean verbose = true;
 	boolean hotkeyGUI = true;
-	boolean usePermissions;
 	
 	public boolean hookCrackShot = false;
 	public boolean hookInventoryPages = false;
@@ -231,146 +233,7 @@ public class ChestSortPlugin extends JavaPlugin {
 		tmpVersion = mcVersion.substring(mcVersion.indexOf("_")+1);
 		mcMinorVersion = Integer.parseInt(tmpVersion.substring(0,tmpVersion.indexOf("_")));
 		
-		// Create the config file, including checks for old config versions, and load
-		// the default values for unset options
-		
-		createConfig();
-		
-		debug = getConfig().getBoolean("debug");
-		
-		if(debug) {
-			ChestSortDebugger debugger = new ChestSortDebugger(this);
-			getServer().getPluginManager().registerEvents(debugger, this);
-		}
-		
-		if(getConfig().getBoolean("hook-crackshot")) {
-			if(Bukkit.getPluginManager().getPlugin("CrackShot") instanceof Plugin) {
-				hookCrackShot=true;
-			}
-		}
-		if(getConfig().getBoolean("hook-inventorypages")) {
-			if(Bukkit.getPluginManager().getPlugin("InventoryPages") instanceof Plugin) {
-				hookInventoryPages=true;
-			}
-		}
-		if(getConfig().getBoolean("hook-minepacks")) {
-			if(Bukkit.getPluginManager().getPlugin("Minepacks") instanceof MinepacksPlugin) {
-				hookMinepacks=true;
-			}
-		}
-
-		
-
-		// Save default sorting category files when enabled in the config (default=true)
-		saveDefaultCategories();
-
-		verbose = getConfig().getBoolean("verbose");
-
-		// Create all needed instances of our classes
-
-		// Messages class will load messages from config, fallback to hardcoded default
-		// messages
-		messages = new ChestSortMessages(this);
-
-		// Organizer will load all category files and will be ready to sort stuff
-		organizer = new ChestSortOrganizer(this);
-		
-		settingsGUI = new ChestSortSettingsGUI(this);
-
-		// UpdateChecker will check on startup and every 24 hours for new updates (when
-		// enabled)
-		updateChecker = new ChestSortUpdateChecker(this);
-
-		// The listener will register joining (and unregister leaving) players, and call
-		// the Organizer to sort inventories when a player closes a chest, shulkerbox or
-		// barrel inventory
-		listener = new ChestSortListener(this);
-		
-		api = new ChestSortAPI(this);
-		
-		permissionsHandler = new ChestSortPermissionsHandler(this);
-		
-		usePermissions = getConfig().getBoolean("use-permissions");
-		
-		updateCheckInterval = (int) (getConfig().getDouble("check-interval")*60*60);
-
-		// The sorting method will determine how stuff is sorted
-		sortingMethod = getConfig().getString("sorting-method");
-
-		// Register the events for our Listener
-		getServer().getPluginManager().registerEvents(listener, this);
-		
-		// Register events for the GUI interaction
-		getServer().getPluginManager().registerEvents(settingsGUI, this);
-
-		// Create the CommandExecutor, register commands and set their TabCompleter
-		ChestSortChestSortCommand chestsortCommandExecutor = new ChestSortChestSortCommand(this);
-		ChestSortTabCompleter tabCompleter = new ChestSortTabCompleter();
-		this.getCommand("chestsort").setExecutor(chestsortCommandExecutor);
-		this.getCommand("chestsort").setTabCompleter(tabCompleter);
-		ChestSortInvSortCommand invsortCommandExecutor = new ChestSortInvSortCommand(this);
-		this.getCommand("invsort").setExecutor(invsortCommandExecutor);
-		this.getCommand("invsort").setTabCompleter(tabCompleter);
-
-		// Does anyone actually need this?
-		if (verbose) {
-			getLogger().info("Use permissions: " + usePermissions);
-			getLogger().info("Current sorting method: " + sortingMethod);
-			getLogger().info("Chest sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
-			getLogger().info("Inventory sorting enabled by default: " + getConfig().getBoolean("inv-sorting-enabled-by-default"));
-			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
-			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
-			getLogger().info("Allow hotkeys: " + getConfig().getBoolean("allow-hotkeys"));
-			if(getConfig().getBoolean("allow-hotkeys")) {
-				getLogger().info("Hotkeys enabled by default:");
-				getLogger().info("- Sorting hotkeys:");
-				getLogger().info("  |- Middle-Click: " + getConfig().getBoolean("sorting-hotkeys.middle-click"));
-				getLogger().info("  |- Shift-Click: " + getConfig().getBoolean("sorting-hotkeys.shift-click"));
-				getLogger().info("  |- Double-Click: " + getConfig().getBoolean("sorting-hotkeys.double-click"));
-				getLogger().info("  |- Shift-Right-Click: " + getConfig().getBoolean("sorting-hotkeys.shift-right-click"));
-				getLogger().info("- Additional hotkeys:");
-				getLogger().info("  |- Left-Click: " + getConfig().getBoolean("additional-hotkeys.left-click"));
-				getLogger().info("  |- Right-Click: " + getConfig().getBoolean("additional-hotkeys.right-click"));
-			}
-			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
-			if(getConfig().getString("check-for-updates").equalsIgnoreCase("true")) {
-				getLogger().info("Check interval: " + getConfig().getString("check-interval") + " hours ("+updateCheckInterval+" seconds)");
-			}
-			getLogger().info("Categories: " + getCategoryList());
-		}
-
-		// Check for updates (async, of course)
-		// When set to true, we check for updates right now, and every X hours (see
-		// updateCheckInterval)
-		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
-			Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-				@Override
-				public void run() {
-					updateChecker.checkForUpdate();
-				}
-			}, 0L, updateCheckInterval * 20);
-
-		} // When set to on-startup, we check right now (delay 0)
-		else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
-			updateChecker.checkForUpdate();
-		}
-
-		registerMetrics();
-		
-		// When dump is set to true in config.yml, we dump all items with their categories
-		// to find out which items are still missing in the category files
-		if(getConfig().getBoolean("dump")) {
-			try {
-				dump();
-			} catch (IOException e) {
-				System.out.println("Error while writing dump file.");
-				e.printStackTrace();
-			}
-		}
-		
-		for(Player p : getServer().getOnlinePlayers()) {
-			permissionsHandler.addPermissions(p);
-		}
+		load(false);
 	}
 
 	private String getCategoryList() {
@@ -549,16 +412,142 @@ public class ChestSortPlugin extends JavaPlugin {
 		}
 	}
 	
-	// Dumps all Materials into a csv file with their current category
-	void dump() throws IOException {
-		File file = new File(getDataFolder() + File.separator + "dump.csv");
-		FileOutputStream fos = new FileOutputStream(file);
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
-		for(Material mat : Material.values()) {
-			bw.write(mat.name()+","+organizer.getCategoryLinePair(mat.name()).getCategoryName());
-			bw.newLine();
+	void load(boolean reload) {
+		
+		if(reload) {
+			unregisterAllPlayers();
+			reloadConfig();
+			if(updateCheckerTask != null) {
+				getServer().getScheduler().cancelTask(updateCheckerTask);
+			}
 		}
-		bw.close();
+		
+		createConfig();
+		debug = getConfig().getBoolean("debug");
+		
+		HandlerList.unregisterAll(this);
+		
+		if(debug) {
+			ChestSortDebugger debugger = new ChestSortDebugger(this);
+			getServer().getPluginManager().registerEvents(debugger, this);
+		}
+		
+		hookCrackShot = getConfig().getBoolean("hook-crackshot")
+					&& Bukkit.getPluginManager().getPlugin("CrackShot") instanceof Plugin ? true : false;
+
+		hookInventoryPages = getConfig().getBoolean("hook-inventorypages")
+					&& Bukkit.getPluginManager().getPlugin("InventoryPages") instanceof Plugin ? true : false;
+			
+		hookMinepacks = getConfig().getBoolean("hook-minepacks")
+			 && Bukkit.getPluginManager().getPlugin("Minepacks") instanceof MinepacksPlugin ? true : false;
+
+		saveDefaultCategories();
+
+		verbose = getConfig().getBoolean("verbose");
+
+		messages = new ChestSortMessages(this);
+		organizer = new ChestSortOrganizer(this);
+		settingsGUI = new ChestSortSettingsGUI(this);
+		updateChecker = new ChestSortUpdateChecker(this);
+		listener = new ChestSortListener(this);
+		api = new ChestSortAPI(this);
+		permissionsHandler = new ChestSortPermissionsHandler(this);
+		updateCheckInterval = (int) (getConfig().getDouble("check-interval")*60*60);
+		sortingMethod = getConfig().getString("sorting-method");
+		getServer().getPluginManager().registerEvents(listener, this);
+		getServer().getPluginManager().registerEvents(settingsGUI, this);
+		ChestSortChestSortCommand chestsortCommandExecutor = new ChestSortChestSortCommand(this);
+		ChestSortTabCompleter tabCompleter = new ChestSortTabCompleter();
+		this.getCommand("chestsort").setExecutor(chestsortCommandExecutor);
+		this.getCommand("chestsort").setTabCompleter(tabCompleter);
+		ChestSortInvSortCommand invsortCommandExecutor = new ChestSortInvSortCommand(this);
+		this.getCommand("invsort").setExecutor(invsortCommandExecutor);
+		this.getCommand("invsort").setTabCompleter(tabCompleter);
+
+		if (verbose) {
+			getLogger().info("Use permissions: " + getConfig().getBoolean("use-permissions"));
+			getLogger().info("Current sorting method: " + sortingMethod);
+			getLogger().info("Chest sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
+			getLogger().info("Inventory sorting enabled by default: " + getConfig().getBoolean("inv-sorting-enabled-by-default"));
+			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
+			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
+			getLogger().info("Allow hotkeys: " + getConfig().getBoolean("allow-hotkeys"));
+			if(getConfig().getBoolean("allow-hotkeys")) {
+				getLogger().info("Hotkeys enabled by default:");
+				getLogger().info("- Sorting hotkeys:");
+				getLogger().info("  |- Middle-Click: " + getConfig().getBoolean("sorting-hotkeys.middle-click"));
+				getLogger().info("  |- Shift-Click: " + getConfig().getBoolean("sorting-hotkeys.shift-click"));
+				getLogger().info("  |- Double-Click: " + getConfig().getBoolean("sorting-hotkeys.double-click"));
+				getLogger().info("  |- Shift-Right-Click: " + getConfig().getBoolean("sorting-hotkeys.shift-right-click"));
+				getLogger().info("- Additional hotkeys:");
+				getLogger().info("  |- Left-Click: " + getConfig().getBoolean("additional-hotkeys.left-click"));
+				getLogger().info("  |- Right-Click: " + getConfig().getBoolean("additional-hotkeys.right-click"));
+			}
+			getLogger().info("Check for updates: " + getConfig().getString("check-for-updates"));
+			if(getConfig().getString("check-for-updates").equalsIgnoreCase("true")) {
+				getLogger().info("Check interval: " + getConfig().getString("check-interval") + " hours ("+updateCheckInterval+" seconds)");
+			}
+			getLogger().info("Categories: " + getCategoryList());
+		}
+
+		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
+			updateCheckerTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
+				@Override
+				public void run() {
+					updateChecker.checkForUpdate();
+				}
+			}, 0L, updateCheckInterval * 20);
+
+		} // When set to on-startup, we check right now (delay 0)
+		else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
+			updateChecker.checkForUpdate();
+		}
+
+		registerMetrics();
+		
+		if(getConfig().getBoolean("dump")) {
+			dump();
+		}
+		
+		for(Player p : getServer().getOnlinePlayers()) {
+			permissionsHandler.addPermissions(p);
+		}
+		
+		// End Reload
+		
+	}
+
+	void unregisterAllPlayers() {
+		if(perPlayerSettings!=null && perPlayerSettings.size()>0) {
+			Iterator<String> it = perPlayerSettings.keySet().iterator();
+			while(it.hasNext()) {
+				Player p = getServer().getPlayer(it.next());
+				if(p != null) {
+					unregisterPlayer(p);
+				}
+			}
+		} else {
+			perPlayerSettings = new HashMap<String,ChestSortPlayerSetting>();
+		}
+	}
+	
+	// Dumps all Materials into a csv file with their current category
+	void dump() {
+		try {
+			File file = new File(getDataFolder() + File.separator + "dump.csv");
+			FileOutputStream fos;
+			fos = new FileOutputStream(file);
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+			for(Material mat : Material.values()) {
+				bw.write(mat.name()+","+organizer.getCategoryLinePair(mat.name()).getCategoryName());
+				bw.newLine();
+			}
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	void registerPlayerIfNeeded(Player p) {

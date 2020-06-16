@@ -5,6 +5,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import net.md_5.bungee.api.ChatColor;
+
 public class ChestSortChestSortCommand implements CommandExecutor {
 
 	ChestSortPlugin plugin;
@@ -19,6 +21,18 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 		// This command toggles automatic chest sorting for the player that runs the command
 		if (!command.getName().equalsIgnoreCase("chestsort")) {
 			return false;
+		}
+		
+		// Reload command
+		if(args.length>0 && args[0].equalsIgnoreCase("reload")) {
+			if(!sender.hasPermission("chestsort.reload")) {
+				sender.sendMessage(plugin.getCommand("chestsort").getPermissionMessage());
+				return true;
+			}
+			sender.sendMessage(ChatColor.GRAY + "Reloading ChestSort...");
+			plugin.load(true);
+			sender.sendMessage(ChatColor.GREEN + "ChestSort has been reloaded.");
+			return true;
 		}
 
 			if (!(sender instanceof Player)) {
