@@ -16,7 +16,8 @@ You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin
 	<dependency>
 		<groupId>de.jeff_media</groupId>
 		<artifactId>ChestSort</artifactId>
-		<version>8.9</version> <!-- Check www.chestsort.de for latest version -->
+		<version>8.10.5</version> <!-- Check www.chestsort.de for latest version -->
+        <scope>provided</scope>
 	</dependency>
 </dependencies>
 ```
