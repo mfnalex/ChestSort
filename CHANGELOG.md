@@ -1,4 +1,8 @@
 # Changelog
+## 9.0.0-SNAPSHOT1
+- Using new universal Update  (https://github.com/JEFF-Media-GbR/Spigot-UpdateChecker)
+- TODO: InvUnload integration (see TODO.md)
+
 ## 8.10.5
 - Added reload command (/chestsort reload) with permission chestsort.reload
 - ChestSort checks if Minepacks version is recent enough and, if not, disable the Minepacks hook.

@@ -42,6 +42,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -60,8 +61,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<String, ChestSortPlayerSetting>();
 	ChestSortMessages messages;
 	ChestSortOrganizer organizer;
-	ChestSortUpdateChecker updateChecker;
-	Integer updateCheckerTask;
+	PluginUpdateChecker updateChecker;
 	ChestSortListener listener;
 	ChestSortSettingsGUI settingsGUI;
 	ChestSortPermissionsHandler permissionsHandler;
@@ -417,8 +417,8 @@ public class ChestSortPlugin extends JavaPlugin {
 		if(reload) {
 			unregisterAllPlayers();
 			reloadConfig();
-			if(updateCheckerTask != null) {
-				getServer().getScheduler().cancelTask(updateCheckerTask);
+			if(updateChecker != null) {
+				updateChecker.stop();
 			}
 		}
 		
@@ -448,7 +448,7 @@ public class ChestSortPlugin extends JavaPlugin {
 		messages = new ChestSortMessages(this);
 		organizer = new ChestSortOrganizer(this);
 		settingsGUI = new ChestSortSettingsGUI(this);
-		updateChecker = new ChestSortUpdateChecker(this);
+		updateChecker = new PluginUpdateChecker(this, "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt", "https://chestsort.de", "https://chestsort.de/changelog", "https://chestsort.de/donate");
 		listener = new ChestSortListener(this);
 		api = new ChestSortAPI(this);
 		permissionsHandler = new ChestSortPermissionsHandler(this);
@@ -491,16 +491,10 @@ public class ChestSortPlugin extends JavaPlugin {
 		}
 
 		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
-			updateCheckerTask = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-				@Override
-				public void run() {
-					updateChecker.checkForUpdate();
-				}
-			}, 0L, updateCheckInterval * 20);
-
+			updateChecker.check(updateCheckInterval);
 		} // When set to on-startup, we check right now (delay 0)
 		else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
-			updateChecker.checkForUpdate();
+			updateChecker.check();
 		}
 
 		registerMetrics();

@@ -9,7 +9,7 @@
 	<name>JeffChestSort</name>
 	<url>https://www.chestsort.de</url>
 	<description>Automatically sorts your chests!</description>
-	<version>8.10.5</version>
+	<version>9.0.0-SNAPSHOT1</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -87,6 +87,10 @@
 			<id>pcgf-repo</id>
 			<url>https://repo.pcgamingfreaks.at/repository/maven-everything</url>
 		</repository>
+		<repository>
+			<id>jeff-media-gbr</id>
+			<url>https://repo.jeff-media.de/maven2</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -113,6 +117,17 @@
 			<groupId>at.pcgamingfreaks</groupId>
 			<artifactId>Minepacks-API</artifactId>
 			<version>2.3.8</version><!-- Check api-version shield for newest version -->
+		</dependency>
+		<dependency>
+			<groupId>de.jeff_media</groupId>
+			<artifactId>PluginUpdateChecker</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>de.jeff_media</groupId>
+			<artifactId>InvUnload</artifactId>
+			<version>4.2.0-SNAPSHOT3</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 
