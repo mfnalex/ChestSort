@@ -9,7 +9,7 @@
 	<name>JeffChestSort</name>
 	<url>https://www.chestsort.de</url>
 	<description>Automatically sorts your chests!</description>
-	<version>9.0.0-SNAPSHOT1</version>
+	<version>9.0.0-SNAPSHOT2</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -138,7 +138,7 @@
 		<dependency>
 			<groupId>de.jeff_media</groupId>
 			<artifactId>InvUnload</artifactId>
-			<version>4.2.0-SNAPSHOT5</version>
+			<version>4.2.0-SNAPSHOT6</version>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>

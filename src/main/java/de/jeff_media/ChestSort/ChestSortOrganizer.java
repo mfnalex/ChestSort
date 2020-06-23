@@ -29,7 +29,6 @@ import org.bukkit.potion.PotionData;
 import de.jeff_media.ChestSort.hooks.CrackShotHook;
 import de.jeff_media.ChestSort.hooks.InventoryPagesHook;
 import de.jeff_media.ChestSort.utils.CategoryLinePair;
-import de.jeff_media.ChestSort.utils.LlamaUtils;
 import de.jeff_media.ChestSort.utils.TypeMatchPositionPair;
 
 public class ChestSortOrganizer {
