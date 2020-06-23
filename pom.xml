@@ -44,8 +44,12 @@
 				<configuration>
 					<relocations>
 						<relocation>
+							<pattern>de.jeff_media.PluginUpdateChecker</pattern>
+							<shadedPattern>de.jeff_media.ChestSort</shadedPattern>
+						</relocation>
+						<relocation>
 							<pattern>org.bstats</pattern>
-							<shadedPattern>de.jeffclan.JeffChestSort</shadedPattern>
+							<shadedPattern>de.jeff_media.ChestSort</shadedPattern>
 						</relocation>
 					</relocations>
 				</configuration>
@@ -117,17 +121,31 @@
 			<groupId>at.pcgamingfreaks</groupId>
 			<artifactId>Minepacks-API</artifactId>
 			<version>2.3.8</version><!-- Check api-version shield for newest version -->
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.jetbrains</groupId>
+					<artifactId>annotations</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>de.jeff_media</groupId>
 			<artifactId>PluginUpdateChecker</artifactId>
-			<version>1.0</version>
+			<version>1.2</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>de.jeff_media</groupId>
 			<artifactId>InvUnload</artifactId>
-			<version>4.2.0-SNAPSHOT3</version>
-			<scope>compile</scope>
+			<version>4.2.0-SNAPSHOT5</version>
+			<scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>de.jeff_media</groupId>
+					<artifactId>PluginUpdateChecker</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
