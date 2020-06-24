@@ -1,5 +1,6 @@
 package de.jeff_media.ChestSort;
 
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
 public class ChestSortPlayerSetting {
@@ -26,6 +27,12 @@ public class ChestSortPlayerSetting {
 	// Do we have to save these settings?
 	boolean changed = false;
 
+	 DoubleClickType currentDoubleClick = DoubleClickType.NONE;
+
+	enum DoubleClickType {
+		NONE, RIGHT_CLICK, LEFT_CLICK;
+	}
+
 	ChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean changed) {
 		this.sortingEnabled = sortingEnabled;
 		this.middleClick = middleClick;
@@ -36,6 +43,25 @@ public class ChestSortPlayerSetting {
 		this.leftClick = leftClick;
 		this.rightClick = rightClick;
 		this.changed = changed;
+	}
+
+	DoubleClickType getCurrentDoubleClick(ChestSortPlugin plugin, DoubleClickType click) {
+		if(click == DoubleClickType.NONE) return DoubleClickType.NONE;
+		if(currentDoubleClick == click) {
+			currentDoubleClick = DoubleClickType.NONE;
+			return click;
+		}
+		if(currentDoubleClick != click) {
+			currentDoubleClick = click;
+			Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
+				@Override
+				public void run() {
+					currentDoubleClick = DoubleClickType.NONE;
+				}
+			}, 10);
+			return DoubleClickType.NONE;
+		}
+		return DoubleClickType.NONE;
 	}
 	
 	void toggleMiddleClick() {

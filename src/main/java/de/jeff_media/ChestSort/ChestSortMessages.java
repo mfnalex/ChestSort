@@ -70,9 +70,9 @@ public class ChestSortMessages {
 		MSG_GUI_SHIFTRIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-gui-shift-right-click","Shift + Right-Click"));
 		
-		MSG_GUI_LEFTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-left-click","Fill Chest (Left-Click)"));
+		MSG_GUI_LEFTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-left-click","Fill Chest (Left-Click/Double-Left-Click)"));
 		
-		MSG_GUI_RIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-right-click","Unload Chest (Right-Click)"));
+		MSG_GUI_RIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-right-click","Unload Chest (Right-Click/Double-Right-Click)"));
 		
 		MSG_ERR_HOTKEYSDISABLED = ChatColor.RED + "[ChestSort] Hotkeys have been disabled by the admin.";
 	}

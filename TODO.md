@@ -1,6 +1,4 @@
 # Todo
-## InvUnload integration
-Use InvUnload API to only put matching stuff into the chest when using left-click hotkey. On second click, everything is put into the chest.
 
 ## StackableItems
 Make it configurable whether ItemStacks > 64 items will stay unsorted, or sorted and reverted back to stacks of 64 items

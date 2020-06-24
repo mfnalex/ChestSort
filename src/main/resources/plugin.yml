@@ -1,6 +1,6 @@
 main: de.jeff_media.ChestSort.ChestSortPlugin
 name: ChestSort
-version: 9.0.0-SNAPSHOT2
+version: 8.11.0
 api-version: 1.13
 description: Allows automatic chest sorting
 author: mfnalex
@@ -25,3 +25,5 @@ permissions:
     description: Allows chest sorting
   chestsort.use.inventory:
     description: Allows inventory sorting
+  chestsort.reload:
+    description: Allows to reload the config via /chestsort reload
