@@ -36,7 +36,7 @@ public class ChestSortSettingsGUI implements Listener {
 	}
 	
 	ItemStack getItem(boolean active, Hotkey hotkey) {
-		ItemStack is = null;
+		ItemStack is;
 		String suffix;
 		
 		if(active) {

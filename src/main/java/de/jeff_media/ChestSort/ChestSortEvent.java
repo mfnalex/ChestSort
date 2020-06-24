@@ -6,6 +6,7 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ChestSortEvent extends Event implements Cancellable {
@@ -35,7 +36,7 @@ public class ChestSortEvent extends Event implements Cancellable {
 		  return p;
 	  }
 
-	    public HandlerList getHandlers() {
+	    public @NotNull HandlerList getHandlers() {
 	        return HANDLERS;
 	    }
 

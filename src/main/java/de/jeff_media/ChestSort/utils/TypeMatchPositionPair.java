@@ -4,7 +4,7 @@ public class TypeMatchPositionPair {
 	
 	final String typeMatch;
 	final String formattedPosition;
-	boolean sticky=false;
+	boolean sticky;
 	
 	public String getTypeMatch() {
 		return typeMatch;

@@ -2,14 +2,7 @@ package de.jeff_media.ChestSort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -152,11 +145,11 @@ public class ChestSortOrganizer {
 							plugin.getLogger().info("Sticky set to true in " + file.getName());
 					}
 				} else {
-					if (currentLine != null) {
+					//if (currentLine != null) {
 						lines.add(new TypeMatchPositionPair(currentLine, currentLineNumber, appendLineNumber));
 						if (plugin.debug)
 							plugin.getLogger().info("Added typeMatch to category file: " + currentLine);
-					}
+					//}
 				}
 			}
 			currentLineNumber++;
@@ -471,9 +464,6 @@ public class ChestSortOrganizer {
 			}
 		}
 
-		// We no longer need the original array that includes all the null-stacks
-		items = null;
-
 		// We need the new list as array. So why did'nt we take an array from the
 		// beginning?
 		// Because I did not bother to count the number of non-null items beforehand.
@@ -482,7 +472,7 @@ public class ChestSortOrganizer {
 		ItemStack[] nonNullItems = nonNullItemsList.toArray(new ItemStack[0]);
 
 		// Sort the array with ItemStacks according to each ItemStacks' sortable String
-		Arrays.sort(nonNullItems, (s1, s2) -> (getSortableString(s1).compareTo(getSortableString(s2))));
+		Arrays.sort(nonNullItems, Comparator.comparing(this::getSortableString));
 
 		// Now, we put everything back in a temporary inventory to combine ItemStacks
 		// even when using strict slot sorting
@@ -515,14 +505,14 @@ public class ChestSortOrganizer {
 			// our temporary inventory was already sorted. Feel free to make a pull request
 			// to
 			// save your server half a nanosecond :)
-			if (item != null)
-			{
+			//if (item != null)
+			//{
 
 				while(unsortableSlots.contains(currentSlot) && currentSlot < endSlot) {
 					currentSlot++;
 				}
 				inv.setItem(currentSlot, item);
-			}
+			//}
 			currentSlot++;
 		}
 		
@@ -632,24 +622,25 @@ public class ChestSortOrganizer {
 		boolean destinationIsShulkerBox = destination.getType().name().equalsIgnoreCase("SHULKER_BOX");
 		Inventory temp = Bukkit.createInventory(null, maxInventorySize);
 		for(int i = playerInvStartSlot;i<=playerInvEndSlot;i++) {
-			if(source.getItem(i)==null) continue;
+			ItemStack currentItem = source.getItem(i);
+			if(currentItem==null) continue;
 			
 			// This prevents Minepacks from being put into Minepacks
 			/*if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(destination)
-					&& plugin.listener.minepacksHook.isMinepacksBackpack(source.getItem(i))) continue;*/
+					&& plugin.listener.minepacksHook.isMinepacksBackpack(currentItem)) continue;*/
 			// This prevents Minepacks from being moved at all
-			if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(source.getItem(i))) continue;
+			if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(currentItem)) continue;
 			
 			if(plugin.hookInventoryPages
-					&& plugin.organizer.inventoryPagesHook.isButton(source.getItem(i), i, source)) continue;
+					&& plugin.organizer.inventoryPagesHook.isButton(currentItem, i, source)) continue;
 			
-			if(destinationIsShulkerBox && source.getItem(i).getType().name().endsWith("SHULKER_BOX")) continue;
+			if(destinationIsShulkerBox && currentItem.getType().name().endsWith("SHULKER_BOX")) continue;
 			
-			if(isOversizedStack(source.getItem(i))) continue;
+			if(isOversizedStack(currentItem)) continue;
 
-			if(onlyMatchingStuff && !doesInventoryContain(destination,source.getItem(i).getType())) continue;
+			if(onlyMatchingStuff && !doesInventoryContain(destination,currentItem.getType())) continue;
 
-			temp.addItem(source.getItem(i));
+			temp.addItem(currentItem);
 			source.clear(i);
 		}
 		stuffInventoryIntoAnother(temp,destination,source,false);

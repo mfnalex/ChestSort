@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.jetbrains.annotations.NotNull;
 
 public class ChestSortTabCompleter implements TabCompleter {
 	
@@ -24,7 +25,7 @@ public class ChestSortTabCompleter implements TabCompleter {
 		return list;
 	}
 	
-	public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+	public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String alias, String[] args) {
 		
 		String entered = "";
 		if(args.length>0) {

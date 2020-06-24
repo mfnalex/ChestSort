@@ -4,7 +4,7 @@ package de.jeff_media.ChestSort.utils;
 public class CategoryLinePair {
 	final String categoryName;
 	final String formattedPosition;
-	boolean sticky = false;
+	boolean sticky;
 	final short position;
 	
 	public CategoryLinePair(String categoryName,short position) {

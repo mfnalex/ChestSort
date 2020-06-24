@@ -25,7 +25,7 @@ public class ChestSortPlayerSetting {
 	boolean hasSeenMessage = false;
 	
 	// Do we have to save these settings?
-	boolean changed = false;
+	boolean changed;
 
 	 DoubleClickType currentDoubleClick = DoubleClickType.NONE;
 

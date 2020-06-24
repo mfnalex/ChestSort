@@ -79,8 +79,8 @@ public class ChestSortListener implements Listener {
 
     @EventHandler
     public void onPlayerInventoryClose(InventoryCloseEvent event) {
-        if (event.getInventory() == null) return;
         if (event.getInventory().getHolder() == null) return;
+        // Might be obsolete, because its @NotNull in 1.15, but who knows if thats for 1.8
         if (event.getInventory().getType() == null) return;
         if (event.getInventory().getType() != InventoryType.CRAFTING)
             return; // Weird! Returns CRAFTING instead of PLAYER
@@ -413,11 +413,9 @@ public class ChestSortListener implements Listener {
             if (event.getSlotType() == SlotType.QUICKBAR) {
                 plugin.organizer.sortInventory(p.getInventory(), 0, 8);
                 plugin.organizer.updateInventoryView(event);
-                return;
             } else if (event.getSlotType() == SlotType.CONTAINER) {
                 plugin.organizer.sortInventory(p.getInventory(), 9, 35);
                 plugin.organizer.updateInventoryView(event);
-                return;
             }
         }
     }

@@ -31,7 +31,6 @@ package de.jeff_media.ChestSort;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
@@ -147,7 +146,6 @@ public class ChestSortPlugin extends JavaPlugin {
 			showOldConfigWarning();
 			ChestSortConfigUpdater configUpdater = new ChestSortConfigUpdater(this);
 			configUpdater.updateConfig();
-			configUpdater = null;
 			usingMatchingConfig = true;
 			//createConfig();
 		}
@@ -237,15 +235,15 @@ public class ChestSortPlugin extends JavaPlugin {
 	}
 
 	private String getCategoryList() {
-		String list = "";
+		StringBuilder list = new StringBuilder();
 		ChestSortCategory[] categories = organizer.categories.toArray(new ChestSortCategory[0]);
 		Arrays.sort(categories);
 		for(ChestSortCategory category : categories) {
-			list = list + category.name + " (";
-			list = list + category.typeMatches.length + "), ";
+			list.append(category.name).append(" (");
+			list.append(category.typeMatches.length).append("), ");
 		}
-		list = list.substring(0, list.length()-2);
-		return list;
+		list = new StringBuilder(list.substring(0, list.length() - 2));
+		return list.toString();
 		
 	}
 
@@ -560,8 +558,8 @@ public class ChestSortPlugin extends JavaPlugin {
 			playerConfig.addDefault("leftClick", getConfig().getBoolean("additional-hotkeys.left-click"));
 			playerConfig.addDefault("rightClick", getConfig().getBoolean("additional-hotkeys.right-click"));
 	
-			boolean activeForThisPlayer = false;
-			boolean invActiveForThisPlayer = false;
+			boolean activeForThisPlayer;
+			boolean invActiveForThisPlayer;
 			boolean middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick;
 			boolean changed = false;
 	
