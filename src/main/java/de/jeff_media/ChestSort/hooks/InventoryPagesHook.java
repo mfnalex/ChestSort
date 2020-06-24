@@ -10,6 +10,7 @@ import org.bukkit.inventory.PlayerInventory;
 
 import de.jeff_media.ChestSort.ChestSortPlugin;
 import net.md_5.bungee.api.ChatColor;
+import org.jetbrains.annotations.NotNull;
 
 public class InventoryPagesHook {
 
@@ -48,7 +49,7 @@ public class InventoryPagesHook {
 		
 	}
 	
-	public boolean isButton(ItemStack item, int slot, Inventory inv) {
+	public boolean isButton(@NotNull ItemStack item, int slot, @NotNull Inventory inv) {
 		
 		if(!plugin.hookInventoryPages) {
 			return false;
@@ -57,11 +58,7 @@ public class InventoryPagesHook {
 		if(!(inv instanceof PlayerInventory)) {
 			return false;
 		}
-		
-		if(item == null) return false;
-		
-		//System.out.println("Checking if slot " + slot + " "+ item.toString() + " is button");
-		
+
 		// When using &f as color, we manually have to add this to the string because it gets removed by InventoryPages
 		if(prevName.startsWith("§f")) prevName = prevName.substring(2);
 		if(nextName.startsWith("§f")) nextName = nextName.substring(2);

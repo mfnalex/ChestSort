@@ -13,6 +13,7 @@ public class MinepacksHook {
 	
 	final ChestSortPlugin plugin;
 	MinepacksPlugin minepacks = null;
+	boolean skipReflection = false;
 
 	public MinepacksHook(ChestSortPlugin plugin) {
 		this.plugin = plugin;
@@ -25,9 +26,11 @@ public class MinepacksHook {
 	
 	public boolean isMinepacksBackpack(ItemStack item) {
 		if(minepacks == null) return false;
-		
+		if(skipReflection && minepacks.isBackpackItem(item)) return true;
+
 		try {
 			minepacks.getClass().getMethod("isBackpackItem", ItemStack.class);
+			skipReflection=true;
 			if(minepacks.isBackpackItem(item)) return true;
 		} catch (NoSuchMethodException | SecurityException e) {
 			plugin.getLogger().warning("You are using a version of Minepacks that is too old and does not implement every API method needed by ChestSort. Minepacks hook will be disabled.");

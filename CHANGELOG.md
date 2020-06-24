@@ -1,7 +1,8 @@
 # Changelog
-## 8.11.1
+## 8.11.1-SNAPSHOT
 - Improved help messages
 - Huge code cleanup
+- Improved performance by caching Reflection checks in the Minepacks hook
 
 ## 8.11.0
 - Adjustet Left-Click / Right-Click hotkeys:
