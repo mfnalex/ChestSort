@@ -67,7 +67,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPI api;
-	final int currentConfigVersion = 33;
+	final int currentConfigVersion = 34;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -131,6 +131,7 @@ public class ChestSortPlugin extends JavaPlugin {
 		// This saves the config.yml included in the .jar file, but it will not
 		// overwrite an existing config.yml
 		this.saveDefaultConfig();
+		reloadConfig();
 		
 		// Load disabled-worlds. If it does not exist in the config, it returns null.
 		// That's no problem
@@ -451,8 +452,8 @@ public class ChestSortPlugin extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(settingsGUI, this);
 		ChestSortChestSortCommand chestsortCommandExecutor = new ChestSortChestSortCommand(this);
 		ChestSortTabCompleter tabCompleter = new ChestSortTabCompleter();
-		this.getCommand("chestsort").setExecutor(chestsortCommandExecutor);
-		this.getCommand("chestsort").setTabCompleter(tabCompleter);
+		this.getCommand("sort").setExecutor(chestsortCommandExecutor);
+		this.getCommand("sort").setTabCompleter(tabCompleter);
 		ChestSortInvSortCommand invsortCommandExecutor = new ChestSortInvSortCommand(this);
 		this.getCommand("invsort").setExecutor(invsortCommandExecutor);
 		this.getCommand("invsort").setTabCompleter(tabCompleter);

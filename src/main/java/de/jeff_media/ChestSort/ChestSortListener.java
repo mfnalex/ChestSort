@@ -37,11 +37,6 @@ public class ChestSortListener implements Listener {
 
         plugin.permissionsHandler.addPermissions(event.getPlayer());
 
-        // OPs will get an update notice if a new update is available
-        if (event.getPlayer().isOp()) {
-            plugin.updateChecker.sendUpdateMessage(event.getPlayer());
-        }
-
         // Put player into our perPlayerSettings map
         plugin.registerPlayerIfNeeded(event.getPlayer());
 
@@ -479,23 +474,27 @@ public class ChestSortListener implements Listener {
                     == ChestSortPlayerSetting.DoubleClickType.LEFT_CLICK) {
             	// Left double click: put everything into destination
                 plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), false);
+                plugin.organizer.sortInventory(e.getInventory());
             } else {
             	// Left single click: put only matching items into destination
                 plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), true);
             }
+
         } else if (e.isRightClick() && setting.rightClick) {
             if (setting.getCurrentDoubleClick(plugin, ChestSortPlayerSetting.DoubleClickType.RIGHT_CLICK)
                     == ChestSortPlayerSetting.DoubleClickType.RIGHT_CLICK) {
             	// Right double click: put everything into player inventory
                 plugin.organizer.stuffInventoryIntoAnother(e.getInventory(), p.getInventory(), e.getInventory(), false);
+                plugin.organizer.sortInventory(p.getInventory(),9,35);
             } else {
             	// Right single click: put only matching items into player inventory
                 plugin.organizer.stuffInventoryIntoAnother(e.getInventory(), p.getInventory(), e.getInventory(), true);
-
             }
+
         }
         //plugin.organizer.sortInventory(e.getInventory());
         plugin.organizer.updateInventoryView(e.getInventory());
+        plugin.organizer.updateInventoryView(p.getInventory());
     }
 
 

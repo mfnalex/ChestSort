@@ -1,5 +1,7 @@
 # Changelog
-## 8.11.1-SNAPSHOT
+## 8.12.0
+- Changed name of command /chestsort to /sort. You can still use /chestsort though.
+- Fixed weird config updater problem on systems that don't properly support UTF-8 (like Windows)
 - Improved help messages
 - Huge code cleanup
 - Improved performance by caching Reflection checks in the Minepacks hook

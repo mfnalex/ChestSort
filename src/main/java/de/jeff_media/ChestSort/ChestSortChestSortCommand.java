@@ -20,7 +20,7 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 	public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
 
 		// This command toggles automatic chest sorting for the player that runs the command
-		if (!command.getName().equalsIgnoreCase("chestsort")) {
+		if (!command.getName().equalsIgnoreCase("sort")) {
 			return false;
 		}
 		

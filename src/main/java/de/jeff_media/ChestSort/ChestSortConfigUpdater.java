@@ -1,9 +1,8 @@
 package de.jeff_media.ChestSort;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
@@ -36,6 +35,12 @@ public class ChestSortConfigUpdater {
 			plugin.getConfig().set("sorting-hotkeys.shift-right-click", plugin.getConfig().getBoolean("hotkeys.shift-right-click"));
 		}
 
+		try {
+			Files.deleteIfExists(new File(plugin.getDataFolder().getAbsolutePath()+File.separator+"config.old.yml").toPath());
+		} catch (IOException e) {
+
+		}
+
 		if (plugin.debug)
 			plugin.getLogger().info("rename config.yml -> config.old.yml");
 		Utils.renameFileInPluginDir(plugin, "config.yml", "config.old.yml");
@@ -44,7 +49,7 @@ public class ChestSortConfigUpdater {
 		plugin.saveDefaultConfig();
 
 		File oldConfigFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.old.yml");
-		FileConfiguration oldConfig = new YamlConfiguration();
+		FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(oldConfigFile);
 
 		try {
 			oldConfig.load(oldConfigFile);
@@ -59,7 +64,7 @@ public class ChestSortConfigUpdater {
 		try {
 
 			Scanner scanner = new Scanner(
-					new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.yml"));
+					new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.yml"),"UTF-8");
 			while (scanner.hasNextLine()) {
 				linesInDefaultConfig.add(scanner.nextLine() + "");
 			}
@@ -117,10 +122,10 @@ public class ChestSortConfigUpdater {
 				newLines.add(newline);
 		}
 
-		FileWriter fw;
+		BufferedWriter fw;
 		String[] linesArray = newLines.toArray(new String[linesInDefaultConfig.size()]);
 		try {
-			fw = new FileWriter(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.yml");
+			fw = Files.newBufferedWriter(new File(plugin.getDataFolder().getAbsolutePath(),"config.yml").toPath(), StandardCharsets.UTF_8);
 			for (String s : linesArray) {
 				fw.write(s + "\n");
 			}

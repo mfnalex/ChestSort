@@ -510,6 +510,7 @@ public class ChestSortOrganizer {
         // duplication
         int currentSlot = startSlot;
         for (ItemStack item : tempInventory.getContents()) {
+            if(item==null) break; // TODO: If there is item loss, change break to continue (should not happen)
             while (unsortableSlots.contains(currentSlot) && currentSlot < endSlot) {
                 currentSlot++;
             }
