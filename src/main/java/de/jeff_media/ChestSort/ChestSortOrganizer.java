@@ -583,7 +583,7 @@ public class ChestSortOrganizer {
 		return false;
 	}
 	
-	public void stuffInventoryIntoAnother(Inventory source, Inventory destination,Inventory origSource) {
+	public void stuffInventoryIntoAnother(Inventory source, Inventory destination,Inventory origSource, boolean onlyMatchingStuff) {
 		
 		Material placeholderMaterial = Material.DIRT;
 		ItemStack[] hotbarStuff = new ItemStack[9];
@@ -604,9 +604,12 @@ public class ChestSortOrganizer {
 		ArrayList<ItemStack> leftovers = new ArrayList<ItemStack>();
 		
 		for(int i = 0;i<source.getSize();i++) {
+
+
 			
 			ItemStack current = source.getItem(i);
 			if(current == null) continue;
+			if(onlyMatchingStuff && !doesInventoryContain(destination,current.getType())) continue;
 			if(isOversizedStack(current)) continue;
 			source.clear(i);
 			HashMap<Integer,ItemStack> currentLeftovers = destination.addItem(current);
@@ -631,8 +634,14 @@ public class ChestSortOrganizer {
 		
 	}
 
+
+
+	/*public void stuffPlayerInventoryIntoAnother(PlayerInventory source, Inventory destination) {
+		stuffPlayerInventoryIntoAnother(source,destination,false);
+	}*/
+
 	public void stuffPlayerInventoryIntoAnother(PlayerInventory source,
-			Inventory destination) {
+			Inventory destination, boolean onlyMatchingStuff) {
 		boolean destinationIsShulkerBox = destination.getType().name().equalsIgnoreCase("SHULKER_BOX");
 		Inventory temp = Bukkit.createInventory(null, maxInventorySize);
 		for(int i = playerInvStartSlot;i<=playerInvEndSlot;i++) {
@@ -650,11 +659,23 @@ public class ChestSortOrganizer {
 			if(destinationIsShulkerBox && source.getItem(i).getType().name().endsWith("SHULKER_BOX")) continue;
 			
 			if(isOversizedStack(source.getItem(i))) continue;
-			
+
+			if(onlyMatchingStuff && !doesInventoryContain(destination,source.getItem(i).getType())) continue;
+
 			temp.addItem(source.getItem(i));
 			source.clear(i);
 		}
-		stuffInventoryIntoAnother(temp,destination,source);
+		stuffInventoryIntoAnother(temp,destination,source,false);
+	}
+
+	static boolean doesInventoryContain(Inventory inv, Material mat) {
+		for(ItemStack item : inv.getContents()) {
+			if(item==null) continue;
+			if(item.getType() == mat) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

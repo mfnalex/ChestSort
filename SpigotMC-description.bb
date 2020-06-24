@@ -58,7 +58,9 @@ Enable/disable automatic inventory sorting[/SIZE]
 Allows usage of automatic chest sorting and the /chestsort command.[/SIZE]
 
 [SIZE=4][B]chestsort.use.inventory[/B]
-Allows usage of automatic inventory sorting and the /invsort command.[/SIZE]
+Allows usage of automatic inventory sorting and the /invsort command.
+
+If you don't want to use a permissions plugin, you can also set "use-permissions" to false in the config.yml to allow every player to use ChestSort.[/SIZE]
 
 [SIZE=6]Hotkeys[/SIZE]
 You can use hotkeys to sort inventories without having to enter commands. This is useful if you only want to sort chests from time to time without having to enable the automatic sorting, or if you quickly want to sort your player inventory. Each hotkey can be enabled/disabled in the config.yml. By default, all hotkeys are enabled. Additionally, players can enable/disable each hotkey individually by running [I]/chestsort hotkeys
@@ -87,7 +89,7 @@ Puts your stuff (except hotbar) into the chest, barrel etc.
 [B]Right-Click outside inventory[/B]
 Empties the chest, barrel etc. into your inventory
 
-[IMG]http://api.jeff-media.de/chestsort/spigotmc/img/fillchest.gif[/IMG] 
+[IMG]http://api.jeff-media.de/chestsort/spigotmc/img/fillchest.gif[/IMG]
 
 [SIZE=4][SIZE=6][COLOR=rgb(89, 179, 0)]Demo Servers[/COLOR][/SIZE][/SIZE][/SIZE]
 [SIZE=4][SIZE=4][COLOR=rgb(89, 179, 0)][FONT=Trebuchet MS][B][I]Join one of our demo servers. You will be in creative mode. Take a chest and lots of random stuff. [/I][/B][/FONT][B][FONT=Trebuchet MS][I]Then toggle automatic chest sorting with /chestsort. Place the chest anywhere [/I][/FONT][/B][FONT=Trebuchet MS][B][I]and fill it[/I][/B][/FONT][B][FONT=Trebuchet MS][I]. It will be magically sorted when you close it. You can disable sorting by using /chestsort again. You can also use hotkeys (middle-click, shift-click, double-click and shift+right-click).[/I][/FONT][/B][/COLOR][/SIZE]
@@ -107,7 +109,7 @@ Empties the chest, barrel etc. into your inventory
 [SIZE=4][SIZE=6]WorldGuard and other protection plugins[/SIZE][/SIZE]
 [SIZE=4]ChestSort will only sort chests that the player has access to. In other words: when some other plugin like WorldGuard prevents access to the chest, then ChestSort will not sort this chest.
 This applies to all plugins that cancel the InventoryOpenEvent, as ChestSort will only sort when the InventoryCloseEvent is called.
-[B]Furthermore, chests will not be sorted if the player is a spectator or in adventure mode.[/B][/SIZE]
+Furthermore, chests will not be sorted if the player is a spectator or in adventure mode.[/SIZE]
 
 [SIZE=4][SIZE=6]Notes[/SIZE][/SIZE]
 [SIZE=4]To view the source code, please visit [URL]https://github.com/JEFF-Media-GbR/Spigot-ChestSort[/URL][/SIZE]
@@ -120,7 +122,7 @@ This applies to all plugins that cancel the InventoryOpenEvent, as ChestSort wil
 
 [SIZE=4]Please note that sorting in versions [B]before 1.13[/B] can be a bit random sometimes, because some item names were inconsistent (e.g. acacia stairs in 1.8 are named "acacia_stairs", while oak planks are just called "planks".) [B]The sorting algorithm has been optimized for 1.13+ only[/B].[/SIZE]
 
-[SIZE=4]The sorting algorithm is extremely fast. It takes [B]less than half a millisecond[/B] to sort a chest.[/SIZE]
+[SIZE=4]The sorting algorithm is extremely fast and should not have any effect on your server performance. Sorting a double chest takes about a quarter of a millisecond.[/SIZE]
 
 [SIZE=6]3rd party Plugins[/SIZE]
 [SIZE=4]ChestSort can hook into certain 3rd party plugins if they are installed on your server to allow better sorting for custom items.
@@ -131,8 +133,8 @@ All CrackShot weapons will be grouped together and will be put into the default 
 [B]InventoryPages[/B]
 ChestSort will ignore the "Next Page" and "Prev. Page" buttons when you have InventoryPages installed, so that your GUI does not get messed up.
 
-[B]Better Shulker Boxes / Minepacks / ShulkerPacks[/B][/SIZE]
-[SIZE=4]Sort your backpacks just like every other chest! Should work with almost every backpack plugin.
+[B]Better Shulker Boxes / Minepacks / ShulkerPacks[/B]
+Sort your backpacks just like every other chest! Should work with almost every backpack plugin.
 
 [B]Plugins using GUI inventories[/B]
 ChestSort tries to detect GUI inventories created by 3rd party plugins. If this detection fails, please message me at GitHub so that I can add support for that plugin.
@@ -149,7 +151,7 @@ You can view the default configuration file [URL='https://github.com/JEFF-Media-
 [/SIZE]
 [SIZE=6]Other Plugins by me[/SIZE]
 [SIZE=4]No time for putting your stuff into the right chests? Try out InvUnload:
-[URL='https://www.spigotmc.org/resources/1-13-alpha-invunload.60095/'][1.13+] InvUnload: Automatically puts your stuff in the right chests![/URL]
+[URL='https://www.spigotmc.org/resources/1-13-alpha-invunload.60095/'][1.12-1.15] InvUnload: Automatically puts your stuff in the right chests![/URL]
 
 Tired of climbing trees like a monkey?
 [URL='https://www.spigotmc.org/resources/1-13-lumberjack.60306/'][1.13+] LumberJack: Enable tree gravity for easy woodcutting.[/URL]
@@ -158,4 +160,4 @@ May the odds be ever in your favor! Have an angel protect your loot when you die
 [URL='https://www.spigotmc.org/resources/1-13-angelchest.60383/'][1.13+] AngelChest: Stores your inventory in a protected chest when you die![/URL]
 
 Don't want to collect all drops manually? Use Drop2Inventory. Also reduces lag.
-[URL='https://www.spigotmc.org/resources/1-13-drop2inventory.62214/'][1.13] Drop2Inventory: No more need to collect drops![/URL][/SIZE]
+[URL='https://www.spigotmc.org/resources/1-13-drop2inventory.62214/'][1.13+] Drop2Inventory: No more need to collect drops![/URL][/SIZE]
