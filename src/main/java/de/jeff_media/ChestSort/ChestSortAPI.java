@@ -5,7 +5,7 @@ import org.bukkit.inventory.Inventory;
 
 public class ChestSortAPI {
 	
-	ChestSortPlugin plugin;
+	final ChestSortPlugin plugin;
 	
 	ChestSortAPI(ChestSortPlugin plugin) {
 		this.plugin = plugin;

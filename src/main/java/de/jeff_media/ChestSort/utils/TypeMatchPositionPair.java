@@ -2,8 +2,8 @@ package de.jeff_media.ChestSort.utils;
 
 public class TypeMatchPositionPair {
 	
-	String typeMatch;
-	String formattedPosition;
+	final String typeMatch;
+	final String formattedPosition;
 	boolean sticky=false;
 	
 	public String getTypeMatch() {
@@ -23,7 +23,7 @@ public class TypeMatchPositionPair {
 		return formattedPosition;
 	}
 
-	short position;
+	final short position;
 	
 	public TypeMatchPositionPair(String typeMatch,short position) {
 		this(typeMatch,position,false);

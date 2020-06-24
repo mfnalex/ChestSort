@@ -11,7 +11,7 @@ public class ChestSortMessages {
 	// When creating pull requests that feature a message to the player, please
 	// stick to this scheme
 
-	ChestSortPlugin plugin;
+	final ChestSortPlugin plugin;
 
 	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_INVACTIVATED, MSG_INVDEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY,
 			MSG_PLAYERINVSORTED, MSG_INVALIDOPTIONS;

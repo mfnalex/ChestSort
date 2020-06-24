@@ -58,7 +58,7 @@ import de.jeff_media.ChestSort.utils.Utils;
 
 public class ChestSortPlugin extends JavaPlugin {
 
-	Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<String, ChestSortPlayerSetting>();
+	Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<>();
 	ChestSortMessages messages;
 	ChestSortOrganizer organizer;
 	PluginUpdateChecker updateChecker;
@@ -68,11 +68,11 @@ public class ChestSortPlugin extends JavaPlugin {
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPI api;
-	int currentConfigVersion = 33;
+	final int currentConfigVersion = 33;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
-	boolean hotkeyGUI = true;
+	final boolean hotkeyGUI = true;
 	
 	public boolean hookCrackShot = false;
 	public boolean hookInventoryPages = false;
@@ -109,7 +109,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	
 	boolean isSortingEnabled(Player p) {
 		if (perPlayerSettings == null) {
-			perPlayerSettings = new HashMap<String, ChestSortPlayerSetting>();
+			perPlayerSettings = new HashMap<>();
 		}
 		listener.plugin.registerPlayerIfNeeded(p);
 		return perPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
@@ -238,7 +238,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
 	private String getCategoryList() {
 		String list = "";
-		ChestSortCategory[] categories = organizer.categories.toArray(new ChestSortCategory[organizer.categories.size()]);
+		ChestSortCategory[] categories = organizer.categories.toArray(new ChestSortCategory[0]);
 		Arrays.sort(categories);
 		for(ChestSortCategory category : categories) {
 			list = list + category.name + " (";
@@ -296,7 +296,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	private void saveDefaultCategories() {
 
 		// Abort when auto-generate-category-files is set to false in config.yml
-		if (getConfig().getBoolean("auto-generate-category-files", true) != true) {
+		if (!getConfig().getBoolean("auto-generate-category-files", true)) {
 			return;
 		}
 
@@ -306,18 +306,13 @@ public class ChestSortPlugin extends JavaPlugin {
 
 		// Delete all files starting with 9..
 		for (File file : new File(getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator)
-				.listFiles(new FilenameFilter() {
-					public boolean accept(File directory, String fileName) {
-						if (!fileName.endsWith(".txt")) {
-							return false;
-						}
-						if (fileName.matches("(?i)9\\d\\d.*\\.txt$")) // Category between 900 and 999-... are default
-																	// categories
-						{
-							return true;
-						}
+				.listFiles((directory, fileName) -> {
+					if (!fileName.endsWith(".txt")) {
 						return false;
 					}
+					// Category between 900 and 999-... are default
+					// categories
+					return fileName.matches("(?i)9\\d\\d.*\\.txt$");
 				})) {
 
 			boolean delete = true;
@@ -433,13 +428,13 @@ public class ChestSortPlugin extends JavaPlugin {
 		}
 		
 		hookCrackShot = getConfig().getBoolean("hook-crackshot")
-					&& Bukkit.getPluginManager().getPlugin("CrackShot") instanceof Plugin ? true : false;
+				&& Bukkit.getPluginManager().getPlugin("CrackShot") instanceof Plugin;
 
 		hookInventoryPages = getConfig().getBoolean("hook-inventorypages")
-					&& Bukkit.getPluginManager().getPlugin("InventoryPages") instanceof Plugin ? true : false;
+				&& Bukkit.getPluginManager().getPlugin("InventoryPages") instanceof Plugin;
 			
 		hookMinepacks = getConfig().getBoolean("hook-minepacks")
-			 && Bukkit.getPluginManager().getPlugin("Minepacks") instanceof MinepacksPlugin ? true : false;
+				&& Bukkit.getPluginManager().getPlugin("Minepacks") instanceof MinepacksPlugin;
 
 		saveDefaultCategories();
 
@@ -521,7 +516,7 @@ public class ChestSortPlugin extends JavaPlugin {
 				}
 			}
 		} else {
-			perPlayerSettings = new HashMap<String,ChestSortPlayerSetting>();
+			perPlayerSettings = new HashMap<>();
 		}
 	}
 	

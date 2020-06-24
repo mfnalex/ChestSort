@@ -16,7 +16,7 @@ import de.jeff_media.ChestSort.utils.Utils;
 
 public class ChestSortConfigUpdater {
 
-	ChestSortPlugin plugin;
+	final ChestSortPlugin plugin;
 
 	public ChestSortConfigUpdater(ChestSortPlugin jeffChestSortPlugin) {
 		this.plugin = jeffChestSortPlugin;
@@ -55,7 +55,7 @@ public class ChestSortConfigUpdater {
 		Map<String, Object> oldValues = oldConfig.getValues(false);
 
 		// Read default config to keep comments
-		ArrayList<String> linesInDefaultConfig = new ArrayList<String>();
+		ArrayList<String> linesInDefaultConfig = new ArrayList<>();
 		try {
 
 			Scanner scanner = new Scanner(
@@ -68,7 +68,7 @@ public class ChestSortConfigUpdater {
 			e.printStackTrace();
 		}
 
-		ArrayList<String> newLines = new ArrayList<String>();
+		ArrayList<String> newLines = new ArrayList<>();
 		for (String line : linesInDefaultConfig) {
 			String newline = line;
 			if (line.startsWith("config-version:")) {
@@ -121,8 +121,8 @@ public class ChestSortConfigUpdater {
 		String[] linesArray = newLines.toArray(new String[linesInDefaultConfig.size()]);
 		try {
 			fw = new FileWriter(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.yml");
-			for (int i = 0; i < linesArray.length; i++) {
-				fw.write(linesArray[i] + "\n");
+			for (String s : linesArray) {
+				fw.write(s + "\n");
 			}
 			fw.close();
 		} catch (IOException e) {

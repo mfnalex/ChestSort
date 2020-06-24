@@ -30,7 +30,7 @@ public class ChestSortPlayerSetting {
 	 DoubleClickType currentDoubleClick = DoubleClickType.NONE;
 
 	enum DoubleClickType {
-		NONE, RIGHT_CLICK, LEFT_CLICK;
+		NONE, RIGHT_CLICK, LEFT_CLICK
 	}
 
 	ChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean changed) {
@@ -53,12 +53,7 @@ public class ChestSortPlayerSetting {
 		}
 		if(currentDoubleClick != click) {
 			currentDoubleClick = click;
-			Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-				@Override
-				public void run() {
-					currentDoubleClick = DoubleClickType.NONE;
-				}
-			}, 10);
+			Bukkit.getScheduler().runTaskLater(plugin, () -> currentDoubleClick = DoubleClickType.NONE, 10);
 			return DoubleClickType.NONE;
 		}
 		return DoubleClickType.NONE;

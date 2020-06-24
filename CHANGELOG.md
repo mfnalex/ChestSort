@@ -1,4 +1,8 @@
 # Changelog
+## 8.11.1
+- Improved help messages
+- Huge code cleanup
+
 ## 8.11.0
 - Adjustet Left-Click / Right-Click hotkeys:
   - Left-Click outside of inventories will put matching items from your inventory into the chest
@@ -8,6 +12,7 @@
 - Using new universal Update checker (https://github.com/JEFF-Media-GbR/Spigot-UpdateChecker)
 
 Note: The last two messages in the config.yml have changed, so please retranslate them. I am also always happy to integrate your translations into the default config.yml if you send them to me.
+
 ## 8.10.5
 - Added reload command (/chestsort reload) with permission chestsort.reload
 - ChestSort checks if Minepacks version is recent enough and, if not, disable the Minepacks hook.

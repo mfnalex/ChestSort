@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChestSortDebugger implements @NotNull Listener {
 	
-	private ChestSortPlugin plugin;
+	private final ChestSortPlugin plugin;
 
 	ChestSortDebugger(ChestSortPlugin plugin) {
 		plugin.getLogger().warning("=======================================");

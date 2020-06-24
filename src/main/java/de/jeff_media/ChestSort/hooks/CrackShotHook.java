@@ -8,7 +8,7 @@ import de.jeff_media.ChestSort.ChestSortPlugin;
 
 public class CrackShotHook {
 	
-	ChestSortPlugin plugin;
+	final ChestSortPlugin plugin;
 	CSUtility crackShotUtility = null;
 
 	public CrackShotHook(ChestSortPlugin plugin) {
@@ -22,7 +22,7 @@ public class CrackShotHook {
 	
 	// Will return when not a weapon
 	public String getCrackShotWeaponName(ItemStack item) {
-		if(crackShotUtility == null || plugin.hookCrackShot==false) {
+		if(crackShotUtility == null || !plugin.hookCrackShot) {
 			return null;
 		}
 		

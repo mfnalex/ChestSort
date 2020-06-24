@@ -11,7 +11,7 @@ import de.jeff_media.ChestSort.ChestSortPlugin;
 
 public class MinepacksHook {
 	
-	ChestSortPlugin plugin;
+	final ChestSortPlugin plugin;
 	MinepacksPlugin minepacks = null;
 
 	public MinepacksHook(ChestSortPlugin plugin) {
@@ -44,13 +44,9 @@ public class MinepacksHook {
 		if(minepacks == null) return false;
 		
 		if( inv.getHolder() == null) return false;
-				
-		if(inv.getHolder() instanceof Backpack) {
-			return true;
-		}
-		
-		return false;
-		
+
+		return inv.getHolder() instanceof Backpack;
+
 	}
 
 }

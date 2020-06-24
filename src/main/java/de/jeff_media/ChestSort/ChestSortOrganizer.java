@@ -44,9 +44,9 @@ public class ChestSortOrganizer {
 	 * they are already alphabetically in the right order
 	 */
 
-	ChestSortPlugin plugin;
-	CrackShotHook crackShotHook;
-	InventoryPagesHook inventoryPagesHook;
+	final ChestSortPlugin plugin;
+	final CrackShotHook crackShotHook;
+	final InventoryPagesHook inventoryPagesHook;
 	
 	private static final int maxInventorySize=54;
 	private static final int playerInvStartSlot=9; // Inclusive
@@ -64,8 +64,8 @@ public class ChestSortOrganizer {
 	private static final String emptyPlaceholderString = "~";
 
 	// We store a list of all Category objects
-	ArrayList<ChestSortCategory> categories = new ArrayList<ChestSortCategory>();
-	ArrayList<String> stickyCategoryNames = new ArrayList<String>();
+	final ArrayList<ChestSortCategory> categories = new ArrayList<>();
+	final ArrayList<String> stickyCategoryNames = new ArrayList<>();
 
 	ChestSortOrganizer(ChestSortPlugin plugin) {
 		this.plugin = plugin;
@@ -73,18 +73,13 @@ public class ChestSortOrganizer {
 		// Load Categories
 		File categoriesFolder = new File(
 				plugin.getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator);
-		File[] listOfCategoryFiles = categoriesFolder.listFiles(new FilenameFilter() {
-			public boolean accept(File directory, String fileName) {
-				if (!fileName.endsWith(".txt")) {
-					return false;
-				}
-				if (fileName.matches("(?i)^\\d\\d\\d.*\\.txt$")) // Category between 900 and 999-... are default
-																	// categories
-				{
-					return true;
-				}
+		File[] listOfCategoryFiles = categoriesFolder.listFiles((directory, fileName) -> {
+			if (!fileName.endsWith(".txt")) {
 				return false;
 			}
+			// Category between 900 and 999-... are default
+			// categories
+			return fileName.matches("(?i)^\\d\\d\\d.*\\.txt$");
 		});
 		for (File file : listOfCategoryFiles) {
 			if (file.isFile()) {
@@ -129,7 +124,7 @@ public class ChestSortOrganizer {
 		// you can set it per category
 		boolean appendLineNumber = false;
 		Scanner sc = new Scanner(file);
-		List<TypeMatchPositionPair> lines = new ArrayList<TypeMatchPositionPair>();
+		List<TypeMatchPositionPair> lines = new ArrayList<>();
 		short currentLineNumber = 1;
 		while (sc.hasNextLine()) {
 			String currentLine = sc.nextLine();
@@ -323,7 +318,7 @@ public class ChestSortOrganizer {
 							}
 						}
 					}
-				} catch (NoSuchMethodException | SecurityException e) {		}
+				} catch (NoSuchMethodException | SecurityException ignored) {		}
 
 				// potionEffects = potionEffects.substring(0, potionEffects.length()-1);
 			}
@@ -410,7 +405,7 @@ public class ChestSortOrganizer {
 			System.out.println(" ");
 		}
 		
-		ArrayList<Integer> unsortableSlots = new ArrayList<Integer>();
+		ArrayList<Integer> unsortableSlots = new ArrayList<>();
 
 		// We copy the complete inventory into an array
 		ItemStack[] items = inv.getContents();
@@ -469,7 +464,7 @@ public class ChestSortOrganizer {
 
 		// We don't want to have stacks of null, so we create a new ArrayList and put in
 		// everything != null
-		ArrayList<ItemStack> nonNullItemsList = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> nonNullItemsList = new ArrayList<>();
 		for (ItemStack item : items) {
 			if (item != null) {
 				nonNullItemsList.add(item);
@@ -484,15 +479,10 @@ public class ChestSortOrganizer {
 		// Because I did not bother to count the number of non-null items beforehand.
 		// TODO: Feel free to make a Pull request if you want to save your server a few
 		// nanoseconds :)
-		ItemStack[] nonNullItems = nonNullItemsList.toArray(new ItemStack[nonNullItemsList.size()]);
+		ItemStack[] nonNullItems = nonNullItemsList.toArray(new ItemStack[0]);
 
 		// Sort the array with ItemStacks according to each ItemStacks' sortable String
-		Arrays.sort(nonNullItems, new Comparator<ItemStack>() {
-			@Override
-			public int compare(ItemStack s1, ItemStack s2) {
-				return (getSortableString(s1).compareTo(getSortableString(s2)));
-			}
-		});
+		Arrays.sort(nonNullItems, (s1, s2) -> (getSortableString(s1).compareTo(getSortableString(s2))));
 
 		// Now, we put everything back in a temporary inventory to combine ItemStacks
 		// even when using strict slot sorting
@@ -579,8 +569,7 @@ public class ChestSortOrganizer {
 	}
 	
 	public boolean isOversizedStack(ItemStack item) {
-		if(item!=null && item.getAmount()>64) return true;
-		return false;
+		return item != null && item.getAmount() > 64;
 	}
 	
 	public void stuffInventoryIntoAnother(Inventory source, Inventory destination,Inventory origSource, boolean onlyMatchingStuff) {
@@ -601,7 +590,7 @@ public class ChestSortOrganizer {
 		}
 		
 		
-		ArrayList<ItemStack> leftovers = new ArrayList<ItemStack>();
+		ArrayList<ItemStack> leftovers = new ArrayList<>();
 		
 		for(int i = 0;i<source.getSize();i++) {
 
@@ -613,14 +602,12 @@ public class ChestSortOrganizer {
 			if(isOversizedStack(current)) continue;
 			source.clear(i);
 			HashMap<Integer,ItemStack> currentLeftovers = destination.addItem(current);
-			
-			
-			for(ItemStack currentLeftover : currentLeftovers.values()) {
-				leftovers.add(currentLeftover);
-			}
+
+
+			leftovers.addAll(currentLeftovers.values());
 		}
 		
-		origSource.addItem(leftovers.toArray(new ItemStack[leftovers.size()]));
+		origSource.addItem(leftovers.toArray(new ItemStack[0]));
 		
 		// Restore hotbar
 		if(destinationIsPlayerInventory) {

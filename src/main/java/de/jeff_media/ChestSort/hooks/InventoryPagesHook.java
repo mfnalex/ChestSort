@@ -13,7 +13,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class InventoryPagesHook {
 
-	ChestSortPlugin plugin;
+	final ChestSortPlugin plugin;
 	YamlConfiguration inventoryPagesConfig;
 	
 	int prevSlot, nextSlot;
@@ -63,26 +63,20 @@ public class InventoryPagesHook {
 		//System.out.println("Checking if slot " + slot + " "+ item.toString() + " is button");
 		
 		// When using &f as color, we manually have to add this to the string because it gets removed by InventoryPages
-		if(prevName.startsWith("§f")) prevName = prevName.substring(2,prevName.length());
-		if(nextName.startsWith("§f")) nextName = nextName.substring(2,nextName.length());
-		if(noPageName.startsWith("§f")) noPageName = noPageName.substring(2,noPageName.length());
+		if(prevName.startsWith("§f")) prevName = prevName.substring(2);
+		if(nextName.startsWith("§f")) nextName = nextName.substring(2);
+		if(noPageName.startsWith("§f")) noPageName = noPageName.substring(2);
 		
 		if(slot == prevSlot ) { 
 			if(item.getType() == prevMat && (item.getItemMeta().getDisplayName().equals(prevName))) {
 				return true;
-			} else if(item.getType() == noPageMat && item.getItemMeta().getDisplayName().equals(noPageName)) {
-				return true;
-			}
-			return false;
+			} else return item.getType() == noPageMat && item.getItemMeta().getDisplayName().equals(noPageName);
 		}
 		
 		if(slot == nextSlot  ) { 
 			if(item.getType() == nextMat && item.getItemMeta().getDisplayName().equals(nextName)) {
 				return true;
-			} else if(item.getType() == noPageMat && item.getItemMeta().getDisplayName().equals(noPageName)) {
-				return true;
-			}
-			return false;
+			} else return item.getType() == noPageMat && item.getItemMeta().getDisplayName().equals(noPageName);
 		}
 		
 		return false;

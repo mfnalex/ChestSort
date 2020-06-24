@@ -24,8 +24,8 @@ import org.bukkit.inventory.InventoryHolder;
 
 public class ChestSortListener implements Listener {
 
-    ChestSortPlugin plugin;
-    MinepacksHook minepacksHook;
+    final ChestSortPlugin plugin;
+    final MinepacksHook minepacksHook;
 
     ChestSortListener(ChestSortPlugin plugin) {
         this.plugin = plugin;
@@ -207,13 +207,10 @@ public class ChestSortListener implements Listener {
         // WARNING: The names are inconsistent! A chest will return
         // org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
         // in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
-        if (!(inventory.getHolder() instanceof Chest) && !(inventory.getHolder() instanceof DoubleChest)
-                && !(inventory.getHolder().getClass().toString().endsWith(".CraftMinecartChest"))
-                && !(inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox")) //Obsolete, is checked above by InventoryType
-                && !(inventory.getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
-            return false;
-        }
-        return true;
+        return inventory.getHolder() instanceof Chest || inventory.getHolder() instanceof DoubleChest
+                || inventory.getHolder().getClass().toString().endsWith(".CraftMinecartChest")
+                || inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox") //Obsolete, is checked above by InventoryType
+                || inventory.getHolder().getClass().toString().endsWith(".CraftBarrel");
     }
 
     private boolean isReadyToSort(Player p) {
@@ -408,7 +405,6 @@ public class ChestSortListener implements Listener {
 
             plugin.organizer.sortInventory(event.getClickedInventory());
             plugin.organizer.updateInventoryView(event);
-            return;
         } else if (holder instanceof Player) {
             if (!p.hasPermission("chestsort.use.inventory")) {
                 return;
@@ -423,7 +419,6 @@ public class ChestSortListener implements Listener {
                 plugin.organizer.updateInventoryView(event);
                 return;
             }
-            return;
         }
     }
 

@@ -21,10 +21,7 @@ public class LlamaUtils {
 		}
 		
 		public static boolean belongsToLlama(Inventory inv) {
-			if(inv != null && inv.getHolder() != null && inv.getHolder().getClass().getName().endsWith("CraftLlama")) {
-				return true;
-			}
-			return false;
+			return inv != null && inv.getHolder() != null && inv.getHolder().getClass().getName().endsWith("CraftLlama");
 		}
 		
 }

@@ -13,7 +13,7 @@ public class ChestSortTabCompleter implements TabCompleter {
 	static final String[] invsortOptions = { "toggle","on","off","all", "hotbar", "inv" };
 	
 	private List<String> getMatchingOptions(String entered, String[] options) {
-		List<String> list = new ArrayList<String>();
+		List<String> list = new ArrayList<>();
 		
 		for(String option : options) {
 			if(option.toLowerCase().startsWith(entered.toLowerCase())) {
@@ -36,7 +36,7 @@ public class ChestSortTabCompleter implements TabCompleter {
 		if(command.getName().equalsIgnoreCase("invsort")) {
 			return getMatchingOptions(entered,invsortOptions);
 		}
-		return new ArrayList<String>();
+		return new ArrayList<>();
 	}
 
 }

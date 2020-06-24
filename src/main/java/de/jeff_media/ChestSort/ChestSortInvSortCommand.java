@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 public class ChestSortInvSortCommand implements CommandExecutor {
 	
-	ChestSortPlugin plugin;
+	final ChestSortPlugin plugin;
 	
 	ChestSortInvSortCommand(ChestSortPlugin plugin) {
 		this.plugin = plugin;

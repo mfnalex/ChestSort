@@ -15,20 +15,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ChestSortSettingsGUI implements Listener {
 	
-	ChestSortPlugin plugin;
+	final ChestSortPlugin plugin;
 	
-	public static int slotMiddleClick = 1;
-	public static int slotShiftClick = 3 ;
-	public static int slotDoubleClick = 5 ;
-	public static int slotShiftRightClick = 7 ;
-	public static int slotLeftClick = 2+18;
-	public static int slotRightClick = 6+18;
+	public static final int slotMiddleClick = 1;
+	public static final int slotShiftClick = 3 ;
+	public static final int slotDoubleClick = 5 ;
+	public static final int slotShiftRightClick = 7 ;
+	public static final int slotLeftClick = 2+18;
+	public static final int slotRightClick = 6+18;
 	
 	final static Material red = Material.REDSTONE_BLOCK;
 	final static Material green = Material.EMERALD_BLOCK;
 	
 	enum Hotkey {
-		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick, LeftClick, RightClick;
+		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick, LeftClick, RightClick
 	}
 	
 	ChestSortSettingsGUI(ChestSortPlugin plugin) {
@@ -95,13 +95,12 @@ public class ChestSortSettingsGUI implements Listener {
     }
     
     Inventory createGUI(String name, Player inventoryHolder) {
-        Inventory inventory = Bukkit.createInventory(inventoryHolder, InventoryType.CHEST, name);
-        return inventory;
+		return Bukkit.createInventory(inventoryHolder, InventoryType.CHEST, name);
     }
     
     @EventHandler
 	void onGUIInteract(InventoryClickEvent event) {
-		if(plugin.hotkeyGUI==false) {
+		if(!plugin.hotkeyGUI) {
 			return;
 		}
 		if(!(event.getWhoClicked() instanceof Player)) {
@@ -131,28 +130,22 @@ public class ChestSortSettingsGUI implements Listener {
 		if(event.getSlot() == ChestSortSettingsGUI.slotMiddleClick) {
 			setting.toggleMiddleClick();
 			plugin.settingsGUI.openGUI(p);
-			return;
 		}
 		else if(event.getSlot() == ChestSortSettingsGUI.slotShiftClick) {
 			setting.toggleShiftClick();
 			plugin.settingsGUI.openGUI(p);
-			return;
 		} else 	if(event.getSlot() == ChestSortSettingsGUI.slotDoubleClick) {
 			setting.toggleDoubleClick();
 			plugin.settingsGUI.openGUI(p);
-			return;
 		} else if(event.getSlot() == ChestSortSettingsGUI.slotShiftRightClick) {
 			setting.toggleShiftRightClick();
 			plugin.settingsGUI.openGUI(p);
-			return;
 		} else if(event.getSlot() == ChestSortSettingsGUI.slotLeftClick) {
 			setting.toggleLeftClick();
 			plugin.settingsGUI.openGUI(p);
-			return;
 		} else if(event.getSlot() == ChestSortSettingsGUI.slotRightClick) {
 			setting.toggleRightClick();
 			plugin.settingsGUI.openGUI(p);
-			return;
 		}
 		
 	}

@@ -1,7 +1,7 @@
 main: de.jeff_media.ChestSort.ChestSortPlugin
 name: ChestSort
-version: 8.11.0
-api-version: 1.13
+version: 8.11.1
+api-version: "1.13"
 description: Allows automatic chest sorting
 author: mfnalex
 website: https://www.chestsort.de
@@ -12,12 +12,21 @@ softdepend: [CrackShot,InventoryPages,Minepacks]
 commands:
   chestsort:
     description: Toggle automatic chest sorting.
-    usage: /<command> [on|off|toggle]
+    usage: |
+            /<command> -- Toggles automatic chest sorting
+            /<command> on|off -- Enables/disabled automatic chest sorting
+            /<command> hotkeys -- Opens hotkeys GUI to enable/disable hotkeys
+            /<command> reload -- Reloads config
     aliases: sort
     permission: chestsort.use
   invsort:
     description: Toggle automatic inventory sorting or sorts the player's inventory. When no option is specified, only the regular inventory (excluding the hotbar) is sorted.
-    usage: /<command> [on|off|toggle|inv|hotbar|all]
+    usage: |
+            /<command> toggle -- Toggles automatic inventory sorting
+            /<command> on|off -- Enables/disables automatic inventory sorting
+            /<command> inv -- Sorts your inventory
+            /<command> hotbar -- Sorts your hotbar
+            /<command> all -- Sorts your inventory and hotbar
     aliases: [isort,inventorysort]
     permission: chestsort.use.inventory
 permissions:

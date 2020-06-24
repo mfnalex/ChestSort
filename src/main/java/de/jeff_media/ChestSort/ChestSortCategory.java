@@ -12,9 +12,9 @@ public class ChestSortCategory implements Comparable<ChestSortCategory>{
 	// "COARSE_DIRT" will not match the typeMatch "dirt"
 	// "COARSE_DIRT" will match the typeMatch "*dirt"
 
-	String name;
+	final String name;
 	boolean sticky = false;
-	TypeMatchPositionPair[] typeMatches;
+	final TypeMatchPositionPair[] typeMatches;
 
 	ChestSortCategory(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
 		this.name = name;
@@ -48,15 +48,15 @@ public class ChestSortCategory implements Comparable<ChestSortCategory>{
 				typeMatch = typeMatch.substring(0, typeMatch.length() - 1);
 			}
 
-			if (asteriskBefore == false && asteriskAfter == false) {
+			if (!asteriskBefore && !asteriskAfter) {
 				if (itemname.equalsIgnoreCase(typeMatch)) {
 					return typeMatchPositionPair.getPosition();
 				}
-			} else if (asteriskBefore == true && asteriskAfter == true) {
+			} else if (asteriskBefore && asteriskAfter) {
 				if (itemname.contains(typeMatch)) {
 					return typeMatchPositionPair.getPosition();
 				}
-			} else if (asteriskBefore == true && asteriskAfter == false) {
+			} else if (asteriskBefore && !asteriskAfter) {
 				if (itemname.endsWith(typeMatch)) {
 					return typeMatchPositionPair.getPosition();
 				}

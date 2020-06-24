@@ -12,7 +12,7 @@ public class ChestSortEvent extends Event implements Cancellable {
 	
 	boolean cancelled = false;
 	Location loc;
-	Inventory inv;
+	final Inventory inv;
 	Player p;
 
 	  private static final HandlerList HANDLERS = new HandlerList();

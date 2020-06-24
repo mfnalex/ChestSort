@@ -8,12 +8,12 @@ import org.bukkit.permissions.PermissionAttachment;
 
 public class ChestSortPermissionsHandler {
 	
-	HashMap<UUID,PermissionAttachment> permissions;
-	ChestSortPlugin plugin;
+	final HashMap<UUID,PermissionAttachment> permissions;
+	final ChestSortPlugin plugin;
 	
 	ChestSortPermissionsHandler(ChestSortPlugin plugin) {
 		this.plugin = plugin;
-		this.permissions = new HashMap<UUID,PermissionAttachment>();
+		this.permissions = new HashMap<>();
 	}
 	
 	void addPermissions(Player p) {

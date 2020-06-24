@@ -2,10 +2,10 @@ package de.jeff_media.ChestSort.utils;
 
 
 public class CategoryLinePair {
-	String categoryName;
-	String formattedPosition;
+	final String categoryName;
+	final String formattedPosition;
 	boolean sticky = false;
-	short position;
+	final short position;
 	
 	public CategoryLinePair(String categoryName,short position) {
 		this(categoryName,position,false);
