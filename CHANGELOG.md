@@ -1,4 +1,7 @@
 # Changelog
+## 8.12.2
+- Fixes NullPointerException when using EssentialsX' /ec command in Minecraft 1.12
+
 ## 8.12.0
 - Changed name of command /chestsort to /sort. You can still use /chestsort though.
 - Fixed weird config updater problem on systems that don't properly support UTF-8 (like Windows)

@@ -18,6 +18,7 @@ import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -399,7 +400,7 @@ public class ChestSortOrganizer {
     }
 
     // Sort an inventory only between startSlot and endSlot
-    void sortInventory(Inventory inv, int startSlot, int endSlot) {
+    void sortInventory(@NotNull Inventory inv, int startSlot, int endSlot) {
         if(inv==null) return;
         Class<? extends Inventory> invClass = inv.getClass();
         try {
@@ -414,7 +415,10 @@ public class ChestSortOrganizer {
                     return;
                 }
             }
-        } catch (NoSuchMethodException | SecurityException | IllegalStateException e) {
+        } catch (Throwable throwable) {
+            //System.out.println("Exception cought");
+            // I dont know, but this inv.getLocation() causes a NullPointerException when using EssentialsX's /ec command in 1.12
+            // Don't ask me why, but everything still works as expected if we catch that Exception.
             // TODO Auto-generated catch block
 
         }
