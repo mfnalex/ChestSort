@@ -400,6 +400,7 @@ public class ChestSortOrganizer {
 
     // Sort an inventory only between startSlot and endSlot
     void sortInventory(Inventory inv, int startSlot, int endSlot) {
+        if(inv==null) return;
         Class<? extends Inventory> invClass = inv.getClass();
         try {
             if (invClass.getMethod("getLocation", null) != null) {
