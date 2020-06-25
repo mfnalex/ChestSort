@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChestSortTabCompleter implements TabCompleter {
 	
-	static final String[] chestsortOptions = { "toggle","on","off","hotkeys" };
-	static final String[] invsortOptions = { "toggle","on","off","all", "hotbar", "inv" };
+	static final String[] chestsortOptions = { "toggle","on","off","hotkeys","help" };
+	static final String[] invsortOptions = { "toggle","on","off","all", "hotbar", "inv","help" };
 	
 	private List<String> getMatchingOptions(String entered, String[] options) {
 		List<String> list = new ArrayList<>();

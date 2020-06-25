@@ -36,6 +36,10 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 			return true;
 		}
 
+		if(args.length>0 && args[0].equalsIgnoreCase("help")) {
+			return false;
+		}
+
 			if (!(sender instanceof Player)) {
 				
 				if(args.length!=0) {

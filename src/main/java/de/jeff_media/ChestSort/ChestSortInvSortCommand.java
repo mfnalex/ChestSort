@@ -21,6 +21,10 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 		if (!command.getName().equalsIgnoreCase("invsort")) {
 			return false;
 		}
+
+		if(args.length>0 && args[0].equalsIgnoreCase("help")) {
+			return false;
+		}
 		
 		if (!(sender instanceof Player)) {
 			sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);

@@ -11,22 +11,26 @@ loadbefore: [InvUnload]
 softdepend: [CrackShot,InventoryPages,Minepacks]
 commands:
   sort:
-    description: Toggle automatic chest sorting.
+    description: Toggle automatic chest sorting or change your hotkey settings
     usage: |
-            /<command> -- Toggles automatic chest sorting
-            /<command> on|off -- Enables/disabled automatic chest sorting
-            /<command> hotkeys -- Opens hotkeys GUI to enable/disable hotkeys
+            /<command> -- Toggle automatic chest sorting
+            /<command> on -- Enable automatic chest sorting
+            /<command> off -- Disable automatic chest sorting
+            /<command> hotkeys -- Change your hotkey settings
             /<command> reload -- Reloads config
+            /<command> help -- Shows help about this command
     aliases: chestsort
     permission: chestsort.use
   invsort:
-    description: Toggle automatic inventory sorting or sorts the player's inventory. When no option is specified, only the regular inventory (excluding the hotbar) is sorted.
+    description: Toggle automatic inventory sorting or sorts the player's inventory.
     usage: |
-            /<command> toggle -- Toggles automatic inventory sorting
-            /<command> on|off -- Enables/disables automatic inventory sorting
-            /<command> inv -- Sorts your inventory
-            /<command> hotbar -- Sorts your hotbar
-            /<command> all -- Sorts your inventory and hotbar
+            /<command> toggle -- Toggle automatic inventory sorting
+            /<command> on -- Enable automatic inventory sorting
+            /<command> off -- Disable automatic inventory sorting
+            /<command> inv -- Sort your inventory
+            /<command> hotbar -- Sort your hotbar
+            /<command> all -- Sort your inventory and hotbar
+            /<command> help -- Shows help about this command
     aliases: [isort,inventorysort]
     permission: chestsort.use.inventory
 permissions:
