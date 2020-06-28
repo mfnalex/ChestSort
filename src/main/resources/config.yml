@@ -312,9 +312,6 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-right-click: "清空箱子 (右键)"
 
 ##### Chinese (Traditional) 繁體中文 - Thanks to Command1264 for translating!
-# Note: The following messages have been changed in version 8.11 and need a new translation:
-# - message-gui-left-click
-# - message-gui-right-click
 #message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
 #message-when-using-chest2: "&7小提醒: 輸入 &6/chestsort&7 來關閉自動整理箱子"
 #message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
@@ -330,8 +327,8 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-click: "Shift + 左鍵"
 #message-gui-double-click: "雙擊左鍵"
 #message-gui-shift-right-click: "Shift + 右鍵"
-#message-gui-left-click: "填滿箱子 (左鍵)"
-#message-gui-right-click: "清空箱子 (右鍵)"
+#message-gui-left-click: "填滿箱子 (左鍵/雙擊左鍵)"
+#message-gui-right-click: "清空箱子 (右鍵/雙擊右鍵)"
 
 ##### Dutch - Thanks to Xeyame for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
