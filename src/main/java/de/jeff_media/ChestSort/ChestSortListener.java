@@ -19,6 +19,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.CraftingInventory;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
@@ -391,13 +392,17 @@ public class ChestSortListener implements Listener {
                 return;
             }
 
+
+
             if (LlamaUtils.belongsToLlama(event.getClickedInventory())) {
                 ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
+                plugin.organizer.condenseIntoShulkers(event.getClickedInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
                 plugin.organizer.sortInventory(event.getClickedInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
                 plugin.organizer.updateInventoryView(event);
                 return;
             }
 
+            plugin.organizer.condenseIntoShulkers(event.getClickedInventory());
             plugin.organizer.sortInventory(event.getClickedInventory());
             plugin.organizer.updateInventoryView(event);
         } else if (holder instanceof Player) {
@@ -406,9 +411,15 @@ public class ChestSortListener implements Listener {
             }
 
             if (event.getSlotType() == SlotType.QUICKBAR) {
+                plugin.organizer.condenseIntoShulkers(event.getClickedInventory(), 0, 8);
                 plugin.organizer.sortInventory(p.getInventory(), 0, 8);
                 plugin.organizer.updateInventoryView(event);
             } else if (event.getSlotType() == SlotType.CONTAINER) {
+                // prevent item loss from shulker packs - this may warrant a message (e.g. "closed shulker pack while sorting to prevent item loss")
+                if(p.getOpenInventory().getTitle().toUpperCase().contains("SHULKER PACK")) {
+                    p.closeInventory();
+                }
+                plugin.organizer.condenseIntoShulkers(event.getClickedInventory(), 9, 35);
                 plugin.organizer.sortInventory(p.getInventory(), 9, 35);
                 plugin.organizer.updateInventoryView(event);
             }

@@ -6,14 +6,17 @@ import de.jeff_media.ChestSort.utils.CategoryLinePair;
 import de.jeff_media.ChestSort.utils.TypeMatchPositionPair;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -627,6 +630,64 @@ public class ChestSortOrganizer {
             source.clear(i);
         }
         stuffInventoryIntoAnother(temp, destination, source, false);
+    }
+
+    public void condenseIntoShulkers(Inventory source) {
+        condenseIntoShulkers(source, 0, source.getSize() - 1);
+    }
+
+    public void condenseIntoShulkers(Inventory source, int startSlot, int endSlot) {
+
+        for(int i = startSlot; i <= endSlot; i++) {
+            ItemStack sourceStack = source.getItem(i);
+            if(sourceStack == null) continue;
+
+            // check if item is a Shulker Box
+            if(sourceStack.getItemMeta() instanceof BlockStateMeta) {
+                BlockStateMeta im = (BlockStateMeta)sourceStack.getItemMeta();
+                if(im.getBlockState() instanceof ShulkerBox) {
+                    // found a Shulker Box
+                    ShulkerBox sourceShulker = (ShulkerBox) im.getBlockState();
+                    Inventory shulkerInv = Bukkit.createInventory(null,27,"SHULKER_BOX");
+                    shulkerInv.setContents(sourceShulker.getInventory().getContents());
+
+                    // stuff Shulker Box
+                    stuffInventoryIntoAnother(source,shulkerInv,source,true);
+
+                    sourceShulker.getInventory().setContents(shulkerInv.getContents());
+                    im.setBlockState(sourceShulker);
+                    sourceStack.setItemMeta(im);
+                }
+            }
+        }
+    }
+
+    public void condenseIntoShulkers(InventoryView viewSource, int startSlot, int endSlot) {
+        Inventory source = viewSource.getBottomInventory();
+        Inventory openShulker = viewSource.getTopInventory();
+        for(int i = startSlot; i <= endSlot; i++) {
+            ItemStack sourceStack = source.getItem(i);
+            if(sourceStack == null) continue;
+
+            // check if item is a Shulker Box
+            if(sourceStack.getItemMeta() instanceof BlockStateMeta) {
+                BlockStateMeta im = (BlockStateMeta)sourceStack.getItemMeta();
+                if(im.getBlockState() instanceof ShulkerBox) {
+                    // found a Shulker Box
+                    ShulkerBox sourceShulker = (ShulkerBox) im.getBlockState();
+                    Inventory shulkerInv = sourceShulker.getInventory();
+                    //Inventory shulkerInv = Bukkit.createInventory(null,27,"SHULKER_BOX");
+                    //shulkerInv.setContents(sourceShulker.getInventory().getContents());
+
+                    // stuff Shulker Box
+                    stuffInventoryIntoAnother(source,shulkerInv,source,true);
+
+                    sourceShulker.getInventory().setContents(shulkerInv.getContents());
+                    im.setBlockState(sourceShulker);
+                    sourceStack.setItemMeta(im);
+                }
+            }
+        }
     }
 
 }
