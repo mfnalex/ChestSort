@@ -392,8 +392,6 @@ public class ChestSortListener implements Listener {
                 return;
             }
 
-
-
             if (LlamaUtils.belongsToLlama(event.getClickedInventory())) {
                 ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
                 plugin.organizer.condenseIntoShulkers(event.getClickedInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);

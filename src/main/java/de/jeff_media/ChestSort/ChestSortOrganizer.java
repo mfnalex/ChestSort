@@ -661,33 +661,4 @@ public class ChestSortOrganizer {
             }
         }
     }
-
-    public void condenseIntoShulkers(InventoryView viewSource, int startSlot, int endSlot) {
-        Inventory source = viewSource.getBottomInventory();
-        Inventory openShulker = viewSource.getTopInventory();
-        for(int i = startSlot; i <= endSlot; i++) {
-            ItemStack sourceStack = source.getItem(i);
-            if(sourceStack == null) continue;
-
-            // check if item is a Shulker Box
-            if(sourceStack.getItemMeta() instanceof BlockStateMeta) {
-                BlockStateMeta im = (BlockStateMeta)sourceStack.getItemMeta();
-                if(im.getBlockState() instanceof ShulkerBox) {
-                    // found a Shulker Box
-                    ShulkerBox sourceShulker = (ShulkerBox) im.getBlockState();
-                    Inventory shulkerInv = sourceShulker.getInventory();
-                    //Inventory shulkerInv = Bukkit.createInventory(null,27,"SHULKER_BOX");
-                    //shulkerInv.setContents(sourceShulker.getInventory().getContents());
-
-                    // stuff Shulker Box
-                    stuffInventoryIntoAnother(source,shulkerInv,source,true);
-
-                    sourceShulker.getInventory().setContents(shulkerInv.getContents());
-                    im.setBlockState(sourceShulker);
-                    sourceStack.setItemMeta(im);
-                }
-            }
-        }
-    }
-
 }
