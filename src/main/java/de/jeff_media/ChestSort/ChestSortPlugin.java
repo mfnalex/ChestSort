@@ -92,18 +92,24 @@ public class ChestSortPlugin extends JavaPlugin {
 	// Public API method to sort any given inventory
 	@Deprecated
 	public void sortInventory(Inventory inv) {
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.",stackTraceElements[2]));
 		api.sortInventory(inv);
 	}
 
 	// Public API method to sort any given inventory inbetween startSlot and endSlot
 	@Deprecated
 	public void sortInventory(Inventory inv, int startSlot, int endSlot) {
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.",stackTraceElements[2]));
 		api.sortInventory(inv, startSlot, endSlot);
 	}
 	
 	// Public API method to check if player has automatic chest sorting enabled
 	@Deprecated
 	public boolean sortingEnabled(Player p) {
+		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+		getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.",stackTraceElements[2]));
 		return isSortingEnabled(p);
 	}
 	
