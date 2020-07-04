@@ -70,7 +70,7 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 				return true;
 			}
 		}
-		
+		plugin.lgr.logSort(p, ChestSortLogger.SortCause.CMD_ISORT);
 		plugin.organizer.sortInventory(p.getInventory(), start, end);
 		p.sendMessage(plugin.messages.MSG_PLAYERINVSORTED);
 		

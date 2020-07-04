@@ -40,6 +40,8 @@ public class ChestSortListener implements Listener {
         // Put player into our perPlayerSettings map
         plugin.registerPlayerIfNeeded(event.getPlayer());
 
+        plugin.lgr.logPlayerJoin(event.getPlayer());
+
     }
 
     @EventHandler
@@ -89,6 +91,8 @@ public class ChestSortListener implements Listener {
         ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
         if (!setting.invSortingEnabled) return;
 
+        plugin.lgr.logSort(p, ChestSortLogger.SortCause.INV_CLOSE);
+
         plugin.organizer.sortInventory(p.getInventory(), 9, 35);
 
     }
@@ -121,6 +125,8 @@ public class ChestSortListener implements Listener {
         }
 
         // Finally call the Organizer to sort the inventory
+
+        plugin.lgr.logSort(p, ChestSortLogger.SortCause.CONT_CLOSE);
 
         // Llama inventories need special start/end slots
         if (LlamaUtils.belongsToLlama(event.getInventory())) {
@@ -162,6 +168,9 @@ public class ChestSortListener implements Listener {
         }
 
         // Finally call the Organizer to sort the inventory
+
+        plugin.lgr.logSort(p, ChestSortLogger.SortCause.CONT_OPEN);
+
 
         // Llama inventories need special start/end slots
         if (LlamaUtils.belongsToLlama(event.getInventory())) {
@@ -284,6 +293,9 @@ public class ChestSortListener implements Listener {
         if (isReadyToSort(p)) {
 
             // Finally call the Organizer to sort the inventory
+
+            plugin.lgr.logSort(p, ChestSortLogger.SortCause.EC_OPEN);
+
             plugin.organizer.sortInventory(event.getInventory());
         }
     }
@@ -327,6 +339,7 @@ public class ChestSortListener implements Listener {
         InventoryHolder holder = event.getClickedInventory().getHolder();
 
         boolean sort = false;
+        ChestSortLogger.SortCause cause = null;
 
         ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 
@@ -341,6 +354,7 @@ public class ChestSortListener implements Listener {
         }
         switch (event.getClick()) {
             case MIDDLE:
+                cause = ChestSortLogger.SortCause.H_MIDDLE;
                 //if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
                 if (setting.middleClick) {
                     if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE) {
@@ -353,6 +367,7 @@ public class ChestSortListener implements Listener {
                 }
                 break;
             case DOUBLE_CLICK:
+                cause = ChestSortLogger.SortCause.H_DOUBLE;
                 //if(plugin.getConfig().getBoolean("hotkeys.double-click")) {
                 if (setting.doubleClick) {
                     // We need getCursor() instead of getCurrentItem(), because after picking up the item, it is gone into the cursor
@@ -362,6 +377,7 @@ public class ChestSortListener implements Listener {
                 }
                 break;
             case SHIFT_LEFT:
+                cause = ChestSortLogger.SortCause.H_SHIFT;
                 //if(plugin.getConfig().getBoolean("hotkeys.shift-click")) {
                 if (setting.shiftClick) {
                     if (event.getCurrentItem() == null || (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.AIR)) {
@@ -370,6 +386,7 @@ public class ChestSortListener implements Listener {
                 }
                 break;
             case SHIFT_RIGHT:
+                cause = ChestSortLogger.SortCause.H_SHIFTRIGHT;
                 //if(plugin.getConfig().getBoolean("hotkeys.shift-right-click")) {
                 if (setting.shiftRightClick) {
                     if (event.getCurrentItem() == null || (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.AIR)) {
@@ -392,12 +409,13 @@ public class ChestSortListener implements Listener {
             }
 
             if (LlamaUtils.belongsToLlama(event.getClickedInventory())) {
+                plugin.lgr.logSort(p,cause);
                 ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
                 plugin.organizer.sortInventory(event.getClickedInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
                 plugin.organizer.updateInventoryView(event);
                 return;
             }
-
+            plugin.lgr.logSort(p,cause);
             plugin.organizer.sortInventory(event.getClickedInventory());
             plugin.organizer.updateInventoryView(event);
         } else if (holder instanceof Player) {
@@ -406,9 +424,11 @@ public class ChestSortListener implements Listener {
             }
 
             if (event.getSlotType() == SlotType.QUICKBAR) {
+                plugin.lgr.logSort(p,cause);
                 plugin.organizer.sortInventory(p.getInventory(), 0, 8);
                 plugin.organizer.updateInventoryView(event);
             } else if (event.getSlotType() == SlotType.CONTAINER) {
+                plugin.lgr.logSort(p,cause);
                 plugin.organizer.sortInventory(p.getInventory(), 9, 35);
                 plugin.organizer.updateInventoryView(event);
             }
@@ -469,7 +489,7 @@ public class ChestSortListener implements Listener {
         }
 
         if (e.isLeftClick() && setting.leftClick) {
-
+            plugin.lgr.logSort(p, ChestSortLogger.SortCause.H_LEFT);
             if (setting.getCurrentDoubleClick(plugin, ChestSortPlayerSetting.DoubleClickType.LEFT_CLICK)
                     == ChestSortPlayerSetting.DoubleClickType.LEFT_CLICK) {
             	// Left double click: put everything into destination
@@ -481,6 +501,7 @@ public class ChestSortListener implements Listener {
             }
 
         } else if (e.isRightClick() && setting.rightClick) {
+            plugin.lgr.logSort(p, ChestSortLogger.SortCause.H_RIGHT);
             if (setting.getCurrentDoubleClick(plugin, ChestSortPlayerSetting.DoubleClickType.RIGHT_CLICK)
                     == ChestSortPlayerSetting.DoubleClickType.RIGHT_CLICK) {
             	// Right double click: put everything into player inventory

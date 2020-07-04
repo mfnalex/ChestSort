@@ -57,6 +57,7 @@ import de.jeff_media.ChestSort.utils.Utils;
 
 public class ChestSortPlugin extends JavaPlugin {
 
+	ChestSortLogger lgr;
 	Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<>();
 	ChestSortMessages messages;
 	ChestSortOrganizer organizer;
@@ -67,7 +68,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPI api;
-	final int currentConfigVersion = 34;
+	final int currentConfigVersion = 35;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -182,6 +183,7 @@ public class ChestSortPlugin extends JavaPlugin {
 		getConfig().addDefault("additional-hotkeys.left-click", false);
 		getConfig().addDefault("additional-hotkeys.right-click", false);
 		getConfig().addDefault("dump", false);
+		getConfig().addDefault("log", false);
 		
 		getConfig().addDefault("hook-crackshot", true);
 		getConfig().addDefault("hook-crackshot-prefix", "crackshot_weapon");
@@ -438,7 +440,7 @@ public class ChestSortPlugin extends JavaPlugin {
 		saveDefaultCategories();
 
 		verbose = getConfig().getBoolean("verbose");
-
+		lgr = new ChestSortLogger(this,getConfig().getBoolean("log"));
 		messages = new ChestSortMessages(this);
 		organizer = new ChestSortOrganizer(this);
 		settingsGUI = new ChestSortSettingsGUI(this);

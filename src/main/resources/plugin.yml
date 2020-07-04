@@ -24,10 +24,10 @@ commands:
   invsort:
     description: Toggle automatic inventory sorting or sorts the player's inventory.
     usage: |
+            /<command> -- Sort your inventory
             /<command> toggle -- Toggle automatic inventory sorting
             /<command> on -- Enable automatic inventory sorting
             /<command> off -- Disable automatic inventory sorting
-            /<command> inv -- Sort your inventory
             /<command> hotbar -- Sort your hotbar
             /<command> all -- Sort your inventory and hotbar
             /<command> help -- Shows help about this command

@@ -568,6 +568,9 @@ dump: false
 # Debug mode - you probably do not want this.
 debug: false
 
+# Enable log - you probably do not want this.
+log: false
+
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 34
+config-version: 35
