@@ -1,6 +1,6 @@
 # Changelog
 ## 8.13.0-SNAPSHOT
-- Updated Chinese (Traditional) translation
+- Updated Chinese (Traditional) and Spanish translation
 - Added option to log ChestSort actions in a log file (default: false)
 - Print console warnings when 3rd party plugins use deprecated ChestSort API methods
 - Small code cleanup
