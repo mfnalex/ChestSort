@@ -495,25 +495,24 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 
-##### Russian - Thanks to Gandon for translating!
-##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
+##### Russian
 #message-when-using-chest: "&7Подсказка: введите &6/chestsort&7, чтобы включить автоматическую сортировку вещей в сундуках."
 #message-when-using-chest2: "&7Подсказка: введите &6/chestsort&7, чтобы отключить автоматическую сортировку вещей в сундуках."
 #message-sorting-disabled: "&7Автоматическая сортировка вещей в сундуках была &cотключена&7."
 #message-sorting-enabled: "&7Автоматическая сортировка вещей в сундуках была &aвключена&7."
-#message-inv-sorting-disabled: "&7Automatic inventory sorting has been &cdisabled&7."
-#message-inv-sorting-enabled: "&7Automatic inventory sorting has been &aenabled&7."
+#message-inv-sorting-disabled: "&7Автоматическая сортировка вещей в инвентаре &cотключена&7."
+#message-inv-sorting-enabled: "&7Автоматическая сортировка вещей в инвентаре &aвключена&7."
 #message-player-inventory-sorted: "&7Ваш инвентарь был отсортирован."
 #message-error-players-only: "&cОшибка: эта команда может быть использована только игроками."
 #message-error-invalid-options: "&cОшибка: Неизвестная опция %s. Допустимые опции: %s."
-#message-gui-enabled: "&aEnabled"
-#message-gui-disabled: "&cDisabled"
-#message-gui-middle-click: "Middle-Click"
-#message-gui-shift-click: "Shift + Click"
-#message-gui-double-click: "Double-Click"
-#message-gui-shift-right-click: "Shift + Right-Click"
-#message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
-#message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
+#message-gui-enabled: "&aАктивировано"
+#message-gui-disabled: "&cОтключено"
+#message-gui-middle-click: "Колесико"
+#message-gui-shift-click: "Shift + Клик"
+#message-gui-double-click: "Двойной клик"
+#message-gui-shift-right-click: "Shift + Правый клик"
+#message-gui-left-click: "Заполнить сундук (ЛКМ/Двойной ЛКМ)"
+#message-gui-right-click: "Освободить сундук (ПКМ/Двойной ПКМ)"
 
 ##### Spanish
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC

@@ -1,6 +1,6 @@
 # Changelog
 ## 8.13.1
-- Updated Turkish translation
+- Updated Russian and Turkish translation
 
 ## 8.13.0
 - Updated Chinese (Traditional) and Spanish translation
