@@ -535,7 +535,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-left-click: "Llenar Cofre (Click-Izquierdo/Doble-Click-Izquierdo)"
 #message-gui-right-click: "Cofre Vació (Click-Derecho/Doble-Click-Derecho)"
 
-##### Turkish (If u found an error contact with Cazcez#0190 on discord! || Hata bulursanız discord üzerinden Cazcez#0190 ile iletişime geçiniz)
+##### Turkish
 #message-when-using-chest: "&7İpucu: &6/chestsort&7 yazarak otomatik sandık düzenlemesini aktif edebilirsiniz"
 #message-when-using-chest2: "&7İpucu: &6/chestsort&7 yazarak otomatik sandık düzenlemesini deaktif edebilirsiniz."
 #message-sorting-disabled: "&7Otomatik sandık düzenlemesi &cdeaktifleştirildi&7."

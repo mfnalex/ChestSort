@@ -1,9 +1,14 @@
 # Changelog
-## 8.13.0-SNAPSHOT
+## 8.13.1
+- Updated Turkish translation
+
+## 8.13.0
 - Updated Chinese (Traditional) and Spanish translation
+- Fixed TabComplete not working for /sort and /chestsort
 - Added option to log ChestSort actions in a log file (default: false)
 - Print console warnings when 3rd party plugins use deprecated ChestSort API methods
 - Small code cleanup
+- Updated API to 1.16.1
 
 ## 8.12.2
 - Fixes NullPointerException when using EssentialsX' /ec command in Minecraft 1.12

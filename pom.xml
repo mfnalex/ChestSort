@@ -9,7 +9,7 @@
 	<name>JeffChestSort</name>
 	<url>https://www.chestsort.de</url>
 	<description>Automatically sorts your chests!</description>
-	<version>8.13.0-SNAPSHOT</version>
+	<version>8.13.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -101,7 +101,7 @@
 		<dependency>
 			<groupId>org.spigotmc</groupId>
 			<artifactId>spigot-api</artifactId>
-			<version>1.15.2-R0.1-SNAPSHOT</version>
+			<version>1.16.1-R0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

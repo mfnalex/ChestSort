@@ -31,7 +31,7 @@ public class ChestSortTabCompleter implements TabCompleter {
 		if(args.length>0) {
 			entered = args[args.length-1];
 		}
-		if(command.getName().equalsIgnoreCase("chestsort")) {
+		if(command.getName().equalsIgnoreCase("sort")) {
 			return getMatchingOptions(entered,chestsortOptions);
 		}
 		if(command.getName().equalsIgnoreCase("invsort")) {
