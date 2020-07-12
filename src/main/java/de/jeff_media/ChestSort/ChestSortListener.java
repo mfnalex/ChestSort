@@ -116,7 +116,7 @@ public class ChestSortListener implements Listener {
         Player p = (Player) event.getPlayer();
         Inventory inventory = event.getInventory();
 
-        if (!belongsToChestLikeBlock(inventory) && !LlamaUtils.belongsToLlama(inventory)) {
+        if (!isAPICall(inventory) && !belongsToChestLikeBlock(inventory) && !LlamaUtils.belongsToLlama(inventory)) {
             return;
         }
 
@@ -159,7 +159,7 @@ public class ChestSortListener implements Listener {
         Player p = (Player) event.getPlayer();
         Inventory inventory = event.getInventory();
 
-        if (!belongsToChestLikeBlock(inventory) && !LlamaUtils.belongsToLlama(inventory)) {
+        if (!isAPICall(inventory) && !belongsToChestLikeBlock(inventory) && !LlamaUtils.belongsToLlama(inventory)) {
             return;
         }
 
@@ -315,14 +315,6 @@ public class ChestSortListener implements Listener {
             return;
         }
 
-        // DEBUG START
-//		p.sendMessage("=====================");
-//		p.sendMessage("Click type: " + event.getClick().name());
-//		p.sendMessage("Right click: " + event.isRightClick());
-//		p.sendMessage("Shift click: " + event.isShiftClick());
-//		p.sendMessage("=====================");
-        // DEBUG END
-
         if (!p.hasPermission("chestsort.use") && !p.hasPermission("chestsort.use.inventory")) {
             return;
         }
@@ -331,10 +323,17 @@ public class ChestSortListener implements Listener {
         if (event.getClickedInventory() == null) {
             return;
         }
+
+        boolean isAPICall = isAPICall(event.getClickedInventory());
+
         // Possible fix for #57
-        if (event.getClickedInventory().getHolder() != null
+        if (!isAPICall && (event.getClickedInventory().getHolder() != null
                 && event.getClickedInventory().getHolder() == p
-                && event.getClickedInventory() != p.getInventory()) return;
+                && event.getClickedInventory() != p.getInventory())) {
+            if(plugin.debug) System.out.println("10");
+            return;
+        }
+
         // End Possible fix for #57
         InventoryHolder holder = event.getClickedInventory().getHolder();
 
@@ -347,11 +346,13 @@ public class ChestSortListener implements Listener {
         if (event.getClickedInventory() == setting.guiInventory) {
             return;
         }
+
         // Prevent player from putting items into GUI inventory
         if (event.getInventory() == setting.guiInventory) {
             event.setCancelled(true);
             return;
         }
+
         switch (event.getClick()) {
             case MIDDLE:
                 cause = ChestSortLogger.SortCause.H_MIDDLE;
@@ -402,7 +403,7 @@ public class ChestSortListener implements Listener {
             return;
         }
 
-        if (belongsToChestLikeBlock(event.getClickedInventory()) || LlamaUtils.belongsToLlama(event.getClickedInventory()) || minepacksHook.isMinepacksBackpack(event.getClickedInventory())) {
+        if (isAPICall || belongsToChestLikeBlock(event.getClickedInventory()) || LlamaUtils.belongsToLlama(event.getClickedInventory()) || minepacksHook.isMinepacksBackpack(event.getClickedInventory())) {
 
             if (!p.hasPermission("chestsort.use")) {
                 return;
@@ -433,6 +434,10 @@ public class ChestSortListener implements Listener {
                 plugin.organizer.updateInventoryView(event);
             }
         }
+    }
+
+    private boolean isAPICall(Inventory inv) {
+        return inv.getHolder() instanceof ISortable;
     }
 
     @EventHandler

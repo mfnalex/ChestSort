@@ -55,7 +55,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
 import de.jeff_media.ChestSort.utils.Utils;
 
-public class ChestSortPlugin extends JavaPlugin {
+public class ChestSortPlugin extends JavaPlugin implements ChestSort {
 
 	ChestSortLogger lgr;
 	Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<>();
@@ -67,7 +67,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	ChestSortPermissionsHandler permissionsHandler;
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
-	ChestSortAPI api;
+	ChestSortAPIHandler api;
 	final int currentConfigVersion = 35;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
@@ -84,13 +84,15 @@ public class ChestSortPlugin extends JavaPlugin {
 						// 1.14.4 = 1_14_R1
 						// 1.8.0  = 1_8_R1
 	int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
-	
-	public ChestSortAPI getAPI() {
+
+	@Override
+	public ChestSortAPIHandler getAPI() {
 		return this.api;
 	}
 
 	// Public API method to sort any given inventory
 	@Deprecated
+	@Override
 	public void sortInventory(Inventory inv) {
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 		getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.",stackTraceElements[2]));
@@ -99,6 +101,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
 	// Public API method to sort any given inventory inbetween startSlot and endSlot
 	@Deprecated
+	@Override
 	public void sortInventory(Inventory inv, int startSlot, int endSlot) {
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 		getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.",stackTraceElements[2]));
@@ -107,6 +110,7 @@ public class ChestSortPlugin extends JavaPlugin {
 	
 	// Public API method to check if player has automatic chest sorting enabled
 	@Deprecated
+	@Override
 	public boolean sortingEnabled(Player p) {
 		StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
 		getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.",stackTraceElements[2]));
@@ -452,7 +456,7 @@ public class ChestSortPlugin extends JavaPlugin {
 		settingsGUI = new ChestSortSettingsGUI(this);
 		updateChecker = new PluginUpdateChecker(this, "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt", "https://chestsort.de", "https://chestsort.de/changelog", "https://chestsort.de/donate");
 		listener = new ChestSortListener(this);
-		api = new ChestSortAPI(this);
+		api = new ChestSortAPIHandler(this);
 		permissionsHandler = new ChestSortPermissionsHandler(this);
 		updateCheckInterval = (int) (getConfig().getDouble("check-interval")*60*60);
 		sortingMethod = getConfig().getString("sorting-method");

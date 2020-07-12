@@ -1,6 +1,7 @@
 # Changelog
 ## 8.13.1
 - Updated Russian and Turkish translation
+- Separated ChestSort plugin and API
 
 ## 8.13.0
 - Updated Chinese (Traditional) and Spanish translation

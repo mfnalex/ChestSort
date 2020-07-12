@@ -127,7 +127,7 @@ public class ChestSortOrganizer {
     }
 
     static boolean doesInventoryContain(Inventory inv, Material mat) {
-        for (ItemStack item : inv.getContents()) {
+        for (ItemStack item : inv.getStorageContents()) {
             if (item == null) continue;
             if (item.getType() == mat) {
                 return true;
