@@ -28,10 +28,14 @@ public class ChestSortListener implements Listener {
 
     final ChestSortPlugin plugin;
     final MinepacksHook minepacksHook;
+    final HeadDatabaseHook headDatabaseHook;
+    final CrateReloadedHook crateReloadedHook;
 
     ChestSortListener(ChestSortPlugin plugin) {
         this.plugin = plugin;
         this.minepacksHook = new MinepacksHook(plugin);
+        this.headDatabaseHook = new HeadDatabaseHook(plugin);
+        this.crateReloadedHook = new CrateReloadedHook(plugin);
     }
 
     @EventHandler
@@ -478,14 +482,14 @@ public class ChestSortListener implements Listener {
         }
 
         // HeadDatabase hook
-        if(HeadDatabaseHook.isHeadDB(e.getClickedInventory())
-                || HeadDatabaseHook.isHeadDB(e.getInventory())) {
+        if(headDatabaseHook.isHeadDB(e.getClickedInventory())
+                || headDatabaseHook.isHeadDB(e.getInventory())) {
             return;
         }
 
         // CrateReloaded hook
-        if(CrateReloadedHook.isCrate(e.getClickedInventory())
-                || CrateReloadedHook.isCrate(e.getInventory())) {
+        if(crateReloadedHook.isCrate(e.getClickedInventory())
+                || crateReloadedHook.isCrate(e.getInventory())) {
             //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
             return;
         }

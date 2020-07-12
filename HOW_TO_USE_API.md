@@ -111,5 +111,6 @@ Sortable holder = new Sortable(player)
 
 Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample)
 
-## Source code
-The source code for the API can be found [here](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).
+## Javadocs & Source code
+- [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI).
+- [ChestSortAPI source code](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).

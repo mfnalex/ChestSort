@@ -1,4 +1,9 @@
 # Changelog
+
+## 8.14.2
+- Made CrateReloaded hook and HeadDatabase hook toggleable
+- Updated Chinese translation
+
 ## 8.14.1
 - Prevent players from using left-click and right-click hotkeys on inventories created by CrateReloaded or HeadDatabase
 

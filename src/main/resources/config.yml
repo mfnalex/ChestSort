@@ -182,6 +182,14 @@ hook-inventorypages: true
 # backpacks and sort them like a regular chest.
 hook-minepacks: true
 
+##### CrateReloaded #####
+# Prevents the player from using hotkeys on a crate
+hook-cratereloaded: true
+
+##### HeadDatabase #####
+# Prevents the player from using hotkeys on the HeadDatabase GUI
+hook-headdatabase: true
+
 ##### Other backpack plugins #####
 # ChestSort is able to detect backpacks from most backpack
 # plugins like ShulkerPacks or Better Shulker Boxes.
@@ -290,9 +298,6 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 
 ##### Chinese - Thanks to qsefthuopq, Aira-Sakuranomiya and BackWheel for translating!
-# Note: The following messages have been changed in version 8.11 and need a new translation:
-# - message-gui-left-click
-# - message-gui-right-click
 #message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
 #message-when-using-chest2: "&7提示: 输入 &6/chestsort&7 来关闭自动整理箱子."
 #message-sorting-disabled: "&7自动整理箱子已 &c关闭&7."
@@ -308,8 +313,8 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-click: "Shift + 左键"
 #message-gui-double-click: "双击左键"
 #message-gui-shift-right-click: "Shift + 右键"
-#message-gui-left-click: "填充箱子 (左键)"
-#message-gui-right-click: "清空箱子 (右键)"
+#message-gui-left-click: "填充箱子 (左键/双击左键)"
+#message-gui-right-click: "清空箱子 (右键/双击右键)"
 
 ##### Chinese (Traditional) 繁體中文 - Thanks to Command1264 for translating!
 #message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
@@ -571,4 +576,4 @@ log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 35
+config-version: 36
