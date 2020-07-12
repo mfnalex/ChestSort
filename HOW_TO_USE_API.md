@@ -47,7 +47,7 @@ If you use the `Sortable`class or the `ISortable` interface, you must also shade
 ## Accessing the API
 Then you can access the API via the plugin manager:
 
-```
+```java
 ChestSort chestSort = (ChestSort) getServer().getPluginManager().getPlugin("ChestSort");
 if(chestSort==null) {
 	getLogger().severe("Error: ChestSort is not installed.");
