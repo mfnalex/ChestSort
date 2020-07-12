@@ -1,5 +1,7 @@
 package de.jeff_media.ChestSort;
 
+import de.jeff_media.ChestSort.hooks.CrateReloadedHook;
+import de.jeff_media.ChestSort.hooks.HeadDatabaseHook;
 import de.jeff_media.ChestSort.hooks.MinepacksHook;
 import de.jeff_media.ChestSort.utils.LlamaUtils;
 import org.bukkit.Bukkit;
@@ -472,6 +474,19 @@ public class ChestSortListener implements Listener {
                 && e.getInventory().getType() != InventoryType.ENDER_CHEST
                 && !e.getInventory().getType().name().equalsIgnoreCase("SHULKER_BOX")
                 && (e.getInventory().getHolder() == null || !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))) {
+            return;
+        }
+
+        // HeadDatabase hook
+        if(HeadDatabaseHook.isHeadDB(e.getClickedInventory())
+                || HeadDatabaseHook.isHeadDB(e.getInventory())) {
+            return;
+        }
+
+        // CrateReloaded hook
+        if(CrateReloadedHook.isCrate(e.getClickedInventory())
+                || CrateReloadedHook.isCrate(e.getInventory())) {
+            //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
             return;
         }
 

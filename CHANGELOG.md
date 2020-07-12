@@ -1,4 +1,7 @@
 # Changelog
+## 8.14.1
+- Prevent players from using left-click and right-click hotkeys on inventories created by CrateReloaded or HeadDatabase
+
 ## 8.14.0
 - Updated Russian and Turkish translation
 - Separated ChestSort plugin and API. You can view the new API documentation [here](https://github.com/JEFF-Media-GbR/Spigot-ChestSort/blob/master/HOW_TO_USE_API.md).
