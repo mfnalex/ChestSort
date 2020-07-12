@@ -1,6 +1,9 @@
 # API Usage
 
-If you want to use ChestSort's advanced sorting features for your own plugin, or if ChestSort causes trouble with your own plugin, you can use the ChestSort API. It provides methods to sort any given inventory, following the rules you have specified in your ChestSort's plugin.yml and the corresponding category files, and a cancellable ChestSortEvent event that is fired whenever ChestSort is about to sort an inventory.
+If you want to use ChestSort's advanced sorting features for your own plugin, or if ChestSort causes trouble with your own plugin, you can use the ChestSort API. It provides
+- the methods `sortInventory(Inventory inv)` and `sortInventory(Inventory inv, int startSlot, int endSlot)`to sort any given inventory, following the rules you have specified in your ChestSort's plugin.yml and the corresponding category files
+- a cancellable event called `ChestSortEvent` that is fired whenever ChestSort is about to sort an inventory
+- a custom InventoryHolder called `Sortable` that you can use when creating inventories to tell ChestSort that this inventory should be sortable
 
 ## Maven repository
 You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin:
