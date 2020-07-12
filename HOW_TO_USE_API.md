@@ -48,8 +48,8 @@ If you use the `Sortable`class or the `ISortable` interface, you must also shade
 Then you can access the API via the plugin manager:
 
 ```
-ChestSortPlugin chestSort = (ChestSortPlugin) getServer().getPluginManager().getPlugin("ChestSort");
-if(chestSort==null || !(chestSort instanceof ChestSortPlugin)) {
+ChestSort chestSort = (ChestSort) getServer().getPluginManager().getPlugin("ChestSort");
+if(chestSort==null) {
 	getLogger().severe("Error: ChestSort is not installed.");
 	return;
 }
@@ -95,10 +95,18 @@ public void onChestSortEvent(ChestSortEvent event) {
 If you create a new Inventory inside your plugin, you can use the `Sortable` class to tell ChestSort that your custom inventory should be sortable.
 
 ```java
-Sortable holder = new Sortable();
-Inventory inv = Bukkit.createInventory(holder, 9, "Example");
+Inventory inv = Bukkit.createInventory(new Sortable(), 9, "Example");
+```
+
+You can also store another InventoryHolder in the Inventory if needed:
+
+```java
+Sortable holder = new Sortable(player)
 ```
 
 ## Example Plugin
 
 Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample)
+
+## Source code
+The source code for the API can be found [here](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).
