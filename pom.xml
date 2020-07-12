@@ -6,10 +6,10 @@
 
 	<groupId>de.jeff_media</groupId>
 	<artifactId>ChestSort</artifactId>
-	<name>JeffChestSort</name>
+	<name>ChestSort</name>
 	<url>https://www.chestsort.de</url>
 	<description>Automatically sorts your chests!</description>
-	<version>8.13.1</version>
+	<version>8.14.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -113,7 +113,7 @@
 		<dependency>
 			<groupId>de.jeff_media</groupId>
 			<artifactId>ChestSortAPI</artifactId>
-			<version>8.13.1</version>
+			<version>1.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>

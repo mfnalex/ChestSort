@@ -3,7 +3,7 @@ package de.jeff_media.ChestSort;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-public class ChestSortAPIHandler implements ChestSortAPI {
+public class ChestSortAPIHandler implements de.jeff_media.ChestSortAPI.ChestSortAPI {
 	
 	final ChestSortPlugin plugin;
 	

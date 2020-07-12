@@ -437,7 +437,7 @@ public class ChestSortListener implements Listener {
     }
 
     private boolean isAPICall(Inventory inv) {
-        return inv.getHolder() instanceof ISortable;
+        return inv.getHolder() instanceof de.jeff_media.ChestSortAPI.ISortable;
     }
 
     @EventHandler
@@ -486,8 +486,8 @@ public class ChestSortListener implements Listener {
         ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 
 
-        ChestSortEvent chestSortEvent = new ChestSortEvent(e.getInventory());
-        chestSortEvent.loc = e.getWhoClicked().getLocation();
+        de.jeff_media.ChestSortAPI.ChestSortEvent chestSortEvent = new de.jeff_media.ChestSortAPI.ChestSortEvent(e.getInventory());
+        chestSortEvent.setLocation(e.getWhoClicked().getLocation());
         Bukkit.getPluginManager().callEvent(chestSortEvent);
         if (chestSortEvent.isCancelled()) {
             return;

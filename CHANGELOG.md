@@ -1,7 +1,7 @@
 # Changelog
-## 8.13.1
+## 8.14.0
 - Updated Russian and Turkish translation
-- Separated ChestSort plugin and API
+- Separated ChestSort plugin and API. You can view the new API documentation [here](https://github.com/JEFF-Media-GbR/Spigot-ChestSort/blob/master/HOW_TO_USE_API.md).
 
 ## 8.13.0
 - Updated Chinese (Traditional) and Spanish translation

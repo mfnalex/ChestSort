@@ -55,7 +55,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
 import de.jeff_media.ChestSort.utils.Utils;
 
-public class ChestSortPlugin extends JavaPlugin implements ChestSort {
+public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSortAPI.ChestSort {
 
 	ChestSortLogger lgr;
 	Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<>();

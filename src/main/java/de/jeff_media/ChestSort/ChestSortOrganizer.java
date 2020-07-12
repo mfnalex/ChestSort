@@ -408,8 +408,8 @@ public class ChestSortOrganizer {
                 // This whole try/catch fixes MethodNotFoundException when using inv.getLocation in Spigot 1.8.
             }
             if (inv.getLocation() != null) {
-                ChestSortEvent chestSortEvent = new ChestSortEvent(inv);
-                chestSortEvent.loc = inv.getLocation();
+                de.jeff_media.ChestSortAPI.ChestSortEvent chestSortEvent = new de.jeff_media.ChestSortAPI.ChestSortEvent(inv);
+                chestSortEvent.setLocation(inv.getLocation());
                 Bukkit.getPluginManager().callEvent(chestSortEvent);
                 if (chestSortEvent.isCancelled()) {
                     return;
