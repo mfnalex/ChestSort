@@ -4,6 +4,8 @@ import de.jeff_media.ChestSort.hooks.CrateReloadedHook;
 import de.jeff_media.ChestSort.hooks.HeadDatabaseHook;
 import de.jeff_media.ChestSort.hooks.MinepacksHook;
 import de.jeff_media.ChestSort.utils.LlamaUtils;
+import de.jeff_media.ChestSortAPI.ChestSortEvent;
+import de.jeff_media.ChestSortAPI.ISortable;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -443,7 +445,7 @@ public class ChestSortListener implements Listener {
     }
 
     private boolean isAPICall(Inventory inv) {
-        return inv.getHolder() instanceof de.jeff_media.ChestSortAPI.ISortable;
+        return inv.getHolder() instanceof ISortable;
     }
 
     @EventHandler
@@ -505,7 +507,7 @@ public class ChestSortListener implements Listener {
         ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 
 
-        de.jeff_media.ChestSortAPI.ChestSortEvent chestSortEvent = new de.jeff_media.ChestSortAPI.ChestSortEvent(e.getInventory());
+        ChestSortEvent chestSortEvent = new ChestSortEvent(e.getInventory());
         chestSortEvent.setLocation(e.getWhoClicked().getLocation());
         Bukkit.getPluginManager().callEvent(chestSortEvent);
         if (chestSortEvent.isCancelled()) {

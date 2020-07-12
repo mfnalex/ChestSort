@@ -2,6 +2,7 @@
 
 ## 8.14.2
 - Made CrateReloaded hook and HeadDatabase hook toggleable
+- Fixed wrong version number in plugin.yml
 - Updated Chinese translation
 
 ## 8.14.1

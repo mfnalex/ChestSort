@@ -2,7 +2,6 @@ package de.jeff_media.ChestSort.hooks;
 
 import de.jeff_media.ChestSort.ChestSortPlugin;
 import org.bukkit.inventory.Inventory;
-import org.jetbrains.annotations.NotNull;
 
 public class CrateReloadedHook {
 
