@@ -1,5 +1,6 @@
 # Todo
-
+## Auto updater
+Automatically use latest version
 ## StackableItems
 Make it configurable whether ItemStacks > 64 items will stay unsorted, or sorted and reverted back to stacks of 64 items
 -> https://www.spigotmc.org/threads/1-8-1-15-chestsort-api.334121/page-19#post-3821591
