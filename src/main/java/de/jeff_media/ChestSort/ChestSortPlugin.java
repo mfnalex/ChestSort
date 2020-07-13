@@ -462,7 +462,6 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		sortingMethod = getConfig().getString("sorting-method");
 		getServer().getPluginManager().registerEvents(listener, this);
 		getServer().getPluginManager().registerEvents(settingsGUI, this);
-		getServer().getPluginManager().registerEvents(new ToolUtils(), this);
 		ChestSortChestSortCommand chestsortCommandExecutor = new ChestSortChestSortCommand(this);
 		ChestSortTabCompleter tabCompleter = new ChestSortTabCompleter();
 		this.getCommand("sort").setExecutor(chestsortCommandExecutor);

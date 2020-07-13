@@ -1,6 +1,6 @@
 main: de.jeff_media.ChestSort.ChestSortPlugin
 name: ChestSort
-version: 9.0.0-SNAPSHOT
+version: 8.15.0
 api-version: "1.13"
 description: Allows automatic chest sorting
 author: mfnalex

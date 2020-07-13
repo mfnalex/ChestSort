@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.15.0
+- Enabled left-click and right-click hotkey for 3rd party plugins implementing the ISortable interface from ChestSort's API (You only need this update if you use plugins depending on the ChestSortAPI)
+
 ## 8.14.2
 - Made CrateReloaded hook and HeadDatabase hook toggleable
 - Fixed wrong version number in plugin.yml
