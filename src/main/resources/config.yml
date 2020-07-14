@@ -200,7 +200,8 @@ hook-headdatabase: true
 # 3rd party plugin's GUI and then prevents it from being sorted.
 # If you encounter any problems, like a sortable GUI inventory,
 # please open a new issue at Github:
-# https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues 
+# https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues
+hook-generic: true
 
 ##########################
 ##### Sorting Method #####
@@ -576,4 +577,4 @@ log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 37
+config-version: 38

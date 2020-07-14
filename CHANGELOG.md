@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.15.2
+- Added generic hook for 3rd plugin GUIs
+
 ## 8.15.1
 - Fixed dirt in containers being affected by the right-click hotkey even though the player had no dirt in his inventory
 

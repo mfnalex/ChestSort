@@ -334,6 +334,13 @@ public class ChestSortListener implements Listener {
 
         boolean isAPICall = isAPICall(event.getClickedInventory());
 
+        // Detect generic GUIs
+        if(!isAPICall &&
+                (plugin.genericHook.isPluginGUI(event.getInventory())
+                || plugin.genericHook.isPluginGUI(event.getInventory()))) {
+            return;
+        }
+
         // Possible fix for #57
         if (!isAPICall && (event.getClickedInventory().getHolder() != null
                 && event.getClickedInventory().getHolder() == p
@@ -445,6 +452,7 @@ public class ChestSortListener implements Listener {
     }
 
     private boolean isAPICall(Inventory inv) {
+        if(inv==null) return false;
         return inv.getHolder() instanceof ISortable;
     }
 
@@ -494,6 +502,13 @@ public class ChestSortListener implements Listener {
         if(crateReloadedHook.isCrate(e.getClickedInventory())
                 || crateReloadedHook.isCrate(e.getInventory())) {
             //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
+            return;
+        }
+
+        // Detect generic GUIs
+        if(!isAPICall(e.getInventory()) && !isAPICall(e.getClickedInventory()) &&
+                (plugin.genericHook.isPluginGUI(e.getInventory())
+                        || plugin.genericHook.isPluginGUI(e.getInventory()))) {
             return;
         }
 
