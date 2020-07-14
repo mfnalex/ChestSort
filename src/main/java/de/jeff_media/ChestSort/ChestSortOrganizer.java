@@ -554,7 +554,6 @@ public class ChestSortOrganizer {
 
     public void stuffInventoryIntoAnother(Inventory source, Inventory destination, Inventory origSource, boolean onlyMatchingStuff) {
 
-        Material placeholderMaterial = Material.DIRT;
         ItemStack[] hotbarStuff = new ItemStack[9];
         boolean destinationIsPlayerInventory = true;
         if (destination.getHolder() == null || !(destination.getHolder() instanceof Player) || destination.getType() != InventoryType.PLAYER) {
@@ -565,7 +564,7 @@ public class ChestSortOrganizer {
         if (destinationIsPlayerInventory) {
             for (int i = 0; i < 9; i++) {
                 hotbarStuff[i] = destination.getItem(i);
-                destination.setItem(i, new ItemStack(placeholderMaterial, 64));
+                destination.setItem(i, getPlaceholderBlock());
             }
         }
 
@@ -598,6 +597,11 @@ public class ChestSortOrganizer {
         updateInventoryView(destination);
         updateInventoryView(source);
 
+    }
+
+    // Used to temporarily fill the hotbar
+    private ItemStack getPlaceholderBlock() {
+        return new ItemStack(Material.BARRIER, 64);
     }
 
     public void stuffPlayerInventoryIntoAnother(PlayerInventory source,
