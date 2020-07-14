@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.15.1
+- Fixed dirt in containers being affected by the right-click hotkey even though the player had no dirt in his inventory
+
 ## 8.15.0
 - Enabled left-click and right-click hotkey for 3rd party plugins implementing the ISortable interface from ChestSort's API (You only need this update if you use plugins depending on the ChestSortAPI)
 

@@ -106,7 +106,7 @@ sorting-hotkeys:
   shift-right-click: true
 
 # Additionally to sorting hotkeys, you can quickly unload your inventory into a chest and vice versa
-# using left-click or richt-click outside of a chest's inventory.
+# using left-click or right-click outside of a chest's inventory.
 # A single click will only affect matching items (items that are already present in the other inventory)
 # and a double click will try to store/take all items.
 # Players can also enable/disable these shortcuts individually via /chestsort hotkeys
@@ -576,4 +576,4 @@ log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 36
+config-version: 37
