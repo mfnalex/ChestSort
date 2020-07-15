@@ -41,6 +41,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import de.jeff_media.ChestSort.hooks.GenericGUIHook;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -68,7 +69,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPIHandler api;
-	final int currentConfigVersion = 37;
+	final int currentConfigVersion = 38;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -77,6 +78,8 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 	public boolean hookCrackShot = false;
 	public boolean hookInventoryPages = false;
 	public boolean hookMinepacks = false;
+
+	public GenericGUIHook genericHook;
 	
 	private static long updateCheckInterval = 4*60*60; // in seconds. We check on startup and every 4 hours
 	
@@ -123,6 +126,10 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		}
 		listener.plugin.registerPlayerIfNeeded(p);
 		return perPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
+	}
+
+	public void debug(String t) {
+		if(debug) getLogger().warning("[DEBUG] "+t);
 	}
 
 	// Creates the default configuration file
@@ -199,6 +206,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		getConfig().addDefault("hook-crackshot-prefix", "crackshot_weapon");
 		getConfig().addDefault("hook-inventorypages", true);
 		getConfig().addDefault("hook-minepacks", true);
+		getConfig().addDefault("hook-generic",true);
 		
 		getConfig().addDefault("verbose", true); // Prints some information in onEnable()
 	}
@@ -446,6 +454,8 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 			
 		hookMinepacks = getConfig().getBoolean("hook-minepacks")
 				&& Bukkit.getPluginManager().getPlugin("Minepacks") instanceof MinepacksPlugin;
+
+		genericHook = new GenericGUIHook(this,getConfig().getBoolean("hook-generic"));
 
 		saveDefaultCategories();
 
