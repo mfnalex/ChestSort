@@ -319,7 +319,7 @@ public class ChestSortListener implements Listener {
 
         plugin.registerPlayerIfNeeded(p);
 
-        if (!plugin.getConfig().getBoolean("allow-hotkeys")) {
+        if (!plugin.getConfig().getBoolean("allow-sorting-hotkeys")) {
             return;
         }
 
@@ -463,7 +463,7 @@ public class ChestSortListener implements Listener {
             return;
         }
 
-        if (!plugin.getConfig().getBoolean("allow-hotkeys")) {
+        if (!plugin.getConfig().getBoolean("allow-additional-hotkeys")) {
             return;
         }
         if (!(e.getWhoClicked() instanceof Player)) {

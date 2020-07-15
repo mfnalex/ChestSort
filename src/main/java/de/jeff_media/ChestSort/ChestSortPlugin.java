@@ -69,7 +69,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPIHandler api;
-	final int currentConfigVersion = 38;
+	final int currentConfigVersion = 40;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -192,7 +192,8 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		getConfig().addDefault("check-interval", 4);
 		getConfig().addDefault("auto-generate-category-files", true);
 		getConfig().addDefault("sort-time", "close");
-		getConfig().addDefault("allow-hotkeys", true);
+		getConfig().addDefault("allow-sorting-hotkeys", true);
+		getConfig().addDefault("allow-additional-hotkeys", true);
 		getConfig().addDefault("sorting-hotkeys.middle-click", true);
 		getConfig().addDefault("sorting-hotkeys.shift-click", true);
 		getConfig().addDefault("sorting-hotkeys.double-click", true);
@@ -295,7 +296,9 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		bStats.addCustomChart(new Metrics.SimplePie("auto_generate_category_files",
 				() -> Boolean.toString(getConfig().getBoolean("auto-generate-category-files"))));
 		bStats.addCustomChart(new Metrics.SimplePie("allow_hotkeys",
-				() -> Boolean.toString(getConfig().getBoolean("allow-hotkeys"))));
+				() -> Boolean.toString(getConfig().getBoolean("allow-sorting-hotkeys"))));
+		bStats.addCustomChart(new Metrics.SimplePie("allow_additional_hotkeys",
+				() -> Boolean.toString(getConfig().getBoolean("allow-additional-hotkeys"))));
 		bStats.addCustomChart(new Metrics.SimplePie("hotkey_middle_click",
 				() -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.middle-click"))));
 		bStats.addCustomChart(new Metrics.SimplePie("hotkey_shift_click",
@@ -487,15 +490,17 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 			getLogger().info("Inventory sorting enabled by default: " + getConfig().getBoolean("inv-sorting-enabled-by-default"));
 			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
 			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
-			getLogger().info("Allow hotkeys: " + getConfig().getBoolean("allow-hotkeys"));
-			if(getConfig().getBoolean("allow-hotkeys")) {
+			getLogger().info("Allow hotkeys: " + getConfig().getBoolean("allow-sorting-hotkeys"));
+			if(getConfig().getBoolean("allow-sorting-hotkeys")) {
 				getLogger().info("Hotkeys enabled by default:");
-				getLogger().info("- Sorting hotkeys:");
 				getLogger().info("  |- Middle-Click: " + getConfig().getBoolean("sorting-hotkeys.middle-click"));
 				getLogger().info("  |- Shift-Click: " + getConfig().getBoolean("sorting-hotkeys.shift-click"));
 				getLogger().info("  |- Double-Click: " + getConfig().getBoolean("sorting-hotkeys.double-click"));
 				getLogger().info("  |- Shift-Right-Click: " + getConfig().getBoolean("sorting-hotkeys.shift-right-click"));
-				getLogger().info("- Additional hotkeys:");
+			}
+			getLogger().info("Allow additional hotkeys: " + getConfig().getBoolean("allow-additional-hotkeys"));
+			if(getConfig().getBoolean("allow-additional-hotkeys")) {
+				getLogger().info("Additional hotkeys enabled by default:");
 				getLogger().info("  |- Left-Click: " + getConfig().getBoolean("additional-hotkeys.left-click"));
 				getLogger().info("  |- Right-Click: " + getConfig().getBoolean("additional-hotkeys.right-click"));
 			}

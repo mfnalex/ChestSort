@@ -1,7 +1,10 @@
 # Changelog
 
-## 8.15.2
-- Added generic hook for 3rd plugin GUIs
+## 8.16.0
+- Added generic hook for 3rd party plugin GUIs
+- Added config option to disable additional hotkeys (left-click and right-click outside of inventory)
+for all players, while still allowing them to use the normal hotkeys
+  - Because of this, the option "allow-hotkeys" has been renamed to "allow-sorting-hotkeys". Don't worry, the config updater will take care of this change.
 
 ## 8.15.1
 - Fixed dirt in containers being affected by the right-click hotkey even though the player had no dirt in his inventory
@@ -213,7 +216,7 @@ The hotkeys are:
 
 All hotkeys are enabled by default.
 
-Info: The "allow-shortcut" option in the config.yml has been renamed to "allow-hotkeys".
+Info: The "allow-shortcut" option in the config.yml has been renamed to "allow-sorting-hotkeys".
 
 ## 6.0
 Added middle-click shortcut
