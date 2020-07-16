@@ -4,6 +4,7 @@ import de.jeff_media.ChestSort.hooks.CrateReloadedHook;
 import de.jeff_media.ChestSort.hooks.HeadDatabaseHook;
 import de.jeff_media.ChestSort.hooks.MinepacksHook;
 import de.jeff_media.ChestSort.utils.LlamaUtils;
+import de.jeff_media.ChestSortAPI.ChestSortCheckForCustomGUIEvent;
 import de.jeff_media.ChestSortAPI.ChestSortEvent;
 import de.jeff_media.ChestSortAPI.ISortable;
 import org.bukkit.Bukkit;
@@ -310,6 +311,7 @@ public class ChestSortListener implements Listener {
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onHotkey(InventoryClickEvent event) {
+        if(event instanceof ChestSortCheckForCustomGUIEvent) return;
 
         if (!(event.getWhoClicked() instanceof Player)) {
             return;
@@ -341,11 +343,8 @@ public class ChestSortListener implements Listener {
             return;
         }
 
-        // Possible fix for #57
-        if (!isAPICall && (event.getClickedInventory().getHolder() != null
-                && event.getClickedInventory().getHolder() == p
-                && event.getClickedInventory() != p.getInventory())) {
-            if(plugin.debug) System.out.println("10");
+        if(plugin.genericHook.isPluginGUIByEvent(event.getView(),event.getSlotType(),event.getSlot(),event.getClick(),event.getAction())) {
+            plugin.debug("Event cancelled because genericHook#isPluginGUIByEvent");
             return;
         }
 
@@ -458,37 +457,35 @@ public class ChestSortListener implements Listener {
 
     @EventHandler
     public void onAdditionalHotkeys(InventoryClickEvent e) {
+        if(e instanceof ChestSortCheckForCustomGUIEvent) return;
 
         if (LlamaUtils.belongsToLlama(e.getInventory()) || LlamaUtils.belongsToLlama(e.getClickedInventory())) {
+            plugin.debug("Cancel AdditionalHotkeys: Belongs to Llama");
             return;
+
         }
 
         if (!plugin.getConfig().getBoolean("allow-additional-hotkeys")) {
+            plugin.debug("Cancel AdditionalHotkeys: allow-additional-hotkeys false");
             return;
         }
         if (!(e.getWhoClicked() instanceof Player)) {
+            plugin.debug("Cancel AdditionalHotkeys: getWhoClicked !instanceof Player");
             return;
         }
         Player p = (Player) e.getWhoClicked();
         // Only continue if clicked outside of the chest
         if (e.getClickedInventory() != null) {
+            plugin.debug("Cancel AdditionalHotkeys: getCLickedInventory != null");
             return;
         }
         // Only continue if hand is empty
         if (e.getCursor() != null && e.getCursor().getType() != null && e.getCursor().getType() != Material.AIR) {
+            plugin.debug("Cancel AdditionalHotkeys: getCursor != null && getCursor.getType!=null || != AIR");
             return;
         }
-        // Possible fix for #57
-        if (e.getInventory().getHolder() == null) return;
-        if (e.getInventory().getHolder() == p && e.getInventory() != p.getInventory()) return;
-        // End Possible fix for #57
-        if (e.getInventory().getType() != InventoryType.CHEST
-                && e.getInventory().getType() != InventoryType.DISPENSER
-                && e.getInventory().getType() != InventoryType.DROPPER
-                && e.getInventory().getType() != InventoryType.ENDER_CHEST
-                && !e.getInventory().getType().name().equalsIgnoreCase("SHULKER_BOX")
-                && (e.getInventory().getHolder() == null || !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))
-                && !(e.getInventory().getHolder() instanceof ISortable)) {
+        if(plugin.genericHook.isPluginGUIByEvent(e.getView(),e.getSlotType(),e.getSlot(),e.getClick(),e.getAction())) {
+            plugin.debug("Event cancelled because genericHook#isPluginGUIByEvent");
             return;
         }
 

@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.17.0-SNAPSHOT
+- Rewrote custom GUI detection completely, now using a fake InventoryClickEvent
+
 ## 8.16.1
 - Allow middle-click hotkey in creative mode when clicked slot is empty
 
