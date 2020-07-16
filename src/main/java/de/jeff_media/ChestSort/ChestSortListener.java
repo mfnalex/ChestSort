@@ -376,7 +376,7 @@ public class ChestSortListener implements Listener {
                     if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE) {
                         sort = true;
                     } else {
-                        if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR) {
+                        if (event.getCurrentItem() != null || event.getCurrentItem().getType() != Material.AIR) {
                             sort = false;
                         }
                     }

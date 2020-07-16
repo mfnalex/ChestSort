@@ -161,7 +161,10 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 
 			// Using old config version, but it's no problem. We just print a warning and
 			// use the default values later on
-		} else*/ if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
+
+		} else*/
+
+		if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
 			showOldConfigWarning();
 			ChestSortConfigUpdater configUpdater = new ChestSortConfigUpdater(this);
 			configUpdater.updateConfig();

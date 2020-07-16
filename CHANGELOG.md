@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.16.1
+- Allow middle-click hotkey in creative mode when clicked slot is empty
+
 ## 8.16.0
 - Added generic hook for 3rd party plugin GUIs
 - Added config option to disable additional hotkeys (left-click and right-click outside of inventory)

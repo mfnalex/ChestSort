@@ -36,6 +36,19 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 			return true;
 		}
 
+		// Debug command
+		if(args.length>0 && args[0].equalsIgnoreCase("debug")) {
+			if(!sender.hasPermission("chestsort.debug")) {
+				sender.sendMessage(plugin.getCommand("chestsort").getPermissionMessage());
+			}
+			sender.sendMessage(ChatColor.RED+"ChestSort Debug mode enabled - I hope you know what you are doing!");
+			plugin.debug=true;
+			ChestSortDebugger debugger = new ChestSortDebugger(plugin);
+			plugin.getServer().getPluginManager().registerEvents(debugger, plugin);
+			plugin.debug("Debug mode activated through command by "+sender.getName());
+			return true;
+		}
+
 		if(args.length>0 && args[0].equalsIgnoreCase("help")) {
 			return false;
 		}
