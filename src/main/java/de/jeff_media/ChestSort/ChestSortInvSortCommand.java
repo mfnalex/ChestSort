@@ -37,6 +37,8 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 		int end = 35;
 		
 		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+
+		if(!plugin.getConfig().getBoolean("allow-automatic-inventory-sorting")) args=new String[]{"inv"};
 		
 		if(args.length>0) {
 			if(args[0].equalsIgnoreCase("all")) {

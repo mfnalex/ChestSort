@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.17.0
+- Added option to disable automatic sorting and/or automatic inventory sorting. Hotkeys will still work if enabled. When running /chestsort while automatic sorting is disabled, it will display the hotkeys gui instead.
+
 ## 8.16.1
 - Allow middle-click hotkey in creative mode when clicked slot is empty
 

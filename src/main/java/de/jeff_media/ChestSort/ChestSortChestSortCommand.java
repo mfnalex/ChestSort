@@ -71,6 +71,8 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 			
 			// fix for Spigot's stupid /reload function
 			plugin.registerPlayerIfNeeded(p);
+
+			if(!plugin.getConfig().getBoolean("allow-automatic-sorting")) args=new String[] {"hotkeys"};
 			
 			// Settings GUI
 			if(args.length>0) {

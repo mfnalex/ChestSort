@@ -69,7 +69,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPIHandler api;
-	final int currentConfigVersion = 40;
+	final int currentConfigVersion = 41;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -184,6 +184,8 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		// for every missing option.
 		// By default, sorting is disabled. Every player has to run /chestsort once
 		getConfig().addDefault("use-permissions", true);
+		getConfig().addDefault("allow-automatic-sorting",true);
+		getConfig().addDefault("allow-automatic-inventory-sorting",true);
 		getConfig().addDefault("sorting-enabled-by-default", false);
 		getConfig().addDefault("inv-sorting-enabled-by-default", false);
 		getConfig().addDefault("show-message-when-using-chest", true);
@@ -283,6 +285,12 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 				new Metrics.SimplePie("check_for_updates", () -> getConfig().getString("check-for-updates", "true")));
 		bStats.addCustomChart(
 				new Metrics.SimplePie("update_interval", () -> Long.toString(updateCheckInterval)));
+
+		bStats.addCustomChart(new Metrics.SimplePie("allow_automatic_sorting",
+				() -> Boolean.toString(getConfig().getBoolean("allow-automatic-sorting"))));
+		bStats.addCustomChart(new Metrics.SimplePie("allow_automatic_inv_sorting",
+				() -> Boolean.toString(getConfig().getBoolean("allow-automatic-inventory-sorting"))));
+
 		bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest",
 				() -> Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
 		bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest_and_sorting_is_enabl", () -> Boolean

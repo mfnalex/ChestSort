@@ -28,6 +28,14 @@
 # - chestsort.use.inventory (allow inventory sorting by hotkeys and via /invsort)
 use-permissions: true
 
+# when set to false, no player is allowed to enable automatic chest sorting
+# hotkeys will still work if enabled
+allow-automatic-sorting: true
+
+# when set to false, no player is allowed to enable automatic inventory sorting
+# hotkeys will still work if enabled
+allow-automatic-inventory-sorting: true
+
 # when set to false, new players will have to run /chestsort
 # once to enable automatic chest sorting.
 sorting-enabled-by-default: false
@@ -580,4 +588,4 @@ log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 40
+config-version: 41
