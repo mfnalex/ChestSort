@@ -497,10 +497,12 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		if (verbose) {
 			getLogger().info("Use permissions: " + getConfig().getBoolean("use-permissions"));
 			getLogger().info("Current sorting method: " + sortingMethod);
-			getLogger().info("Chest sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
-			getLogger().info("Inventory sorting enabled by default: " + getConfig().getBoolean("inv-sorting-enabled-by-default"));
+			getLogger().info("Allow automatic chest sorting:" + getConfig().getBoolean("allow-automatic-sorting"));
+			getLogger().info("  |- Chest sorting enabled by default: " + getConfig().getBoolean("sorting-enabled-by-default"));
+			getLogger().info("  |- Sort time: " + getConfig().getString("sort-time"));
+			getLogger().info("Allow automatic inventory sorting:" + getConfig().getBoolean("allow-automatic-inventory-sorting"));
+			getLogger().info("  |- Inventory sorting enabled by default: " + getConfig().getBoolean("inv-sorting-enabled-by-default"));
 			getLogger().info("Auto generate category files: " + getConfig().getBoolean("auto-generate-category-files"));
-			getLogger().info("Sort time: " + getConfig().getString("sort-time"));
 			getLogger().info("Allow hotkeys: " + getConfig().getBoolean("allow-sorting-hotkeys"));
 			if(getConfig().getBoolean("allow-sorting-hotkeys")) {
 				getLogger().info("Hotkeys enabled by default:");
