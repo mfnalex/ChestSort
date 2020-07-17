@@ -82,13 +82,17 @@ public class ChestSortSettingsGUI implements Listener {
         Inventory inventory = createGUI("ChestSort", player);
         
         ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(player.getUniqueId().toString());
-        
-        inventory.setItem(slotMiddleClick, getItem(setting.middleClick,Hotkey.MiddleClick));
-        inventory.setItem(slotShiftClick, getItem(setting.shiftClick,Hotkey.ShiftClick));
-        inventory.setItem(slotDoubleClick, getItem(setting.doubleClick,Hotkey.DoubleClick));
-        inventory.setItem(slotShiftRightClick, getItem(setting.shiftRightClick,Hotkey.ShiftRightClick));
-        inventory.setItem(slotLeftClick, getItem(setting.leftClick,Hotkey.LeftClick));
-        inventory.setItem(slotRightClick, getItem(setting.rightClick,Hotkey.RightClick));
+
+        if(plugin.getConfig().getBoolean("allow-sorting-hotkeys")) {
+			inventory.setItem(slotMiddleClick, getItem(setting.middleClick, Hotkey.MiddleClick));
+			inventory.setItem(slotShiftClick, getItem(setting.shiftClick, Hotkey.ShiftClick));
+			inventory.setItem(slotDoubleClick, getItem(setting.doubleClick, Hotkey.DoubleClick));
+			inventory.setItem(slotShiftRightClick, getItem(setting.shiftRightClick, Hotkey.ShiftRightClick));
+		}
+        if(plugin.getConfig().getBoolean("allow-additional-hotkeys")) {
+        	inventory.setItem(slotLeftClick, getItem(setting.leftClick,Hotkey.LeftClick));
+			inventory.setItem(slotRightClick, getItem(setting.rightClick,Hotkey.RightClick));
+		}
         
         setting.guiInventory = inventory;
         player.openInventory(inventory);
@@ -126,7 +130,12 @@ public class ChestSortSettingsGUI implements Listener {
 		if(event.getClick() != ClickType.LEFT) {
 			return;
 		}
-		
+
+		if(event.getCurrentItem()==null || event.getCurrentItem().getType()==Material.AIR) {
+			return;
+		}
+
+
 		if(event.getSlot() == ChestSortSettingsGUI.slotMiddleClick) {
 			setting.toggleMiddleClick();
 			plugin.settingsGUI.openGUI(p);

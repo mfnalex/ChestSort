@@ -35,6 +35,11 @@ public class ChestSortConfigUpdater {
 			plugin.getConfig().set("sorting-hotkeys.shift-right-click", plugin.getConfig().getBoolean("hotkeys.shift-right-click"));
 		}
 
+		// allow-hotkeys has been renamed to allow-sorting-hotkeys
+		if(plugin.getConfig().isSet("allow-hotkeys")) {
+			plugin.getConfig().set("allow-sorting-hotkeys",plugin.getConfig().getBoolean("allow-hotkeys"));
+		}
+
 		try {
 			Files.deleteIfExists(new File(plugin.getDataFolder().getAbsolutePath()+File.separator+"config.old.yml").toPath());
 		} catch (IOException ignored) {

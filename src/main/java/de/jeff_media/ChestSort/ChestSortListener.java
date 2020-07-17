@@ -74,6 +74,7 @@ public class ChestSortListener implements Listener {
     }
 
     void onBackPackUse(Inventory inv, Player p) {
+        if(!plugin.getConfig().getBoolean("allow-automatic-sorting")) return; //TODO: Maybe change to allow-automatic-inventory-sorting ?
         if (!minepacksHook.isMinepacksBackpack(inv)) return;
         if (!p.hasPermission("chestsort.use")) return;
         plugin.registerPlayerIfNeeded(p);
@@ -84,6 +85,9 @@ public class ChestSortListener implements Listener {
 
     @EventHandler
     public void onPlayerInventoryClose(InventoryCloseEvent event) {
+
+        if(!plugin.getConfig().getBoolean("allow-automatic-inventory-sorting")) return;
+
         if (event.getInventory().getHolder() == null) return;
         // Might be obsolete, because its @NotNull in 1.15, but who knows if thats for 1.8
         if (event.getInventory().getType() == null) return;
@@ -111,6 +115,8 @@ public class ChestSortListener implements Listener {
     // the chestsort.use permission and has /chestsort enabled)
     @EventHandler
     public void onChestClose(InventoryCloseEvent event) {
+
+        if(!plugin.getConfig().getBoolean("allow-automatic-sorting")) return;
 
         if (!(plugin.getConfig().getString("sort-time").equalsIgnoreCase("close")
                 || plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))) {
@@ -150,6 +156,8 @@ public class ChestSortListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChestOpen(InventoryOpenEvent event) {
+
+        if(!plugin.getConfig().getBoolean("allow-automatic-sorting")) return;
 
         if (!(plugin.getConfig().getString("sort-time").equalsIgnoreCase("open")
                 || plugin.getConfig().getString("sort-time").equalsIgnoreCase("both"))) {
@@ -287,6 +295,8 @@ public class ChestSortListener implements Listener {
     @EventHandler
     public void onEnderChestOpen(InventoryOpenEvent event) {
 
+        if(!plugin.getConfig().getBoolean("allow-automatic-sorting")) return;
+
         if (!(event.getPlayer() instanceof Player)) {
             return;
         }
@@ -319,7 +329,7 @@ public class ChestSortListener implements Listener {
 
         plugin.registerPlayerIfNeeded(p);
 
-        if (!plugin.getConfig().getBoolean("allow-hotkeys")) {
+        if (!plugin.getConfig().getBoolean("allow-sorting-hotkeys")) {
             return;
         }
 
@@ -376,7 +386,7 @@ public class ChestSortListener implements Listener {
                     if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE) {
                         sort = true;
                     } else {
-                        if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR) {
+                        if (event.getCurrentItem() != null || event.getCurrentItem().getType() != Material.AIR) {
                             sort = false;
                         }
                     }
@@ -463,7 +473,7 @@ public class ChestSortListener implements Listener {
             return;
         }
 
-        if (!plugin.getConfig().getBoolean("allow-hotkeys")) {
+        if (!plugin.getConfig().getBoolean("allow-additional-hotkeys")) {
             return;
         }
         if (!(e.getWhoClicked() instanceof Player)) {
