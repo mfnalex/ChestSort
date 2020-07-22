@@ -105,6 +105,44 @@ public class ChestSortOrganizer {
 
     }
 
+    static String getColorOrdered(String c) {
+        switch(c) {
+            case "white":
+                return "01_white";
+            case "light_gray":
+                return "02_light_gray";
+            case "gray":
+                return "03_gray";
+            case "black":
+                return "04_black";
+            case "brown":
+                return "05_brown";
+            case "red":
+                return "06_red";
+            case "orange":
+                return "07_orange";
+            case "yellow":
+                return "08_yellow";
+            case "lime":
+                return "09_lime";
+            case "green":
+                return "10_green";
+            case "cyan":
+                return "11_cyan";
+            case "light_blue":
+                return "12_light_blue";
+            case "blue":
+                return "13_blue";
+            case "magenta":
+                return "14_magenta";
+            case "purple":
+                return "15_purple";
+            case "pink":
+                return "16_pink";
+        }
+        return "";
+    }
+
     static int getNumberOfEnchantments(ItemStack is) {
 
         int totalEnchants = 0;
@@ -214,7 +252,7 @@ public class ChestSortOrganizer {
         for (String color : colors) {
             if (typeName.startsWith(color)) {
                 typeName = typeName.replaceFirst(color + "_", "");
-                myColor = color;
+                myColor = getColorOrdered(color);
             }
         }
         // Same for wood, but the wood name can also be in the middle of the item name,

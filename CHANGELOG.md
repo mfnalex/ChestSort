@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.17.1
+- Improved sorting of colored blocks
+  - White, light gray, gray and black comes first
+  - Remaining colors are sorted in a rainbow like order
+
 ## 8.17.0
 - Added option to disable automatic sorting and/or automatic inventory sorting. Hotkeys will still work if enabled. When running /chestsort while automatic sorting is disabled, it will display the hotkeys gui instead.
 
