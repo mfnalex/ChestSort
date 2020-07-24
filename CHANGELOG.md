@@ -2,6 +2,8 @@
 
 ## 8.17.1-SNAPSHOT
 - Added possibility to sort a player's inventory from console using /invsort <player> [toggle|on|off|hotbar|inv|all]
+- Added placeholders (see new config.yml)
+- Added "use permissions" metric
 
 ## 8.17.0
 - Added option to disable automatic sorting and/or automatic inventory sorting. Hotkeys will still work if enabled. When running /chestsort while automatic sorting is disabled, it will display the hotkeys gui instead.

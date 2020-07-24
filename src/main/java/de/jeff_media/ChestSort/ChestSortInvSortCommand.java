@@ -20,11 +20,6 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 
 		Player p = null;
 
-		// This command toggles automatic chest sorting for the player that runs the command
-		if (!command.getName().equalsIgnoreCase("invsort")) {
-			return false;
-		}
-
 		if(args.length>0 && args[0].equalsIgnoreCase("help")) {
 			return false;
 		}
@@ -45,6 +40,8 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 
 			if(args.length>1) {
 				args = new String[] { args[1] };
+			} else {
+				args = new String[0];
 			}
 
 			//sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
