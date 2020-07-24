@@ -10,11 +10,43 @@
 # Don't worry! Your changes will be kept after every update.
 #
 
-#
-# Please note that players will need the chestsort.use permission
-# or have to be OP to be able to use automatic chest sorting.
-# To use /invsort, the permission chestsort.use.inventory is required.
-#
+###############################
+#######    Commands     #######
+###############################
+
+# /sort (or /chestsort)   Toggle automatic sorting for containers (chests, barrels, enderchests, llamas, etc.)
+# /sort on                Enable automatic sorting for containers
+# /sort off               Disable automatic sorting for containers
+# /sort hotkeys           Open a GUI to change the sorting hotkeys
+# /sort help              Display help about the /sort (or /chestsort) command
+
+# /isort (or /invsort)    Sort the player's inventory
+# /isort hotbar           Sort the player's hotbar
+# /isort all              Sort the player's inventory and hotbar
+# /isort toggle           Toggle automatic sorting for the player's inventory
+# /isort on               Enable automatic sorting for the player's inventory
+# /isort off              Disable automatic sorting for the player's inventory
+# /isort help             Display help about the /isort (or /invsort) command
+
+
+###############################
+#######   Permissions   #######
+###############################
+
+# chestsort.use           Allows to sort containers using automatic sorting (/sort) or via hotkeys
+# chestsort.use.inventory Allows to sort the player's inventory using automatic sorting (/isort) or via hotkeys
+# chestsort.reload        Allows to reload the config using /sort reload
+
+
+###############################
+#######  Placeholders   #######
+###############################
+
+# When using PlaceholderAPI, you can use the following placeholders:
+
+# %chestsort_sortingenabled%    - true if this player has automatic sorting enabled for containers
+# %chestsort_invsortingenabled% - true if this player has automatic sorting enabled for the player's inventory
+
 
 ############################
 ##### Default settings #####
@@ -588,4 +620,4 @@ log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 41
+config-version: 42

@@ -1,5 +1,6 @@
 package de.jeff_media.ChestSort;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,21 +18,37 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
 
-		// This command toggles automatic chest sorting for the player that runs the command
-		if (!command.getName().equalsIgnoreCase("invsort")) {
-			return false;
-		}
+		Player p = null;
 
 		if(args.length>0 && args[0].equalsIgnoreCase("help")) {
 			return false;
 		}
 		
 		if (!(sender instanceof Player)) {
-			sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
-			return true;
+
+			if(args.length==0) {
+				sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
+				return true;
+			}
+			// Console can sort player's inventories
+			if(Bukkit.getPlayer(args[0]) == null) {
+				sender.sendMessage("Could not find player "+args[0]);
+				return true;
+			}
+
+			p = Bukkit.getPlayer(args[0]);
+
+			if(args.length>1) {
+				args = new String[] { args[1] };
+			} else {
+				args = new String[0];
+			}
+
+			//sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
+			//return true;
 		}
 		
-		Player p = (Player) sender;
+		if(p == null) p = (Player) sender;
 		
 		int start = 9;
 		int end = 35;

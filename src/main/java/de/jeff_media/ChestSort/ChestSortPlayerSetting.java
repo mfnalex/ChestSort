@@ -11,10 +11,10 @@ public class ChestSortPlayerSetting {
 	// - Did this player see the message on how to use ChestSort (message-when-using-chest in config.yml)
 
 	// Sorting enabled for this player?
-	boolean sortingEnabled;
+	public boolean sortingEnabled;
 	
 	// Inventory sorting enabled for this player?
-	boolean invSortingEnabled;
+	public boolean invSortingEnabled;
 	
 	// Hotkey settings
 	boolean middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick;

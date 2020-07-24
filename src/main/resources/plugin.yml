@@ -21,7 +21,7 @@ commands:
             /<command> help -- Shows help about this command
     aliases: chestsort
     permission: chestsort.use
-  invsort:
+  isort:
     description: Toggle automatic inventory sorting or sorts the player's inventory.
     usage: |
             /<command> -- Sort your inventory
@@ -31,7 +31,7 @@ commands:
             /<command> hotbar -- Sort your hotbar
             /<command> all -- Sort your inventory and hotbar
             /<command> help -- Shows help about this command
-    aliases: [isort,inventorysort]
+    aliases: [invsort,inventorysort]
     permission: chestsort.use.inventory
 permissions:
   chestsort.use:

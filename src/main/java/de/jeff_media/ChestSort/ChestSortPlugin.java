@@ -42,6 +42,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import de.jeff_media.ChestSort.hooks.GenericGUIHook;
+import de.jeff_media.ChestSort.placeholders.ChestSortPlaceholders;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -69,7 +70,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPIHandler api;
-	final int currentConfigVersion = 41;
+	final int currentConfigVersion = 42;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -250,6 +251,11 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		}
 	}
 
+	public ChestSortPlayerSetting getPlayerSetting(Player p) {
+		registerPlayerIfNeeded(p);
+		return perPlayerSettings.get(p.getUniqueId().toString());
+	}
+
 	@Override
 	public void onEnable() {
 		
@@ -259,6 +265,10 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		mcMinorVersion = Integer.parseInt(tmpVersion.substring(0,tmpVersion.indexOf("_")));
 		
 		load(false);
+
+		if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null){
+			new ChestSortPlaceholders(this).register();
+		}
 	}
 
 	private String getCategoryList() {
@@ -322,6 +332,8 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 				() -> Boolean.toString(getConfig().getBoolean("additional-hotkeys.left-click"))));
 		bStats.addCustomChart(new Metrics.SimplePie("hotkey_right_click",
 				() -> Boolean.toString(getConfig().getBoolean("additional-hotkeys.right-click"))));
+		bStats.addCustomChart(new Metrics.SimplePie("use_permissions",
+				() -> Boolean.toString(getConfig().getBoolean("use-permissions"))));
 		
 	}
 
