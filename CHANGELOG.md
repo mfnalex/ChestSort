@@ -1,9 +1,15 @@
 # Changelog
 
-## 8.17.1-SNAPSHOT
+
+## 8.17.2
 - Added possibility to sort a player's inventory from console using /invsort <player> [toggle|on|off|hotbar|inv|all]
 - Added placeholders (see new config.yml)
 - Added "use permissions" metric
+
+## 8.17.1
+- Improved sorting of colored blocks
+  - White, light gray, gray and black comes first
+  - Remaining colors are sorted in a rainbow like order
 
 ## 8.17.0
 - Added option to disable automatic sorting and/or automatic inventory sorting. Hotkeys will still work if enabled. When running /chestsort while automatic sorting is disabled, it will display the hotkeys gui instead.
