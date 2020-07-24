@@ -1,6 +1,5 @@
 # Changelog
 
-
 ## 8.17.2
 - Added possibility to sort a player's inventory from console using /invsort <player> [toggle|on|off|hotbar|inv|all]
 - Added placeholders (see new config.yml)
