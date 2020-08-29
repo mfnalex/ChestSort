@@ -524,6 +524,25 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 
+##### Polish - Thanks to PLKaratusPL for translating!
+#message-when-using-chest: "&7Wskazówka: Wpisz &6/chestsort&7 by włączyć automatyczne sortowanie skrzyń."
+#message-when-using-chest2: "&7Wskazówka: Wpisz &6/chestsort&7 by wyłączyć automatyczne sortowanie skrzyń."
+#message-sorting-disabled: "&7Automatyczne sortowanie skrzyń zostało &cwyłączone&7."
+#message-sorting-enabled: "&7Automatyczne sortowanie skrzyń zostało &awłączone&7."
+#message-inv-sorting-disabled: "&7Automatyczne sortowanie ekwipunku zostało &cwyłączone&7."
+#message-inv-sorting-enabled: "&7Automatyczne sortowanie ekwipunku zostało &awłączone&7."
+#message-player-inventory-sorted: "&7Twój ekwipunek został posortowany."
+#message-error-players-only: "&cBłąd: To polecenie może być używane tylko przez graczy."
+#message-error-invalid-options: "&cBłąd: Nieznana opcja %s. Prawidłowe opcje to %s."
+#message-gui-enabled: "&aWłączone"
+#message-gui-disabled: "&cWyłączone"
+#message-gui-middle-click: "Środkowy Przycisk Myszy"
+#message-gui-shift-click: "Shift + Kliknięcie"
+#message-gui-double-click: "Podwójne Kliknięcie"
+#message-gui-shift-right-click: "Shift + PPM"
+#message-gui-left-click: "Wypełnienie Skrzyni (LPM/Podwójny LPM)"
+#message-gui-right-click: "Opróżnienie Skrzyni (PPM/Podwójny PPM)"
+
 ##### Portuguese - Thanks to wildastral for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Dica: Digite &6/chestsort&7 para habilitar a organização automática."
@@ -620,4 +639,4 @@ log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 42
+config-version: 43
