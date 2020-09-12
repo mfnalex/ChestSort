@@ -25,6 +25,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChestSortListener implements Listener {
 
@@ -535,6 +539,12 @@ public class ChestSortListener implements Listener {
 
         ChestSortEvent chestSortEvent = new ChestSortEvent(e.getInventory());
         chestSortEvent.setLocation(e.getWhoClicked().getLocation());
+
+        chestSortEvent.setSortableMaps(new HashMap<ItemStack, Map<String, String>>());
+        for (ItemStack item : e.getInventory().getContents()) {
+            chestSortEvent.getSortableMaps().put(item, plugin.organizer.getSortableMap(item));
+        }
+
         Bukkit.getPluginManager().callEvent(chestSortEvent);
         if (chestSortEvent.isCancelled()) {
             return;

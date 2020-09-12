@@ -341,17 +341,16 @@ public class ChestSortOrganizer {
         return new CategoryLinePair((plugin.debug) ? "~category~" : emptyPlaceholderString, (short) 0);
     }
 
-    // This puts together the sortable item name, the category, the color, and
-    // whether the item is a block or a "regular item"
-    String getSortableString(ItemStack item) {
-        char blocksFirst;
-        char itemsFirst;
+    // Generate a map of "{placeholder}", "sortString" pairs for an ItemStack
+    Map<String, String> getSortableMap(ItemStack item) {
+        String blocksFirst;
+        String itemsFirst;
         if (item.getType().isBlock()) {
-            blocksFirst = '!'; // ! is before # in ASCII
-            itemsFirst = '#';
+            blocksFirst = "!"; // ! is before # in ASCII
+            itemsFirst = "#";
         } else {
-            blocksFirst = '#';
-            itemsFirst = '!';
+            blocksFirst = "#";
+            itemsFirst = "!";
         }
 
         String[] typeAndColor = getTypeAndColor(item.getType().name());
@@ -416,20 +415,33 @@ public class ChestSortOrganizer {
         // Put enchanted items before unenchanted ones
         typeName = typeName + String.format("%05d", 10000 - getNumberOfEnchantments(item));
 
-        // Generate the strings that finally are used for sorting.
-        // They are generated according to the config.yml's sorting-method option
+        // Generate the map of string replacements used to generate a sortableString.
+        // This map can be edited by ChestSortEvent handlers. See ChestSortEvent.getSortableMaps()
+        Map<String, String> sortableMap = new HashMap<String, String>();
+        sortableMap.put("{itemsFirst}", String.valueOf(itemsFirst));
+        sortableMap.put("{blocksFirst}", String.valueOf(blocksFirst));
+        sortableMap.put("{name}", typeName + potionEffect);
+        sortableMap.put("{color}", color);
+        sortableMap.put("{category}", categorySticky);
+        sortableMap.put("{keepCategoryOrder}", lineNumber);
+        sortableMap.put("{customName}", customName);
+        sortableMap.put("{lore}", lore);
+
+        return sortableMap;
+    }
+
+    // This puts together the sortable item name, the category, the color, and
+    // whether the item is a block or a "regular item"
+    String getSortableString(ItemStack item, Map<String, String> sortableMap) {
         String sortableString = plugin.sortingMethod.replaceAll(",", "|");
-        sortableString = sortableString.replace("{itemsFirst}", String.valueOf(itemsFirst));
-        sortableString = sortableString.replace("{blocksFirst}", String.valueOf(blocksFirst));
-        sortableString = sortableString.replace("{name}", typeName + potionEffect);
-        sortableString = sortableString.replace("{color}", color);
-        sortableString = sortableString.replace("{category}", categorySticky);
-        sortableString = sortableString.replace("{keepCategoryOrder}", lineNumber);
-        sortableString = sortableString.replace("{customName}", customName);
-        sortableString = sortableString.replace("{lore}", lore);
+
+        for (Map.Entry<String, String> entry : sortableMap.entrySet()) {
+            String placeholder = entry.getKey();
+            String sortableValue = entry.getValue();
+            sortableString = sortableString.replace(placeholder, sortableValue);
+        }
 
         return sortableString;
-
     }
 
     // Sort a complete inventory
@@ -441,16 +453,12 @@ public class ChestSortOrganizer {
     void sortInventory(@NotNull Inventory inv, int startSlot, int endSlot) {
         if(inv==null) return;
         Class<? extends Inventory> invClass = inv.getClass();
+        de.jeff_media.ChestSortAPI.ChestSortEvent chestSortEvent = new de.jeff_media.ChestSortAPI.ChestSortEvent(inv);
         try {
             if (invClass.getMethod("getLocation", null) != null) {
                 // This whole try/catch fixes MethodNotFoundException when using inv.getLocation in Spigot 1.8.
-            }
-            if (inv.getLocation() != null) {
-                de.jeff_media.ChestSortAPI.ChestSortEvent chestSortEvent = new de.jeff_media.ChestSortAPI.ChestSortEvent(inv);
-                chestSortEvent.setLocation(inv.getLocation());
-                Bukkit.getPluginManager().callEvent(chestSortEvent);
-                if (chestSortEvent.isCancelled()) {
-                    return;
+                if (inv.getLocation() != null) {
+                    chestSortEvent.setLocation(inv.getLocation());
                 }
             }
         } catch (Throwable throwable) {
@@ -459,6 +467,16 @@ public class ChestSortOrganizer {
             // Don't ask me why, but everything still works as expected if we catch that Exception.
             // TODO Auto-generated catch block
 
+        }
+
+        chestSortEvent.setSortableMaps(new HashMap<ItemStack, Map<String, String>>());
+        for (ItemStack item : inv.getContents()) {
+            chestSortEvent.getSortableMaps().put(item, getSortableMap(item));
+        }
+
+        Bukkit.getPluginManager().callEvent(chestSortEvent);
+        if (chestSortEvent.isCancelled()) {
+            return;
         }
 
 
@@ -525,7 +543,9 @@ public class ChestSortOrganizer {
         ItemStack[] nonNullItems = nonNullItemsList.toArray(new ItemStack[0]);
 
         // Sort the array with ItemStacks according to each ItemStacks' sortable String
-        Arrays.sort(nonNullItems, Comparator.comparing(this::getSortableString));
+        Arrays.sort(nonNullItems, Comparator.comparing((ItemStack item) -> {
+            // lambda expression used to pass extra parameter
+            return this.getSortableString(item, chestSortEvent.getSortableMaps().get(item));}));
 
         // Now, we put everything back in a temporary inventory to combine ItemStacks
         // even when using strict slot sorting
@@ -541,7 +561,7 @@ public class ChestSortOrganizer {
 
         for (ItemStack item : nonNullItems) {
             if (plugin.debug)
-                System.out.println(getSortableString(item));
+                System.out.println(getSortableString(item, chestSortEvent.getSortableMaps().get(item)));
             // Add the item to the temporary inventory
             tempInventory.addItem(item);
         }
