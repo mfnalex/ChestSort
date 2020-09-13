@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.17.5
+- Fixed "/invsort hotbar" and "/invsort all" only sorting the normal inventory when "allow-automatic-inventory-sorting" is set to false
+
 ## 8.17.4
 - Improved GUI detection
 - Added Polish translation (thanks to PLKaratusPL)
