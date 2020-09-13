@@ -343,6 +343,11 @@ public class ChestSortOrganizer {
 
     // Generate a map of "{placeholder}", "sortString" pairs for an ItemStack
     Map<String, String> getSortableMap(ItemStack item) {
+        if (item == null) {
+            // Empty map for non-item
+            return new HashMap<String, String>();
+        }
+
         String blocksFirst;
         String itemsFirst;
         if (item.getType().isBlock()) {
