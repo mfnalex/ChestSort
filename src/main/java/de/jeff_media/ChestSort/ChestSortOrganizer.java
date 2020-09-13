@@ -348,14 +348,14 @@ public class ChestSortOrganizer {
             return new HashMap<String, String>();
         }
 
-        String blocksFirst;
-        String itemsFirst;
+        char blocksFirst;
+        char itemsFirst;
         if (item.getType().isBlock()) {
-            blocksFirst = "!"; // ! is before # in ASCII
-            itemsFirst = "#";
+            blocksFirst = '!'; // ! is before # in ASCII
+            itemsFirst = '#';
         } else {
-            blocksFirst = "#";
-            itemsFirst = "!";
+            blocksFirst = '#';
+            itemsFirst = '!';
         }
 
         String[] typeAndColor = getTypeAndColor(item.getType().name());
