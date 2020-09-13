@@ -7,8 +7,17 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import de.jeff_media.ChestSort.ChestSortPlugin;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class Utils {
+
+	public static ItemStack[] getStorageContents(Inventory inv, int bukkitMinorVersion) {
+		if(bukkitMinorVersion<=8) {
+			return inv.getContents();
+		}
+		return inv.getStorageContents();
+	}
 	
 	// We need this to write the category files inside the .jar to the disk
 	// Maybe there is a smarter way, i don't know.

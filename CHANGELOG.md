@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.17.6
+- Fixed exception and hotbar being filled up with barrier blocks when using the addition right-click-hotkey on MC 1.8
+
 ## 8.17.5
 - Fixed "/invsort hotbar" and "/invsort all" only sorting the normal inventory when "allow-automatic-inventory-sorting" is set to false
 

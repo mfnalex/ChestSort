@@ -4,6 +4,7 @@ import de.jeff_media.ChestSort.hooks.CrackShotHook;
 import de.jeff_media.ChestSort.hooks.InventoryPagesHook;
 import de.jeff_media.ChestSort.utils.CategoryLinePair;
 import de.jeff_media.ChestSort.utils.TypeMatchPositionPair;
+import de.jeff_media.ChestSort.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -164,8 +165,8 @@ public class ChestSortOrganizer {
         return totalEnchants;
     }
 
-    static boolean doesInventoryContain(Inventory inv, Material mat) {
-        for (ItemStack item : inv.getStorageContents()) {
+    boolean doesInventoryContain(Inventory inv, Material mat) {
+        for (ItemStack item : Utils.getStorageContents(inv,plugin.mcMinorVersion)) {
             if (item == null) continue;
             if (item.getType() == mat) {
                 return true;
