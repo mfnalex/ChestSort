@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.17.7-SNAPSHOT
+- Fixed InventoryPages hook when using colored item names
+
 ## 8.17.6
 - Fixed exception and hotbar being filled up with barrier blocks when using the addition right-click-hotkey on MC 1.8
 

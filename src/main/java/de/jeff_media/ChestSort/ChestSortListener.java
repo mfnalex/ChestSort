@@ -86,22 +86,46 @@ public class ChestSortListener implements Listener {
     @EventHandler
     public void onPlayerInventoryClose(InventoryCloseEvent event) {
 
-        if(!plugin.getConfig().getBoolean("allow-automatic-inventory-sorting")) return;
+        plugin.debug("Attempt to automatically sort a player inventory");
 
-        if (event.getInventory().getHolder() == null) return;
+        if (event.getInventory().getHolder() == null) {
+            plugin.debug("Abort: holder == null");
+            return;
+        }
         // Might be obsolete, because its @NotNull in 1.15, but who knows if thats for 1.8
-        if (event.getInventory().getType() == null) return;
-        if (event.getInventory().getType() != InventoryType.CRAFTING)
+        if (event.getInventory().getType() == null) {
+            plugin.debug("Abort: type == null");
+            return;
+        }
+        if (event.getInventory().getType() != InventoryType.CRAFTING) {
+            plugin.debug("Abort: type != CRAFTING, but "+event.getInventory().getType().name());
             return; // Weird! Returns CRAFTING instead of PLAYER
-        if (!(event.getInventory().getHolder() instanceof Player)) return;
+        }
+
+        if (!(event.getInventory().getHolder() instanceof Player)) {
+            plugin.debug("Abort: holder ! instanceof Player");
+            return;
+        }
+
+
+        if(!plugin.getConfig().getBoolean("allow-automatic-inventory-sorting")) {
+            plugin.debug("allow-automatic-inventory-sorting is false");
+            return;
+        }
 
         Player p = (Player) event.getInventory().getHolder();
 
-        if (!p.hasPermission("chestsort.use.inventory")) return;
+        if (!p.hasPermission("chestsort.use.inventory")) {
+            plugin.debug("Missing permission chestsort.use.inventory");
+            return;
+        }
         plugin.registerPlayerIfNeeded(p);
 
         ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
-        if (!setting.invSortingEnabled) return;
+        if (!setting.invSortingEnabled) {
+            plugin.debug("auto inv sorting not enabled for player "+p.getName());
+            return;
+        }
 
         plugin.lgr.logSort(p, ChestSortLogger.SortCause.INV_CLOSE);
 
@@ -156,6 +180,8 @@ public class ChestSortListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChestOpen(InventoryOpenEvent event) {
+
+        plugin.debug("onChestOpen (InventoryOpenEvent");
 
         if(!plugin.getConfig().getBoolean("allow-automatic-sorting")) return;
 

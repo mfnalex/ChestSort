@@ -2,6 +2,7 @@ package de.jeff_media.ChestSort.hooks;
 
 import java.io.File;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
@@ -9,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import de.jeff_media.ChestSort.ChestSortPlugin;
-import net.md_5.bungee.api.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
 public class InventoryPagesHook {
@@ -60,20 +60,20 @@ public class InventoryPagesHook {
 		}
 
 		// When using &f as color, we manually have to add this to the string because it gets removed by InventoryPages
-		if(prevName.startsWith("§f")) prevName = prevName.substring(2);
-		if(nextName.startsWith("§f")) nextName = nextName.substring(2);
-		if(noPageName.startsWith("§f")) noPageName = noPageName.substring(2);
+		//if(prevName.startsWith("§f")) prevName = prevName.substring(2);
+		//if(nextName.startsWith("§f")) nextName = nextName.substring(2);
+		//if(noPageName.startsWith("§f")) noPageName = noPageName.substring(2);
 		
 		if(slot == prevSlot ) { 
-			if(item.getType() == prevMat && (item.getItemMeta().getDisplayName().equals(prevName))) {
+			if(item.getType() == prevMat && (ChatColor.stripColor(item.getItemMeta().getDisplayName()).equals(ChatColor.stripColor(prevName)))) {
 				return true;
-			} else return item.getType() == noPageMat && item.getItemMeta().getDisplayName().equals(noPageName);
+			} else return item.getType() == noPageMat && ChatColor.stripColor(item.getItemMeta().getDisplayName()).equals(ChatColor.stripColor(noPageName));
 		}
 		
 		if(slot == nextSlot  ) { 
-			if(item.getType() == nextMat && item.getItemMeta().getDisplayName().equals(nextName)) {
+			if(item.getType() == nextMat && ChatColor.stripColor(item.getItemMeta().getDisplayName()).equals(ChatColor.stripColor(nextName))) {
 				return true;
-			} else return item.getType() == noPageMat && item.getItemMeta().getDisplayName().equals(noPageName);
+			} else return item.getType() == noPageMat && ChatColor.stripColor(item.getItemMeta().getDisplayName()).equals(ChatColor.stripColor(noPageName));
 		}
 		
 		return false;
