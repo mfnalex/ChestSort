@@ -1,5 +1,11 @@
 # Changelog
 
+## 8.18.1
+- Improved API
+
+## 8.18.0
+- Added DeluxeMenus support
+
 ## 8.17.7-SNAPSHOT
 - Fixed InventoryPages hook when using colored item names
 
