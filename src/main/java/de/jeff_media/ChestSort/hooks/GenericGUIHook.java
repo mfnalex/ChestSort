@@ -15,8 +15,9 @@ public class GenericGUIHook {
 
     public boolean isPluginGUI(Inventory inv) {
         if(!enabled) return false;
-        if(inv.getHolder()!=null && inv.getHolder().getClass().getName().toLowerCase().contains("gui")) {
-            main.debug("Generic GUI detected by class name containing \"gui\"");
+        if(inv.getHolder()!=null && (inv.getHolder().getClass().getName().toLowerCase().contains("gui")
+            || inv.getHolder().getClass().getName().toLowerCase().contains("menu"))) {
+            main.debug("Generic GUI detected by class name containing \"gui\" or \"menu\"");
             return true;
         }
         return false;
