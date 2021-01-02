@@ -93,7 +93,7 @@ public void onChestSortEvent(ChestSortEvent event) {
 }
 ```
 
-You can also excempt certain slots / ItemStacks from being sorted using the following methods:
+You can also exempt certain slots / ItemStacks from being sorted using the following methods:
 
 ```java
     public void setUnmovable(int slot)
