@@ -5,6 +5,7 @@ import de.jeff_media.ChestSort.hooks.InventoryPagesHook;
 import de.jeff_media.ChestSort.utils.CategoryLinePair;
 import de.jeff_media.ChestSort.utils.TypeMatchPositionPair;
 import de.jeff_media.ChestSort.utils.Utils;
+import de.jeff_media.ChestSortAPI.ChestSortEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -520,7 +521,9 @@ public class ChestSortOrganizer {
         for (int i = startSlot; i <= endSlot; i++) {
             if ((plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(items[i]))
                     || (plugin.hookInventoryPages && inventoryPagesHook.isButton(items[i], i, inv))
-                    || isOversizedStack(items[i])) {
+                    || isOversizedStack(items[i])
+                    || chestSortEvent.isUnmovable(i)
+                    || chestSortEvent.isUnmovable(items[i])) {
                 items[i] = null;
                 unsortableSlots.add(i);
             }
@@ -669,12 +672,13 @@ public class ChestSortOrganizer {
     }
 
     public void stuffPlayerInventoryIntoAnother(PlayerInventory source,
-                                                Inventory destination, boolean onlyMatchingStuff) {
+                                                Inventory destination, boolean onlyMatchingStuff, ChestSortEvent chestSortEvent) {
         boolean destinationIsShulkerBox = destination.getType().name().equalsIgnoreCase("SHULKER_BOX");
         Inventory temp = Bukkit.createInventory(null, maxInventorySize);
         for (int i = playerInvStartSlot; i <= playerInvEndSlot; i++) {
             ItemStack currentItem = source.getItem(i);
             if (currentItem == null) continue;
+            if(chestSortEvent.isUnmovable(i) || chestSortEvent.isUnmovable(currentItem)) continue;
 
             // This prevents Minepacks from being put into Minepacks
 			/*if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(destination)

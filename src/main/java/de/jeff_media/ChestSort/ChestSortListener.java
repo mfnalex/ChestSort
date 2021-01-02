@@ -581,11 +581,11 @@ public class ChestSortListener implements Listener {
             if (setting.getCurrentDoubleClick(plugin, ChestSortPlayerSetting.DoubleClickType.LEFT_CLICK)
                     == ChestSortPlayerSetting.DoubleClickType.LEFT_CLICK) {
             	// Left double click: put everything into destination
-                plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), false);
+                plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), false, chestSortEvent);
                 plugin.organizer.sortInventory(e.getInventory());
             } else {
             	// Left single click: put only matching items into destination
-                plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), true);
+                plugin.organizer.stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), true, chestSortEvent);
             }
 
         } else if (e.isRightClick() && setting.rightClick) {

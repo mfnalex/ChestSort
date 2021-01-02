@@ -19,7 +19,7 @@ You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin
 	<dependency>
 		<groupId>de.jeff_media</groupId>
 		<artifactId>ChestSortAPI</artifactId>
-		<version>1.0.0</version> <!-- The API version is independent of the ChestSort version -->
+		<version>1.1.0</version> <!-- The API version is independent of the ChestSort version -->
         	<scope>compile</scope>
 	</dependency>
 </dependencies>
@@ -90,6 +90,31 @@ public void onChestSortEvent(ChestSortEvent event) {
 	if(event.getInventory() == whatever) {
 		event.setCancelled(true);
 	}
+}
+```
+
+You can also excempt certain slots / ItemStacks from being sorted using the following methods:
+
+```java
+    public void setUnmovable(int slot)
+
+    public void setUnmovable(ItemStack itemStack)
+
+    public void removeUnmovable(int slot)
+
+    public void removeUnmovable(ItemStack itemStack)
+
+    public boolean isUnmovable(int slot)
+
+    public boolean isUnmovable(ItemStack itemStack)
+```
+
+For example, to avoid the first item in the player's hotbar from being sorted:
+
+```java
+@EventHandler
+public void onChestSortEvent(ChestSortEvent event) {
+	event.setUnmovable(0);
 }
 ```
 

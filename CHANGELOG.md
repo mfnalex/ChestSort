@@ -1,5 +1,8 @@
 # Changelog
 
+## 8.19.0
+- Improved API for ItemJoin
+
 ## 8.18.1
 - Improved API
 
