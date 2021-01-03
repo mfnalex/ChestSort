@@ -476,6 +476,12 @@ public class ChestSortOrganizer {
 
         }
 
+        if(inv.getHolder() != null) {
+            if(inv.getHolder() instanceof HumanEntity) {
+                chestSortEvent.setPlayer((HumanEntity) inv.getHolder());
+            }
+        }
+
         chestSortEvent.setSortableMaps(new HashMap<ItemStack, Map<String, String>>());
         for (ItemStack item : inv.getContents()) {
             chestSortEvent.getSortableMaps().put(item, getSortableMap(item));

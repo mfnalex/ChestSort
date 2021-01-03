@@ -564,6 +564,7 @@ public class ChestSortListener implements Listener {
 
 
         ChestSortEvent chestSortEvent = new ChestSortEvent(e.getInventory());
+        chestSortEvent.setPlayer(e.getWhoClicked());
         chestSortEvent.setLocation(e.getWhoClicked().getLocation());
 
         chestSortEvent.setSortableMaps(new HashMap<ItemStack, Map<String, String>>());

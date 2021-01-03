@@ -30,4 +30,15 @@ public class ChestSortAPIHandler implements ChestSortAPI {
 		return plugin.isSortingEnabled(p);
 	}
 
+	@Override
+	public String getChestSortVersion() {
+		return plugin.getDescription().getVersion();
+	}
+
+	@Override
+	public String getChestSortAPIVersion() {
+		return "1.2.0";
+	}
+
+
 }

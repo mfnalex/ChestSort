@@ -1,7 +1,10 @@
 # Changelog
 
-## 8.19.0
-- Improved API for ItemJoin
+## 9.0.0
+THIS UPDATE IS IMPORTANT WHEN YOU ARE USING PLUGINS THAT INTERACT WITH CHESTSORT
+Note: When you are using other plugins that depend on the ChestSortAPI 2.0.0+ (e.g. probably the next release of ItemJoin AFAIK) you need at least this version of ChestSort.
+- Improved API, especially for plugins that want to prevent specific items from being moved.
+- Implements ChestSortAPI version 2.0.0 
 
 ## 8.18.1
 - Improved API
