@@ -233,6 +233,12 @@ hook-cratereloaded: true
 # Prevents the player from using hotkeys on the HeadDatabase GUI
 hook-headdatabase: true
 
+##### Slimefun #####
+# Some versions of Slimefun fail to prevent putting the backpack into itself
+# when you do so immediately after ChestSort moved a backpack. You can
+# prevent ChestSort from moving Slimefun backpacks until they fixed this.
+dont-move-slimefun-backpacks: false
+
 ##### Other backpack plugins #####
 # ChestSort is able to detect backpacks from most backpack
 # plugins like ShulkerPacks or Better Shulker Boxes.
@@ -639,4 +645,4 @@ log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 43
+config-version: 44

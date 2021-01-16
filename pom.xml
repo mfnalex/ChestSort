@@ -9,7 +9,7 @@
 	<name>ChestSort</name>
 	<url>https://www.chestsort.de</url>
 	<description>Automatically sorts your chests!</description>
-	<version>9.0.0</version>
+	<version>9.0.1</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -105,6 +105,10 @@
 			<id>jeff-media-gbr</id>
 			<url>https://repo.jeff-media.de/maven2</url>
 		</repository>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -168,6 +172,12 @@
 					<artifactId>PluginUpdateChecker</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.github.TheBusyBiscuit</groupId>
+			<artifactId>Slimefun4</artifactId>
+			<version>RC-15</version>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 

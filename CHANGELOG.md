@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.0.1
+- Added option "dont-move-slimefun-backpacks" to prevent a bug related to backpacks caused by Slimefun (false by default)
+
 ## 9.0.0
 THIS UPDATE IS IMPORTANT WHEN YOU ARE USING PLUGINS THAT INTERACT WITH CHESTSORT
 Note: When you are using other plugins that depend on the ChestSortAPI 2.0.0+ (e.g. probably the next release of ItemJoin AFAIK) you need at least this version of ChestSort.

@@ -2,6 +2,7 @@ package de.jeff_media.ChestSort;
 
 import de.jeff_media.ChestSort.hooks.CrackShotHook;
 import de.jeff_media.ChestSort.hooks.InventoryPagesHook;
+import de.jeff_media.ChestSort.hooks.SlimeFunHook;
 import de.jeff_media.ChestSort.utils.CategoryLinePair;
 import de.jeff_media.ChestSort.utils.TypeMatchPositionPair;
 import de.jeff_media.ChestSort.utils.Utils;
@@ -527,6 +528,7 @@ public class ChestSortOrganizer {
         for (int i = startSlot; i <= endSlot; i++) {
             if ((plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(items[i]))
                     || (plugin.hookInventoryPages && inventoryPagesHook.isButton(items[i], i, inv))
+                    || (plugin.getConfig().getBoolean("dont-move-slimefun-backpacks") && SlimeFunHook.isSlimefunBackpack(items[i]))
                     || isOversizedStack(items[i])
                     || chestSortEvent.isUnmovable(i)
                     || chestSortEvent.isUnmovable(items[i])) {

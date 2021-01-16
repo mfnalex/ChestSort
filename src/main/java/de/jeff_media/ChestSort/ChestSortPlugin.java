@@ -70,7 +70,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPIHandler api;
-	final int currentConfigVersion = 43;
+	final int currentConfigVersion = 44;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
