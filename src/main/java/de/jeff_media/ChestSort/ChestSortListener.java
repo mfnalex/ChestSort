@@ -1,6 +1,7 @@
 package de.jeff_media.ChestSort;
 
 import de.jeff_media.ChestSort.hooks.CrateReloadedHook;
+import de.jeff_media.ChestSort.hooks.GoldenCratesHook;
 import de.jeff_media.ChestSort.hooks.HeadDatabaseHook;
 import de.jeff_media.ChestSort.hooks.MinepacksHook;
 import de.jeff_media.ChestSort.utils.LlamaUtils;
@@ -36,12 +37,14 @@ public class ChestSortListener implements Listener {
     final MinepacksHook minepacksHook;
     final HeadDatabaseHook headDatabaseHook;
     final CrateReloadedHook crateReloadedHook;
+    final GoldenCratesHook goldenCratesHook;
 
     ChestSortListener(ChestSortPlugin plugin) {
         this.plugin = plugin;
         this.minepacksHook = new MinepacksHook(plugin);
         this.headDatabaseHook = new HeadDatabaseHook(plugin);
         this.crateReloadedHook = new CrateReloadedHook(plugin);
+        this.goldenCratesHook = new GoldenCratesHook(plugin);
     }
 
     @EventHandler
@@ -541,6 +544,13 @@ public class ChestSortListener implements Listener {
         // CrateReloaded hook
         if(crateReloadedHook.isCrate(e.getClickedInventory())
                 || crateReloadedHook.isCrate(e.getInventory())) {
+            //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
+            return;
+        }
+
+        // GoldenCrates hook
+        if(goldenCratesHook.isCrate(e.getClickedInventory())
+                || goldenCratesHook.isCrate(e.getInventory())) {
             //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
             return;
         }
