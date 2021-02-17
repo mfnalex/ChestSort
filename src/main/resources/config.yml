@@ -229,6 +229,10 @@ hook-minepacks: true
 # Prevents the player from using hotkeys on a crate
 hook-cratereloaded: true
 
+##### GoldenCrates #####
+# Prevents the player from using hotkeys on a crate
+hook-goldencrates: true
+
 ##### HeadDatabase #####
 # Prevents the player from using hotkeys on the HeadDatabase GUI
 hook-headdatabase: true
