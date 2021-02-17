@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.1.1
+- Fixed category files being "too wildcardy" lol
+
 ## 9.1.0
 - Added compatibility with GoldenCrates (thanks to xmssss @ Github)
 - Improved Spanish translation (thanks to Carlosjrlu @ Github)
