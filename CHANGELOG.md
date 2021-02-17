@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.1.0
+- Added compatibility with GoldenCrates (thanks to xmssss @ Github)
+- Improved Spanish translation (thanks to Carlosjrlu @ Github)
+
 ## 9.0.1
 - Added option "dont-move-slimefun-backpacks" to prevent a bug related to backpacks caused by Slimefun (false by default)
 
