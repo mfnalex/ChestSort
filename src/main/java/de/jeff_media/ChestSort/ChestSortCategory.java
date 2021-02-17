@@ -33,11 +33,12 @@ public class ChestSortCategory implements Comparable<ChestSortCategory>{
 	// Checks whether a the given itemname fits into this category and returns the line number. 0 means not found
 	short matches(String itemname) {
 
-		boolean asteriskBefore = false;
-		boolean asteriskAfter = false;
-
 		// Very, very simple wildcard checks
 		for (TypeMatchPositionPair typeMatchPositionPair : typeMatches) {
+			
+			boolean asteriskBefore = false;
+			boolean asteriskAfter = false;
+			
 			String typeMatch = typeMatchPositionPair.getTypeMatch();
 			if (typeMatch.startsWith("*")) {
 				asteriskBefore = true;
