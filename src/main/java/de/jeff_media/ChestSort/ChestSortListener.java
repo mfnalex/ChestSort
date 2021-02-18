@@ -1,9 +1,6 @@
 package de.jeff_media.ChestSort;
 
-import de.jeff_media.ChestSort.hooks.CrateReloadedHook;
-import de.jeff_media.ChestSort.hooks.GoldenCratesHook;
-import de.jeff_media.ChestSort.hooks.HeadDatabaseHook;
-import de.jeff_media.ChestSort.hooks.MinepacksHook;
+import de.jeff_media.ChestSort.hooks.*;
 import de.jeff_media.ChestSort.utils.LlamaUtils;
 import de.jeff_media.ChestSortAPI.ChestSortEvent;
 import de.jeff_media.ChestSortAPI.ISortable;
@@ -354,26 +351,36 @@ public class ChestSortListener implements Listener {
     @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
     public void onHotkey(InventoryClickEvent event) {
 
+        plugin.debug2("Hotkey?");
+
         if (!(event.getWhoClicked() instanceof Player)) {
+            plugin.debug2("exit: 0");
             return;
         }
+
 
         Player p = (Player) event.getWhoClicked();
 
         plugin.registerPlayerIfNeeded(p);
 
         if (!plugin.getConfig().getBoolean("allow-sorting-hotkeys")) {
+            plugin.debug2("exit: 1");
             return;
         }
 
+
         if (!p.hasPermission("chestsort.use") && !p.hasPermission("chestsort.use.inventory")) {
+            plugin.debug2("exit: 2");
             return;
         }
+
 
         //InventoryHolder holder = event.getInventory().getHolder();
         if (event.getClickedInventory() == null) {
+            plugin.debug2("exit: 3");
             return;
         }
+
 
         boolean isAPICall = isAPICall(event.getClickedInventory());
 
@@ -381,8 +388,10 @@ public class ChestSortListener implements Listener {
         if(!isAPICall &&
                 (plugin.genericHook.isPluginGUI(event.getInventory())
                 || plugin.genericHook.isPluginGUI(event.getInventory()))) {
+            plugin.debug("Aborting hotkey sorting: no API call & generic GUI detected");
             return;
         }
+
 
         // Possible fix for #57
         if (!isAPICall && (event.getClickedInventory().getHolder() != null
@@ -391,6 +400,7 @@ public class ChestSortListener implements Listener {
             if(plugin.debug) System.out.println("10");
             return;
         }
+
 
         // End Possible fix for #57
         InventoryHolder holder = event.getClickedInventory().getHolder();
@@ -405,11 +415,13 @@ public class ChestSortListener implements Listener {
             return;
         }
 
+
         // Prevent player from putting items into GUI inventory
         if (event.getInventory() == setting.guiInventory) {
             event.setCancelled(true);
             return;
         }
+
 
         switch (event.getClick()) {
             case MIDDLE:
@@ -426,6 +438,7 @@ public class ChestSortListener implements Listener {
                 }
                 break;
             case DOUBLE_CLICK:
+                if(event.isShiftClick()) return;
                 cause = ChestSortLogger.SortCause.H_DOUBLE;
                 //if(plugin.getConfig().getBoolean("hotkeys.double-click")) {
                 if (setting.doubleClick) {
@@ -461,23 +474,40 @@ public class ChestSortListener implements Listener {
             return;
         }
 
-        if (isAPICall || belongsToChestLikeBlock(event.getClickedInventory()) || LlamaUtils.belongsToLlama(event.getClickedInventory()) || minepacksHook.isMinepacksBackpack(event.getClickedInventory())) {
+
+        if(plugin.isInHotkeyCooldown(p.getUniqueId())) {
+            plugin.debug("Skipping: hotkey cooldown");
+            return;
+        }
+
+
+        plugin.debug("Hotkey triggered: " + event.getClick().name());
+
+        if (isAPICall
+                || belongsToChestLikeBlock(event.getClickedInventory())
+                || LlamaUtils.belongsToLlama(event.getClickedInventory())
+                || minepacksHook.isMinepacksBackpack(event.getClickedInventory())
+                || plugin.playerVaultsHook.isPlayerVault(event.getClickedInventory())) {
+
 
             if (!p.hasPermission("chestsort.use")) {
                 return;
             }
 
             if (LlamaUtils.belongsToLlama(event.getClickedInventory())) {
+
                 plugin.lgr.logSort(p,cause);
                 ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
                 plugin.organizer.sortInventory(event.getClickedInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
                 plugin.organizer.updateInventoryView(event);
                 return;
             }
+
             plugin.lgr.logSort(p,cause);
             plugin.organizer.sortInventory(event.getClickedInventory());
             plugin.organizer.updateInventoryView(event);
         } else if (holder instanceof Player) {
+
             if (!p.hasPermission("chestsort.use.inventory")) {
                 return;
             }
@@ -486,10 +516,12 @@ public class ChestSortListener implements Listener {
                 plugin.lgr.logSort(p,cause);
                 plugin.organizer.sortInventory(p.getInventory(), 0, 8);
                 plugin.organizer.updateInventoryView(event);
+
             } else if (event.getSlotType() == SlotType.CONTAINER) {
                 plugin.lgr.logSort(p,cause);
                 plugin.organizer.sortInventory(p.getInventory(), 9, 35);
                 plugin.organizer.updateInventoryView(event);
+
             }
         }
     }

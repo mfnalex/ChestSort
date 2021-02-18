@@ -145,6 +145,10 @@ sorting-hotkeys:
   # Use shift + right-click on any EMPTY inventory slot as hotkey
   shift-right-click: true
 
+# Amount in seconds that players have to wait between using hotkeys to prevent them from spamming the
+# sorting mechanism
+hotkey-cooldown: 0.2
+
 # Additionally to sorting hotkeys, you can quickly unload your inventory into a chest and vice versa
 # using left-click or right-click outside of a chest's inventory.
 # A single click will only affect matching items (items that are already present in the other inventory)
@@ -224,6 +228,11 @@ hook-inventorypages: true
 # When Minepacks version 2.3.8+ is installed, ChestSort can detect your
 # backpacks and sort them like a regular chest.
 hook-minepacks: true
+
+##### PlayerVaultsX #####
+# When PlayerVaultsX is installed, ChestSort can sort your
+# player vaults just like regular chests.
+hook-playervaultsx: true
 
 ##### CrateReloaded #####
 # Prevents the player from using hotkeys on a crate
@@ -642,10 +651,11 @@ dump: false
 
 # Debug mode - you probably do not want this.
 debug: false
+debug2: false
 
 # Enable log - you probably do not want this.
 log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 44
+config-version: 45

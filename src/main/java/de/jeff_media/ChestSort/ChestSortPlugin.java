@@ -41,9 +41,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import de.jeff_media.ChestSort.config.Config;
 import de.jeff_media.ChestSort.hooks.GenericGUIHook;
+import de.jeff_media.ChestSort.hooks.PlayerVaultsHook;
 import de.jeff_media.ChestSort.placeholders.ChestSortPlaceholders;
 import de.jeff_media.PluginUpdateChecker.PluginUpdateChecker;
+import io.papermc.lib.PaperLib;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -61,6 +64,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 
 	ChestSortLogger lgr;
 	Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<>();
+	HashMap<UUID,Long> hotkeyCooldown;
 	ChestSortMessages messages;
 	ChestSortOrganizer organizer;
 	PluginUpdateChecker updateChecker;
@@ -70,7 +74,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 	String sortingMethod;
 	ArrayList<String> disabledWorlds;
 	ChestSortAPIHandler api;
-	final int currentConfigVersion = 44;
+	final int currentConfigVersion = 45;
 	boolean usingMatchingConfig = true;
 	protected boolean debug = false;
 	boolean verbose = true;
@@ -81,6 +85,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 	public boolean hookMinepacks = false;
 
 	public GenericGUIHook genericHook;
+	public PlayerVaultsHook playerVaultsHook;
 	
 	private static long updateCheckInterval = 4*60*60; // in seconds. We check on startup and every 4 hours
 	
@@ -131,6 +136,10 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 
 	public void debug(String t) {
 		if(debug) getLogger().warning("[DEBUG] "+t);
+	}
+
+	public void debug2(String t) {
+		if(getConfig().getBoolean(Config.DEBUG2)) getLogger().warning("[DEBUG2] "+t);
 	}
 
 	// Creates the default configuration file
@@ -490,12 +499,26 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		messages = new ChestSortMessages(this);
 		organizer = new ChestSortOrganizer(this);
 		settingsGUI = new ChestSortSettingsGUI(this);
-		updateChecker = new PluginUpdateChecker(this, "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt", "https://chestsort.de", "https://chestsort.de/changelog", "https://chestsort.de/donate");
+		try {
+			if(Class.forName("net.md_5.bungee.api.chat.BaseComponent") != null) {
+				updateChecker = new PluginUpdateChecker(this, "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt", "https://chestsort.de", "https://chestsort.de/changelog", "https://chestsort.de/donate");
+			} else {
+				getLogger().severe("You are using an unsupported server software! Consider switching to Spigot or Paper!");
+				getLogger().severe("The Update Checker will NOT work when using CraftBukkit instead of Spigot/Paper!");
+				PaperLib.suggestPaper(this);
+			}
+		} catch (ClassNotFoundException e) {
+			getLogger().severe("You are using an unsupported server software! Consider switching to Spigot or Paper!");
+			getLogger().severe("The Update Checker will NOT work when using CraftBukkit instead of Spigot/Paper!");
+			PaperLib.suggestPaper(this);
+		}
 		listener = new ChestSortListener(this);
 		api = new ChestSortAPIHandler(this);
+		hotkeyCooldown = new HashMap<>();
 		permissionsHandler = new ChestSortPermissionsHandler(this);
 		updateCheckInterval = (int) (getConfig().getDouble("check-interval")*60*60);
 		sortingMethod = getConfig().getString("sorting-method");
+		playerVaultsHook = new PlayerVaultsHook(this);
 		getServer().getPluginManager().registerEvents(listener, this);
 		getServer().getPluginManager().registerEvents(settingsGUI, this);
 		ChestSortChestSortCommand chestsortCommandExecutor = new ChestSortChestSortCommand(this);
@@ -536,11 +559,13 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 			getLogger().info("Categories: " + getCategoryList());
 		}
 
-		if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
-			updateChecker.check(updateCheckInterval);
-		} // When set to on-startup, we check right now (delay 0)
-		else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
-			updateChecker.check();
+		if(updateChecker!=null) {
+			if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
+				updateChecker.check(updateCheckInterval);
+			} // When set to on-startup, we check right now (delay 0)
+			else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
+				updateChecker.check();
+			}
 		}
 
 		registerMetrics();
@@ -588,6 +613,17 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 			e.printStackTrace();
 		}
 
+	}
+
+	public boolean isInHotkeyCooldown(UUID uuid) {
+		double cooldown = getConfig().getDouble(Config.HOTKEY_COOLDOWN)*1000;
+		if(cooldown==0) return false;
+		long lastUsage = hotkeyCooldown.containsKey(uuid) ? hotkeyCooldown.get(uuid) : 0;
+		long currentTime = System.currentTimeMillis();
+		long difference = currentTime-lastUsage;
+		hotkeyCooldown.put(uuid,currentTime);
+		debug("Difference: "+difference);
+		return difference <= cooldown;
 	}
 
 	void registerPlayerIfNeeded(Player p) {

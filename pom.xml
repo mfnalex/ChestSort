@@ -9,7 +9,7 @@
 	<name>ChestSort</name>
 	<url>https://www.chestsort.de</url>
 	<description>Automatically sorts your chests!</description>
-	<version>9.1.1</version>
+	<version>9.3.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -51,6 +51,10 @@
 							<pattern>org.bstats</pattern>
 							<shadedPattern>de.jeff_media.ChestSort</shadedPattern>
 						</relocation>
+						<relocation>
+							<pattern>io.papermc.lib</pattern>
+							<shadedPattern>de.jeff_media.ChestSort.paperlib</shadedPattern> <!-- Replace this -->
+						</relocation>
 					</relocations>
 					<artifactSet>
 						<excludes>
@@ -84,6 +88,10 @@
 		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+		</repository>
+		<repository>
+			<id>papermc</id>
+			<url>https://papermc.io/repo/repository/maven-public/</url>
 		</repository>
 		<repository>
 			<id>placeholderapi</id>
@@ -178,6 +186,12 @@
 			<artifactId>Slimefun4</artifactId>
 			<version>RC-15</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.papermc</groupId>
+			<artifactId>paperlib</artifactId>
+			<version>1.0.6</version>
+			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 

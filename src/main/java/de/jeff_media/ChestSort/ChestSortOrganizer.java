@@ -460,8 +460,10 @@ public class ChestSortOrganizer {
     // Sort an inventory only between startSlot and endSlot
     void sortInventory(@NotNull Inventory inv, int startSlot, int endSlot) {
         if(inv==null) return;
+        plugin.debug("Attempting to sort an Inventory and calling ChestSortEvent.");
         Class<? extends Inventory> invClass = inv.getClass();
         de.jeff_media.ChestSortAPI.ChestSortEvent chestSortEvent = new de.jeff_media.ChestSortAPI.ChestSortEvent(inv);
+
         try {
             if (invClass.getMethod("getLocation", null) != null) {
                 // This whole try/catch fixes MethodNotFoundException when using inv.getLocation in Spigot 1.8.
@@ -490,6 +492,7 @@ public class ChestSortOrganizer {
 
         Bukkit.getPluginManager().callEvent(chestSortEvent);
         if (chestSortEvent.isCancelled()) {
+            plugin.debug("ChestSortEvent cancelled, I'll stay in bed.");
             return;
         }
 
@@ -597,6 +600,7 @@ public class ChestSortOrganizer {
             inv.setItem(currentSlot, item);
             currentSlot++;
         }
+        plugin.debug("Sorting successful. I'll go back to bed now.");
     }
 
     public void updateInventoryView(InventoryClickEvent event) {

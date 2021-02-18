@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.3.0
+- Added CraftBukkit compatibility (although I don't unterstand why anyone would prefer CraftBukkit over Spigot)
+
+## 9.2.0
+- Added support for PlayerVaultsX
+
 ## 9.1.1
 - Fixed category files being "too wildcardy" lol
 
