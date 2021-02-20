@@ -134,6 +134,8 @@ You can also store another InventoryHolder in the Inventory if needed:
 Sortable holder = new Sortable(player)
 ```
 
+You can also instead use your own custom inventory holder that either `implements ISortable` or `extends Sortable`.
+
 ## Example Plugin
 
 Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample)
