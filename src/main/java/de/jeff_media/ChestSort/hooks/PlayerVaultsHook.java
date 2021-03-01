@@ -14,7 +14,8 @@ public class PlayerVaultsHook {
     public boolean isPlayerVault(Inventory inv) {
         if(inv==null) return false;
         if(inv.getHolder()==null) return false;
-        if(!main.getConfig().getBoolean("hook-playervaultsx",true)) return false;
-        return inv.getHolder().getClass().getName().equals("com.drtshock.playervaults.vaultmanagement.VaultHolder");
+        if(!main.getConfig().getBoolean("hook-playervaults",true)) return false;
+        return inv.getHolder().getClass().getName().equals("com.drtshock.playervaults.vaultmanagement.VaultHolder")
+                || inv.getHolder().getClass().getName().equals("com.github.dig.endervaults.bukkit.vault.BukkitInventoryHolder");
     }
 }

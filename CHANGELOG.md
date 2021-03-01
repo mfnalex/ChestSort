@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.4.0
+- Added support for more PlayerVault plugins (specifically EnderVaults)
+
 ## 9.3.0
 - Added CraftBukkit compatibility (although I don't unterstand why anyone would prefer CraftBukkit over Spigot)
 
