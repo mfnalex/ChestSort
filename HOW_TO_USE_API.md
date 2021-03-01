@@ -5,6 +5,8 @@ If you want to use ChestSort's advanced sorting features for your own plugin, or
 - a cancellable event called `ChestSortEvent` that is fired whenever ChestSort is about to sort an inventory
 - a custom InventoryHolder called `Sortable` that you can use when creating inventories to tell ChestSort that this inventory should be sortable
 
+and more.
+
 ## Maven repository
 You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin:
 
@@ -131,6 +133,8 @@ You can also store another InventoryHolder in the Inventory if needed:
 ```java
 Sortable holder = new Sortable(player)
 ```
+
+You can also instead use your own custom inventory holder that either `implements ISortable` or `extends Sortable`.
 
 ## Example Plugin
 
