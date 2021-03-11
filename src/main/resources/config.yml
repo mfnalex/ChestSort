@@ -234,6 +234,11 @@ hook-minepacks: true
 # player vaults just like regular chests.
 hook-playervaults: true
 
+##### EnderContainers ##### -> https://www.spigotmc.org/resources/endercontainers.4750/
+# When EnderContainers version 2+ is installed, ChestSort can detect your
+# enderchests and sort them like a regular chest.
+hook-endercontainers: true
+
 ##### CrateReloaded #####
 # Prevents the player from using hotkeys on a crate
 hook-cratereloaded: true

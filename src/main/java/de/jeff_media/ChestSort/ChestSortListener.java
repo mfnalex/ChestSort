@@ -487,7 +487,8 @@ public class ChestSortListener implements Listener {
                 || belongsToChestLikeBlock(event.getClickedInventory())
                 || LlamaUtils.belongsToLlama(event.getClickedInventory())
                 || minepacksHook.isMinepacksBackpack(event.getClickedInventory())
-                || plugin.playerVaultsHook.isPlayerVault(event.getClickedInventory())) {
+                || plugin.playerVaultsHook.isPlayerVault(event.getClickedInventory())
+                || plugin.enderContainersHook.isEnderchest(event.getClickedInventory())) {
 
 
             if (!p.hasPermission("chestsort.use")) {
