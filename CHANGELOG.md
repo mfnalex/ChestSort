@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.5.1
+- Fixed version in plugin.yml
+
 ## 9.4.0
 - Added support for more PlayerVault plugins (specifically EnderVaults)
 
