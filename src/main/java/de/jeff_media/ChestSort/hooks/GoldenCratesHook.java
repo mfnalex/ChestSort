@@ -2,7 +2,6 @@ package de.jeff_media.ChestSort.hooks;
 
 import de.jeff_media.ChestSort.ChestSortPlugin;
 import org.bukkit.inventory.Inventory;
-import sun.awt.Win32GraphicsConfig;
 
 public class GoldenCratesHook {
 
