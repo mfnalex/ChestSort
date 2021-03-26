@@ -42,6 +42,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import de.jeff_media.ChestSort.config.Config;
+import de.jeff_media.ChestSort.hooks.EnderContainersHook;
 import de.jeff_media.ChestSort.hooks.GenericGUIHook;
 import de.jeff_media.ChestSort.hooks.PlayerVaultsHook;
 import de.jeff_media.ChestSort.placeholders.ChestSortPlaceholders;
@@ -86,7 +87,8 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 
 	public GenericGUIHook genericHook;
 	public PlayerVaultsHook playerVaultsHook;
-	
+	public EnderContainersHook enderContainersHook;
+
 	private static long updateCheckInterval = 4*60*60; // in seconds. We check on startup and every 4 hours
 	
 	String mcVersion; 	// 1.13.2 = 1_13_R2
@@ -519,6 +521,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 		updateCheckInterval = (int) (getConfig().getDouble("check-interval")*60*60);
 		sortingMethod = getConfig().getString("sorting-method");
 		playerVaultsHook = new PlayerVaultsHook(this);
+		enderContainersHook = new EnderContainersHook(this);
 		getServer().getPluginManager().registerEvents(listener, this);
 		getServer().getPluginManager().registerEvents(settingsGUI, this);
 		ChestSortChestSortCommand chestsortCommandExecutor = new ChestSortChestSortCommand(this);

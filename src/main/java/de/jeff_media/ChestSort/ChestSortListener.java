@@ -158,7 +158,10 @@ public class ChestSortListener implements Listener {
         Player p = (Player) event.getPlayer();
         Inventory inventory = event.getInventory();
 
-        if (!isAPICall(inventory) && !belongsToChestLikeBlock(inventory) && !LlamaUtils.belongsToLlama(inventory)) {
+        if (!isAPICall(inventory)
+                && !belongsToChestLikeBlock(inventory)
+                && !plugin.enderContainersHook.isEnderchest(inventory)
+                && !LlamaUtils.belongsToLlama(inventory)) {
             return;
         }
 
@@ -205,7 +208,10 @@ public class ChestSortListener implements Listener {
         Player p = (Player) event.getPlayer();
         Inventory inventory = event.getInventory();
 
-        if (!isAPICall(inventory) && !belongsToChestLikeBlock(inventory) && !LlamaUtils.belongsToLlama(inventory)) {
+        if (!isAPICall(inventory)
+                && !belongsToChestLikeBlock(inventory)
+                && !plugin.enderContainersHook.isEnderchest(inventory)
+                && !LlamaUtils.belongsToLlama(inventory)) {
             return;
         }
 
@@ -487,7 +493,8 @@ public class ChestSortListener implements Listener {
                 || belongsToChestLikeBlock(event.getClickedInventory())
                 || LlamaUtils.belongsToLlama(event.getClickedInventory())
                 || minepacksHook.isMinepacksBackpack(event.getClickedInventory())
-                || plugin.playerVaultsHook.isPlayerVault(event.getClickedInventory())) {
+                || plugin.playerVaultsHook.isPlayerVault(event.getClickedInventory())
+                || plugin.enderContainersHook.isEnderchest(event.getClickedInventory())) {
 
 
             if (!p.hasPermission("chestsort.use")) {
