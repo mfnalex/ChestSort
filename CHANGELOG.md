@@ -1,5 +1,8 @@
 # Changelog
 
+## 9.5.2
+- PlayerData is stored as NBT data instead of using separate files in 1.14.4 and later
+
 ## 9.5.1
 - Fixed version in plugin.yml
 
