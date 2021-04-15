@@ -667,7 +667,7 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-shift-right-click: "Shift + Sağ tık"
 #message-gui-left-click: "Sandığı doldur (Sol tık/Çift sol tık)"
 #message-gui-right-click: "Sandığı boşalt (Sağ tık/Çift sağ tık)"
-#message-gui-left-click-outside: "Left-Click from outside"
+#message-gui-left-click-outside: "Dışarıdan sol tıkla"
 
 ############################
 ##### Technical stuff! #####
