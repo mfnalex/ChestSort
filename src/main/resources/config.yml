@@ -688,4 +688,4 @@ log: false
 
 # Please DO NOT change the following line manually!
 # It is used by the automatic config updater.
-config-version: 47
+config-version: 50

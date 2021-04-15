@@ -55,7 +55,7 @@ import java.util.*;
 public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSortAPI.ChestSort {
 
     private static double updateCheckInterval = 4 * 60 * 60; // in seconds. We check on startup and every 4 hours
-    final int currentConfigVersion = 47;
+    final int currentConfigVersion = 50;
     final boolean hotkeyGUI = true;
     public EnderContainersHook enderContainersHook;
     public GenericGUIHook genericHook;
