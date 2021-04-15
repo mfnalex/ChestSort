@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.7.2
+- Updated Turkish translation
+
+## 9.7.1
+- Fixed exception when also using AngelChest
+
 ## 9.7.0
 - Added hotkey to sort chests/barrels etc. by shiftclicking them
   - Can be configured per player using "/sort hotkeys"
