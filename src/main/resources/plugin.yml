@@ -33,6 +33,11 @@ commands:
             /<command> help -- Shows help about this command
     aliases: [invsort,inventorysort]
     permission: chestsort.use.inventory
+  chestsortadmin:
+    description: Admin command for ChestSort
+    usage: |
+            /<command> reset <player> -- Reset's a player's hotkey settings
+    permission: chestsort.admin
 permissions:
   chestsort.use:
     description: Allows chest sorting

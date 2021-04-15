@@ -2,25 +2,30 @@ package de.jeff_media.ChestSort;
 
 import de.jeff_media.ChestSort.hooks.*;
 import de.jeff_media.ChestSort.utils.LlamaUtils;
+import de.jeff_media.ChestSortAPI.ChestSortAPI;
 import de.jeff_media.ChestSortAPI.ChestSortEvent;
 import de.jeff_media.ChestSortAPI.ISortable;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.block.Chest;
-import org.bukkit.block.DoubleChest;
+import org.bukkit.block.*;
 import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.inventory.InventoryType.SlotType;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -42,6 +47,23 @@ public class ChestSortListener implements Listener {
         this.headDatabaseHook = new HeadDatabaseHook(plugin);
         this.crateReloadedHook = new CrateReloadedHook(plugin);
         this.goldenCratesHook = new GoldenCratesHook(plugin);
+    }
+
+    @EventHandler
+    public void onLeftClickChest(PlayerInteractEvent event) {
+        if(!event.getPlayer().hasPermission("chestsort.use")) return;
+        if(event.getHand() != EquipmentSlot.HAND) return;
+        if(event.getAction() != Action.LEFT_CLICK_BLOCK) return;
+        if(!plugin.getConfig().getBoolean("allow-left-click-to-sort")) return;
+        Block clickedBlock = event.getClickedBlock();
+        if(!(clickedBlock.getState() instanceof Container)) return;
+        plugin.registerPlayerIfNeeded(event.getPlayer());
+        ChestSortPlayerSetting playerSetting = plugin.getPlayerSetting(event.getPlayer());
+        if(!playerSetting.leftClickOutside) return;
+        Container containerState = (Container) clickedBlock.getState();
+        Inventory inventory = containerState.getInventory();
+        plugin.getAPI().sortInventory(inventory);
+        event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(plugin.messages.MSG_CONTAINER_SORTED));
     }
 
     @EventHandler
@@ -403,7 +425,6 @@ public class ChestSortListener implements Listener {
         if (!isAPICall && (event.getClickedInventory().getHolder() != null
                 && event.getClickedInventory().getHolder() == p
                 && event.getClickedInventory() != p.getInventory())) {
-            if(plugin.debug) System.out.println("10");
             return;
         }
 

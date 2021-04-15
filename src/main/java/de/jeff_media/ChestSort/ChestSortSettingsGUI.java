@@ -21,6 +21,7 @@ public class ChestSortSettingsGUI implements Listener {
 	public static final int slotShiftClick = 3 ;
 	public static final int slotDoubleClick = 5 ;
 	public static final int slotShiftRightClick = 7 ;
+	public static final int slotLeftClickFromOutside = 4 + 9;
 	public static final int slotLeftClick = 2+18;
 	public static final int slotRightClick = 6+18;
 	
@@ -28,7 +29,7 @@ public class ChestSortSettingsGUI implements Listener {
 	final static Material green = Material.EMERALD_BLOCK;
 	
 	enum Hotkey {
-		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick, LeftClick, RightClick
+		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick, LeftClick, RightClick, LeftClickOutside
 	}
 	
 	ChestSortSettingsGUI(ChestSortPlugin plugin) {
@@ -63,6 +64,9 @@ public class ChestSortSettingsGUI implements Listener {
 		case ShiftRightClick:
 			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_SHIFTRIGHTCLICK + ": " + suffix);
 			break;
+		case LeftClickOutside:
+			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_LEFTCLICKOUTSIDE + ": " + suffix);
+			break;
 		case LeftClick:
 			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_LEFTCLICK + ": "+ suffix);
 			break;
@@ -88,6 +92,9 @@ public class ChestSortSettingsGUI implements Listener {
 			inventory.setItem(slotShiftClick, getItem(setting.shiftClick, Hotkey.ShiftClick));
 			inventory.setItem(slotDoubleClick, getItem(setting.doubleClick, Hotkey.DoubleClick));
 			inventory.setItem(slotShiftRightClick, getItem(setting.shiftRightClick, Hotkey.ShiftRightClick));
+		}
+        if(plugin.getConfig().getBoolean("allow-left-click-to-sort")) {
+        	inventory.setItem(slotLeftClickFromOutside, getItem(setting.leftClickOutside, Hotkey.LeftClickOutside));
 		}
         if(plugin.getConfig().getBoolean("allow-additional-hotkeys")) {
         	inventory.setItem(slotLeftClick, getItem(setting.leftClick,Hotkey.LeftClick));
@@ -145,6 +152,9 @@ public class ChestSortSettingsGUI implements Listener {
 			plugin.settingsGUI.openGUI(p);
 		} else 	if(event.getSlot() == ChestSortSettingsGUI.slotDoubleClick) {
 			setting.toggleDoubleClick();
+			plugin.settingsGUI.openGUI(p);
+		} else if(event.getSlot() == ChestSortSettingsGUI.slotLeftClickFromOutside) {
+			setting.toggleLeftClickOutside();
 			plugin.settingsGUI.openGUI(p);
 		} else if(event.getSlot() == ChestSortSettingsGUI.slotShiftRightClick) {
 			setting.toggleShiftRightClick();

@@ -149,6 +149,13 @@ sorting-hotkeys:
 # sorting mechanism
 hotkey-cooldown: 0.2
 
+# When enabled, players can leftclick on chests, barrels etc.
+# to sort them without having to open them.
+allow-left-click-to-sort: true
+
+# When set to true, sorting a chest by left-clicking it is enabled by default
+left-click-to-sort-enabled-by-default: false
+
 # Additionally to sorting hotkeys, you can quickly unload your inventory into a chest and vice versa
 # using left-click or right-click outside of a chest's inventory.
 # A single click will only affect matching items (items that are already present in the other inventory)
@@ -337,6 +344,7 @@ message-inv-sorting-enabled: "&7Automatic inventory sorting has been &aenabled&7
 message-player-inventory-sorted: "&7Your inventory has been sorted."
 message-error-players-only: "&cError: This command can only be run by players."
 message-error-invalid-options: "&cError: Unknown option %s. Valid options are %s."
+message-hotbar-container-sorted: "&aContainer sorted!"
 message-gui-enabled: "&aEnabled"
 message-gui-disabled: "&cDisabled"
 message-gui-middle-click: "Middle-Click"
@@ -345,6 +353,7 @@ message-gui-double-click: "Double-Click"
 message-gui-shift-right-click: "Shift + Right-Click"
 message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
 message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
+message-gui-left-click-outside: "Left-Click from outside"
 
 ##### English
 #message-when-using-chest: "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."
@@ -364,6 +373,8 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
+#message-gui-left-click-outside: "Left-Click from outside"
+
 
 ##### Chinese - Thanks to qsefthuopq, Aira-Sakuranomiya and BackWheel for translating!
 #message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
@@ -383,6 +394,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + 右键"
 #message-gui-left-click: "填充箱子 (左键/双击左键)"
 #message-gui-right-click: "清空箱子 (右键/双击右键)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Chinese (Traditional) 繁體中文 - Thanks to Command1264 for translating!
 #message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
@@ -402,6 +414,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + 右鍵"
 #message-gui-left-click: "填滿箱子 (左鍵/雙擊左鍵)"
 #message-gui-right-click: "清空箱子 (右鍵/雙擊右鍵)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Dutch - Thanks to Xeyame for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -422,6 +435,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### French / Français - Thanks to automatizer, demon57730, FichdlMaa and Stalk3r77 for translating!
 # Note: The following messages have been changed in version 8.11 and need a new translation:
@@ -444,6 +458,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Clic droit"
 #message-gui-left-click: "Remplir le coffre (Clic-gauche)"
 #message-gui-right-click: "Vider le coffre (Clic-droit)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### German
 #message-when-using-chest: "&7Hinweis: Benutze &6/chestsort&7 um die automatische Kistensortierung zu aktivieren."
@@ -463,6 +478,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Rechtsklick"
 #message-gui-left-click: "Kiste füllen (Linksklick/doppelter Linksklick)"
 #message-gui-right-click: "Kiste leeren (Rechtsklick/doppelter Rechtsklick)"
+#message-gui-left-click-outside: "Linksklick von außen"
 
 ##### Hungarian - Thanks to Letter and Polaroli for translating!
 # Note: The following messages have been changed in version 8.11 and need a new translation:
@@ -485,6 +501,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Jobb klikk"
 #message-gui-left-click: "Láda feltöltés (Bal klikk)"
 #message-gui-right-click: "Láda ürítés (Jobb klikk)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Italian
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -505,6 +522,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Japanese - Thanks to Sefyy for translating!
 # Note: The following messages have been changed in version 8.11 and need a new translation:
@@ -527,6 +545,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "シフト+右クリック"
 #message-gui-left-click: "チェストを埋める(左クリック)"
 #message-gui-right-click: "チェストを空ける(右クリック)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Korean (한국어) - Thanks to kf12 for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -547,6 +566,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "쉬프트 + 우클릭"
 #message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Polish - Thanks to PLKaratusPL for translating!
 #message-when-using-chest: "&7Wskazówka: Wpisz &6/chestsort&7 by włączyć automatyczne sortowanie skrzyń."
@@ -566,6 +586,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + PPM"
 #message-gui-left-click: "Wypełnienie Skrzyni (LPM/Podwójny LPM)"
 #message-gui-right-click: "Opróżnienie Skrzyni (PPM/Podwójny PPM)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Portuguese - Thanks to wildastral for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
@@ -586,6 +607,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Right-Click"
 #message-gui-left-click: "Fill Chest (Left-Click/Double-Left-Click)"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Russian
 #message-when-using-chest: "&7Подсказка: введите &6/chestsort&7, чтобы включить автоматическую сортировку вещей в сундуках."
@@ -605,6 +627,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Правый клик"
 #message-gui-left-click: "Заполнить сундук (ЛКМ/Двойной ЛКМ)"
 #message-gui-right-click: "Освободить сундук (ПКМ/Двойной ПКМ)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Spanish
 #message-when-using-chest: "&7Sugerencia: Escribe &6/chestsort&7 para activar la clasificación automática de cofres."
@@ -624,6 +647,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Mayus + Clic Derecho"
 #message-gui-left-click: "Llenar Cofre (Clic Izquierdo / Doble Clic Izquierdo)"
 #message-gui-right-click: "Vaciar Cofre (Clic Derecho / Doble Clic Derecho)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Turkish
 #message-when-using-chest: "&7İpucu: &6/chestsort&7 yazarak otomatik sandık düzenlemesini aktif edebilirsiniz"
@@ -643,6 +667,7 @@ message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-shift-right-click: "Shift + Sağ tık"
 #message-gui-left-click: "Sandığı doldur (Sol tık/Çift sol tık)"
 #message-gui-right-click: "Sandığı boşalt (Sağ tık/Çift sağ tık)"
+#message-gui-left-click-outside: "Left-Click from outside"
 
 ############################
 ##### Technical stuff! #####

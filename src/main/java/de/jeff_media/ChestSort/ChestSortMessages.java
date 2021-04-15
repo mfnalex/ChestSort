@@ -3,8 +3,9 @@ package de.jeff_media.ChestSort;
 import org.bukkit.ChatColor;
 
 public class ChestSortMessages {
+    final String MSG_GUI_LEFTCLICKOUTSIDE, MSG_CONTAINER_SORTED;
 
-	// Messages can be customized in the config.yml
+    // Messages can be customized in the config.yml
 	// To avoid problems with missing messages in the config, the default messages
 	// are
 	// hardcoded.
@@ -24,6 +25,9 @@ public class ChestSortMessages {
 
 	ChestSortMessages(ChestSortPlugin plugin) {
 		this.plugin = plugin;
+
+		MSG_CONTAINER_SORTED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+				.getString("message-container-sorted","&aContainer sorted!"));
 
 		MSG_ACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-sorting-enabled", "&7Automatic chest sorting has been &aenabled&7.&r"));
@@ -66,6 +70,9 @@ public class ChestSortMessages {
 		
 		MSG_GUI_DOUBLECLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-gui-double-click","Double-Click"));
+
+		MSG_GUI_LEFTCLICKOUTSIDE = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+				.getString("message-gui-left-click-outside", "Left-Click"));
 		
 		MSG_GUI_SHIFTRIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-gui-shift-right-click","Shift + Right-Click"));

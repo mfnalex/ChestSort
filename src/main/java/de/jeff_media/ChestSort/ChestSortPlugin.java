@@ -285,6 +285,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
         ChestSortInvSortCommand invsortCommandExecutor = new ChestSortInvSortCommand(this);
         this.getCommand("invsort").setExecutor(invsortCommandExecutor);
         this.getCommand("invsort").setTabCompleter(tabCompleter);
+        this.getCommand("chestsortadmin").setExecutor(new ChestSortAdminCommand(this));
 
         if (verbose) {
             getLogger().info("Use permissions: " + getConfig().getBoolean("use-permissions"));
@@ -431,6 +432,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
                     p.getUniqueId().toString() + ".yml");
             YamlConfiguration playerConfig = YamlConfiguration.loadConfiguration(playerFile);
 
+            playerConfig.addDefault("sortingEnabled", getConfig().getBoolean("sorting-enabled-by-default"));
             playerConfig.addDefault("invSortingEnabled", getConfig().getBoolean("inv-sorting-enabled-by-default"));
             playerConfig.addDefault("middleClick", getConfig().getBoolean("sorting-hotkeys.middle-click"));
             playerConfig.addDefault("shiftClick", getConfig().getBoolean("sorting-hotkeys.shift-click"));
@@ -438,6 +440,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
             playerConfig.addDefault("shiftRightClick", getConfig().getBoolean("sorting-hotkeys.shift-right-click"));
             playerConfig.addDefault("leftClick", getConfig().getBoolean("additional-hotkeys.left-click"));
             playerConfig.addDefault("rightClick", getConfig().getBoolean("additional-hotkeys.right-click"));
+            playerConfig.addDefault("leftClickOutside", getConfig().getBoolean("left-click-to-sort-enabled-by-default"));
 
             boolean activeForThisPlayer;
             boolean invActiveForThisPlayer;
@@ -447,28 +450,34 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
             boolean shiftRightClick;
             boolean leftClick;
             boolean rightClick;
-            boolean changed = false;
+            boolean leftClickFromOutside;
+            boolean changed;
 
-            if (!playerFile.exists()) {
+            if (playerFile.exists() || VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_14_4_R01)) {
                 // If the player settings file does not exist for this player, set it to the
                 // default value
-                activeForThisPlayer = getConfig().getBoolean("sorting-enabled-by-default");
-                invActiveForThisPlayer = getConfig().getBoolean("inv-sorting-enabled-by-default");
-                middleClick = getConfig().getBoolean("sorting-hotkeys.middle-click");
-                shiftClick = getConfig().getBoolean("sorting-hotkeys.shift-click");
-                doubleClick = getConfig().getBoolean("sorting-hotkeys.double-click");
-                shiftRightClick = getConfig().getBoolean("sorting-hotkeys.shift-right-click");
-                leftClick = getConfig().getBoolean("additional-hotkeys.left-click");
-                rightClick = getConfig().getBoolean("additional-hotkeys.right-click");
+                activeForThisPlayer = playerConfig.getBoolean("sortingEnabled");
+                invActiveForThisPlayer = playerConfig.getBoolean("invSortingEnabled");
+                middleClick = playerConfig.getBoolean("middleClick");
+                shiftClick = playerConfig.getBoolean("shiftClick");
+                doubleClick = playerConfig.getBoolean("doubleClick");
+                shiftRightClick = playerConfig.getBoolean("shiftRightClick");
+                leftClickFromOutside = playerConfig.getBoolean("leftClickOutside");
+                leftClick = playerConfig.getBoolean("leftClick");
+                rightClick = playerConfig.getBoolean("rightClick");
 
-                if (debug) {
-                    getLogger().info("Player " + p.getName() + " does not have player settings yet, using default values.");
-                }
-
-                // Because this is new a file, we have to save it on shutdown/disconnect
                 changed = true;
+
+                if(VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01)) {
+                    if (playerFile.delete()) {
+                        this.getLogger().info("Converted old .yml playerdata file to NBT tags for player " + p.getName());
+                    } else {
+                        this.getLogger().warning("Could not remove old playerdata .yml file for player " + p.getName());
+                    }
+                }
             } else {
                 // If the file exists, check if the player has sorting enabled
+                // NBT Values
                 activeForThisPlayer = Boolean.parseBoolean(NBTAPI.getNBT(p, "sortingEnabled", String.valueOf(playerConfig.getBoolean("sortingEnabled"))));
                 invActiveForThisPlayer = Boolean.parseBoolean(NBTAPI.getNBT(p, "invSortingEnabled", String.valueOf(playerConfig.getBoolean("invSortingEnabled", getConfig().getBoolean("inv-sorting-enabled-by-default")))));
                 middleClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "middleClick", String.valueOf(playerConfig.getBoolean("middleClick"))));
@@ -477,10 +486,12 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
                 shiftRightClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "shiftRightClick", String.valueOf(playerConfig.getBoolean("shiftRightClick"))));
                 leftClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "leftClick", String.valueOf(playerConfig.getBoolean("leftClick", getConfig().getBoolean("additional-hotkeys.left-click")))));
                 rightClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "rightClick", String.valueOf(playerConfig.getBoolean("rightClick", getConfig().getBoolean("additional-hotkeys.right-click")))));
-                playerFile.delete();
+                leftClickFromOutside = Boolean.parseBoolean(NBTAPI.getNBT(p, "leftClickOutside", String.valueOf(playerConfig.getBoolean("leftClickOutside", getConfig().getBoolean("left-click-to-sort-enabled-by-default")))));
+
+                changed = true;
             }
 
-            ChestSortPlayerSetting newSettings = new ChestSortPlayerSetting(activeForThisPlayer, invActiveForThisPlayer, middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick, changed);
+            ChestSortPlayerSetting newSettings = new ChestSortPlayerSetting(activeForThisPlayer, invActiveForThisPlayer, middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick, leftClickFromOutside, changed);
 
             // when "show-message-again-after-logout" is enabled, we don't care if the
             // player already saw the message
@@ -581,6 +592,8 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
         getConfig().addDefault("use-permissions", true);
         getConfig().addDefault("allow-automatic-sorting", true);
         getConfig().addDefault("allow-automatic-inventory-sorting", true);
+        getConfig().addDefault("allow-left-click-to-sort",true);
+        getConfig().addDefault("left-click-to-sort-enabled-by-default", false);
         getConfig().addDefault("sorting-enabled-by-default", false);
         getConfig().addDefault("inv-sorting-enabled-by-default", false);
         getConfig().addDefault("show-message-when-using-chest", true);
@@ -683,6 +696,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
                 NBTAPI.addNBT(p, "shiftRightClick", String.valueOf(setting.shiftRightClick));
                 NBTAPI.addNBT(p, "leftClick", String.valueOf(setting.leftClick));
                 NBTAPI.addNBT(p, "rightClick", String.valueOf(setting.rightClick));
+                NBTAPI.addNBT(p, "leftClickOutside", String.valueOf(setting.leftClickOutside));
             } else {
 
                 File playerFile = new File(getDataFolder() + File.separator + "playerdata",
@@ -697,6 +711,7 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
                 playerConfig.set("shiftRightClick", setting.shiftRightClick);
                 playerConfig.set("leftClick", setting.leftClick);
                 playerConfig.set("rightClick", setting.rightClick);
+                playerConfig.set("leftClickOutside", setting.leftClickOutside);
                 try {
                     // Only saved if the config has been changed
                     if (setting.changed) {

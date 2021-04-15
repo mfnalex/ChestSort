@@ -1,5 +1,12 @@
 # Changelog
 
+## 9.6.0
+- Added hotkey to sort chests/barrels etc. by shiftclicking them
+  - Can be configured per player using "/sort hotkeys"
+  - By default it's allowed but disabled
+- Added command "/chestsortadmin reset <player>" to reset hotkey settings for specific players
+- Old YML PlayerData is automatically converted to the new NBT storage
+
 ## 9.5.2
 - PlayerData is stored as NBT data instead of using separate files in 1.14.4 and later
 

@@ -17,7 +17,7 @@ public class ChestSortPlayerSetting {
 	public boolean invSortingEnabled;
 	
 	// Hotkey settings
-	boolean middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick;
+	boolean middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick, leftClickOutside;
 	
 	Inventory guiInventory = null;
 
@@ -33,7 +33,7 @@ public class ChestSortPlayerSetting {
 		NONE, RIGHT_CLICK, LEFT_CLICK
 	}
 
-	ChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean changed) {
+	ChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean leftCLickOutside, boolean changed) {
 		this.sortingEnabled = sortingEnabled;
 		this.middleClick = middleClick;
 		this.shiftClick = shiftClick;
@@ -42,6 +42,7 @@ public class ChestSortPlayerSetting {
 		this.invSortingEnabled = invSortingEnabled;
 		this.leftClick = leftClick;
 		this.rightClick = rightClick;
+		this.leftClickOutside = leftCLickOutside;
 		this.changed = changed;
 	}
 
@@ -73,6 +74,10 @@ public class ChestSortPlayerSetting {
 	}
 	void toggleShiftRightClick() {
 		shiftRightClick = !shiftRightClick;
+		changed = true;
+	}
+	void toggleLeftClickOutside() {
+		leftClickOutside = !leftClickOutside;
 		changed = true;
 	}
 	void toggleLeftClick() {
