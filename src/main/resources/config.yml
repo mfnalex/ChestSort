@@ -671,7 +671,7 @@ message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Vietnamese
 #message-when-using-chest: "&7Gợi ý: Nhập &6/chestsort&7 để bật tự động sắp xếp rương."
-#message-when-using-chest2: "&7Gợi ý:: Nhập &6/chestsort&7 để tắt tự động sắp xếp rương."
+#message-when-using-chest2: "&7Gợi ý: Nhập &6/chestsort&7 để tắt tự động sắp xếp rương."
 #message-sorting-disabled: "&7Sắp xếp rương tự động đã được &ctắt&7."
 #message-sorting-enabled: "&7Sắp xếp rương tự động đã được &abật&7."
 #message-inv-sorting-disabled: "&7Sắp xếp túi đồ tự động đã được &ctắt&7."
