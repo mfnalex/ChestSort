@@ -669,6 +669,26 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-right-click: "Sandığı boşalt (Sağ tık/Çift sağ tık)"
 #message-gui-left-click-outside: "Dışarıdan sol tıkla"
 
+##### Vietnamese
+#message-when-using-chest: "&7Gợi ý: Nhập &6/chestsort&7 để bật tự động sắp xếp rương."
+#message-when-using-chest2: "&7Gợi ý: Nhập &6/chestsort&7 để tắt tự động sắp xếp rương."
+#message-sorting-disabled: "&7Sắp xếp rương tự động đã được &ctắt&7."
+#message-sorting-enabled: "&7Sắp xếp rương tự động đã được &abật&7."
+#message-inv-sorting-disabled: "&7Sắp xếp túi đồ tự động đã được &ctắt&7."
+#message-inv-sorting-enabled: "&7Sắp xếp túi đồ tự động đã được &abật&7."
+#message-player-inventory-sorted: "&7Túi đồ của bạn đã được sắp xếp."
+#message-error-players-only: "&cLỗi: Lệnh này chỉ có thể thực hiện bởi người chơi."
+#message-error-invalid-options: "&cLỗi: Lựa chọn không hợp lệ %s. Lựa chọn đúng phải là %s."
+#message-gui-enabled: "&aĐã bật"
+#message-gui-disabled: "&cĐã tắt"
+#message-gui-middle-click: "Chuột giữa"
+#message-gui-shift-click: "Shift + Chuột trái"
+#message-gui-double-click: "Nhấn đúp"
+#message-gui-shift-right-click: "Shift + Chuột phải"
+#message-gui-left-click: "Lấp đầy rương (Chuột trái/nhấn đúp chuột trái)"
+#message-gui-right-click: "Empty Chest (Chuột phải/nhấn đúp chuột phải)"
+#message-gui-left-click-outside: "Nhấn chuột trái bên ngoài"
+
 ############################
 ##### Technical stuff! #####
 ############################
