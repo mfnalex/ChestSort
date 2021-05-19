@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.0.0
+## 10.0.1
 - API update - some weird Spigot update broke casting the Plugin instance to its interface.
   - Plugins depending on ChestSort or using its API must be updated too.
   - API is now accessed simply via de.jeff_media.chestsort.ChestSortAPI
