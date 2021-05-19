@@ -1,4 +1,4 @@
-main: de.jeff_media.ChestSort.ChestSortPlugin
+main: de.jeff_media.chestsort.ChestSortPlugin
 name: ChestSort
 version: 9.7.1
 api-version: "1.13"

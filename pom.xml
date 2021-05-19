@@ -9,7 +9,7 @@
 	<name>ChestSort</name>
 	<url>https://www.chestsort.de</url>
 	<description>Automatically sorts your chests!</description>
-	<version>9.7.2</version>
+	<version>10.0.0</version>
 	<packaging>jar</packaging>
 
 	<properties>
@@ -45,23 +45,23 @@
 					<relocations>
 						<relocation>
 							<pattern>de.jeff_media.jefflib</pattern>
-							<shadedPattern>de.jeff_media.ChestSort.jefflib</shadedPattern>
+							<shadedPattern>de.jeff_media.chestsort.jefflib</shadedPattern>
 						</relocation>
 						<relocation>
 							<pattern>org.apache.maven.artifact</pattern>
-							<shadedPattern>de.jeff_media.ChestSort.jefflib.thirdparty.org.apache.maven.artifact</shadedPattern>
+							<shadedPattern>de.jeff_media.chestsort.jefflib.thirdparty.org.apache.maven.artifact</shadedPattern>
 						</relocation>
 						<relocation>
 							<pattern>de.jeff_media.updatechecker</pattern>
-							<shadedPattern>de.jeff_media.ChestSort.updatechecker</shadedPattern>
+							<shadedPattern>de.jeff_media.chestsort.updatechecker</shadedPattern>
 						</relocation>
 						<relocation>
 							<pattern>org.bstats</pattern>
-							<shadedPattern>de.jeff_media.ChestSort</shadedPattern>
+							<shadedPattern>de.jeff_media.chestsort</shadedPattern>
 						</relocation>
 						<relocation>
 							<pattern>io.papermc.lib</pattern>
-							<shadedPattern>de.jeff_media.ChestSort.paperlib</shadedPattern> <!-- Replace this -->
+							<shadedPattern>de.jeff_media.chestsort.paperlib</shadedPattern> <!-- Replace this -->
 						</relocation>
 					</relocations>
 					<artifactSet>
@@ -149,7 +149,7 @@
 		<dependency>
 			<groupId>de.jeff_media</groupId>
 			<artifactId>ChestSortAPI</artifactId>
-			<version>2.0.0</version>
+			<version>3.0.0</version>
 			<scope>compile</scope>
 		</dependency>
 		<dependency>
