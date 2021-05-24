@@ -2,8 +2,6 @@ package de.jeff_media.chestsort;
 
 import de.jeff_media.chestsort.hooks.*;
 import de.jeff_media.chestsort.utils.LlamaUtils;
-import de.jeff_media.ChestSortAPI.ChestSortEvent;
-import de.jeff_media.ChestSortAPI.ISortable;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -61,7 +59,7 @@ public class ChestSortListener implements Listener {
         if(!playerSetting.leftClickOutside) return;
         Container containerState = (Container) clickedBlock.getState();
         Inventory inventory = containerState.getInventory();
-        plugin.getAPI().sortInventory(inventory);
+        plugin.organizer.sortInventory(inventory);
         event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(plugin.messages.MSG_CONTAINER_SORTED));
     }
 

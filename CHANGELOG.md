@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.0.2
+- Fixed legacy API still being shaded into the .jar file.
+
 ## 10.0.1
 - API update - some weird Spigot update broke casting the Plugin instance to its interface.
   - Plugins depending on ChestSort or using its API must be updated too.

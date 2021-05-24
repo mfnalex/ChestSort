@@ -6,7 +6,7 @@ import de.jeff_media.chestsort.hooks.SlimeFunHook;
 import de.jeff_media.chestsort.utils.CategoryLinePair;
 import de.jeff_media.chestsort.utils.TypeMatchPositionPair;
 import de.jeff_media.chestsort.utils.Utils;
-import de.jeff_media.ChestSortAPI.ChestSortEvent;
+import de.jeff_media.chestsort.ChestSortEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -462,7 +462,7 @@ public class ChestSortOrganizer {
         if(inv==null) return;
         plugin.debug("Attempting to sort an Inventory and calling ChestSortEvent.");
         Class<? extends Inventory> invClass = inv.getClass();
-        de.jeff_media.ChestSortAPI.ChestSortEvent chestSortEvent = new de.jeff_media.ChestSortAPI.ChestSortEvent(inv);
+        ChestSortEvent chestSortEvent = new ChestSortEvent(inv);
 
         try {
             if (invClass.getMethod("getLocation", null) != null) {

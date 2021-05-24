@@ -52,7 +52,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.util.*;
 
-public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSortAPI.ChestSort {
+public class ChestSortPlugin extends JavaPlugin {
 
     private static double updateCheckInterval = 4 * 60 * 60; // in seconds. We check on startup and every 4 hours
     final int currentConfigVersion = 50;
@@ -64,7 +64,6 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
     public boolean hookMinepacks = false;
     public PlayerVaultsHook playerVaultsHook;
     protected boolean debug = false;
-    ChestSortAPIHandler api;
     ArrayList<String> disabledWorlds;
     HashMap<UUID, Long> hotkeyCooldown;
     ChestSortLogger lgr;
@@ -177,11 +176,6 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
 
     }
 
-    @Override
-    public ChestSortAPIHandler getAPI() {
-        return this.api;
-    }
-
     private String getCategoryList() {
         StringBuilder list = new StringBuilder();
         ChestSortCategory[] categories = organizer.categories.toArray(new ChestSortCategory[0]);
@@ -274,7 +268,6 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
             PaperLib.suggestPaper(this);
         }
         listener = new ChestSortListener(this);
-        api = new ChestSortAPIHandler(this);
         hotkeyCooldown = new HashMap<>();
         permissionsHandler = new ChestSortPermissionsHandler(this);
         updateCheckInterval = getConfig().getDouble("check-interval");
@@ -638,33 +631,6 @@ public class ChestSortPlugin extends JavaPlugin implements de.jeff_media.ChestSo
         getLogger().warning("has updated the file to the newest version.");
         getLogger().warning("Your changes have been kept.");
         getLogger().warning("==============================================");
-    }
-
-    // Public API method to sort any given inventory
-    @Deprecated
-    @Override
-    public void sortInventory(Inventory inv) {
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.", stackTraceElements[2]));
-        api.sortInventory(inv);
-    }
-
-    // Public API method to sort any given inventory inbetween startSlot and endSlot
-    @Deprecated
-    @Override
-    public void sortInventory(Inventory inv, int startSlot, int endSlot) {
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.", stackTraceElements[2]));
-        api.sortInventory(inv, startSlot, endSlot);
-    }
-
-    // Public API method to check if player has automatic chest sorting enabled
-    @Deprecated
-    @Override
-    public boolean sortingEnabled(Player p) {
-        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
-        getLogger().warning(String.format("%s has performed a call to a deprecated ChestSort API method. This is NOT a ChestSort error.", stackTraceElements[2]));
-        return isSortingEnabled(p);
     }
 
     void unregisterAllPlayers() {
