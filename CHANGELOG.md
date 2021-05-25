@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.0.3
+- Fixed "Could not check for updates" message being shown to OPs on join when Update Checker is disabled
+
 ## 10.0.2
 - Fixed legacy API still being shaded into the .jar file.
 

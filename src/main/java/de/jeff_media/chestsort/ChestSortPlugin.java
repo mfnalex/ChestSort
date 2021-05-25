@@ -324,6 +324,10 @@ public class ChestSortPlugin extends JavaPlugin {
             }
         }
 
+        if(getConfig().getString("check-for-updates").equalsIgnoreCase("false")) {
+            updateChecker.setNotifyOpsOnJoin(false);
+        }
+
         registerMetrics();
 
         if (getConfig().getBoolean("dump")) {
