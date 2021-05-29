@@ -1,5 +1,7 @@
 # API Usage
 
+### Note: The API documentation is currently outdated, I will update them in the upcoming days - please look at the source code instead, it's really easy to understand. Sorry for the trouble. If you need assistance on using the API, feel free to contact me on Discord at https://discord.jeff-media.de
+
 If you want to use ChestSort's advanced sorting features for your own plugin, or if ChestSort causes trouble with your own plugin, you can use the ChestSort API. It provides
 - the methods `sortInventory(Inventory inv)` and `sortInventory(Inventory inv, int startSlot, int endSlot)`to sort any given inventory, following the rules you have specified in your ChestSort's plugin.yml and the corresponding category files
 - a cancellable event called `ChestSortEvent` that is fired whenever ChestSort is about to sort an inventory
@@ -21,7 +23,7 @@ You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin
 	<dependency>
 		<groupId>de.jeff_media</groupId>
 		<artifactId>ChestSortAPI</artifactId>
-		<version>2.0.0</version> <!-- The API version is independent of the ChestSort version -->
+		<version>3.0.0</version> <!-- The API version is independent of the ChestSort version -->
         	<scope>compile</scope>
 	</dependency>
 </dependencies>
@@ -138,8 +140,8 @@ You can also instead use your own custom inventory holder that either `implement
 
 ## Example Plugin
 
-Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample)
+Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample) (OUTDATED: The example plugin still uses API version 2.0.0)
 
 ## Javadocs & Source code
-- [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI).
+- [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI). (OUTDATED: The JavaDocs are still on version 2.0.0, I will update it in the next days, sorry for the trouble - contact me on Discord at https://discord.jeffm-media.de if you need assistance)
 - [ChestSortAPI source code](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).
