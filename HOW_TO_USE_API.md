@@ -143,5 +143,5 @@ You can also instead use your own custom inventory holder that either `implement
 Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample) (OUTDATED: The example plugin still uses API version 2.0.0)
 
 ## Javadocs & Source code
-- [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI). (OUTDATED: The JavaDocs are still on version 2.0.0, I will update it in the next days, sorry for the trouble - contact me on Discord at https://discord.jeffm-media.de if you need assistance)
+- [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI). (OUTDATED: The JavaDocs are still on version 2.0.0, I will update it in the next days, sorry for the trouble - contact me on Discord at https://discord.jeff-media.de if you need assistance)
 - [ChestSortAPI source code](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).
