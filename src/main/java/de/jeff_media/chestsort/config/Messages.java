@@ -1,9 +1,10 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.config;
 
+import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.ChatColor;
 
-public class ChestSortMessages {
-    final String MSG_GUI_LEFTCLICKOUTSIDE, MSG_CONTAINER_SORTED;
+public class Messages {
+	public static String MSG_GUI_LEFTCLICKOUTSIDE, MSG_CONTAINER_SORTED;
 
     // Messages can be customized in the config.yml
 	// To avoid problems with missing messages in the config, the default messages
@@ -12,18 +13,18 @@ public class ChestSortMessages {
 	// When creating pull requests that feature a message to the player, please
 	// stick to this scheme
 
-	final ChestSortPlugin plugin;
+	public static ChestSortPlugin plugin;
 
-	final String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_INVACTIVATED, MSG_INVDEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY,
+	public static String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_INVACTIVATED, MSG_INVDEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY,
 			MSG_PLAYERINVSORTED, MSG_INVALIDOPTIONS;
-	
-	final String MSG_GUI_ENABLED, MSG_GUI_DISABLED;
-	
-	final String MSG_GUI_MIDDLECLICK, MSG_GUI_SHIFTCLICK, MSG_GUI_DOUBLECLICK, MSG_GUI_SHIFTRIGHTCLICK, MSG_GUI_LEFTCLICK, MSG_GUI_RIGHTCLICK;
 
-	final String MSG_ERR_HOTKEYSDISABLED;
+	public static String MSG_GUI_ENABLED, MSG_GUI_DISABLED;
 
-	ChestSortMessages(ChestSortPlugin plugin) {
+	public static String MSG_GUI_MIDDLECLICK, MSG_GUI_SHIFTCLICK, MSG_GUI_DOUBLECLICK, MSG_GUI_SHIFTRIGHTCLICK, MSG_GUI_LEFTCLICK, MSG_GUI_RIGHTCLICK;
+
+	public static String MSG_ERR_HOTKEYSDISABLED;
+
+	public Messages(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 
 		MSG_CONTAINER_SORTED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()

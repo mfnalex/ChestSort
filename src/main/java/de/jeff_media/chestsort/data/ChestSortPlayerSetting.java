@@ -1,5 +1,6 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.data;
 
+import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
@@ -17,23 +18,29 @@ public class ChestSortPlayerSetting {
 	public boolean invSortingEnabled;
 	
 	// Hotkey settings
-	boolean middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick, leftClickOutside;
+	public boolean middleClick;
+	public boolean shiftClick;
+	public boolean doubleClick;
+	public boolean shiftRightClick;
+	public boolean leftClick;
+	public boolean rightClick;
+	public boolean leftClickOutside;
 	
-	Inventory guiInventory = null;
+	public Inventory guiInventory = null;
 
 	// Did we already show the message how to activate sorting?
-	boolean hasSeenMessage = false;
+	public boolean hasSeenMessage = false;
 	
 	// Do we have to save these settings?
-	boolean changed;
+	public boolean changed;
 
 	 DoubleClickType currentDoubleClick = DoubleClickType.NONE;
 
-	enum DoubleClickType {
+	public enum DoubleClickType {
 		NONE, RIGHT_CLICK, LEFT_CLICK
 	}
 
-	ChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean leftCLickOutside, boolean changed) {
+	public ChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean leftCLickOutside, boolean changed) {
 		this.sortingEnabled = sortingEnabled;
 		this.middleClick = middleClick;
 		this.shiftClick = shiftClick;
@@ -46,7 +53,7 @@ public class ChestSortPlayerSetting {
 		this.changed = changed;
 	}
 
-	DoubleClickType getCurrentDoubleClick(ChestSortPlugin plugin, DoubleClickType click) {
+	public DoubleClickType getCurrentDoubleClick(ChestSortPlugin plugin, DoubleClickType click) {
 		if(click == DoubleClickType.NONE) return DoubleClickType.NONE;
 		if(currentDoubleClick == click) {
 			currentDoubleClick = DoubleClickType.NONE;
@@ -60,55 +67,55 @@ public class ChestSortPlayerSetting {
 		return DoubleClickType.NONE;
 	}
 	
-	void toggleMiddleClick() {
+	public void toggleMiddleClick() {
 		middleClick = !middleClick;
 		changed = true;
 	}
-	void toggleShiftClick() {
+	public void toggleShiftClick() {
 		shiftClick = !shiftClick;
 		changed = true;
 	}
-	void toggleDoubleClick() {
+	public void toggleDoubleClick() {
 		doubleClick = !doubleClick;
 		changed = true;
 	}
-	void toggleShiftRightClick() {
+	public void toggleShiftRightClick() {
 		shiftRightClick = !shiftRightClick;
 		changed = true;
 	}
-	void toggleLeftClickOutside() {
+	public void toggleLeftClickOutside() {
 		leftClickOutside = !leftClickOutside;
 		changed = true;
 	}
-	void toggleLeftClick() {
+	public void toggleLeftClick() {
 		leftClick = !leftClick;
 		changed = true;
 	}
-	void toggleRightClick() {
+	public void toggleRightClick() {
 		rightClick = !rightClick;
 		changed = true;
 	}
-	void enableChestSorting() {
+	public void enableChestSorting() {
 		sortingEnabled = true;
 		changed = true;
 	}
-	void disableChestSorting() {
+	public void disableChestSorting() {
 		sortingEnabled = false;
 		changed = true;
 	}
-	void toggleChestSorting() {
+	public void toggleChestSorting() {
 		sortingEnabled = !sortingEnabled;
 		changed = true;
 	}
-	void enableInvSorting() {
+	public void enableInvSorting() {
 		invSortingEnabled = true;
 		changed = true;
 	}
-	void disableInvSorting() {
+	public void disableInvSorting() {
 		invSortingEnabled = false;
 		changed = true;
 	}
-	void toggleInvSorting() {
+	public void toggleInvSorting() {
 		invSortingEnabled = !invSortingEnabled;
 		changed = true;
 	}

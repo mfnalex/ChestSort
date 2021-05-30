@@ -1,5 +1,9 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.commands;
 
+import de.jeff_media.chestsort.config.Messages;
+import de.jeff_media.chestsort.handlers.ChestSortLogger;
+import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
+import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,7 +15,7 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 	
 	final ChestSortPlugin plugin;
 	
-	ChestSortInvSortCommand(ChestSortPlugin plugin) {
+	public ChestSortInvSortCommand(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -27,7 +31,7 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 		if (!(sender instanceof Player)) {
 
 			if(args.length==0) {
-				sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
+				sender.sendMessage(Messages.MSG_PLAYERSONLY);
 				return true;
 			}
 			// Console can sort player's inventories
@@ -44,7 +48,7 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 				args = new String[0];
 			}
 
-			//sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
+			//sender.sendMessage(Messages.MSG_PLAYERSONLY);
 			//return true;
 		}
 		
@@ -73,29 +77,29 @@ public class ChestSortInvSortCommand implements CommandExecutor {
 				end=35;
 			} else if(args[0].equalsIgnoreCase("on")) {
 				setting.enableInvSorting();
-				p.sendMessage(plugin.messages.MSG_INVACTIVATED);
+				p.sendMessage(Messages.MSG_INVACTIVATED);
 				return true;
 			} else if(args[0].equalsIgnoreCase("off")) {
 				setting.disableInvSorting();
-				p.sendMessage(plugin.messages.MSG_INVDEACTIVATED);
+				p.sendMessage(Messages.MSG_INVDEACTIVATED);
 				return true;
 			} else if(args[0].equalsIgnoreCase("toggle")) {
 				setting.toggleInvSorting();
 				if(setting.invSortingEnabled) {
-					p.sendMessage(plugin.messages.MSG_INVACTIVATED);
+					p.sendMessage(Messages.MSG_INVACTIVATED);
 				} else {
-					p.sendMessage(plugin.messages.MSG_INVDEACTIVATED);
+					p.sendMessage(Messages.MSG_INVDEACTIVATED);
 				}
 				return true;
 			}
 			else {
-				p.sendMessage(String.format(plugin.messages.MSG_INVALIDOPTIONS,"\""+args[0]+"\"","\"on\", \"off\", \"toggle\", \"inv\", \"hotbar\", \"all\""));
+				p.sendMessage(String.format(Messages.MSG_INVALIDOPTIONS,"\""+args[0]+"\"","\"on\", \"off\", \"toggle\", \"inv\", \"hotbar\", \"all\""));
 				return true;
 			}
 		}
 		plugin.lgr.logSort(p, ChestSortLogger.SortCause.CMD_ISORT);
 		plugin.organizer.sortInventory(p.getInventory(), start, end);
-		p.sendMessage(plugin.messages.MSG_PLAYERINVSORTED);
+		p.sendMessage(Messages.MSG_PLAYERINVSORTED);
 		
 		return true;
 		

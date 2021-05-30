@@ -1,4 +1,4 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.data;
 
 import de.jeff_media.chestsort.utils.TypeMatchPositionPair;
 
@@ -12,16 +12,16 @@ public class ChestSortCategory implements Comparable<ChestSortCategory>{
 	// "COARSE_DIRT" will not match the typeMatch "dirt"
 	// "COARSE_DIRT" will match the typeMatch "*dirt"
 
-	final String name;
+	public final String name;
 	boolean sticky = false;
-	final TypeMatchPositionPair[] typeMatches;
+	public final TypeMatchPositionPair[] typeMatches;
 
-	ChestSortCategory(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
+	public ChestSortCategory(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
 		this.name = name;
 		this.typeMatches = typeMatchPositionPairs;
 	}
 	
-	void setSticky() {
+	public void setSticky() {
 		this.sticky=true;
 	}
 	
@@ -31,7 +31,7 @@ public class ChestSortCategory implements Comparable<ChestSortCategory>{
 	
 
 	// Checks whether a the given itemname fits into this category and returns the line number. 0 means not found
-	short matches(String itemname) {
+	public short matches(String itemname) {
 
 		// Very, very simple wildcard checks
 		for (TypeMatchPositionPair typeMatchPositionPair : typeMatches) {

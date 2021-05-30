@@ -1,5 +1,9 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.commands;
 
+import de.jeff_media.chestsort.config.Messages;
+import de.jeff_media.chestsort.handlers.ChestSortDebugger;
+import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
+import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -10,9 +14,9 @@ import org.jetbrains.annotations.NotNull;
 
 public class ChestSortChestSortCommand implements CommandExecutor {
 
-	final ChestSortPlugin plugin;
+	private final ChestSortPlugin plugin;
 
-	ChestSortChestSortCommand(ChestSortPlugin plugin) {
+	public ChestSortChestSortCommand(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -63,7 +67,7 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 					} 
 				}
 				
-				sender.sendMessage(plugin.messages.MSG_PLAYERSONLY);
+				sender.sendMessage(Messages.MSG_PLAYERSONLY);
 				return true;
 			}
 
@@ -79,7 +83,7 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 				if(args[0].equalsIgnoreCase("hotkey") || args[0].equalsIgnoreCase("hotkeys")) {
 					
 					if(!plugin.hotkeyGUI) {
-						p.sendMessage(plugin.messages.MSG_ERR_HOTKEYSDISABLED);
+						p.sendMessage(Messages.MSG_ERR_HOTKEYSDISABLED);
 						return true;
 					}
 					
@@ -97,7 +101,7 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 					 && !args[0].equalsIgnoreCase("toggle")
 					 && !args[0].equalsIgnoreCase("on")
 					 && !args[0].equalsIgnoreCase("off")) {
-				p.sendMessage(String.format(plugin.messages.MSG_INVALIDOPTIONS,"\""+args[0]+"\"","\"toggle\", \"on\", \"off\", \"hotkeys\""));
+				p.sendMessage(String.format(Messages.MSG_INVALIDOPTIONS,"\""+args[0]+"\"","\"toggle\", \"on\", \"off\", \"hotkeys\""));
 				return true;
 			}
 			if(args.length==0 || args[0].equalsIgnoreCase("toggle")) {
@@ -112,9 +116,9 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 			setting.hasSeenMessage=true;
 
 			if (setting.sortingEnabled) {
-				p.sendMessage(plugin.messages.MSG_ACTIVATED);
+				p.sendMessage(Messages.MSG_ACTIVATED);
 			} else {
-				p.sendMessage(plugin.messages.MSG_DEACTIVATED);
+				p.sendMessage(Messages.MSG_DEACTIVATED);
 			}
 
 			return true;

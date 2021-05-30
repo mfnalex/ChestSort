@@ -1,5 +1,6 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.handlers;
 
+import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -10,7 +11,7 @@ public class ChestSortDebugger implements @NotNull Listener {
 
     private final ChestSortPlugin plugin;
 
-    ChestSortDebugger(ChestSortPlugin plugin) {
+    public ChestSortDebugger(ChestSortPlugin plugin) {
         plugin.getLogger().warning("=======================================");
         plugin.getLogger().warning("    CHESTSORT DEBUG MODE ACTIVATED!");
         plugin.getLogger().warning("Only use this for development purposes!");

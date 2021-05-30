@@ -1,12 +1,14 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.handlers;
 
+import de.jeff_media.chestsort.ChestSortEvent;
+import de.jeff_media.chestsort.ChestSortPlugin;
+import de.jeff_media.chestsort.data.ChestSortCategory;
 import de.jeff_media.chestsort.hooks.CrackShotHook;
 import de.jeff_media.chestsort.hooks.InventoryPagesHook;
 import de.jeff_media.chestsort.hooks.SlimeFunHook;
-import de.jeff_media.chestsort.utils.CategoryLinePair;
+import de.jeff_media.chestsort.data.CategoryLinePair;
 import de.jeff_media.chestsort.utils.TypeMatchPositionPair;
 import de.jeff_media.chestsort.utils.Utils;
-import de.jeff_media.chestsort.ChestSortEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -55,10 +57,10 @@ public class ChestSortOrganizer {
     final CrackShotHook crackShotHook;
     final InventoryPagesHook inventoryPagesHook;
     // We store a list of all Category objects
-    final ArrayList<ChestSortCategory> categories = new ArrayList<>();
+    public final ArrayList<ChestSortCategory> categories = new ArrayList<>();
     final ArrayList<String> stickyCategoryNames = new ArrayList<>();
 
-    ChestSortOrganizer(ChestSortPlugin plugin) {
+    public ChestSortOrganizer(ChestSortPlugin plugin) {
         this.plugin = plugin;
 
         // Load Categories
@@ -333,7 +335,7 @@ public class ChestSortOrganizer {
     // This method takes a sortable item name and checks all categories for a match
     // If none, matches, return "<none>" (it will be put behind all categorized
     // items when sorting by category)
-    CategoryLinePair getCategoryLinePair(String typeName) {
+    public CategoryLinePair getCategoryLinePair(String typeName) {
         typeName = typeName.toLowerCase();
         for (ChestSortCategory cat : categories) {
             short matchingLineNumber = cat.matches(typeName);
@@ -345,7 +347,7 @@ public class ChestSortOrganizer {
     }
 
     // Generate a map of "{placeholder}", "sortString" pairs for an ItemStack
-    Map<String, String> getSortableMap(ItemStack item) {
+    public Map<String, String> getSortableMap(ItemStack item) {
         if (item == null) {
             // Empty map for non-item
             return new HashMap<String, String>();

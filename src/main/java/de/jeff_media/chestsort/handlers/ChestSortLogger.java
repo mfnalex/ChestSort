@@ -1,5 +1,7 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.handlers;
 
+import de.jeff_media.chestsort.ChestSortPlugin;
+import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +17,7 @@ public class ChestSortLogger {
     boolean log;
     Logger logger;
 
-    ChestSortLogger(ChestSortPlugin plugin, boolean log) {
+    public ChestSortLogger(ChestSortPlugin plugin, boolean log) {
         if(!log) return;
         plugin.getLogger().info("=======================================");
         plugin.getLogger().info("     CHESTSORT LOGGER ACTIVATED!");
@@ -50,18 +52,18 @@ public class ChestSortLogger {
         logger.info(s);
     }
 
-    void logSort(Player p, @Nullable SortCause cause) {
+    public void logSort(Player p, @Nullable SortCause cause) {
         if(!log) return;
         String settings = getPlayerSettings(p);
         if(cause==null) cause = SortCause.UNKNOWN;
         log(String.format("SORT: Player: %s, Cause: %s, Settings: {%s}",p.getName(),cause.name(),settings));
     }
 
-    enum SortCause {
+    public enum SortCause {
         UNKNOWN, INV_CLOSE, CONT_CLOSE, CONT_OPEN, EC_OPEN, H_MIDDLE, H_SHIFT, H_DOUBLE, H_SHIFTRIGHT, H_LEFT, H_RIGHT, CMD_ISORT
     }
 
-    void logPlayerJoin(Player p) {
+    public void logPlayerJoin(Player p) {
         if(!log) return;
         String settings = getPlayerSettings(p);
         log(String.format("JOIN: Player: %s, Settings: {%s}",p.getName(),settings));

@@ -1,5 +1,7 @@
-package de.jeff_media.chestsort.utils;
+package de.jeff_media.chestsort.data;
 
+
+import de.jeff_media.chestsort.utils.Utils;
 
 public class CategoryLinePair {
 	final String categoryName;
@@ -13,7 +15,7 @@ public class CategoryLinePair {
 	
 	public CategoryLinePair(String categoryName,short position,boolean sticky) {
 		this.categoryName=categoryName;
-		this.formattedPosition=Utils.shortToStringWithLeadingZeroes(position);
+		this.formattedPosition= Utils.shortToStringWithLeadingZeroes(position);
 		this.position=position;
 		this.sticky=sticky;
 	}

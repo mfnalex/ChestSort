@@ -28,10 +28,24 @@
 package de.jeff_media.chestsort;
 
 import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
+import de.jeff_media.chestsort.commands.ChestSortAdminCommand;
+import de.jeff_media.chestsort.commands.ChestSortChestSortCommand;
+import de.jeff_media.chestsort.commands.ChestSortInvSortCommand;
+import de.jeff_media.chestsort.commands.ChestSortTabCompleter;
+import de.jeff_media.chestsort.config.ChestSortConfigUpdater;
+import de.jeff_media.chestsort.config.Messages;
 import de.jeff_media.chestsort.config.Config;
+import de.jeff_media.chestsort.data.ChestSortCategory;
+import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
+import de.jeff_media.chestsort.gui.ChestSortSettingsGUI;
+import de.jeff_media.chestsort.handlers.ChestSortDebugger;
+import de.jeff_media.chestsort.handlers.ChestSortLogger;
+import de.jeff_media.chestsort.handlers.ChestSortOrganizer;
+import de.jeff_media.chestsort.handlers.ChestSortPermissionsHandler;
 import de.jeff_media.chestsort.hooks.EnderContainersHook;
 import de.jeff_media.chestsort.hooks.GenericGUIHook;
 import de.jeff_media.chestsort.hooks.PlayerVaultsHook;
+import de.jeff_media.chestsort.listeners.ChestSortListener;
 import de.jeff_media.chestsort.placeholders.ChestSortPlaceholders;
 import de.jeff_media.chestsort.utils.Utils;
 import de.jeff_media.jefflib.JeffLib;
@@ -45,7 +59,6 @@ import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -54,33 +67,33 @@ import java.util.*;
 
 public class ChestSortPlugin extends JavaPlugin {
 
-    private static double updateCheckInterval = 4 * 60 * 60; // in seconds. We check on startup and every 4 hours
-    final int currentConfigVersion = 50;
-    final boolean hotkeyGUI = true;
+    public static double updateCheckInterval = 4 * 60 * 60; // in seconds. We check on startup and every 4 hours
+    public final int currentConfigVersion = 50;
+    public final boolean hotkeyGUI = true;
     public EnderContainersHook enderContainersHook;
     public GenericGUIHook genericHook;
     public boolean hookCrackShot = false;
     public boolean hookInventoryPages = false;
     public boolean hookMinepacks = false;
     public PlayerVaultsHook playerVaultsHook;
-    protected boolean debug = false;
-    ArrayList<String> disabledWorlds;
-    HashMap<UUID, Long> hotkeyCooldown;
-    ChestSortLogger lgr;
-    ChestSortListener listener;
+    public boolean debug = false;
+    public ArrayList<String> disabledWorlds;
+    public HashMap<UUID, Long> hotkeyCooldown;
+    public ChestSortLogger lgr;
+    public ChestSortListener listener;
     // 1.14.4 = 1_14_R1
     // 1.8.0  = 1_8_R1
-    int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
-    String mcVersion;    // 1.13.2 = 1_13_R2
-    ChestSortMessages messages;
+    public int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
+    public String mcVersion;    // 1.13.2 = 1_13_R2
+    public Messages messages;
     public ChestSortOrganizer organizer;
-    Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<>();
-    ChestSortPermissionsHandler permissionsHandler;
-    ChestSortSettingsGUI settingsGUI;
-    String sortingMethod;
-    UpdateChecker updateChecker;
-    boolean usingMatchingConfig = true;
-    boolean verbose = true;
+    public Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<>();
+    public ChestSortPermissionsHandler permissionsHandler;
+    public ChestSortSettingsGUI settingsGUI;
+    public String sortingMethod;
+    public UpdateChecker updateChecker;
+    public boolean usingMatchingConfig = true;
+    public boolean verbose = true;
     private static ChestSortPlugin instance;
 
     public static ChestSortPlugin getInstance() {
@@ -209,11 +222,11 @@ public class ChestSortPlugin extends JavaPlugin {
         if (perPlayerSettings == null) {
             perPlayerSettings = new HashMap<>();
         }
-        listener.plugin.registerPlayerIfNeeded(p);
+        registerPlayerIfNeeded(p);
         return perPlayerSettings.get(p.getUniqueId().toString()).sortingEnabled;
     }
 
-    void load(boolean reload) {
+    public void load(boolean reload) {
 
         if (reload) {
             unregisterAllPlayers();
@@ -248,7 +261,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
         verbose = getConfig().getBoolean("verbose");
         lgr = new ChestSortLogger(this, getConfig().getBoolean("log"));
-        messages = new ChestSortMessages(this);
+        messages = new Messages(this);
         organizer = new ChestSortOrganizer(this);
         settingsGUI = new ChestSortSettingsGUI(this);
         try {
@@ -423,7 +436,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
     }
 
-    void registerPlayerIfNeeded(Player p) {
+    public void registerPlayerIfNeeded(Player p) {
         // Players are stored by their UUID, so that name changes don't break player's
         // settings
         UUID uniqueId = p.getUniqueId();
@@ -652,7 +665,7 @@ public class ChestSortPlugin extends JavaPlugin {
     }
 
     // Unregister a player and save their settings in the playerdata folder
-    void unregisterPlayer(Player p) {
+    public void unregisterPlayer(Player p) {
         // File will be named by the player's uuid. This will prevent problems on player
         // name changes.
         UUID uniqueId = p.getUniqueId();

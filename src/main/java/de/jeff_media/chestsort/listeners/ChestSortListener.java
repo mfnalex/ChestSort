@@ -1,5 +1,11 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.listeners;
 
+import de.jeff_media.chestsort.ChestSortEvent;
+import de.jeff_media.chestsort.config.Messages;
+import de.jeff_media.chestsort.handlers.ChestSortLogger;
+import de.jeff_media.chestsort.ChestSortPlugin;
+import de.jeff_media.chestsort.ISortable;
+import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
 import de.jeff_media.chestsort.hooks.*;
 import de.jeff_media.chestsort.utils.LlamaUtils;
 import net.md_5.bungee.api.ChatMessageType;
@@ -33,12 +39,12 @@ import java.util.Map;
 public class ChestSortListener implements Listener {
 
     final ChestSortPlugin plugin;
-    final MinepacksHook minepacksHook;
+    public final MinepacksHook minepacksHook;
     final HeadDatabaseHook headDatabaseHook;
     final CrateReloadedHook crateReloadedHook;
     final GoldenCratesHook goldenCratesHook;
 
-    ChestSortListener(ChestSortPlugin plugin) {
+    public ChestSortListener(ChestSortPlugin plugin) {
         this.plugin = plugin;
         this.minepacksHook = new MinepacksHook(plugin);
         this.headDatabaseHook = new HeadDatabaseHook(plugin);
@@ -60,7 +66,7 @@ public class ChestSortListener implements Listener {
         Container containerState = (Container) clickedBlock.getState();
         Inventory inventory = containerState.getInventory();
         plugin.organizer.sortInventory(inventory);
-        event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(plugin.messages.MSG_CONTAINER_SORTED));
+        event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.MSG_CONTAINER_SORTED));
     }
 
     @EventHandler
@@ -323,7 +329,7 @@ public class ChestSortListener implements Listener {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
                 if (plugin.getConfig().getBoolean("show-message-when-using-chest")) {
-                    p.sendMessage(plugin.messages.MSG_COMMANDMESSAGE);
+                    p.sendMessage(Messages.MSG_COMMANDMESSAGE);
                 }
             }
             return false;
@@ -340,7 +346,7 @@ public class ChestSortListener implements Listener {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
                 if (plugin.getConfig().getBoolean("show-message-when-using-chest-and-sorting-is-enabled")) {
-                    p.sendMessage(plugin.messages.MSG_COMMANDMESSAGE2);
+                    p.sendMessage(Messages.MSG_COMMANDMESSAGE2);
                 }
             }
         }
@@ -634,7 +640,7 @@ public class ChestSortListener implements Listener {
         chestSortEvent.setPlayer(e.getWhoClicked());
         chestSortEvent.setLocation(e.getWhoClicked().getLocation());
 
-        chestSortEvent.setSortableMaps(new HashMap<ItemStack, Map<String, String>>());
+        chestSortEvent.setSortableMaps(new HashMap<>());
         for (ItemStack item : e.getInventory().getContents()) {
             chestSortEvent.getSortableMaps().put(item, plugin.organizer.getSortableMap(item));
         }

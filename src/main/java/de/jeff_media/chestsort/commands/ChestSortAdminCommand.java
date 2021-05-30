@@ -1,5 +1,6 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.commands;
 
+import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.jefflib.NBTAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

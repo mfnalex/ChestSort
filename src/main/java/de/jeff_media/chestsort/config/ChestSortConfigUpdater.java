@@ -1,4 +1,4 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.config;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Scanner;
 
+import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -25,7 +26,7 @@ public class ChestSortConfigUpdater {
 	// config version
 	// Don't worry! Your changes will be kept
 
-	void updateConfig() {
+	public void updateConfig() {
 		
 		// hotkeys has been renamed to sorting-hotkeys
 		if(plugin.getConfig().isSet("hotkeys.middle-click")) {

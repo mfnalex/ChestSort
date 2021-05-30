@@ -1,4 +1,4 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.commands;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,8 @@
-package de.jeff_media.chestsort;
+package de.jeff_media.chestsort.gui;
 
+import de.jeff_media.chestsort.ChestSortPlugin;
+import de.jeff_media.chestsort.config.Messages;
+import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,7 +35,7 @@ public class ChestSortSettingsGUI implements Listener {
 		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick, LeftClick, RightClick, LeftClickOutside
 	}
 	
-	ChestSortSettingsGUI(ChestSortPlugin plugin) {
+	public ChestSortSettingsGUI(ChestSortPlugin plugin) {
 		this.plugin=plugin;
 	}
 	
@@ -42,36 +45,36 @@ public class ChestSortSettingsGUI implements Listener {
 		
 		if(active) {
 			is = new ItemStack(green);
-			suffix = plugin.messages.MSG_GUI_ENABLED;
+			suffix = Messages.MSG_GUI_ENABLED;
 		}
 		else {
 			is = new ItemStack(red);
-			suffix = plugin.messages.MSG_GUI_DISABLED;
+			suffix = Messages.MSG_GUI_DISABLED;
 		}
 		
 		ItemMeta meta = is.getItemMeta();
 				
 		switch(hotkey) {
 		case MiddleClick:
-			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_MIDDLECLICK + ": " + suffix);
+			meta.setDisplayName(ChatColor.RESET + Messages.MSG_GUI_MIDDLECLICK + ": " + suffix);
 			break;
 		case ShiftClick:
-			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_SHIFTCLICK + ": " + suffix);
+			meta.setDisplayName(ChatColor.RESET + Messages.MSG_GUI_SHIFTCLICK + ": " + suffix);
 			break;
 		case DoubleClick:
-			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_DOUBLECLICK + ": " + suffix);
+			meta.setDisplayName(ChatColor.RESET + Messages.MSG_GUI_DOUBLECLICK + ": " + suffix);
 			break;
 		case ShiftRightClick:
-			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_SHIFTRIGHTCLICK + ": " + suffix);
+			meta.setDisplayName(ChatColor.RESET + Messages.MSG_GUI_SHIFTRIGHTCLICK + ": " + suffix);
 			break;
 		case LeftClickOutside:
-			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_LEFTCLICKOUTSIDE + ": " + suffix);
+			meta.setDisplayName(ChatColor.RESET + Messages.MSG_GUI_LEFTCLICKOUTSIDE + ": " + suffix);
 			break;
 		case LeftClick:
-			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_LEFTCLICK + ": "+ suffix);
+			meta.setDisplayName(ChatColor.RESET + Messages.MSG_GUI_LEFTCLICK + ": "+ suffix);
 			break;
 		case RightClick:
-			meta.setDisplayName(ChatColor.RESET + plugin.messages.MSG_GUI_RIGHTCLICK + ": "+ suffix);
+			meta.setDisplayName(ChatColor.RESET + Messages.MSG_GUI_RIGHTCLICK + ": "+ suffix);
 			break;
 		default:
 			break;
@@ -82,7 +85,7 @@ public class ChestSortSettingsGUI implements Listener {
 		return is;
 	}
 	
-    void openGUI(Player player) {
+    public void openGUI(Player player) {
         Inventory inventory = createGUI("ChestSort", player);
         
         ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(player.getUniqueId().toString());
@@ -118,7 +121,7 @@ public class ChestSortSettingsGUI implements Listener {
 			return;
 		}
 		Player p = (Player) event.getWhoClicked();
-		plugin.listener.plugin.registerPlayerIfNeeded(p);
+		plugin.registerPlayerIfNeeded(p);
 		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		
 		if(setting.guiInventory==null) {
