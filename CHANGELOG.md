@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.0.4
+- Added compatibility to the ChestShopConfirmation plugin
+
 ## 10.0.3
 - Fixed "Could not check for updates" message being shown to OPs on join when Update Checker is disabled
 
