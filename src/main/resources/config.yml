@@ -135,6 +135,13 @@ allow-sorting-hotkeys: true
 # Players can also enable/disable these shortcuts individually via /chestsort hotkeys
 # Hotkeys that could interfere with Minecraft's normal behaviour (e.g.
 # shift+left-click) only work on empty slots, so don't worry about them.
+#
+# IMPORTANT! I get this question asked every day on my Discord, so please read:
+# SETTING A HOTKEY TO FALSE WILL NOT(!) DISABLE IT!
+# This are only the default values used for NEW players.
+# Every player can disable/enable the hotkeys individually using
+# /chestsort hotkeys
+#
 sorting-hotkeys:
   # Use middle click (mousewheel) on ANY inventory slot as hotkey
   middle-click: true 
@@ -706,6 +713,6 @@ debug2: false
 # Enable log - you probably do not want this.
 log: false
 
-# Please DO NOT change the following line manually!
-# It is used by the automatic config updater.
-config-version: 50
+# Do not change the following lines!
+config-version: ${config.version}
+plugin-version: ${project.version}

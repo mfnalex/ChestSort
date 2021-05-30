@@ -1,148 +1,238 @@
 package de.jeff_media.chestsort.config;
 
+import de.jeff_media.chestsort.ChestSortPlugin;
+import org.bukkit.plugin.Plugin;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.List;
+import java.util.Set;
+import java.util.logging.Logger;
 
-import de.jeff_media.chestsort.ChestSortPlugin;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
+/**
+ * Updates the config file. When a new config file is shipped with AngelChest, it will save the new
+ * file and replace all default values with the values that were set in the old config file.
+ */
+public final class ConfigUpdater {
 
-import de.jeff_media.chestsort.utils.Utils;
+    // Lines STARTING WITH these names will be treated as String lists
+    private static final String[] LINES_CONTAINING_STRING_LISTS = {Config.DISABLED_WORLDS + ":"};
+    // Lines STARTING WITH these names will never get the old value applied
+    private static final String[] LINES_IGNORED = {"config-version:", "plugin-version:"};
+    // Lines STARTING WITH these names will get no quotes although they would match one of the lists below
+    private static final String[] CONFLICTING_NODES_NEEDING_NO_QUOTES = {};
+    // Lines STARTING WITH these names will get their values wrapped in double quotes
+    private static final String[] NODES_NEEDING_DOUBLE_QUOTES = {"message-"};
+    // Lines STARTING WITH these names will get their values wrapped in single quotes
+    private static final String[] NODES_NEEDING_SINGLE_QUOTES = {};
 
-public class ConfigUpdater {
+    private static void backupCurrentConfig(final ChestSortPlugin main) {
+        final File oldFile = new File(getFilePath(main, "config.yml"));
+        final File newFile = new File(getFilePath(main, "config-backup-" + main.getConfig().getString(Config.CONFIG_PLUGIN_VERSION) + ".yml"));
+        if (newFile.exists()) newFile.delete();
+        if (oldFile.getAbsoluteFile().renameTo(newFile.getAbsoluteFile())) {
+            if(main.isDebug()) main.debug("Could not rename " + oldFile.getAbsolutePath() + " to " + newFile.getAbsolutePath());
+        }
+    }
 
-	final ChestSortPlugin plugin;
+    /**
+     * For debugging the config updater only
+     */
+    private static void debug(final Logger logger, final String message) {
+        if (false) {
+            logger.warning(message);
+        }
+    }
 
-	public ConfigUpdater(ChestSortPlugin jeffChestSortPlugin) {
-		this.plugin = jeffChestSortPlugin;
-	}
+    private static String getFilePath(final Plugin main, final String fileName) {
+        return main.getDataFolder() + File.separator + fileName;
+    }
 
-	// Admins hate config updates. Just relax and let ChestSort update to the newest
-	// config version
-	// Don't worry! Your changes will be kept
+    private static List<String> getNewConfigAsArrayList(final Plugin main) {
+        final List<String> lines;
+        try {
+            lines = Files.readAllLines(Paths.get(getFilePath(main, "config.yml")), StandardCharsets.UTF_8);
+            return lines;
+        } catch (final IOException ioException) {
+            ioException.printStackTrace();
+        }
+        return null;
+    }
 
-	public void updateConfig() {
-		
-		// hotkeys has been renamed to sorting-hotkeys
-		if(plugin.getConfig().isSet("hotkeys.middle-click")) {
-			plugin.getConfig().set("sorting-hotkeys.middle-click", plugin.getConfig().getBoolean("hotkeys.middle-click"));
-			plugin.getConfig().set("sorting-hotkeys.shift-click", plugin.getConfig().getBoolean("hotkeys.shift-click"));
-			plugin.getConfig().set("sorting-hotkeys.double-click", plugin.getConfig().getBoolean("hotkeys.double-click"));
-			plugin.getConfig().set("sorting-hotkeys.shift-right-click", plugin.getConfig().getBoolean("hotkeys.shift-right-click"));
-		}
+    /**
+     * Returns the config version of the currently installed AngelChest default config
+     *
+     * @return default config version
+     */
+    private static long getNewConfigVersion() {
+        final InputStream in = ChestSortPlugin.getInstance().getClass().getResourceAsStream("/config-version.txt");
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        try {
+            return Long.parseLong(reader.readLine());
+        } catch (final IOException ioException) {
+            ioException.printStackTrace();
+            return 0;
+        }
 
-		// allow-hotkeys has been renamed to allow-sorting-hotkeys
-		if(plugin.getConfig().isSet("allow-hotkeys")) {
-			plugin.getConfig().set("allow-sorting-hotkeys",plugin.getConfig().getBoolean("allow-hotkeys"));
-		}
+    }
 
-		try {
-			Files.deleteIfExists(new File(plugin.getDataFolder().getAbsolutePath()+File.separator+"config.old.yml").toPath());
-		} catch (IOException ignored) {
+    /**
+     * Returns a String representing the correct quotes to use for this key's value
+     *
+     * @param line line/key to get the quotes for
+     * @return double quote, single quote or empty string, according to the key name
+     */
+    private static String getQuotes(final String line) {
+        for(final String test : CONFLICTING_NODES_NEEDING_NO_QUOTES) {
+            if(line.startsWith(test)) {
+                return "";
+            }
+        }
+        for (final String test : NODES_NEEDING_DOUBLE_QUOTES) {
+            if (line.startsWith(test)) {
+                return "\"";
+            }
+        }
+        for (final String test : NODES_NEEDING_SINGLE_QUOTES) {
+            if (line.startsWith(test)) {
+                return "'";
+            }
+        }
+        return "";
+    }
 
-		}
+    private static boolean lineContainsIgnoredNode(final String line) {
+        for (final String test : LINES_IGNORED) {
+            if (line.startsWith(test)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-		if (plugin.isDebug())
-			plugin.getLogger().info("rename config.yml -> config.old.yml");
-		Utils.renameFileInPluginDir(plugin, "config.yml", "config.old.yml");
-		if (plugin.isDebug())
-			plugin.getLogger().info("saving new config.yml");
-		plugin.saveDefaultConfig();
+    private static boolean lineIsStringList(final String line) {
+        for (final String test : LINES_CONTAINING_STRING_LISTS) {
+            if (line.startsWith(test)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-		File oldConfigFile = new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.old.yml");
-		FileConfiguration oldConfig = YamlConfiguration.loadConfiguration(oldConfigFile);
+    private static void saveArrayListToConfig(final Plugin main, final List<String> lines) {
+        try {
+            final BufferedWriter fw = Files.newBufferedWriter(new File(getFilePath(main, "config.yml")).toPath(), StandardCharsets.UTF_8);
+            for (final String line : lines) {
+                fw.write(line + System.lineSeparator());
+            }
+            fw.close();
+        } catch (final IOException ioException) {
+            ioException.printStackTrace();
+        }
+    }
 
-		try {
-			oldConfig.load(oldConfigFile);
-		} catch (IOException | InvalidConfigurationException e) {
-			e.printStackTrace();
-		}
+    /**
+     * Attempts to update the config
+     */
+    public static void updateConfig() {
+        final ChestSortPlugin main = ChestSortPlugin.getInstance();
+        final Logger logger = main.getLogger();
+        debug(logger, "Newest config version  = " + getNewConfigVersion());
+        debug(logger, "Current config version = " + main.getConfig().getLong(Config.CONFIG_VERSION));
+        if (main.getConfig().getLong(Config.CONFIG_VERSION) >= getNewConfigVersion()) {
+            debug(logger, "The config currently used has an equal or newer version than the one shipped with this release.");
+            return;
+        }
 
-		Map<String, Object> oldValues = oldConfig.getValues(false);
+        logger.info("===========================================");
+        logger.info("You are using an outdated config file.");
+        logger.info("Your config file will now be updated to the");
+        logger.info("newest version. You changes will be kept.");
+        logger.info("===========================================");
 
-		// Read default config to keep comments
-		ArrayList<String> linesInDefaultConfig = new ArrayList<>();
-		try {
+        // hotkeys has been renamed to sorting-hotkeys
+        if(main.getConfig().isSet("hotkeys.middle-click")) {
+            main.getConfig().set("sorting-hotkeys.middle-click", main.getConfig().getBoolean("hotkeys.middle-click"));
+            main.getConfig().set("sorting-hotkeys.shift-click", main.getConfig().getBoolean("hotkeys.shift-click"));
+            main.getConfig().set("sorting-hotkeys.double-click", main.getConfig().getBoolean("hotkeys.double-click"));
+            main.getConfig().set("sorting-hotkeys.shift-right-click", main.getConfig().getBoolean("hotkeys.shift-right-click"));
+        }
 
-			Scanner scanner = new Scanner(
-					new File(plugin.getDataFolder().getAbsolutePath() + File.separator + "config.yml"),"UTF-8");
-			while (scanner.hasNextLine()) {
-				linesInDefaultConfig.add(scanner.nextLine() + "");
-			}
-			scanner.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+        // allow-hotkeys has been renamed to allow-sorting-hotkeys
+        if(main.getConfig().isSet("allow-hotkeys")) {
+            main.getConfig().set("allow-sorting-hotkeys",main.getConfig().getBoolean("allow-hotkeys"));
+        }
 
-		ArrayList<String> newLines = new ArrayList<>();
-		for (String line : linesInDefaultConfig) {
-			String newline = line;
-			if (line.startsWith("config-version:")) {
-				// dont replace config-version
-			} else if (line.startsWith("disabled-worlds:")) {
-				newline = null;
-				newLines.add("disabled-worlds:");
-				if (plugin.getDisabledWorlds() != null) {
-					for (String disabledWorld : plugin.getDisabledWorlds()) {
-						newLines.add("- " + disabledWorld);
-					}
-				}
-			} else if (line.startsWith("sorting-hotkeys:") || line.startsWith("additional-hotkeys:")) {
-				// dont replace hotkeys root part
-			} else if (line.startsWith("  middle-click:")) {
-				newline = "  middle-click: " + plugin.getConfig().getBoolean("sorting-hotkeys.middle-click");
-			} else if (line.startsWith("  shift-click:")) {
-				newline = "  shift-click: " + plugin.getConfig().getBoolean("sorting-hotkeys.shift-click");
-			} else if (line.startsWith("  double-click:")) {
-				newline = "  double-click: " + plugin.getConfig().getBoolean("sorting-hotkeys.double-click");
-			} else if (line.startsWith("  shift-right-click:")) {
-				newline = "  shift-right-click: " + plugin.getConfig().getBoolean("sorting-hotkeys.shift-right-click");
-			} else if (line.startsWith("  left-click:")) {
-				newline = "  left-click: " + plugin.getConfig().getBoolean("additional-hotkeys.left-click");
-			} else if (line.startsWith("  right-click:")) {
-				newline = "  right-click: " + plugin.getConfig().getBoolean("additional-hotkeys.right-click");
-			} else {
-				for (String node : oldValues.keySet()) {
-					if (line.startsWith(node + ":")) {
+        backupCurrentConfig(main);
+        main.saveDefaultConfig();
 
-						String quotes = "";
+        final Set<String> oldConfigNodes = main.getConfig().getKeys(false);
+        final ArrayList<String> newConfig = new ArrayList<>();
 
-						if (node.equalsIgnoreCase("sorting-method")) // needs single quotes
-							quotes = "'";
-						if (node.startsWith("message-")) // needs double quotes
-							quotes = "\"";
+        // Iterate through ALL lines from the new default config
+        for (final String defaultLine : getNewConfigAsArrayList(main)) {
 
-						newline = node + ": " + quotes + oldValues.get(node).toString() + quotes;
-						if (plugin.isDebug())
-							plugin.getLogger().info("Updating config node " + newline);
-						break;
-					}
-				}
-			}
-			if (newline != null)
-				newLines.add(newline);
-		}
+            String updatedLine = defaultLine;
 
-		BufferedWriter fw;
-		String[] linesArray = newLines.toArray(new String[linesInDefaultConfig.size()]);
-		try {
-			fw = Files.newBufferedWriter(new File(plugin.getDataFolder().getAbsolutePath(),"config.yml").toPath(), StandardCharsets.UTF_8);
-			for (String s : linesArray) {
-				fw.write(s + "\n");
-			}
-			fw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+            /*if (Daddy.allows(Features.GENERIC)) {
+                if (updatedLine.startsWith("# PREMIUM FEATURE: ONLY AVAILABLE IN AngelChestPlus!")) {
+                    updatedLine = null;
+                }
+            } else*/
 
-		// Utils.renameFileInPluginDir(plugin, "config.yml.default", "config.yml");
+            if (defaultLine.startsWith("sorting-hotkeys:") || defaultLine.startsWith("additional-hotkeys:")) {
+                // dont replace hotkeys root part
+            } else if (defaultLine.startsWith("  middle-click:")) {
+                updatedLine = "  middle-click: " + main.getConfig().getBoolean("sorting-hotkeys.middle-click");
+            } else if (defaultLine.startsWith("  shift-click:")) {
+                updatedLine = "  shift-click: " + main.getConfig().getBoolean("sorting-hotkeys.shift-click");
+            } else if (defaultLine.startsWith("  double-click:")) {
+                updatedLine = "  double-click: " + main.getConfig().getBoolean("sorting-hotkeys.double-click");
+            } else if (defaultLine.startsWith("  shift-right-click:")) {
+                updatedLine = "  shift-right-click: " + main.getConfig().getBoolean("sorting-hotkeys.shift-right-click");
+            } else if (defaultLine.startsWith("  left-click:")) {
+                updatedLine = "  left-click: " + main.getConfig().getBoolean("additional-hotkeys.left-click");
+            } else if (defaultLine.startsWith("  right-click:")) {
+                updatedLine = "  right-click: " + main.getConfig().getBoolean("additional-hotkeys.right-click");
+            }
+            else if (defaultLine.startsWith("-") || defaultLine.startsWith(" -") || defaultLine.startsWith("  -")) {
+                debug(logger, "Not including default String list entry: " + defaultLine);
+                updatedLine = null;
+            } else if (lineContainsIgnoredNode(defaultLine)) {
+                debug(logger, "Not updating this line: " + defaultLine);
+            } else if (lineIsStringList(defaultLine)) {
+                updatedLine = null;
+                newConfig.add(defaultLine);
+                final String node = defaultLine.split(":")[0];
+                for (final String entry : main.getConfig().getStringList(node)) {
+                    newConfig.add("- " + entry);
+                }
+            } else {
+                for (final String node : oldConfigNodes) {
+                    // Iterate through all keys from the old config file.
+                    if (defaultLine.startsWith(node + ":")) {
+                        // This key from the old file matches this line from the new file! Updating...
+                        final String quotes = getQuotes(node);
+                        String value = main.getConfig().get(node).toString();
 
-	}
+                        // The hologram text needs special escaping for the newline symbols
+                        if (node.equals("hologram-text")) {
+                            value = value.replaceAll("\n", "\\\\n");
+                        }
 
+                        updatedLine = node + ": " + quotes + value + quotes;
+                    }
+                }
+            }
+
+            if (updatedLine != null) {
+                newConfig.add(updatedLine);
+            }
+        }
+
+        saveArrayListToConfig(main, newConfig);
+    }
 }
