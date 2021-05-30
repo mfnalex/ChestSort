@@ -144,8 +144,9 @@ public class ChestSortOrganizer {
                 return "15_purple";
             case "pink":
                 return "16_pink";
+            default:
+                return "";
         }
-        return "";
     }
 
     static int getNumberOfEnchantments(ItemStack is) {
