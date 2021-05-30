@@ -20,7 +20,7 @@ public class InvSortCommand implements CommandExecutor {
 	}
 	
 	@Override
-	public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
+	public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
 
 		Player p = null;
 
@@ -48,8 +48,6 @@ public class InvSortCommand implements CommandExecutor {
 				args = new String[0];
 			}
 
-			//sender.sendMessage(Messages.MSG_PLAYERSONLY);
-			//return true;
 		}
 		
 		if(p == null) p = (Player) sender;

@@ -8,19 +8,17 @@ import java.util.List;
 
 public class GenericGUIHook {
 
-    ChestSortPlugin main;
-    boolean enabled;
-    private final List<String> guiClasses = Arrays.asList(new String[] {
-            "me.droreo002.chestshopconfirmation.inventory.ConfirmationInventory"
-    });
+    private final ChestSortPlugin main;
+    //boolean enabled;
+
+    private final List<String> guiClasses = Arrays.asList("me.droreo002.chestshopconfirmation.inventory.ConfirmationInventory");
 
     public GenericGUIHook(ChestSortPlugin main, boolean enabled) {
         this.main=main;
-        this.enabled=enabled;
+        //this.enabled=enabled;
     }
 
     public boolean isPluginGUI(Inventory inv) {
-        if(!enabled) return false;
         if(inv.getHolder()!=null && (inv.getHolder().getClass().getName().toLowerCase().contains("gui")
             || inv.getHolder().getClass().getName().toLowerCase().contains("menu"))) {
             main.debug("Generic GUI detected by class name containing \"gui\" or \"menu\"");

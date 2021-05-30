@@ -5,7 +5,7 @@ import org.bukkit.inventory.Inventory;
 
 public class HeadDatabaseHook {
 
-    ChestSortPlugin main;
+    private final ChestSortPlugin main;
 
     public HeadDatabaseHook(ChestSortPlugin main) {
         this.main=main;

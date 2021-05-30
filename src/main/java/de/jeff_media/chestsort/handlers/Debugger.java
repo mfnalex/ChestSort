@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class Debugger implements @NotNull Listener {
+public class Debugger implements Listener {
 
     private final ChestSortPlugin plugin;
 

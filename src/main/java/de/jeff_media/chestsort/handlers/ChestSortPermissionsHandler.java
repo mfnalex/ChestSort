@@ -9,8 +9,8 @@ import org.bukkit.permissions.PermissionAttachment;
 
 public class ChestSortPermissionsHandler {
 	
-	final HashMap<UUID,PermissionAttachment> permissions;
-	final ChestSortPlugin plugin;
+	private final HashMap<UUID,PermissionAttachment> permissions;
+	private final ChestSortPlugin plugin;
 	
 	public ChestSortPermissionsHandler(ChestSortPlugin plugin) {
 		this.plugin = plugin;

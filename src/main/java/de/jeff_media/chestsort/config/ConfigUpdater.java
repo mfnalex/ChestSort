@@ -42,6 +42,7 @@ public final class ConfigUpdater {
      * For debugging the config updater only
      */
     private static void debug(final Logger logger, final String message) {
+        //noinspection ConstantConditions
         if (false) {
             logger.warning(message);
         }
@@ -183,6 +184,7 @@ public final class ConfigUpdater {
                 }
             } else*/
 
+            //noinspection StatementWithEmptyBody
             if (defaultLine.startsWith("sorting-hotkeys:") || defaultLine.startsWith("additional-hotkeys:")) {
                 // dont replace hotkeys root part
             } else if (defaultLine.startsWith("  middle-click:")) {

@@ -5,7 +5,7 @@ import org.bukkit.inventory.Inventory;
 
 public class GoldenCratesHook {
 
-   ChestSortPlugin main;
+   private final ChestSortPlugin main;
 
     public GoldenCratesHook(ChestSortPlugin main) {
         this.main=main;

@@ -13,8 +13,6 @@ public class Messages {
 	// When creating pull requests that feature a message to the player, please
 	// stick to this scheme
 
-	public static ChestSortPlugin plugin;
-
 	public static String MSG_ACTIVATED, MSG_DEACTIVATED, MSG_INVACTIVATED, MSG_INVDEACTIVATED, MSG_COMMANDMESSAGE, MSG_COMMANDMESSAGE2, MSG_PLAYERSONLY,
 			MSG_PLAYERINVSORTED, MSG_INVALIDOPTIONS;
 
@@ -24,8 +22,9 @@ public class Messages {
 
 	public static String MSG_ERR_HOTKEYSDISABLED;
 
-	public Messages(ChestSortPlugin plugin) {
-		this.plugin = plugin;
+	public Messages() {
+
+		ChestSortPlugin plugin = ChestSortPlugin.getInstance();
 
 		MSG_CONTAINER_SORTED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
 				.getString("message-container-sorted","&aContainer sorted!"));

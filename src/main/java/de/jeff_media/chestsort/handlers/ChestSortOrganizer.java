@@ -169,6 +169,7 @@ public class ChestSortOrganizer {
         return totalEnchants;
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean doesInventoryContain(Inventory inv, Material mat) {
         for (ItemStack item : Utils.getStorageContents(inv, plugin.getMcMinorVersion())) {
             if (item == null) continue;
@@ -350,7 +351,7 @@ public class ChestSortOrganizer {
     public Map<String, String> getSortableMap(ItemStack item) {
         if (item == null) {
             // Empty map for non-item
-            return new HashMap<String, String>();
+            return new HashMap<>();
         }
 
         char blocksFirst;
@@ -376,7 +377,7 @@ public class ChestSortOrganizer {
                 // Only continue if Method "getBasePotionData" exists
                 Class<? extends PotionMeta> potionMetaClass = potionMeta.getClass();
                 try {
-                    if (potionMetaClass.getDeclaredMethod("getBasePotionData", null) != null) {
+                    if (potionMetaClass.getDeclaredMethod("getBasePotionData", (Class<?>) null) != null) {
                         if (potionMeta.getBasePotionData() != null) {
                             PotionData pdata = potionMeta.getBasePotionData();
                             if (pdata != null && pdata.getType() != null && pdata.getType().getEffectType() != null) {
@@ -427,7 +428,7 @@ public class ChestSortOrganizer {
 
         // Generate the map of string replacements used to generate a sortableString.
         // This map can be edited by ChestSortEvent handlers. See ChestSortEvent.getSortableMaps()
-        Map<String, String> sortableMap = new HashMap<String, String>();
+        Map<String, String> sortableMap = new HashMap<>();
         sortableMap.put("{itemsFirst}", String.valueOf(itemsFirst));
         sortableMap.put("{blocksFirst}", String.valueOf(blocksFirst));
         sortableMap.put("{name}", typeName + potionEffect);
@@ -467,7 +468,7 @@ public class ChestSortOrganizer {
         ChestSortEvent chestSortEvent = new ChestSortEvent(inv);
 
         try {
-            if (invClass.getMethod("getLocation", null) != null) {
+            if (invClass.getMethod("getLocation", (Class<?>) null) != null) {
                 // This whole try/catch fixes MethodNotFoundException when using inv.getLocation in Spigot 1.8.
                 if (inv.getLocation() != null) {
                     chestSortEvent.setLocation(inv.getLocation());
@@ -487,7 +488,7 @@ public class ChestSortOrganizer {
             }
         }
 
-        chestSortEvent.setSortableMaps(new HashMap<ItemStack, Map<String, String>>());
+        chestSortEvent.setSortableMaps(new HashMap<>());
         for (ItemStack item : inv.getContents()) {
             chestSortEvent.getSortableMaps().put(item, getSortableMap(item));
         }
@@ -517,15 +518,6 @@ public class ChestSortOrganizer {
         for (int i = endSlot + 1; i < inv.getSize(); i++) {
             items[i] = null;
         }
-        // Get rid of all stuff that contains more than maxStackSize
-        // We do not need this as ChestSort will keep the "overstacked" stacks intact
-		/*for(int i = 0; i<endSlot; i++) {
-			if(inv.getItem(i) != null && inv.getItem(i).getAmount() > inv.getItem(i).getMaxStackSize()) {
-				//System.out.println("Debug: "+inv.getItem(i).getMaxStackSize());
-				//items[i] = null;
-				//unsortableSlots.add(i);
-			}
-		}*/
         // Check for
         // - Minepacks backpacks
         // - Inventorypages buttons
@@ -628,16 +620,13 @@ public class ChestSortOrganizer {
     }
 
 
-
-	/*public void stuffPlayerInventoryIntoAnother(PlayerInventory source, Inventory destination) {
-		stuffPlayerInventoryIntoAnother(source,destination,false);
-	}*/
-
     public void stuffInventoryIntoAnother(Inventory source, Inventory destination, Inventory origSource, boolean onlyMatchingStuff) {
 
         ItemStack[] hotbarStuff = new ItemStack[9];
         boolean destinationIsPlayerInventory = true;
-        if (destination.getHolder() == null || !(destination.getHolder() instanceof Player) || destination.getType() != InventoryType.PLAYER) {
+        if (destination.getHolder() == null
+                || !(destination.getHolder() instanceof Player)
+                || destination.getType() != InventoryType.PLAYER) {
             destinationIsPlayerInventory = false;
         }
 
