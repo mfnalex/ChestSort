@@ -21,7 +21,7 @@ public class Debugger implements @NotNull Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onInventoryClickEvent(InventoryClickEvent e) {
-    	if(plugin.debug) {
+    	if(plugin.isDebug()) {
 			// Debug
 			plugin.debug(" ");
 			plugin.debug("InventoryClickEvent:");

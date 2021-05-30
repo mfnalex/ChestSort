@@ -14,7 +14,7 @@ public class CrackShotHook {
 	public CrackShotHook(ChestSortPlugin plugin) {
 		this.plugin=plugin;
 		
-		if(plugin.hookCrackShot) {
+		if(plugin.isHookCrackShot()) {
 			crackShotUtility = new CSUtility();
 			plugin.getLogger().info("Succesfully hooked into CrackShot");
 		}
@@ -22,7 +22,7 @@ public class CrackShotHook {
 	
 	// Will return when not a weapon
 	public String getCrackShotWeaponName(ItemStack item) {
-		if(crackShotUtility == null || !plugin.hookCrackShot) {
+		if(crackShotUtility == null || !plugin.isHookCrackShot()) {
 			return null;
 		}
 		

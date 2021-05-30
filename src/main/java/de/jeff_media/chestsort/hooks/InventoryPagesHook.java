@@ -24,7 +24,7 @@ public class InventoryPagesHook {
 	public InventoryPagesHook(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 		
-		if(!plugin.hookInventoryPages) {
+		if(!plugin.isHookInventoryPages()) {
 			return;
 		}
 		
@@ -51,7 +51,7 @@ public class InventoryPagesHook {
 	
 	public boolean isButton(@NotNull ItemStack item, int slot, @NotNull Inventory inv) {
 		
-		if(!plugin.hookInventoryPages) {
+		if(!plugin.isHookInventoryPages()) {
 			return false;
 		}
 		

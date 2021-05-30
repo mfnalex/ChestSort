@@ -47,10 +47,10 @@ public class ConfigUpdater {
 
 		}
 
-		if (plugin.debug)
+		if (plugin.isDebug())
 			plugin.getLogger().info("rename config.yml -> config.old.yml");
 		Utils.renameFileInPluginDir(plugin, "config.yml", "config.old.yml");
-		if (plugin.debug)
+		if (plugin.isDebug())
 			plugin.getLogger().info("saving new config.yml");
 		plugin.saveDefaultConfig();
 
@@ -87,8 +87,8 @@ public class ConfigUpdater {
 			} else if (line.startsWith("disabled-worlds:")) {
 				newline = null;
 				newLines.add("disabled-worlds:");
-				if (plugin.disabledWorlds != null) {
-					for (String disabledWorld : plugin.disabledWorlds) {
+				if (plugin.getDisabledWorlds() != null) {
+					for (String disabledWorld : plugin.getDisabledWorlds()) {
 						newLines.add("- " + disabledWorld);
 					}
 				}
@@ -118,7 +118,7 @@ public class ConfigUpdater {
 							quotes = "\"";
 
 						newline = node + ": " + quotes + oldValues.get(node).toString() + quotes;
-						if (plugin.debug)
+						if (plugin.isDebug())
 							plugin.getLogger().info("Updating config node " + newline);
 						break;
 					}

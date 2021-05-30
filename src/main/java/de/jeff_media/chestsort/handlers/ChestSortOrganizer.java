@@ -79,13 +79,13 @@ public class ChestSortOrganizer {
                 // Category name is the filename without .txt
                 String categoryName = file.getName().replaceFirst(".txt", "");
 
-                if (plugin.debug) {
+                if (plugin.isDebug()) {
                     plugin.getLogger().info("Loading category file " + file.getName());
                 }
                 try {
                     Category category = new Category(categoryName, loadCategoryFile(file));
                     categories.add(category);
-                    if (plugin.debug) {
+                    if (plugin.isDebug()) {
                         plugin.getLogger().info("Loaded category file " + file.getName() + " ("
                                 + category.typeMatches.length + " items)");
                     }
@@ -170,7 +170,7 @@ public class ChestSortOrganizer {
     }
 
     boolean doesInventoryContain(Inventory inv, Material mat) {
-        for (ItemStack item : Utils.getStorageContents(inv,plugin.mcMinorVersion)) {
+        for (ItemStack item : Utils.getStorageContents(inv, plugin.getMcMinorVersion())) {
             if (item == null) continue;
             if (item.getType() == mat) {
                 return true;
@@ -210,13 +210,13 @@ public class ChestSortOrganizer {
                     if (currentLine.toLowerCase().endsWith("=true")) {
                         appendLineNumber = true;
                         makeCategoryStickyByFileName(file.getName());
-                        if (plugin.debug)
+                        if (plugin.isDebug())
                             plugin.getLogger().info("Sticky set to true in " + file.getName());
                     }
                 } else {
                     //if (currentLine != null) {
                     lines.add(new TypeMatchPositionPair(currentLine, currentLineNumber, appendLineNumber));
-                    if (plugin.debug)
+                    if (plugin.isDebug())
                         plugin.getLogger().info("Added typeMatch to category file: " + currentLine);
                     //}
                 }
@@ -246,7 +246,7 @@ public class ChestSortOrganizer {
         // [0] = Sortable Item name
         // [1] = Color/Wood
 
-        String myColor = (plugin.debug) ? "~color~" : emptyPlaceholderString;
+        String myColor = (plugin.isDebug()) ? "~color~" : emptyPlaceholderString;
 
         // Only work with lowercase
         typeName = typeName.toLowerCase();
@@ -343,7 +343,7 @@ public class ChestSortOrganizer {
                 return new CategoryLinePair(cat.name, matchingLineNumber);
             }
         }
-        return new CategoryLinePair((plugin.debug) ? "~category~" : emptyPlaceholderString, (short) 0);
+        return new CategoryLinePair((plugin.isDebug()) ? "~category~" : emptyPlaceholderString, (short) 0);
     }
 
     // Generate a map of "{placeholder}", "sortString" pairs for an ItemStack
@@ -394,7 +394,7 @@ public class ChestSortOrganizer {
         String hookChangedName = item.getType().name();
 
         // CrackShot Support Start
-        if (plugin.hookCrackShot) {
+        if (plugin.isHookCrackShot()) {
             if (crackShotHook.getCrackShotWeaponName(item) != null) {
                 typeName = plugin.getConfig().getString("hook-crackshot-prefix") + "_" + crackShotHook.getCrackShotWeaponName(item);
                 color = "";
@@ -411,11 +411,11 @@ public class ChestSortOrganizer {
             categorySticky = categoryName + "~" + lineNumber;
         }
 
-        String customName = (plugin.debug) ? "~customName~" : emptyPlaceholderString;
+        String customName = (plugin.isDebug()) ? "~customName~" : emptyPlaceholderString;
         if (item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName() != null) {
             customName = item.getItemMeta().getDisplayName();
         }
-        String lore = (plugin.debug) ? "~lore~" : emptyPlaceholderString;
+        String lore = (plugin.isDebug()) ? "~lore~" : emptyPlaceholderString;
         if (item.getItemMeta().hasLore() && item.getItemMeta().getLore() != null
                 && item.getItemMeta().getLore().size() != 0) {
             String[] loreArray = item.getItemMeta().getLore().toArray(new String[0]);
@@ -443,7 +443,7 @@ public class ChestSortOrganizer {
     // This puts together the sortable item name, the category, the color, and
     // whether the item is a block or a "regular item"
     String getSortableString(ItemStack item, Map<String, String> sortableMap) {
-        String sortableString = plugin.sortingMethod.replaceAll(",", "|");
+        String sortableString = plugin.getSortingMethod().replaceAll(",", "|");
 
         for (Map.Entry<String, String> entry : sortableMap.entrySet()) {
             String placeholder = entry.getKey();
@@ -499,7 +499,7 @@ public class ChestSortOrganizer {
         }
 
 
-        if (plugin.debug) {
+        if (plugin.isDebug()) {
             System.out.println(" ");
             System.out.println(" ");
         }
@@ -531,8 +531,8 @@ public class ChestSortOrganizer {
         // - Inventorypages buttons
         // - ItemStacks with more than 64 items
         for (int i = startSlot; i <= endSlot; i++) {
-            if ((plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(items[i]))
-                    || (plugin.hookInventoryPages && inventoryPagesHook.isButton(items[i], i, inv))
+            if ((plugin.isHookMinepacks() && plugin.getListener().minepacksHook.isMinepacksBackpack(items[i]))
+                    || (plugin.isHookInventoryPages() && inventoryPagesHook.isButton(items[i], i, inv))
                     || (plugin.getConfig().getBoolean("dont-move-slimefun-backpacks") && SlimeFunHook.isSlimefunBackpack(items[i]))
                     || isOversizedStack(items[i])
                     || chestSortEvent.isUnmovable(i)
@@ -582,7 +582,7 @@ public class ChestSortOrganizer {
         Inventory tempInventory = Bukkit.createInventory(null, maxInventorySize); // cannot be bigger than 54 as of 1.14
 
         for (ItemStack item : nonNullItems) {
-            if (plugin.debug)
+            if (plugin.isDebug())
                 System.out.println(getSortableString(item, chestSortEvent.getSortableMaps().get(item)));
             // Add the item to the temporary inventory
             tempInventory.addItem(item);
@@ -698,10 +698,10 @@ public class ChestSortOrganizer {
 			/*if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(destination)
 					&& plugin.listener.minepacksHook.isMinepacksBackpack(currentItem)) continue;*/
             // This prevents Minepacks from being moved at all
-            if (plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(currentItem)) continue;
+            if (plugin.isHookMinepacks() && plugin.getListener().minepacksHook.isMinepacksBackpack(currentItem)) continue;
 
-            if (plugin.hookInventoryPages
-                    && plugin.organizer.inventoryPagesHook.isButton(currentItem, i, source)) continue;
+            if (plugin.isHookInventoryPages()
+                    && plugin.getOrganizer().inventoryPagesHook.isButton(currentItem, i, source)) continue;
 
             if (destinationIsShulkerBox && currentItem.getType().name().endsWith("SHULKER_BOX")) continue;
 

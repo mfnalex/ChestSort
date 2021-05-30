@@ -18,7 +18,7 @@ public class MinepacksHook {
 	public MinepacksHook(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 	    Plugin bukkitPlugin = Bukkit.getPluginManager().getPlugin("Minepacks");
-	    if(plugin.hookMinepacks && bukkitPlugin instanceof MinepacksPlugin) {
+	    if(plugin.isHookMinepacks() && bukkitPlugin instanceof MinepacksPlugin) {
 	        minepacks = (MinepacksPlugin) bukkitPlugin;
 			plugin.getLogger().info("Succesfully hooked into Minepacks");
 	    }
@@ -35,7 +35,7 @@ public class MinepacksHook {
 		} catch (NoSuchMethodException | SecurityException e) {
 			plugin.getLogger().warning("You are using a version of Minepacks that is too old and does not implement every API method needed by ChestSort. Minepacks hook will be disabled.");
 			minepacks = null;
-			plugin.hookMinepacks=false;
+			plugin.setHookMinepacks(false);
 		}
 		
 		return false;

@@ -88,7 +88,7 @@ public class SettingsGUI implements Listener {
     public void openGUI(Player player) {
         Inventory inventory = createGUI("ChestSort", player);
         
-        PlayerSetting setting = plugin.perPlayerSettings.get(player.getUniqueId().toString());
+        PlayerSetting setting = plugin.getPerPlayerSettings().get(player.getUniqueId().toString());
 
         if(plugin.getConfig().getBoolean("allow-sorting-hotkeys")) {
 			inventory.setItem(slotMiddleClick, getItem(setting.middleClick, Hotkey.MiddleClick));
@@ -114,7 +114,7 @@ public class SettingsGUI implements Listener {
     
     @EventHandler
 	void onGUIInteract(InventoryClickEvent event) {
-		if(!plugin.hotkeyGUI) {
+		if(!plugin.isHotkeyGUI()) {
 			return;
 		}
 		if(!(event.getWhoClicked() instanceof Player)) {
@@ -122,7 +122,7 @@ public class SettingsGUI implements Listener {
 		}
 		Player p = (Player) event.getWhoClicked();
 		plugin.registerPlayerIfNeeded(p);
-		PlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		PlayerSetting setting = plugin.getPerPlayerSettings().get(p.getUniqueId().toString());
 		
 		if(setting.guiInventory==null) {
 			return;
@@ -148,26 +148,26 @@ public class SettingsGUI implements Listener {
 
 		if(event.getSlot() == SettingsGUI.slotMiddleClick) {
 			setting.toggleMiddleClick();
-			plugin.settingsGUI.openGUI(p);
+			plugin.getSettingsGUI().openGUI(p);
 		}
 		else if(event.getSlot() == SettingsGUI.slotShiftClick) {
 			setting.toggleShiftClick();
-			plugin.settingsGUI.openGUI(p);
+			plugin.getSettingsGUI().openGUI(p);
 		} else 	if(event.getSlot() == SettingsGUI.slotDoubleClick) {
 			setting.toggleDoubleClick();
-			plugin.settingsGUI.openGUI(p);
+			plugin.getSettingsGUI().openGUI(p);
 		} else if(event.getSlot() == SettingsGUI.slotLeftClickFromOutside) {
 			setting.toggleLeftClickOutside();
-			plugin.settingsGUI.openGUI(p);
+			plugin.getSettingsGUI().openGUI(p);
 		} else if(event.getSlot() == SettingsGUI.slotShiftRightClick) {
 			setting.toggleShiftRightClick();
-			plugin.settingsGUI.openGUI(p);
+			plugin.getSettingsGUI().openGUI(p);
 		} else if(event.getSlot() == SettingsGUI.slotLeftClick) {
 			setting.toggleLeftClick();
-			plugin.settingsGUI.openGUI(p);
+			plugin.getSettingsGUI().openGUI(p);
 		} else if(event.getSlot() == SettingsGUI.slotRightClick) {
 			setting.toggleRightClick();
-			plugin.settingsGUI.openGUI(p);
+			plugin.getSettingsGUI().openGUI(p);
 		}
 		
 	}

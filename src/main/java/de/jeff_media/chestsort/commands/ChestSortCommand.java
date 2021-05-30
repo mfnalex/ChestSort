@@ -46,7 +46,7 @@ public class ChestSortCommand implements CommandExecutor {
 				sender.sendMessage(plugin.getCommand("chestsort").getPermissionMessage());
 			}
 			sender.sendMessage(ChatColor.RED+"ChestSort Debug mode enabled - I hope you know what you are doing!");
-			plugin.debug=true;
+			plugin.setDebug(true);
 			Debugger debugger = new Debugger(plugin);
 			plugin.getServer().getPluginManager().registerEvents(debugger, plugin);
 			plugin.debug("Debug mode activated through command by "+sender.getName());
@@ -61,7 +61,7 @@ public class ChestSortCommand implements CommandExecutor {
 				
 				if(args.length!=0) {
 					if(args[0].equalsIgnoreCase("debug")) {
-						plugin.debug=true;
+						plugin.setDebug(true);
 						plugin.getLogger().info("ChestSort debug mode enabled.");
 						return true;
 					} 
@@ -82,12 +82,12 @@ public class ChestSortCommand implements CommandExecutor {
 			if(args.length>0) {
 				if(args[0].equalsIgnoreCase("hotkey") || args[0].equalsIgnoreCase("hotkeys")) {
 					
-					if(!plugin.hotkeyGUI) {
+					if(!plugin.isHotkeyGUI()) {
 						p.sendMessage(Messages.MSG_ERR_HOTKEYSDISABLED);
 						return true;
 					}
 					
-					plugin.settingsGUI.openGUI(p);
+					plugin.getSettingsGUI().openGUI(p);
 					
 					return true;
 				} 
@@ -95,7 +95,7 @@ public class ChestSortCommand implements CommandExecutor {
 			}
 			// Settings GUI End
 			
-			PlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+			PlayerSetting setting = plugin.getPerPlayerSettings().get(p.getUniqueId().toString());
 			
 			if(args.length>0
 					 && !args[0].equalsIgnoreCase("toggle")

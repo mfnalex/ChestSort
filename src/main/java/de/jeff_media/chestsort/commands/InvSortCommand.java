@@ -57,7 +57,7 @@ public class InvSortCommand implements CommandExecutor {
 		int start = 9;
 		int end = 35;
 		
-		PlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		PlayerSetting setting = plugin.getPerPlayerSettings().get(p.getUniqueId().toString());
 
 		if(!plugin.getConfig().getBoolean("allow-automatic-inventory-sorting")) {
 			if(args.length==0 || args[0].equalsIgnoreCase("on") || args[0].equalsIgnoreCase("off") || args[0].equalsIgnoreCase("toggle") ) {
@@ -97,8 +97,8 @@ public class InvSortCommand implements CommandExecutor {
 				return true;
 			}
 		}
-		plugin.lgr.logSort(p, Logger.SortCause.CMD_ISORT);
-		plugin.organizer.sortInventory(p.getInventory(), start, end);
+		plugin.getLgr().logSort(p, Logger.SortCause.CMD_ISORT);
+		plugin.getOrganizer().sortInventory(p.getInventory(), start, end);
 		p.sendMessage(Messages.MSG_PLAYERINVSORTED);
 		
 		return true;
