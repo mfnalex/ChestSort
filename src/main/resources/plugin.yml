@@ -1,11 +1,13 @@
-main: de.jeff_media.chestsort.ChestSortPlugin
-name: ChestSort
-version: 10.0.3
+main: ${spigot.main}
+name: ${project.name}
+version: ${project.version}
 api-version: "1.13"
-description: Allows automatic chest sorting
-author: mfnalex
-website: https://www.chestsort.de
-prefix: ChestSort
+description: "${project.description}"
+authors:
+  - mfnalex
+  - JEFF Media GbR
+website: ${project.url}
+prefix: ${spigot.prefix}
 database: false
 loadbefore: [InvUnload]
 softdepend: [CrackShot,InventoryPages,Minepacks]
