@@ -4,7 +4,7 @@ import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 
-public class ChestSortPlayerSetting {
+public class PlayerSetting {
 	
 	// Represents the information regarding a player
 	// That includes:
@@ -40,7 +40,7 @@ public class ChestSortPlayerSetting {
 		NONE, RIGHT_CLICK, LEFT_CLICK
 	}
 
-	public ChestSortPlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean leftCLickOutside, boolean changed) {
+	public PlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean leftCLickOutside, boolean changed) {
 		this.sortingEnabled = sortingEnabled;
 		this.middleClick = middleClick;
 		this.shiftClick = shiftClick;

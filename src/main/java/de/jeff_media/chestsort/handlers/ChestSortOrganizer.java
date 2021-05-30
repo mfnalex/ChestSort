@@ -2,7 +2,7 @@ package de.jeff_media.chestsort.handlers;
 
 import de.jeff_media.chestsort.ChestSortEvent;
 import de.jeff_media.chestsort.ChestSortPlugin;
-import de.jeff_media.chestsort.data.ChestSortCategory;
+import de.jeff_media.chestsort.data.Category;
 import de.jeff_media.chestsort.hooks.CrackShotHook;
 import de.jeff_media.chestsort.hooks.InventoryPagesHook;
 import de.jeff_media.chestsort.hooks.SlimeFunHook;
@@ -57,7 +57,7 @@ public class ChestSortOrganizer {
     final CrackShotHook crackShotHook;
     final InventoryPagesHook inventoryPagesHook;
     // We store a list of all Category objects
-    public final ArrayList<ChestSortCategory> categories = new ArrayList<>();
+    public final ArrayList<Category> categories = new ArrayList<>();
     final ArrayList<String> stickyCategoryNames = new ArrayList<>();
 
     public ChestSortOrganizer(ChestSortPlugin plugin) {
@@ -83,7 +83,7 @@ public class ChestSortOrganizer {
                     plugin.getLogger().info("Loading category file " + file.getName());
                 }
                 try {
-                    ChestSortCategory category = new ChestSortCategory(categoryName, loadCategoryFile(file));
+                    Category category = new Category(categoryName, loadCategoryFile(file));
                     categories.add(category);
                     if (plugin.debug) {
                         plugin.getLogger().info("Loaded category file " + file.getName() + " ("
@@ -98,7 +98,7 @@ public class ChestSortOrganizer {
 
         // Make categories sticky
         for (String catName : stickyCategoryNames) {
-            for (ChestSortCategory cat : categories) {
+            for (Category cat : categories) {
                 if (catName.equalsIgnoreCase(cat.name)) {
                     cat.setSticky();
                 }
@@ -337,7 +337,7 @@ public class ChestSortOrganizer {
     // items when sorting by category)
     public CategoryLinePair getCategoryLinePair(String typeName) {
         typeName = typeName.toLowerCase();
-        for (ChestSortCategory cat : categories) {
+        for (Category cat : categories) {
             short matchingLineNumber = cat.matches(typeName);
             if (matchingLineNumber != 0) {
                 return new CategoryLinePair(cat.name, matchingLineNumber);

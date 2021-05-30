@@ -5,10 +5,9 @@ import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.jetbrains.annotations.NotNull;
 
-public class ChestSortTabCompleter implements TabCompleter {
+public class TabCompleter implements org.bukkit.command.TabCompleter {
 	
 	static final String[] chestsortOptions = { "toggle","on","off","hotkeys","help" };
 	static final String[] invsortOptions = { "toggle","on","off","all", "hotbar", "inv","help" };

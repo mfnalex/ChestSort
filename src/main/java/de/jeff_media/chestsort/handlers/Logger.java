@@ -1,30 +1,29 @@
 package de.jeff_media.chestsort.handlers;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
-import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
+import de.jeff_media.chestsort.data.PlayerSetting;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.FileHandler;
-import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
-public class ChestSortLogger {
+public class Logger {
 
     ChestSortPlugin plugin;
     boolean log;
-    Logger logger;
+    java.util.logging.Logger logger;
 
-    public ChestSortLogger(ChestSortPlugin plugin, boolean log) {
+    public Logger(ChestSortPlugin plugin, boolean log) {
         if(!log) return;
         plugin.getLogger().info("=======================================");
         plugin.getLogger().info("     CHESTSORT LOGGER ACTIVATED!");
         plugin.getLogger().info("=======================================");
         this.plugin=plugin;
         this.log=log;
-        logger = Logger.getLogger("ChestSortLogger");
+        logger = java.util.logging.Logger.getLogger("ChestSortLogger");
         logger.setUseParentHandlers(false);
         FileHandler fh;
         try {
@@ -39,7 +38,7 @@ public class ChestSortLogger {
 
     private String getPlayerSettings(Player p) {
         if(plugin.perPlayerSettings.containsKey(p.getUniqueId().toString())) {
-            ChestSortPlayerSetting s = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+            PlayerSetting s = plugin.perPlayerSettings.get(p.getUniqueId().toString());
             return String.format("sorting: %s, invsorting: %s, middle-click: %s, shift-click: %s, double-click: %s, shift-right-click: %s, left-click: %s, right-click: %s, seen-msg: %s",
                     s.sortingEnabled, s.invSortingEnabled, s.middleClick, s.shiftClick, s.doubleClick, s.shiftRightClick, s.leftClick, s.rightClick, s.hasSeenMessage);
         } else {

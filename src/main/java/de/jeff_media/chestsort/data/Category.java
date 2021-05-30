@@ -2,7 +2,7 @@ package de.jeff_media.chestsort.data;
 
 import de.jeff_media.chestsort.utils.TypeMatchPositionPair;
 
-public class ChestSortCategory implements Comparable<ChestSortCategory>{
+public class Category implements Comparable<Category>{
 
 	// Represents a sorting category
 	// Includes an array of strings called typeMatches
@@ -16,7 +16,7 @@ public class ChestSortCategory implements Comparable<ChestSortCategory>{
 	boolean sticky = false;
 	public final TypeMatchPositionPair[] typeMatches;
 
-	public ChestSortCategory(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
+	public Category(String name, TypeMatchPositionPair[] typeMatchPositionPairs) {
 		this.name = name;
 		this.typeMatches = typeMatchPositionPairs;
 	}
@@ -71,7 +71,7 @@ public class ChestSortCategory implements Comparable<ChestSortCategory>{
 		return 0;
 	}
 	
-	public int compareTo(ChestSortCategory compareCategory) {
+	public int compareTo(Category compareCategory) {
 		return this.name.compareTo(compareCategory.name);
 	}
 

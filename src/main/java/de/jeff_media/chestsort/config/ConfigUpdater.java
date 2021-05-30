@@ -14,11 +14,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import de.jeff_media.chestsort.utils.Utils;
 
-public class ChestSortConfigUpdater {
+public class ConfigUpdater {
 
 	final ChestSortPlugin plugin;
 
-	public ChestSortConfigUpdater(ChestSortPlugin jeffChestSortPlugin) {
+	public ConfigUpdater(ChestSortPlugin jeffChestSortPlugin) {
 		this.plugin = jeffChestSortPlugin;
 	}
 

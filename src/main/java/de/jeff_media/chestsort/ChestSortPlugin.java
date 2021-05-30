@@ -28,25 +28,25 @@
 package de.jeff_media.chestsort;
 
 import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
-import de.jeff_media.chestsort.commands.ChestSortAdminCommand;
-import de.jeff_media.chestsort.commands.ChestSortChestSortCommand;
-import de.jeff_media.chestsort.commands.ChestSortInvSortCommand;
-import de.jeff_media.chestsort.commands.ChestSortTabCompleter;
-import de.jeff_media.chestsort.config.ChestSortConfigUpdater;
+import de.jeff_media.chestsort.commands.AdminCommand;
+import de.jeff_media.chestsort.commands.ChestSortCommand;
+import de.jeff_media.chestsort.commands.InvSortCommand;
+import de.jeff_media.chestsort.commands.TabCompleter;
+import de.jeff_media.chestsort.config.ConfigUpdater;
 import de.jeff_media.chestsort.config.Messages;
 import de.jeff_media.chestsort.config.Config;
-import de.jeff_media.chestsort.data.ChestSortCategory;
-import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
-import de.jeff_media.chestsort.gui.ChestSortSettingsGUI;
-import de.jeff_media.chestsort.handlers.ChestSortDebugger;
-import de.jeff_media.chestsort.handlers.ChestSortLogger;
+import de.jeff_media.chestsort.data.Category;
+import de.jeff_media.chestsort.data.PlayerSetting;
+import de.jeff_media.chestsort.gui.SettingsGUI;
+import de.jeff_media.chestsort.handlers.Debugger;
+import de.jeff_media.chestsort.handlers.Logger;
 import de.jeff_media.chestsort.handlers.ChestSortOrganizer;
 import de.jeff_media.chestsort.handlers.ChestSortPermissionsHandler;
 import de.jeff_media.chestsort.hooks.EnderContainersHook;
 import de.jeff_media.chestsort.hooks.GenericGUIHook;
 import de.jeff_media.chestsort.hooks.PlayerVaultsHook;
-import de.jeff_media.chestsort.listeners.ChestSortListener;
-import de.jeff_media.chestsort.placeholders.ChestSortPlaceholders;
+import de.jeff_media.chestsort.listeners.Listener;
+import de.jeff_media.chestsort.placeholders.Placeholders;
 import de.jeff_media.chestsort.utils.Utils;
 import de.jeff_media.jefflib.JeffLib;
 import de.jeff_media.jefflib.NBTAPI;
@@ -79,17 +79,17 @@ public class ChestSortPlugin extends JavaPlugin {
     public boolean debug = false;
     public ArrayList<String> disabledWorlds;
     public HashMap<UUID, Long> hotkeyCooldown;
-    public ChestSortLogger lgr;
-    public ChestSortListener listener;
+    public Logger lgr;
+    public Listener listener;
     // 1.14.4 = 1_14_R1
     // 1.8.0  = 1_8_R1
     public int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
     public String mcVersion;    // 1.13.2 = 1_13_R2
     public Messages messages;
     public ChestSortOrganizer organizer;
-    public Map<String, ChestSortPlayerSetting> perPlayerSettings = new HashMap<>();
+    public Map<String, PlayerSetting> perPlayerSettings = new HashMap<>();
     public ChestSortPermissionsHandler permissionsHandler;
-    public ChestSortSettingsGUI settingsGUI;
+    public SettingsGUI settingsGUI;
     public String sortingMethod;
     public UpdateChecker updateChecker;
     public boolean usingMatchingConfig = true;
@@ -134,7 +134,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
         if (getConfig().getInt("config-version", 0) != currentConfigVersion) {
             showOldConfigWarning();
-            ChestSortConfigUpdater configUpdater = new ChestSortConfigUpdater(this);
+            ConfigUpdater configUpdater = new ConfigUpdater(this);
             configUpdater.updateConfig();
             usingMatchingConfig = true;
             //createConfig();
@@ -191,9 +191,9 @@ public class ChestSortPlugin extends JavaPlugin {
 
     private String getCategoryList() {
         StringBuilder list = new StringBuilder();
-        ChestSortCategory[] categories = organizer.categories.toArray(new ChestSortCategory[0]);
+        Category[] categories = organizer.categories.toArray(new Category[0]);
         Arrays.sort(categories);
-        for (ChestSortCategory category : categories) {
+        for (Category category : categories) {
             list.append(category.name).append(" (");
             list.append(category.typeMatches.length).append("), ");
         }
@@ -202,7 +202,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
     }
 
-    public ChestSortPlayerSetting getPlayerSetting(Player p) {
+    public PlayerSetting getPlayerSetting(Player p) {
         registerPlayerIfNeeded(p);
         return perPlayerSettings.get(p.getUniqueId().toString());
     }
@@ -242,7 +242,7 @@ public class ChestSortPlugin extends JavaPlugin {
         HandlerList.unregisterAll(this);
 
         if (debug) {
-            ChestSortDebugger debugger = new ChestSortDebugger(this);
+            Debugger debugger = new Debugger(this);
             getServer().getPluginManager().registerEvents(debugger, this);
         }
 
@@ -260,10 +260,10 @@ public class ChestSortPlugin extends JavaPlugin {
         saveDefaultCategories();
 
         verbose = getConfig().getBoolean("verbose");
-        lgr = new ChestSortLogger(this, getConfig().getBoolean("log"));
+        lgr = new Logger(this, getConfig().getBoolean("log"));
         messages = new Messages(this);
         organizer = new ChestSortOrganizer(this);
-        settingsGUI = new ChestSortSettingsGUI(this);
+        settingsGUI = new SettingsGUI(this);
         try {
             if (Class.forName("net.md_5.bungee.api.chat.BaseComponent") != null) {
                 updateChecker = UpdateChecker.init(this, "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt")
@@ -280,7 +280,7 @@ public class ChestSortPlugin extends JavaPlugin {
             getLogger().severe("The Update Checker will NOT work when using CraftBukkit instead of Spigot/Paper!");
             PaperLib.suggestPaper(this);
         }
-        listener = new ChestSortListener(this);
+        listener = new Listener(this);
         hotkeyCooldown = new HashMap<>();
         permissionsHandler = new ChestSortPermissionsHandler(this);
         updateCheckInterval = getConfig().getDouble("check-interval");
@@ -289,14 +289,14 @@ public class ChestSortPlugin extends JavaPlugin {
         enderContainersHook = new EnderContainersHook(this);
         getServer().getPluginManager().registerEvents(listener, this);
         getServer().getPluginManager().registerEvents(settingsGUI, this);
-        ChestSortChestSortCommand chestsortCommandExecutor = new ChestSortChestSortCommand(this);
-        ChestSortTabCompleter tabCompleter = new ChestSortTabCompleter();
+        ChestSortCommand chestsortCommandExecutor = new ChestSortCommand(this);
+        TabCompleter tabCompleter = new TabCompleter();
         this.getCommand("sort").setExecutor(chestsortCommandExecutor);
         this.getCommand("sort").setTabCompleter(tabCompleter);
-        ChestSortInvSortCommand invsortCommandExecutor = new ChestSortInvSortCommand(this);
+        InvSortCommand invsortCommandExecutor = new InvSortCommand(this);
         this.getCommand("invsort").setExecutor(invsortCommandExecutor);
         this.getCommand("invsort").setTabCompleter(tabCompleter);
-        this.getCommand("chestsortadmin").setExecutor(new ChestSortAdminCommand(this));
+        this.getCommand("chestsortadmin").setExecutor(new AdminCommand(this));
 
         if (verbose) {
             getLogger().info("Use permissions: " + getConfig().getBoolean("use-permissions"));
@@ -379,7 +379,7 @@ public class ChestSortPlugin extends JavaPlugin {
         load(false);
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
-            new ChestSortPlaceholders(this).register();
+            new Placeholders(this).register();
         }
     }
 
@@ -508,7 +508,7 @@ public class ChestSortPlugin extends JavaPlugin {
                 changed = true;
             }
 
-            ChestSortPlayerSetting newSettings = new ChestSortPlayerSetting(activeForThisPlayer, invActiveForThisPlayer, middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick, leftClickFromOutside, changed);
+            PlayerSetting newSettings = new PlayerSetting(activeForThisPlayer, invActiveForThisPlayer, middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick, leftClickFromOutside, changed);
 
             // when "show-message-again-after-logout" is enabled, we don't care if the
             // player already saw the message
@@ -674,7 +674,7 @@ public class ChestSortPlugin extends JavaPlugin {
         // are online
         // but not registered. So, we only continue when the player has been registered
         if (perPlayerSettings.containsKey(uniqueId.toString())) {
-            ChestSortPlayerSetting setting = perPlayerSettings.get(p.getUniqueId().toString());
+            PlayerSetting setting = perPlayerSettings.get(p.getUniqueId().toString());
 
             if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01)) {
                 NBTAPI.addNBT(p, "sortingEnabled", String.valueOf(setting.sortingEnabled));

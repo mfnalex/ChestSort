@@ -2,7 +2,7 @@ package de.jeff_media.chestsort.gui;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.config.Messages;
-import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
+import de.jeff_media.chestsort.data.PlayerSetting;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class ChestSortSettingsGUI implements Listener {
+public class SettingsGUI implements Listener {
 	
 	final ChestSortPlugin plugin;
 	
@@ -35,7 +35,7 @@ public class ChestSortSettingsGUI implements Listener {
 		MiddleClick, ShiftClick, DoubleClick, ShiftRightClick, LeftClick, RightClick, LeftClickOutside
 	}
 	
-	public ChestSortSettingsGUI(ChestSortPlugin plugin) {
+	public SettingsGUI(ChestSortPlugin plugin) {
 		this.plugin=plugin;
 	}
 	
@@ -88,7 +88,7 @@ public class ChestSortSettingsGUI implements Listener {
     public void openGUI(Player player) {
         Inventory inventory = createGUI("ChestSort", player);
         
-        ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(player.getUniqueId().toString());
+        PlayerSetting setting = plugin.perPlayerSettings.get(player.getUniqueId().toString());
 
         if(plugin.getConfig().getBoolean("allow-sorting-hotkeys")) {
 			inventory.setItem(slotMiddleClick, getItem(setting.middleClick, Hotkey.MiddleClick));
@@ -122,7 +122,7 @@ public class ChestSortSettingsGUI implements Listener {
 		}
 		Player p = (Player) event.getWhoClicked();
 		plugin.registerPlayerIfNeeded(p);
-		ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+		PlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 		
 		if(setting.guiInventory==null) {
 			return;
@@ -146,26 +146,26 @@ public class ChestSortSettingsGUI implements Listener {
 		}
 
 
-		if(event.getSlot() == ChestSortSettingsGUI.slotMiddleClick) {
+		if(event.getSlot() == SettingsGUI.slotMiddleClick) {
 			setting.toggleMiddleClick();
 			plugin.settingsGUI.openGUI(p);
 		}
-		else if(event.getSlot() == ChestSortSettingsGUI.slotShiftClick) {
+		else if(event.getSlot() == SettingsGUI.slotShiftClick) {
 			setting.toggleShiftClick();
 			plugin.settingsGUI.openGUI(p);
-		} else 	if(event.getSlot() == ChestSortSettingsGUI.slotDoubleClick) {
+		} else 	if(event.getSlot() == SettingsGUI.slotDoubleClick) {
 			setting.toggleDoubleClick();
 			plugin.settingsGUI.openGUI(p);
-		} else if(event.getSlot() == ChestSortSettingsGUI.slotLeftClickFromOutside) {
+		} else if(event.getSlot() == SettingsGUI.slotLeftClickFromOutside) {
 			setting.toggleLeftClickOutside();
 			plugin.settingsGUI.openGUI(p);
-		} else if(event.getSlot() == ChestSortSettingsGUI.slotShiftRightClick) {
+		} else if(event.getSlot() == SettingsGUI.slotShiftRightClick) {
 			setting.toggleShiftRightClick();
 			plugin.settingsGUI.openGUI(p);
-		} else if(event.getSlot() == ChestSortSettingsGUI.slotLeftClick) {
+		} else if(event.getSlot() == SettingsGUI.slotLeftClick) {
 			setting.toggleLeftClick();
 			plugin.settingsGUI.openGUI(p);
-		} else if(event.getSlot() == ChestSortSettingsGUI.slotRightClick) {
+		} else if(event.getSlot() == SettingsGUI.slotRightClick) {
 			setting.toggleRightClick();
 			plugin.settingsGUI.openGUI(p);
 		}

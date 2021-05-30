@@ -1,8 +1,8 @@
 package de.jeff_media.chestsort.commands;
 
 import de.jeff_media.chestsort.config.Messages;
-import de.jeff_media.chestsort.handlers.ChestSortDebugger;
-import de.jeff_media.chestsort.data.ChestSortPlayerSetting;
+import de.jeff_media.chestsort.handlers.Debugger;
+import de.jeff_media.chestsort.data.PlayerSetting;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,11 +12,11 @@ import org.bukkit.entity.Player;
 import net.md_5.bungee.api.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
-public class ChestSortChestSortCommand implements CommandExecutor {
+public class ChestSortCommand implements CommandExecutor {
 
 	private final ChestSortPlugin plugin;
 
-	public ChestSortChestSortCommand(ChestSortPlugin plugin) {
+	public ChestSortCommand(ChestSortPlugin plugin) {
 		this.plugin = plugin;
 	}
 
@@ -47,7 +47,7 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 			}
 			sender.sendMessage(ChatColor.RED+"ChestSort Debug mode enabled - I hope you know what you are doing!");
 			plugin.debug=true;
-			ChestSortDebugger debugger = new ChestSortDebugger(plugin);
+			Debugger debugger = new Debugger(plugin);
 			plugin.getServer().getPluginManager().registerEvents(debugger, plugin);
 			plugin.debug("Debug mode activated through command by "+sender.getName());
 			return true;
@@ -95,7 +95,7 @@ public class ChestSortChestSortCommand implements CommandExecutor {
 			}
 			// Settings GUI End
 			
-			ChestSortPlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
+			PlayerSetting setting = plugin.perPlayerSettings.get(p.getUniqueId().toString());
 			
 			if(args.length>0
 					 && !args[0].equalsIgnoreCase("toggle")

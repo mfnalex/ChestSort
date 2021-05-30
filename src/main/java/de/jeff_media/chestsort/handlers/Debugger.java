@@ -7,11 +7,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class ChestSortDebugger implements @NotNull Listener {
+public class Debugger implements @NotNull Listener {
 
     private final ChestSortPlugin plugin;
 
-    public ChestSortDebugger(ChestSortPlugin plugin) {
+    public Debugger(ChestSortPlugin plugin) {
         plugin.getLogger().warning("=======================================");
         plugin.getLogger().warning("    CHESTSORT DEBUG MODE ACTIVATED!");
         plugin.getLogger().warning("Only use this for development purposes!");

@@ -4,11 +4,11 @@ import de.jeff_media.chestsort.ChestSortPlugin;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 
-public class ChestSortPlaceholders extends PlaceholderExpansion {
+public class Placeholders extends PlaceholderExpansion {
     private ChestSortPlugin main;
 
 
-    public ChestSortPlaceholders(ChestSortPlugin main){
+    public Placeholders(ChestSortPlugin main){
         this.main = main;
     }
 

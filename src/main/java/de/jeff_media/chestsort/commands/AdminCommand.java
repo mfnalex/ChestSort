@@ -9,11 +9,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class ChestSortAdminCommand implements CommandExecutor {
+public class AdminCommand implements CommandExecutor {
 
     private final ChestSortPlugin plugin;
 
-    public ChestSortAdminCommand(ChestSortPlugin plugin) {
+    public AdminCommand(ChestSortPlugin plugin) {
         this.plugin = plugin;
     }
 
