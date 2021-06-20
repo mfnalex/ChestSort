@@ -24,6 +24,11 @@ public class InvSortCommand implements CommandExecutor {
 
 		Player p = null;
 
+		if(!plugin.getConfig().getBoolean("allow-commands")) {
+			sender.sendMessage(command.getPermissionMessage());
+			return true;
+		}
+
 		if(args.length>0 && args[0].equalsIgnoreCase("help")) {
 			return false;
 		}

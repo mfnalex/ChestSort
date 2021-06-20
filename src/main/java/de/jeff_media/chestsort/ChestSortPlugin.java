@@ -723,6 +723,7 @@ public class ChestSortPlugin extends JavaPlugin {
         getConfig().addDefault("additional-hotkeys.right-click", false);
         getConfig().addDefault("dump", false);
         getConfig().addDefault("log", false);
+        getConfig().addDefault("allow-commands", true);
 
         getConfig().addDefault("hook-crackshot", true);
         getConfig().addDefault("hook-crackshot-prefix", "crackshot_weapon");

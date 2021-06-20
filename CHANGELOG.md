@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.2.0
+- Added config option "allow-commands"
+
 ## 10.1.0
 - Added config option "prevent-sorting-null-inventories"
 - Updated Chinese (Traditional) translation
