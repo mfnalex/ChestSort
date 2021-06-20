@@ -1,5 +1,15 @@
 # Changelog
 
+## 10.3.0
+- Added permissions for each hotkey.
+  - Given to all players by default
+  - Permission: chestsort.hotkey.\<hotkey\>
+  - Available hotkeys are:
+    - shiftclick, middleclick, doubleclick, shiftrightclick, leftclickoutside, rightclickoutside
+
+## 10.2.1
+- Fixed config updater breaking the config.yml file because "sorting-method" value wasn't put inside double quotes
+
 ## 10.2.0
 - Added config option "allow-commands"
 

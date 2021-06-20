@@ -2,6 +2,7 @@ package de.jeff_media.chestsort.listeners;
 
 import de.jeff_media.chestsort.ChestSortEvent;
 import de.jeff_media.chestsort.config.Messages;
+import de.jeff_media.chestsort.enums.Hotkey;
 import de.jeff_media.chestsort.handlers.Logger;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.ISortable;
@@ -455,7 +456,7 @@ public class Listener implements org.bukkit.event.Listener {
             case MIDDLE:
                 cause = Logger.SortCause.H_MIDDLE;
                 //if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
-                if (setting.middleClick) {
+                if (setting.middleClick && p.hasPermission(Hotkey.getPermission(Hotkey.MIDDLE_CLICK))) {
                     if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE) {
                         sort = true;
                     } else {
@@ -469,7 +470,7 @@ public class Listener implements org.bukkit.event.Listener {
                 if(event.isShiftClick()) return;
                 cause = Logger.SortCause.H_DOUBLE;
                 //if(plugin.getConfig().getBoolean("hotkeys.double-click")) {
-                if (setting.doubleClick) {
+                if (setting.doubleClick  && p.hasPermission(Hotkey.getPermission(Hotkey.DOUBLE_CLICK))) {
                     // We need getCursor() instead of getCurrentItem(), because after picking up the item, it is gone into the cursor
                     if (event.getCursor() == null || (event.getCursor() != null && event.getCursor().getType() == Material.AIR)) {
                         sort = true;
@@ -479,7 +480,7 @@ public class Listener implements org.bukkit.event.Listener {
             case SHIFT_LEFT:
                 cause = Logger.SortCause.H_SHIFT;
                 //if(plugin.getConfig().getBoolean("hotkeys.shift-click")) {
-                if (setting.shiftClick) {
+                if (setting.shiftClick && p.hasPermission(Hotkey.getPermission(Hotkey.SHIFT_CLICK))) {
                     if (event.getCurrentItem() == null || (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.AIR)) {
                         sort = true;
                     }
@@ -488,7 +489,7 @@ public class Listener implements org.bukkit.event.Listener {
             case SHIFT_RIGHT:
                 cause = Logger.SortCause.H_SHIFTRIGHT;
                 //if(plugin.getConfig().getBoolean("hotkeys.shift-right-click")) {
-                if (setting.shiftRightClick) {
+                if (setting.shiftRightClick && p.hasPermission(Hotkey.getPermission(Hotkey.SHIFT_RIGHT_CLICK))) {
                     if (event.getCurrentItem() == null || (event.getCurrentItem() != null && event.getCurrentItem().getType() == Material.AIR)) {
                         sort = true;
                     }
@@ -648,7 +649,7 @@ public class Listener implements org.bukkit.event.Listener {
             return;
         }
 
-        if (e.isLeftClick() && setting.leftClick) {
+        if (e.isLeftClick() && setting.leftClick && p.hasPermission(Hotkey.getPermission(Hotkey.LEFT_CLICK_OUTSIDE))) {
             plugin.getLgr().logSort(p, Logger.SortCause.H_LEFT);
             if (setting.getCurrentDoubleClick(plugin, PlayerSetting.DoubleClickType.LEFT_CLICK)
                     == PlayerSetting.DoubleClickType.LEFT_CLICK) {
@@ -660,7 +661,7 @@ public class Listener implements org.bukkit.event.Listener {
                 plugin.getOrganizer().stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), true, chestSortEvent);
             }
 
-        } else if (e.isRightClick() && setting.rightClick) {
+        } else if (e.isRightClick() && setting.rightClick && p.hasPermission(Hotkey.getPermission(Hotkey.RIGHT_CLICK_OUTSIDE))) {
             plugin.getLgr().logSort(p, Logger.SortCause.H_RIGHT);
             if (setting.getCurrentDoubleClick(plugin, PlayerSetting.DoubleClickType.RIGHT_CLICK)
                     == PlayerSetting.DoubleClickType.RIGHT_CLICK) {

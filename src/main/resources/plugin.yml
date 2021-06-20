@@ -47,3 +47,15 @@ permissions:
     description: Allows inventory sorting
   chestsort.reload:
     description: Allows to reload the config via /chestsort reload
+  chestsort.hotkey.shiftclick:
+    default: true
+  chestsort.hotkey.middleclick:
+    default: true
+  chestsort.hotkey.doubleclick:
+    default: true
+  chestsort.hotkey.shiftrightclick:
+    default: true
+  chestsort.hotkey.leftclickoutside:
+    default: true
+  chestsort.hotkey.rightclickoutside:
+    default: true
