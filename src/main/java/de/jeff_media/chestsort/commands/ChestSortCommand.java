@@ -28,7 +28,7 @@ public class ChestSortCommand implements CommandExecutor {
 			return false;
 		}
 
-		if(!plugin.getConfig().getBoolean("allow-commands")) {
+		if(!plugin.getConfig().getBoolean("allow-commands") && !sender.isOp()) {
 			sender.sendMessage(command.getPermissionMessage());
 			return true;
 		}
