@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.1.0
+- Added config option "prevent-sorting-null-inventories"
+- Updated Chinese (Traditional) translation
+
 ## 10.0.4
 - Added compatibility to the ChestShopConfirmation plugin
 

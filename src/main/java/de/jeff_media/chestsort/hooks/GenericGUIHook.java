@@ -24,6 +24,11 @@ public class GenericGUIHook {
             main.debug("Generic GUI detected by class name containing \"gui\" or \"menu\"");
             return true;
         }
+        if(main.getConfig().getBoolean("prevent-sorting-null-inventories")) {
+            if(inv.getHolder()==null) {
+                return false;
+            }
+        }
         if(inv.getHolder() != null && guiClasses.contains(inv.getHolder().getClass().getName())) return true;
         return false;
     }

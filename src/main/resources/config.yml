@@ -284,6 +284,13 @@ dont-move-slimefun-backpacks: false
 # https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues
 hook-generic: true
 
+##### Plugins not using an InventoryHolder #####
+# When you have a plugin that uses "null" as InventoryHolder for their
+# GUIs, you can prevent those from being sorted. Please note that this
+# will also disable sorting for certain other inventories, so only use
+# it if it's the only possibility.
+prevent-sorting-null-inventories: false
+
 ##########################
 ##### Sorting Method #####
 ##########################
@@ -403,25 +410,26 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-right-click: "清空箱子 (右键/双击右键)"
 #message-gui-left-click-outside: "Left-Click from outside"
 
-##### Chinese (Traditional) 繁體中文 - Thanks to Command1264 for translating!
-#message-when-using-chest: "&7小提醒: 輸入 &6/chestsort&7 來開啟自動整理箱子"
-#message-when-using-chest2: "&7小提醒: 輸入 &6/chestsort&7 來關閉自動整理箱子"
-#message-sorting-disabled: "&7自動整理箱子已 &c關閉&7"
-#message-sorting-enabled: "&7自動整理箱子已 &a開啟&7"
-#message-inv-sorting-disabled: "&7自動整理背包已 &c關閉&7."
-#message-inv-sorting-enabled: "&7自動整理背包已 &a開啟&7."
-#message-player-inventory-sorted: "&7你的背包已成功整理."
-#message-error-players-only: "&c錯誤: 這個指令只能由玩家使用"
-#message-error-invalid-options: "&c錯誤: 未知選項 %s. 有效的選項為 %s."
+##### Chinese (Traditional) 繁體中文
+#message-when-using-chest: "&7小提醒 ： 輸入 &6/chestsort&7 來開啟自動整理儲物箱。"
+#message-when-using-chest2: "&7小提醒 ： 輸入 &6/chestsort&7 來關閉自動整理儲物箱。"
+#message-sorting-disabled: "&c已關閉&7自動整理儲物箱。"
+#message-sorting-enabled: "&a已開啟&7自動整理儲物箱。"
+#message-inv-sorting-disabled: "&c已關閉&7自動整理物品欄。"
+#message-inv-sorting-enabled: "&a已開啟&7自動整理物品欄。"
+#message-player-inventory-sorted: "&7已成功整理物品欄。"
+#message-error-players-only: "&c錯誤 ： 這個指令只能由玩家使用。"
+#message-error-invalid-options: "&c錯誤 ： 未知的選項 %s，有效的選項為 %s。"
+#message-hotbar-container-sorted: "&a已成功整理儲物箱 ！"
 #message-gui-enabled: "&a開啟"
 #message-gui-disabled: "&c關閉"
-#message-gui-middle-click: "中鍵"
-#message-gui-shift-click: "Shift + 左鍵"
-#message-gui-double-click: "雙擊左鍵"
-#message-gui-shift-right-click: "Shift + 右鍵"
-#message-gui-left-click: "填滿箱子 (左鍵/雙擊左鍵)"
-#message-gui-right-click: "清空箱子 (右鍵/雙擊右鍵)"
-#message-gui-left-click-outside: "Left-Click from outside"
+#message-gui-middle-click: "點擊中鍵"
+#message-gui-shift-click: "Shift + 點擊左鍵"
+#message-gui-double-click: "雙點擊左鍵"
+#message-gui-shift-right-click: "Shift + 點擊右鍵"
+#message-gui-left-click: "填滿儲物箱 （點擊左鍵/雙點擊左鍵）"
+#message-gui-right-click: "清空儲物箱 （點擊右鍵/雙點擊右鍵）"
+#message-gui-left-click-outside: "對儲物箱點擊左鍵"
 
 ##### Dutch - Thanks to Xeyame for translating!
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC

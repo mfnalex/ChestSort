@@ -729,6 +729,7 @@ public class ChestSortPlugin extends JavaPlugin {
         getConfig().addDefault("hook-inventorypages", true);
         getConfig().addDefault("hook-minepacks", true);
         getConfig().addDefault("hook-generic", true);
+        getConfig().addDefault("prevent-sorting-null-inventories", false);
 
         getConfig().addDefault("verbose", true); // Prints some information in onEnable()
     }
