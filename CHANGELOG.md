@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.3.1
+- Fixed hotkeys not working since 10.3.0
+
 ## 10.3.0
 - Added permissions for each hotkey.
   - Given to all players by default

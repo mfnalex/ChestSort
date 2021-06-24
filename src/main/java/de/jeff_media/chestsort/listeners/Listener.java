@@ -54,6 +54,7 @@ public class Listener implements org.bukkit.event.Listener {
     @EventHandler
     public void onLeftClickChest(PlayerInteractEvent event) {
         if(!event.getPlayer().hasPermission("chestsort.use")) return;
+        if(!event.getPlayer().hasPermission(Hotkey.getPermission(Hotkey.OUTSIDE))) return;
         if(event.getHand() != EquipmentSlot.HAND) return;
         if(event.getAction() != Action.LEFT_CLICK_BLOCK) return;
         if(!plugin.getConfig().getBoolean("allow-left-click-to-sort")) return;
@@ -649,7 +650,7 @@ public class Listener implements org.bukkit.event.Listener {
             return;
         }
 
-        if (e.isLeftClick() && setting.leftClick && p.hasPermission(Hotkey.getPermission(Hotkey.LEFT_CLICK_OUTSIDE))) {
+        if (e.isLeftClick() && setting.leftClick && p.hasPermission(Hotkey.getPermission(Hotkey.LEFT_CLICK))) {
             plugin.getLgr().logSort(p, Logger.SortCause.H_LEFT);
             if (setting.getCurrentDoubleClick(plugin, PlayerSetting.DoubleClickType.LEFT_CLICK)
                     == PlayerSetting.DoubleClickType.LEFT_CLICK) {
@@ -661,7 +662,7 @@ public class Listener implements org.bukkit.event.Listener {
                 plugin.getOrganizer().stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), true, chestSortEvent);
             }
 
-        } else if (e.isRightClick() && setting.rightClick && p.hasPermission(Hotkey.getPermission(Hotkey.RIGHT_CLICK_OUTSIDE))) {
+        } else if (e.isRightClick() && setting.rightClick && p.hasPermission(Hotkey.getPermission(Hotkey.RIGHT_CLICK))) {
             plugin.getLgr().logSort(p, Logger.SortCause.H_RIGHT);
             if (setting.getCurrentDoubleClick(plugin, PlayerSetting.DoubleClickType.RIGHT_CLICK)
                     == PlayerSetting.DoubleClickType.RIGHT_CLICK) {

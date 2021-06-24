@@ -55,7 +55,9 @@ permissions:
     default: true
   chestsort.hotkey.shiftrightclick:
     default: true
-  chestsort.hotkey.leftclickoutside:
+  chestsort.hotkey.leftclick:
     default: true
-  chestsort.hotkey.rightclickoutside:
+  chestsort.hotkey.rightclick:
+    default: true
+  chestsort.hotkey.outside:
     default: true

@@ -15,9 +15,17 @@ import org.jetbrains.annotations.NotNull;
 public class ChestSortCommand implements CommandExecutor {
 
 	private final ChestSortPlugin plugin;
+	final String noPermission;
 
 	public ChestSortCommand(ChestSortPlugin plugin) {
 		this.plugin = plugin;
+		 noPermission = plugin.getCommand("sort").getPermissionMessage();
+	}
+
+	private void sendNoPermissionMessage(CommandSender sender) {
+		if(noPermission != null && noPermission.length()>0) {
+			sender.sendMessage(noPermission);
+		}
 	}
 
 	@Override
@@ -29,14 +37,14 @@ public class ChestSortCommand implements CommandExecutor {
 		}
 
 		if(!plugin.getConfig().getBoolean("allow-commands") && !sender.isOp()) {
-			sender.sendMessage(command.getPermissionMessage());
+			sendNoPermissionMessage(sender);
 			return true;
 		}
 		
 		// Reload command
 		if(args.length>0 && args[0].equalsIgnoreCase("reload")) {
 			if(!sender.hasPermission("chestsort.reload")) {
-				sender.sendMessage(plugin.getCommand("chestsort").getPermissionMessage());
+				sendNoPermissionMessage(sender);
 				return true;
 			}
 			sender.sendMessage(ChatColor.GRAY + "Reloading ChestSort...");
@@ -48,7 +56,7 @@ public class ChestSortCommand implements CommandExecutor {
 		// Debug command
 		if(args.length>0 && args[0].equalsIgnoreCase("debug")) {
 			if(!sender.hasPermission("chestsort.debug")) {
-				sender.sendMessage(plugin.getCommand("chestsort").getPermissionMessage());
+				sendNoPermissionMessage(sender);
 			}
 			sender.sendMessage(ChatColor.RED+"ChestSort Debug mode enabled - I hope you know what you are doing!");
 			plugin.setDebug(true);

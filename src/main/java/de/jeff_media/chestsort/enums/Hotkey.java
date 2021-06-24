@@ -6,9 +6,11 @@ public enum Hotkey {
 
     SHIFT_CLICK,
     MIDDLE_CLICK, DOUBLE_CLICK, SHIFT_RIGHT_CLICK,
-    LEFT_CLICK_OUTSIDE, RIGHT_CLICK_OUTSIDE;
+    OUTSIDE, LEFT_CLICK, RIGHT_CLICK;
 
     public static String getPermission(Hotkey hotkey) {
-        return hotkey.name().toLowerCase(Locale.ROOT).replace("_", "");
+        String permission = "chestsort.hotkey." + hotkey.name().toLowerCase(Locale.ROOT).replace("_", "");
+        //System.out.println("Permission for " + hotkey.name()+ ": " + permission);
+        return permission;
     }
 }
