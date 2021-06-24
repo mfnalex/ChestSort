@@ -32,16 +32,16 @@ import de.jeff_media.chestsort.commands.AdminCommand;
 import de.jeff_media.chestsort.commands.ChestSortCommand;
 import de.jeff_media.chestsort.commands.InvSortCommand;
 import de.jeff_media.chestsort.commands.TabCompleter;
+import de.jeff_media.chestsort.config.Config;
 import de.jeff_media.chestsort.config.ConfigUpdater;
 import de.jeff_media.chestsort.config.Messages;
-import de.jeff_media.chestsort.config.Config;
 import de.jeff_media.chestsort.data.Category;
 import de.jeff_media.chestsort.data.PlayerSetting;
 import de.jeff_media.chestsort.gui.SettingsGUI;
-import de.jeff_media.chestsort.handlers.Debugger;
-import de.jeff_media.chestsort.handlers.Logger;
 import de.jeff_media.chestsort.handlers.ChestSortOrganizer;
 import de.jeff_media.chestsort.handlers.ChestSortPermissionsHandler;
+import de.jeff_media.chestsort.handlers.Debugger;
+import de.jeff_media.chestsort.handlers.Logger;
 import de.jeff_media.chestsort.hooks.EnderContainersHook;
 import de.jeff_media.chestsort.hooks.GenericGUIHook;
 import de.jeff_media.chestsort.hooks.PlayerVaultsHook;
@@ -68,12 +68,14 @@ import java.util.*;
 public class ChestSortPlugin extends JavaPlugin {
 
     private static double updateCheckInterval = 4 * 60 * 60; // in seconds. We check on startup and every 4 hours
+    private static ChestSortPlugin instance;
+    public ChestSortOrganizer organizer; // Must be public for the API
+    boolean hotkeyGUI = true;
     private EnderContainersHook enderContainersHook;
     private GenericGUIHook genericHook;
     private boolean hookCrackShot = false;
     private boolean hookInventoryPages = false;
     private boolean hookMinepacks = false;
-    boolean hotkeyGUI = true;
     private PlayerVaultsHook playerVaultsHook;
     private boolean debug = false;
     private ArrayList<String> disabledWorlds;
@@ -85,7 +87,6 @@ public class ChestSortPlugin extends JavaPlugin {
     private int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
     private String mcVersion;    // 1.13.2 = 1_13_R2
     private Messages messages;
-    private ChestSortOrganizer organizer;
     private Map<String, PlayerSetting> perPlayerSettings = new HashMap<>();
     private ChestSortPermissionsHandler permissionsHandler;
     private SettingsGUI settingsGUI;
@@ -93,7 +94,6 @@ public class ChestSortPlugin extends JavaPlugin {
     private UpdateChecker updateChecker;
     private boolean usingMatchingConfig = true;
     private boolean verbose = true;
-    private static ChestSortPlugin instance;
 
     public static ChestSortPlugin getInstance() {
         return instance;
@@ -198,48 +198,96 @@ public class ChestSortPlugin extends JavaPlugin {
         return disabledWorlds;
     }
 
+    public void setDisabledWorlds(ArrayList<String> disabledWorlds) {
+        this.disabledWorlds = disabledWorlds;
+    }
+
     public EnderContainersHook getEnderContainersHook() {
         return enderContainersHook;
+    }
+
+    public void setEnderContainersHook(EnderContainersHook enderContainersHook) {
+        this.enderContainersHook = enderContainersHook;
     }
 
     public GenericGUIHook getGenericHook() {
         return genericHook;
     }
 
+    public void setGenericHook(GenericGUIHook genericHook) {
+        this.genericHook = genericHook;
+    }
+
     public HashMap<UUID, Long> getHotkeyCooldown() {
         return hotkeyCooldown;
+    }
+
+    public void setHotkeyCooldown(HashMap<UUID, Long> hotkeyCooldown) {
+        this.hotkeyCooldown = hotkeyCooldown;
     }
 
     public Logger getLgr() {
         return lgr;
     }
 
+    public void setLgr(Logger lgr) {
+        this.lgr = lgr;
+    }
+
     public Listener getListener() {
         return listener;
+    }
+
+    public void setListener(Listener listener) {
+        this.listener = listener;
     }
 
     public int getMcMinorVersion() {
         return mcMinorVersion;
     }
 
+    public void setMcMinorVersion(int mcMinorVersion) {
+        this.mcMinorVersion = mcMinorVersion;
+    }
+
     public String getMcVersion() {
         return mcVersion;
+    }
+
+    public void setMcVersion(String mcVersion) {
+        this.mcVersion = mcVersion;
     }
 
     public Messages getMessages() {
         return messages;
     }
 
+    public void setMessages(Messages messages) {
+        this.messages = messages;
+    }
+
     public ChestSortOrganizer getOrganizer() {
         return organizer;
+    }
+
+    public void setOrganizer(ChestSortOrganizer organizer) {
+        this.organizer = organizer;
     }
 
     public Map<String, PlayerSetting> getPerPlayerSettings() {
         return perPlayerSettings;
     }
 
+    public void setPerPlayerSettings(Map<String, PlayerSetting> perPlayerSettings) {
+        this.perPlayerSettings = perPlayerSettings;
+    }
+
     public ChestSortPermissionsHandler getPermissionsHandler() {
         return permissionsHandler;
+    }
+
+    public void setPermissionsHandler(ChestSortPermissionsHandler permissionsHandler) {
+        this.permissionsHandler = permissionsHandler;
     }
 
     public PlayerSetting getPlayerSetting(Player p) {
@@ -251,32 +299,64 @@ public class ChestSortPlugin extends JavaPlugin {
         return playerVaultsHook;
     }
 
+    public void setPlayerVaultsHook(PlayerVaultsHook playerVaultsHook) {
+        this.playerVaultsHook = playerVaultsHook;
+    }
+
     public SettingsGUI getSettingsGUI() {
         return settingsGUI;
+    }
+
+    public void setSettingsGUI(SettingsGUI settingsGUI) {
+        this.settingsGUI = settingsGUI;
     }
 
     public String getSortingMethod() {
         return sortingMethod;
     }
 
+    public void setSortingMethod(String sortingMethod) {
+        this.sortingMethod = sortingMethod;
+    }
+
     public UpdateChecker getUpdateChecker() {
         return updateChecker;
+    }
+
+    public void setUpdateChecker(UpdateChecker updateChecker) {
+        this.updateChecker = updateChecker;
     }
 
     public boolean isDebug() {
         return debug;
     }
 
+    public void setDebug(boolean debug) {
+        this.debug = debug;
+    }
+
     public boolean isHookCrackShot() {
         return hookCrackShot;
+    }
+
+    public void setHookCrackShot(boolean hookCrackShot) {
+        this.hookCrackShot = hookCrackShot;
     }
 
     public boolean isHookInventoryPages() {
         return hookInventoryPages;
     }
 
+    public void setHookInventoryPages(boolean hookInventoryPages) {
+        this.hookInventoryPages = hookInventoryPages;
+    }
+
     public boolean isHookMinepacks() {
         return hookMinepacks;
+    }
+
+    public void setHookMinepacks(boolean hookMinepacks) {
+        this.hookMinepacks = hookMinepacks;
     }
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
@@ -308,8 +388,16 @@ public class ChestSortPlugin extends JavaPlugin {
         return usingMatchingConfig;
     }
 
+    public void setUsingMatchingConfig(boolean usingMatchingConfig) {
+        this.usingMatchingConfig = usingMatchingConfig;
+    }
+
     public boolean isVerbose() {
         return verbose;
+    }
+
+    public void setVerbose(boolean verbose) {
+        this.verbose = verbose;
     }
 
     public void load(boolean reload) {
@@ -424,7 +512,7 @@ public class ChestSortPlugin extends JavaPlugin {
             }
         }
 
-        if(getConfig().getString("check-for-updates").equalsIgnoreCase("false")) {
+        if (getConfig().getString("check-for-updates").equalsIgnoreCase("false")) {
             getUpdateChecker().setNotifyOpsOnJoin(false);
         }
 
@@ -476,50 +564,50 @@ public class ChestSortPlugin extends JavaPlugin {
 
         bStats.addCustomChart(new Metrics.SimplePie("sorting_method", this::getSortingMethod));
         bStats.addCustomChart(new Metrics.SimplePie("config_version",
-                ()->Integer.toString(getConfig().getInt("config-version", 0))));
+                () -> Integer.toString(getConfig().getInt("config-version", 0))));
         bStats.addCustomChart(
-                new Metrics.SimplePie("check_for_updates", ()->getConfig().getString("check-for-updates", "true")));
+                new Metrics.SimplePie("check_for_updates", () -> getConfig().getString("check-for-updates", "true")));
         bStats.addCustomChart(
-                new Metrics.SimplePie("update_interval", ()->Double.toString(getUpdateCheckInterval())));
+                new Metrics.SimplePie("update_interval", () -> Double.toString(getUpdateCheckInterval())));
 
         bStats.addCustomChart(new Metrics.SimplePie("allow_automatic_sorting",
-                ()->Boolean.toString(getConfig().getBoolean("allow-automatic-sorting"))));
+                () -> Boolean.toString(getConfig().getBoolean("allow-automatic-sorting"))));
         bStats.addCustomChart(new Metrics.SimplePie("allow_automatic_inv_sorting",
-                ()->Boolean.toString(getConfig().getBoolean("allow-automatic-inventory-sorting"))));
+                () -> Boolean.toString(getConfig().getBoolean("allow-automatic-inventory-sorting"))));
 
         bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest",
-                ()->Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
-        bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest_and_sorting_is_enabl", ()->Boolean
+                () -> Boolean.toString(getConfig().getBoolean("show-message-when-using-chest"))));
+        bStats.addCustomChart(new Metrics.SimplePie("show_message_when_using_chest_and_sorting_is_enabl", () -> Boolean
                 .toString(getConfig().getBoolean("show-message-when-using-chest-and-sorting-is-enabled"))));
         bStats.addCustomChart(new Metrics.SimplePie("show_message_again_after_logout",
-                ()->Boolean.toString(getConfig().getBoolean("show-message-again-after-logout"))));
+                () -> Boolean.toString(getConfig().getBoolean("show-message-again-after-logout"))));
         bStats.addCustomChart(new Metrics.SimplePie("sorting_enabled_by_default",
-                ()->Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
+                () -> Boolean.toString(getConfig().getBoolean("sorting-enabled-by-default"))));
         bStats.addCustomChart(new Metrics.SimplePie("inv_sorting_enabled_by_default",
-                ()->Boolean.toString(getConfig().getBoolean("inv-sorting-enabled-by-default"))));
+                () -> Boolean.toString(getConfig().getBoolean("inv-sorting-enabled-by-default"))));
         bStats.addCustomChart(
-                new Metrics.SimplePie("using_matching_config_version", ()->Boolean.toString(isUsingMatchingConfig())));
-        bStats.addCustomChart(new Metrics.SimplePie("sort_time", ()->getConfig().getString("sort-time")));
+                new Metrics.SimplePie("using_matching_config_version", () -> Boolean.toString(isUsingMatchingConfig())));
+        bStats.addCustomChart(new Metrics.SimplePie("sort_time", () -> getConfig().getString("sort-time")));
         bStats.addCustomChart(new Metrics.SimplePie("auto_generate_category_files",
-                ()->Boolean.toString(getConfig().getBoolean("auto-generate-category-files"))));
+                () -> Boolean.toString(getConfig().getBoolean("auto-generate-category-files"))));
         bStats.addCustomChart(new Metrics.SimplePie("allow_hotkeys",
-                ()->Boolean.toString(getConfig().getBoolean("allow-sorting-hotkeys"))));
+                () -> Boolean.toString(getConfig().getBoolean("allow-sorting-hotkeys"))));
         bStats.addCustomChart(new Metrics.SimplePie("allow_additional_hotkeys",
-                ()->Boolean.toString(getConfig().getBoolean("allow-additional-hotkeys"))));
+                () -> Boolean.toString(getConfig().getBoolean("allow-additional-hotkeys"))));
         bStats.addCustomChart(new Metrics.SimplePie("hotkey_middle_click",
-                ()->Boolean.toString(getConfig().getBoolean("sorting-hotkeys.middle-click"))));
+                () -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.middle-click"))));
         bStats.addCustomChart(new Metrics.SimplePie("hotkey_shift_click",
-                ()->Boolean.toString(getConfig().getBoolean("sorting-hotkeys.shift-click"))));
+                () -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.shift-click"))));
         bStats.addCustomChart(new Metrics.SimplePie("hotkey_double_click",
-                ()->Boolean.toString(getConfig().getBoolean("sorting-hotkeys.double-click"))));
+                () -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.double-click"))));
         bStats.addCustomChart(new Metrics.SimplePie("hotkey_shift_right_click",
-                ()->Boolean.toString(getConfig().getBoolean("sorting-hotkeys.shift-right-click"))));
+                () -> Boolean.toString(getConfig().getBoolean("sorting-hotkeys.shift-right-click"))));
         bStats.addCustomChart(new Metrics.SimplePie("hotkey_left_click",
-                ()->Boolean.toString(getConfig().getBoolean("additional-hotkeys.left-click"))));
+                () -> Boolean.toString(getConfig().getBoolean("additional-hotkeys.left-click"))));
         bStats.addCustomChart(new Metrics.SimplePie("hotkey_right_click",
-                ()->Boolean.toString(getConfig().getBoolean("additional-hotkeys.right-click"))));
+                () -> Boolean.toString(getConfig().getBoolean("additional-hotkeys.right-click"))));
         bStats.addCustomChart(new Metrics.SimplePie("use_permissions",
-                ()->Boolean.toString(getConfig().getBoolean("use-permissions"))));
+                () -> Boolean.toString(getConfig().getBoolean("use-permissions"))));
 
     }
 
@@ -572,7 +660,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
                 changed = true;
 
-                if(VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01)) {
+                if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01)) {
                     if (playerFile.delete()) {
                         this.getLogger().info("Converted old .yml playerdata file to NBT tags for player " + p.getName());
                     } else {
@@ -600,11 +688,11 @@ public class ChestSortPlugin extends JavaPlugin {
             // when "show-message-again-after-logout" is enabled, we don't care if the
             // player already saw the message
             if (!getConfig().getBoolean("show-message-again-after-logout")) {
-            	if(VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01) && !playerFile.exists()) {
-            		NBTAPI.getNBT(p,"hasSeenMessage", String.valueOf(false));
-				} else {
-					newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
-				}
+                if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01) && !playerFile.exists()) {
+                    NBTAPI.getNBT(p, "hasSeenMessage", String.valueOf(false));
+                } else {
+                    newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
+                }
             }
 
             // Finally add the PlayerSetting object to the map
@@ -627,7 +715,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
         // Delete all files starting with 9..
         for (File file : new File(getDataFolder().getAbsolutePath() + File.separator + "categories" + File.separator)
-                .listFiles((directory, fileName)->{
+                .listFiles((directory, fileName) -> {
                     if (!fileName.endsWith(".txt")) {
                         return false;
                     }
@@ -688,10 +776,6 @@ public class ChestSortPlugin extends JavaPlugin {
         }
     }
 
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
-
     private void setDefaultConfigValues() {
         // If you use an old config file with missing options, the following default
         // values will be used instead
@@ -700,7 +784,7 @@ public class ChestSortPlugin extends JavaPlugin {
         getConfig().addDefault("use-permissions", true);
         getConfig().addDefault("allow-automatic-sorting", true);
         getConfig().addDefault("allow-automatic-inventory-sorting", true);
-        getConfig().addDefault("allow-left-click-to-sort",true);
+        getConfig().addDefault("allow-left-click-to-sort", true);
         getConfig().addDefault("left-click-to-sort-enabled-by-default", false);
         getConfig().addDefault("sorting-enabled-by-default", false);
         getConfig().addDefault("inv-sorting-enabled-by-default", false);
@@ -733,90 +817,6 @@ public class ChestSortPlugin extends JavaPlugin {
         getConfig().addDefault("prevent-sorting-null-inventories", false);
 
         getConfig().addDefault("verbose", true); // Prints some information in onEnable()
-    }
-
-    public void setDisabledWorlds(ArrayList<String> disabledWorlds) {
-        this.disabledWorlds = disabledWorlds;
-    }
-
-    public void setEnderContainersHook(EnderContainersHook enderContainersHook) {
-        this.enderContainersHook = enderContainersHook;
-    }
-
-    public void setGenericHook(GenericGUIHook genericHook) {
-        this.genericHook = genericHook;
-    }
-
-    public void setHookCrackShot(boolean hookCrackShot) {
-        this.hookCrackShot = hookCrackShot;
-    }
-
-    public void setHookInventoryPages(boolean hookInventoryPages) {
-        this.hookInventoryPages = hookInventoryPages;
-    }
-
-    public void setHookMinepacks(boolean hookMinepacks) {
-        this.hookMinepacks = hookMinepacks;
-    }
-
-    public void setHotkeyCooldown(HashMap<UUID, Long> hotkeyCooldown) {
-        this.hotkeyCooldown = hotkeyCooldown;
-    }
-
-    public void setLgr(Logger lgr) {
-        this.lgr = lgr;
-    }
-
-    public void setListener(Listener listener) {
-        this.listener = listener;
-    }
-
-    public void setMcMinorVersion(int mcMinorVersion) {
-        this.mcMinorVersion = mcMinorVersion;
-    }
-
-    public void setMcVersion(String mcVersion) {
-        this.mcVersion = mcVersion;
-    }
-
-    public void setMessages(Messages messages) {
-        this.messages = messages;
-    }
-
-    public void setOrganizer(ChestSortOrganizer organizer) {
-        this.organizer = organizer;
-    }
-
-    public void setPerPlayerSettings(Map<String, PlayerSetting> perPlayerSettings) {
-        this.perPlayerSettings = perPlayerSettings;
-    }
-
-    public void setPermissionsHandler(ChestSortPermissionsHandler permissionsHandler) {
-        this.permissionsHandler = permissionsHandler;
-    }
-
-    public void setPlayerVaultsHook(PlayerVaultsHook playerVaultsHook) {
-        this.playerVaultsHook = playerVaultsHook;
-    }
-
-    public void setSettingsGUI(SettingsGUI settingsGUI) {
-        this.settingsGUI = settingsGUI;
-    }
-
-    public void setSortingMethod(String sortingMethod) {
-        this.sortingMethod = sortingMethod;
-    }
-
-    public void setUpdateChecker(UpdateChecker updateChecker) {
-        this.updateChecker = updateChecker;
-    }
-
-    public void setUsingMatchingConfig(boolean usingMatchingConfig) {
-        this.usingMatchingConfig = usingMatchingConfig;
-    }
-
-    public void setVerbose(boolean verbose) {
-        this.verbose = verbose;
     }
 
     private void showOldConfigWarning() {

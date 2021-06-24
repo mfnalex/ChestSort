@@ -6,6 +6,7 @@
   - Permission: chestsort.hotkey.\<hotkey\>
   - Available hotkeys are:
     - shiftclick, middleclick, doubleclick, shiftrightclick, leftclickoutside, rightclickoutside
+- Fixed bug regarding InvUnload
 
 ## 10.2.1
 - Fixed config updater breaking the config.yml file because "sorting-method" value wasn't put inside double quotes
