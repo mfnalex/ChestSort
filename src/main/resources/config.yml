@@ -506,10 +506,8 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-right-click: "Kiste leeren (Rechtsklick/doppelter Rechtsklick)"
 #message-gui-left-click-outside: "Linksklick von außen"
 
-##### Hungarian - Thanks to Letter and Polaroli for translating!
-# Note: The following messages have been changed in version 8.11 and need a new translation:
-# - message-gui-left-click
-# - message-gui-right-click
+##### Hungarian
+### CHESTSORT - HUNGARIAN MESSAGES
 #message-when-using-chest: "&7Automatikus láda rendezés bekapcsolás: &6/chestsort"
 #message-when-using-chest2: "&7Automatikus láda rendezés bekapcsolás: &6/chestsort"
 #message-sorting-disabled: "&7Automatikus láda rendezés kikapcsolva."
@@ -519,6 +517,7 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-error-players-only: "&cHiba: Ezt a parancsot csak játékos használhatja."
 #message-player-inventory-sorted: "&7A leltárad rendezve lett."
 #message-error-invalid-options: "&cHiba: Ismeretlen opció %s. Helyes opció %s."
+#message-hotbar-container-sorted: "&aLáda rendezve!"
 #message-gui-enabled: "&aEngedélyezve"
 #message-gui-disabled: "&cKikapcsolva"
 #message-gui-middle-click: "Középső egérgomb"
@@ -527,7 +526,7 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-shift-right-click: "Shift + Jobb klikk"
 #message-gui-left-click: "Láda feltöltés (Bal klikk)"
 #message-gui-right-click: "Láda ürítés (Jobb klikk)"
-#message-gui-left-click-outside: "Left-Click from outside"
+#message-gui-left-click-outside: "Bal klikk a ládán kívül"
 
 ##### Italian
 ##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC

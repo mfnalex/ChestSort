@@ -1,5 +1,8 @@
 # Changelog
 
+## 10.3.2
+- Updated Hungarian translation
+
 ## 10.3.1
 - Fixed hotkeys not working since 10.3.0
 
