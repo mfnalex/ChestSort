@@ -400,8 +400,7 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-right-click: "Empty Chest (Right-Click/Double-Right-Click)"
 #message-gui-left-click-outside: "Left-Click from outside"
 
-
-##### Chinese - Thanks to qsefthuopq, Aira-Sakuranomiya and BackWheel for translating!
+##### Chinese (Simplified) - Thanks to qsefthuopq, Aira-Sakuranomiya and BackWheel for translating!
 #message-when-using-chest: "&7提示: 输入 &6/chestsort&7 来启用自动整理箱子."
 #message-when-using-chest2: "&7提示: 输入 &6/chestsort&7 来关闭自动整理箱子."
 #message-sorting-disabled: "&7自动整理箱子已 &c关闭&7."
@@ -419,7 +418,7 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-shift-right-click: "Shift + 右键"
 #message-gui-left-click: "填充箱子 (左键/双击左键)"
 #message-gui-right-click: "清空箱子 (右键/双击右键)"
-#message-gui-left-click-outside: "Left-Click from outside"
+#message-gui-left-click-outside: "对着箱子点击左键"
 
 ##### Chinese (Traditional) 繁體中文
 #message-when-using-chest: "&7小提醒 ： 輸入 &6/chestsort&7 來開啟自動整理儲物箱。"
