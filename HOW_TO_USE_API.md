@@ -27,7 +27,7 @@ You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin
 </dependencies>
 ```
 
-You must also add ChestSort to the `depend` or `softdepend` section of your `plugin.yml`.
+You must also add `ChestSort` (NOT `ChestSortAPI`) to the `depend` or `softdepend` section of your `plugin.yml`.
 
 Note: it is no longer required **nor allowed** to shade the ChestSortAPI into your plugin.
 
