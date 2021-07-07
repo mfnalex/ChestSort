@@ -9,7 +9,7 @@
     <name>ChestSort</name>
     <url>https://www.chestsort.de</url>
     <description>Allows automatic chest sorting!</description>
-    <version>10.3.2</version>
+    <version>11.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -91,8 +91,17 @@
                             <exclude>org.jetbrains:*</exclude>
                             <exclude>org.intellij.lang:*</exclude>
                             <exclude>org.slf4j</exclude>
+                            <exclude>de.jeff_media.chestsortapi:de.jeff_media.chestsortapi.ChestSortAPI</exclude>
                         </excludes>
                     </artifactSet>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>de/jeff_media/chestsortapi/**</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
                 <executions>
                     <execution>
@@ -166,13 +175,6 @@
             <artifactId>spigot-api</artifactId>
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>de.jeff_media</groupId>
-            <artifactId>ChestSortAPI</artifactId>
-            <version>4.0.1</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>

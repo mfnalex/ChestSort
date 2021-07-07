@@ -1,6 +1,6 @@
 package de.jeff_media.chestsort.handlers;
 
-import de.jeff_media.chestsort.ChestSortEvent;
+import de.jeff_media.chestsort.api.ChestSortEvent;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.data.Category;
 import de.jeff_media.chestsort.hooks.CrackShotHook;
@@ -59,6 +59,8 @@ public class ChestSortOrganizer {
     // We store a list of all Category objects
     public final ArrayList<Category> categories = new ArrayList<>();
     final ArrayList<String> stickyCategoryNames = new ArrayList<>();
+    private final HashSet<Inventory> sortableInventories = new HashSet<>();
+    private final HashSet<Inventory> unsortableInventories = new HashSet<>();
 
     public ChestSortOrganizer(ChestSortPlugin plugin) {
         this.plugin = plugin;
@@ -147,6 +149,18 @@ public class ChestSortOrganizer {
             default:
                 return "";
         }
+    }
+
+    public void setSortable(Inventory inv) {
+        sortableInventories.add(inv);
+    }
+
+    public void setUnsortable(Inventory inv) {
+        unsortableInventories.add(inv);
+    }
+
+    public boolean isMarkedAsSortable(Inventory inv) {
+        return sortableInventories.contains(inv);
     }
 
     static int getNumberOfEnchantments(ItemStack is) {
@@ -464,6 +478,7 @@ public class ChestSortOrganizer {
     // Sort an inventory only between startSlot and endSlot
     public void sortInventory(@NotNull Inventory inv, int startSlot, int endSlot) {
         if(inv==null) return;
+        if(unsortableInventories.contains(inv)) return;
         plugin.debug("Attempting to sort an Inventory and calling ChestSortEvent.");
         Class<? extends Inventory> invClass = inv.getClass();
         ChestSortEvent chestSortEvent = new ChestSortEvent(inv);

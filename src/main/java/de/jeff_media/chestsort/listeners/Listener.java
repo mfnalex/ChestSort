@@ -1,11 +1,11 @@
 package de.jeff_media.chestsort.listeners;
 
-import de.jeff_media.chestsort.ChestSortEvent;
+import de.jeff_media.chestsort.api.ChestSortEvent;
 import de.jeff_media.chestsort.config.Messages;
 import de.jeff_media.chestsort.enums.Hotkey;
 import de.jeff_media.chestsort.handlers.Logger;
 import de.jeff_media.chestsort.ChestSortPlugin;
-import de.jeff_media.chestsort.ISortable;
+import de.jeff_media.chestsort.api.*;
 import de.jeff_media.chestsort.data.PlayerSetting;
 import de.jeff_media.chestsort.hooks.*;
 import de.jeff_media.chestsort.utils.LlamaUtils;
@@ -186,7 +186,8 @@ public class Listener implements org.bukkit.event.Listener {
         if (!isAPICall(inventory)
                 && !belongsToChestLikeBlock(inventory)
                 && !plugin.getEnderContainersHook().isEnderchest(inventory)
-                && !LlamaUtils.belongsToLlama(inventory)) {
+                && !LlamaUtils.belongsToLlama(inventory)
+                && !plugin.getOrganizer().isMarkedAsSortable(inventory)) {
             return;
         }
 
@@ -236,7 +237,8 @@ public class Listener implements org.bukkit.event.Listener {
         if (!isAPICall(inventory)
                 && !belongsToChestLikeBlock(inventory)
                 && !plugin.getEnderContainersHook().isEnderchest(inventory)
-                && !LlamaUtils.belongsToLlama(inventory)) {
+                && !LlamaUtils.belongsToLlama(inventory)
+                && !plugin.getOrganizer().isMarkedAsSortable(inventory)) {
             return;
         }
 
@@ -515,6 +517,7 @@ public class Listener implements org.bukkit.event.Listener {
 
         if (isAPICall
                 || belongsToChestLikeBlock(event.getClickedInventory())
+                || plugin.getOrganizer().isMarkedAsSortable(event.getClickedInventory())
                 || LlamaUtils.belongsToLlama(event.getClickedInventory())
                 || minepacksHook.isMinepacksBackpack(event.getClickedInventory())
                 || plugin.getPlayerVaultsHook().isPlayerVault(event.getClickedInventory())
@@ -559,7 +562,7 @@ public class Listener implements org.bukkit.event.Listener {
 
     private boolean isAPICall(Inventory inv) {
         if(inv==null) return false;
-        return inv.getHolder() instanceof ISortable;
+        return inv.getHolder() instanceof ISortable || plugin.getOrganizer().isMarkedAsSortable(inv);
     }
 
     @EventHandler

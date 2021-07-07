@@ -1,5 +1,10 @@
 # Changelog
 
+## 11.0.0
+- Enhanced API
+- Added Chinese (Simplified) translation
+- Updated Dutch translation
+
 ## 10.3.2
 - Updated Hungarian translation
 
