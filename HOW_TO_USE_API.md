@@ -5,7 +5,7 @@ If you want to use ChestSort's advanced sorting features for your own plugin, or
 - a cancellable event called `ChestSortEvent` that is fired whenever ChestSort is about to sort an inventory, that can also be used to change the sorting results
 - the methods `setSortable(Inventory inv)` and `setUnsortable(Inventory inv)` to tell ChestSort whether your custom inventories should be sortable by ChestSort
 
-and more, see the Javadocs at the bottom of this page.
+and more, see the Javadocs at the bottom of this page. There's also a link to an example plugin.
 
 ## Maven repository
 You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin:
@@ -130,9 +130,14 @@ ChestSortAPI.setUnsortable(myInventory);
 
 ## Example Plugin
 
-Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample)
 
-## Javadocs & Source code
+## Javadocs, Source code & Discord
 There are more methods you can use, just have a look at the Javadocs.
 - [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI).
 - [ChestSortAPI source code](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).
+
+Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample)
+
+If you need help using the API, feel free to join my Discord server:
+
+[![Join my Discord](https://api.jeff-media.de/img/discord1.png)](https://discord.jeff-media.de)
