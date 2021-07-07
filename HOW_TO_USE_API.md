@@ -29,17 +29,35 @@ You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin
 </dependencies>
 ```
 
+You must also add ChestSort to the `depend` or `softdepend` section of your `plugin.yml`.
+
+Note: it is no longer required **nor allowed** to shade the ChestSortAPI into your plugin.
+
 ## Accessing the API
-Then you can access the API via the plugin manager:
+### As `depend`
+If you depend on ChestSort, you can easily access the API methods directly:
 
 ```java
-ChestSort chestSort = (ChestSort) getServer().getPluginManager().getPlugin("ChestSort");
-if(chestSort==null) {
-	getLogger().severe("Error: ChestSort is not installed.");
-	return;
+import de.jeff_media.chestsort.api.ChestSortAPI;
+...
+ChestSortAPI.sortInventory(player.getInventory());
+```
+
+### As `softdepend`
+If you only softdepend on ChestSort, you have to check whether ChestSort is installed. To avoid exceptions, do not import the ChestSortAPI class
+in classes that you instantiate regardless of whether ChestSort is installed, but use qualified method calls instead:
+
+```java
+if(Bukkit.getPluginManager().getPlugin("ChestSort") != null) {
+    de.jeff_media.chestsort.api.ChestSortAPI.sortInventory(player.getInventory());    
 }
-	
-ChestSortAPI chestSortAPI = chestSort.getAPI();
+```
+
+Your Listener has to import the ChestSortEvent class, so only register it when ChestSort is installed:
+```java
+if(Bukkit.getPluginManager().getPlugin("ChestSort") != null) {
+    Bukkit.getPluginManager().registerEvents(new MyListener(), yourPlugin);    
+}
 ```
 
 ### Sorting inventories
@@ -47,19 +65,19 @@ ChestSortAPI chestSortAPI = chestSort.getAPI();
 Now, you can sort any Inventory! Just like this:
 
 ```java
-chestSortAPI.sortInventory(Inventory inventory);
+ChestSortAPI.sortInventory(Inventory inventory);
 ```
 
 To sort only specific slots, you can pass slot numbers where to start and end sorting. ChestSort will not modify the inventory outside the given slot range.
 
 ```java
-chestSortAPI.sortInventory(Inventory inventory, int startSlot, int endSlot);
+ChestSortAPI.sortInventory(Inventory inventory, int startSlot, int endSlot);
 ```
 
 You can also check if a player has automatic sorting enabled or disabled:
 
 ```java
-boolean sortingEnabled = chestSortAPI.sortingEnabled(Player player);
+boolean sortingEnabled = ChestSortAPI.hasSortingEnabled(Player player);
 ```
 
 ### Custom ChestSort event
@@ -100,26 +118,23 @@ public void onChestSortEvent(ChestSortEvent event) {
 }
 ```
 
-### Making custom inventories sortable
+### Making custom inventories sortable / unsortable
 
-If you create a new Inventory inside your plugin, you can use the `Sortable` class to tell ChestSort that your custom inventory should be sortable.
-
-```java
-Inventory inv = Bukkit.createInventory(new Sortable(), 9, "Example");
-```
-
-You can also store another InventoryHolder in the Inventory if needed:
+If you create a new Inventory inside your plugin, you can tell ChestSort whether that inventory should be sortable by ChestSort:
 
 ```java
-Sortable holder = new Sortable(player)
-```
+// Make it sortable
+ChestSortAPI.setSortable(myInventory);
 
-You can also instead use your own custom inventory holder that either `implements ISortable` or `extends Sortable`.
+// or make it not sortable
+ChestSortAPI.setUnsortable(myInventory);
+```
 
 ## Example Plugin
 
-Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample) (OUTDATED: The example plugin still uses API version 2.0.0)
+Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample)
 
 ## Javadocs & Source code
-- [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI). (OUTDATED: The JavaDocs are still on version 2.0.0, I will update it in the next days, sorry for the trouble - contact me on Discord at https://discord.jeff-media.de if you need assistance)
+There are more methods you can use, just have a look at the Javadocs.
+- [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI).
 - [ChestSortAPI source code](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).
