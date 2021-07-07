@@ -128,10 +128,7 @@ ChestSortAPI.setSortable(myInventory);
 ChestSortAPI.setUnsortable(myInventory);
 ```
 
-## Example Plugin
-
-
-## Javadocs, Source code & Discord
+## Javadocs, Source code, Example plugin & Discord
 There are more methods you can use, just have a look at the Javadocs.
 - [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI).
 - [ChestSortAPI source code](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).
