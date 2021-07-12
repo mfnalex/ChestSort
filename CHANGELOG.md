@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.1
+- Updated Russian translation - thanks to @Alskar
+
 ## 11.0.0
 - Enhanced API
 - Added Chinese (Simplified) translation
