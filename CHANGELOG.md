@@ -1,6 +1,9 @@
 # Changelog
 
-## 1.0.1
+## 11.0.2
+- Fixed message "Container sorted" not being translatable
+
+## 11.0.1
 - Updated Russian translation - thanks to @Alskar
 
 ## 11.0.0
