@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.0.3
+- Removed message "You are using the latest version of ChestSort"
+- Updated Korean translation
+
 ## 11.0.2
 - Fixed message "Container sorted" not being translatable
 

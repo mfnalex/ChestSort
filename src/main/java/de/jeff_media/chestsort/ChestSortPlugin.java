@@ -444,7 +444,8 @@ public class ChestSortPlugin extends JavaPlugin {
                 setUpdateChecker(UpdateChecker.init(this, "https://api.jeff-media.de/chestsort/chestsort-latest-version.txt")
                         .setChangelogLink("https://www.chestsort.de/changelog")
                         .setDonationLink("https://paypal.me/mfnalex")
-                        .setDownloadLink("https://www.chestsort.de"));
+                        .setDownloadLink("https://www.chestsort.de")
+                        .suppressUpToDateMessage(true));
             } else {
                 getLogger().severe("You are using an unsupported server software! Consider switching to Spigot or Paper!");
                 getLogger().severe("The Update Checker will NOT work when using CraftBukkit instead of Spigot/Paper!");
