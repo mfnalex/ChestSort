@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.1.0
+- Improved sorting for items enchanted with different types of Enchantments
+
 ## 11.0.3
 - Removed message "You are using the latest version of ChestSort"
 - Updated Korean translation

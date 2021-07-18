@@ -7,6 +7,7 @@ import de.jeff_media.chestsort.hooks.CrackShotHook;
 import de.jeff_media.chestsort.hooks.InventoryPagesHook;
 import de.jeff_media.chestsort.hooks.SlimeFunHook;
 import de.jeff_media.chestsort.data.CategoryLinePair;
+import de.jeff_media.chestsort.utils.EnchantmentUtils;
 import de.jeff_media.chestsort.utils.TypeMatchPositionPair;
 import de.jeff_media.chestsort.utils.Utils;
 import org.bukkit.Bukkit;
@@ -163,7 +164,7 @@ public class ChestSortOrganizer {
         return sortableInventories.contains(inv);
     }
 
-    static int getNumberOfEnchantments(ItemStack is) {
+    /*static int getNumberOfEnchantments(ItemStack is) {
 
         int totalEnchants = 0;
 
@@ -182,7 +183,7 @@ public class ChestSortOrganizer {
             totalEnchants += level;
         }
         return totalEnchants;
-    }
+    }*/
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean doesInventoryContain(Inventory inv, Material mat) {
@@ -439,7 +440,7 @@ public class ChestSortOrganizer {
         }
 
         // Put enchanted items before unenchanted ones
-        typeName = typeName + String.format("%05d", 10000 - getNumberOfEnchantments(item));
+        typeName = typeName + EnchantmentUtils.getEnchantmentString(item); //String.format("%05d", 10000 - getNumberOfEnchantments(item));
 
         // Generate the map of string replacements used to generate a sortableString.
         // This map can be edited by ChestSortEvent handlers. See ChestSortEvent.getSortableMaps()
@@ -490,11 +491,7 @@ public class ChestSortOrganizer {
                     chestSortEvent.setLocation(inv.getLocation());
                 }
             }
-        } catch (Throwable throwable) {
-            //System.out.println("Exception cought");
-            // I dont know, but this inv.getLocation() causes a NullPointerException when using EssentialsX's /ec command in 1.12
-            // Don't ask me why, but everything still works as expected if we catch that Exception.
-            // TODO Auto-generated catch block
+        } catch (Throwable ignored) {
 
         }
 
