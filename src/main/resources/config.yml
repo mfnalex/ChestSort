@@ -617,7 +617,6 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-left-click-outside: "Left-Click from outside"
 
 ##### Portuguese - Thanks to wildastral for translating!
-##### Note: Some messages are still untranslated. Please send me your translation at SpigotMC
 #message-when-using-chest: "&7Dica: Digite &6/chestsort&7 para habilitar a organização automática."
 #message-when-using-chest2: "&7Dica: Digite &6/chestsort&7 para desabilitar a organização automática."
 #message-sorting-disabled: "&7AOrganização automática de baús foi &cdesabilitada&7."
