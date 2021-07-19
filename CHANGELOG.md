@@ -1,8 +1,13 @@
 # Changelog
 
+## 11.2.1
+- Added new permissions to config.yml
+  - They are all true by default so you don't have to change anything to keep the current behaviour
+
 ## 11.2.0
 - Added permission "chestsort.automatic" (default: true).
   - You can remove this from some players to disallow automatic sorting while allowing hotkeys
+- Updated Porguguese translation
 
 ## 11.1.0
 - Improved sorting for items enchanted with different types of Enchantments
