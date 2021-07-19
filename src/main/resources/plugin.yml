@@ -61,3 +61,5 @@ permissions:
     default: true
   chestsort.hotkey.outside:
     default: true
+  chestsort.automatic:
+    default: true

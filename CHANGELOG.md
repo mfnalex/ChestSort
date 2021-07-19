@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.2.0
+- Added permission "chestsort.automatic" (default: true).
+  - You can remove this from some players to disallow automatic sorting while allowing hotkeys
+
 ## 11.1.0
 - Improved sorting for items enchanted with different types of Enchantments
 

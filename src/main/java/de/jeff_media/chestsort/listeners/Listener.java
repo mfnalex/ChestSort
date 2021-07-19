@@ -106,6 +106,7 @@ public class Listener implements org.bukkit.event.Listener {
         if(!plugin.getConfig().getBoolean("allow-automatic-sorting")) return; //TODO: Maybe change to allow-automatic-inventory-sorting ?
         if (!minepacksHook.isMinepacksBackpack(inv)) return;
         if (!p.hasPermission("chestsort.use")) return;
+        if (!p.hasPermission("chestsort.automatic")) return;
         plugin.registerPlayerIfNeeded(p);
         PlayerSetting setting = plugin.getPerPlayerSettings().get(p.getUniqueId().toString());
         if (!setting.sortingEnabled) return;
@@ -144,8 +145,8 @@ public class Listener implements org.bukkit.event.Listener {
 
         Player p = (Player) event.getInventory().getHolder();
 
-        if (!p.hasPermission("chestsort.use.inventory")) {
-            plugin.debug("Missing permission chestsort.use.inventory");
+        if (!p.hasPermission("chestsort.use.inventory") || !p.hasPermission("chestsort.automatic")) {
+            plugin.debug("Missing permission chestsort.use.inventory or chestsort.automatic");
             return;
         }
         plugin.registerPlayerIfNeeded(p);
@@ -182,6 +183,8 @@ public class Listener implements org.bukkit.event.Listener {
         }
         Player p = (Player) event.getPlayer();
         Inventory inventory = event.getInventory();
+
+        if(!p.hasPermission("chestsort.automatic")) return;
 
         if (!isAPICall(inventory)
                 && !belongsToChestLikeBlock(inventory)
@@ -233,6 +236,8 @@ public class Listener implements org.bukkit.event.Listener {
         }
         Player p = (Player) event.getPlayer();
         Inventory inventory = event.getInventory();
+
+        if(!p.hasPermission("chestsort.automatic")) return;
 
         if (!isAPICall(inventory)
                 && !belongsToChestLikeBlock(inventory)
@@ -365,6 +370,8 @@ public class Listener implements org.bukkit.event.Listener {
         }
 
         Player p = (Player) event.getPlayer();
+
+        if(!p.hasPermission("chestsort.automatic")) return;
 
         // Check if this is an EnderChest (is there a smarter way?)
         if (!event.getInventory().equals(p.getEnderChest())) {
