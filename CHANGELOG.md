@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.2.2
+- Fixed warning regarding PlaceholderAPI on server startup
+
 ## 11.2.1
 - Added new permissions to config.yml
   - They are all true by default so you don't have to change anything to keep the current behaviour
