@@ -510,7 +510,6 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-left-click-outside: "Linksklick von außen"
 
 ##### Hungarian
-### CHESTSORT - HUNGARIAN MESSAGES
 #message-when-using-chest: "&7Automatikus láda rendezés bekapcsolás: &6/chestsort"
 #message-when-using-chest2: "&7Automatikus láda rendezés bekapcsolás: &6/chestsort"
 #message-sorting-disabled: "&7Automatikus láda rendezés kikapcsolva."
