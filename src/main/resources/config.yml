@@ -511,7 +511,6 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-left-click-outside: "Linksklick von außen"
 
 ##### Hungarian
-### CHESTSORT - HUNGARIAN MESSAGES
 #message-when-using-chest: "&7Automatikus láda rendezés bekapcsolás: &6/chestsort"
 #message-when-using-chest2: "&7Automatikus láda rendezés bekapcsolás: &6/chestsort"
 #message-sorting-disabled: "&7Automatikus láda rendezés kikapcsolva."
@@ -608,7 +607,7 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-player-inventory-sorted: "&7Twój ekwipunek został posortowany."
 #message-error-players-only: "&cBłąd: To polecenie może być używane tylko przez graczy."
 #message-error-invalid-options: "&cBłąd: Nieznana opcja %s. Prawidłowe opcje to %s."
-#message-container-sorted: "&aContainer sorted!"
+#message-container-sorted: "&aKontener posortowany!"
 #message-gui-enabled: "&aWłączone"
 #message-gui-disabled: "&cWyłączone"
 #message-gui-middle-click: "Środkowy Przycisk Myszy"
@@ -617,7 +616,7 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-shift-right-click: "Shift + PPM"
 #message-gui-left-click: "Wypełnienie Skrzyni (LPM/Podwójny LPM)"
 #message-gui-right-click: "Opróżnienie Skrzyni (PPM/Podwójny PPM)"
-#message-gui-left-click-outside: "Left-Click from outside"
+#message-gui-left-click-outside: "Kliknij LPM z zewnątrz"
 
 ##### Portuguese - Thanks to wildastral for translating!
 #message-when-using-chest: "&7Dica: Digite &6/chestsort&7 para habilitar a organização automática."
