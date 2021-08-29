@@ -316,6 +316,7 @@ prevent-sorting-null-inventories: false
 # {keepCategoryOrder} orders stuff in the same category according to their line numbers in the category file
 # {itemsFirst}        put items before blocks
 # {blocksFirst}       put blocks before items
+# {tier}              orders by material type from best to worst (netherite, diamond, gold, iron, stone, wood, then all remaining items)
 # {name}              returns the name (e.g. DIRT, GRASS_BLOCK, BIRCH_LOG, DIAMOND_SWORD, ...)
 # {color}             returns the color, e.g. light_blue for wool. Empty if block/item is not dyeable
 # {customName}        returns the display name if set (e.g. with an anvil)

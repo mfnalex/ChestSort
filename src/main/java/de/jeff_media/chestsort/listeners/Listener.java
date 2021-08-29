@@ -470,7 +470,7 @@ public class Listener implements org.bukkit.event.Listener {
                     if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE) {
                         sort = true;
                     } else {
-                        if (event.getCurrentItem() != null || event.getCurrentItem().getType() != Material.AIR) {
+                        if (event.getCurrentItem() != null || (event.getCurrentItem()==null && event.getCurrentItem().getType() != Material.AIR)) {
                             sort = false;
                         }
                     }
@@ -512,7 +512,7 @@ public class Listener implements org.bukkit.event.Listener {
         if (!sort) {
             return;
         }
-
+        event.setCancelled(true);
 
         if(plugin.isInHotkeyCooldown(p.getUniqueId())) {
             plugin.debug("Skipping: hotkey cooldown");
@@ -637,6 +637,11 @@ public class Listener implements org.bukkit.event.Listener {
 
         // Don't sort inventories belonging to BossShopPro
         if (e.getInventory() != null && e.getInventory().getHolder() != null && e.getInventory().getHolder().getClass().getName().equalsIgnoreCase("org.black_ixx.bossshop.core.BSShopHolder")) {
+            return;
+        }
+
+        // BetterBackpacks
+        if (e.getInventory() != null && e.getInventory().getHolder() != null && e.getInventory().getHolder().getClass().getName().equals("com.alonsoaliaga.betterbackpacks.others.BackpackHolder")) {
             return;
         }
 

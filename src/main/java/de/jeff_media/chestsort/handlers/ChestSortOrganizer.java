@@ -442,6 +442,8 @@ public class ChestSortOrganizer {
         // Put enchanted items before unenchanted ones
         typeName = typeName + EnchantmentUtils.getEnchantmentString(item); //String.format("%05d", 10000 - getNumberOfEnchantments(item));
 
+        String tier = getTier(item);
+
         // Generate the map of string replacements used to generate a sortableString.
         // This map can be edited by ChestSortEvent handlers. See ChestSortEvent.getSortableMaps()
         Map<String, String> sortableMap = new HashMap<>();
@@ -453,8 +455,19 @@ public class ChestSortOrganizer {
         sortableMap.put("{keepCategoryOrder}", lineNumber);
         sortableMap.put("{customName}", customName);
         sortableMap.put("{lore}", lore);
-
+        sortableMap.put("{tier}", tier);
         return sortableMap;
+    }
+
+    private String getTier(ItemStack item) {
+        String type = item.getType().name();
+        if(type.contains("NETHERITE")) return "10netherite";
+        if(type.contains("DIAMOND")) return "20diamond";
+        if(type.contains("GOLD")) return "30gold";
+        if(type.contains("IRON")) return "40iron";
+        if(type.contains("STONE")) return "50stone";
+        if(type.contains("WOOD")) return "60wood";
+        return "99none";
     }
 
     // This puts together the sortable item name, the category, the color, and

@@ -1,5 +1,15 @@
 # Changelog
 
+## 11.4.0
+- Added {tier} sorting modifier to sort by tool/block material (netherite, diamond, gold, iron, stone, wood, then the rest)
+- Fixed exception
+
+## 11.3.0
+- Added support for BetterBackpacks
+
+## 11.2.3
+- Cancel inventory click when using hotkeys (TODO: Better explanation)
+
 ## 11.2.2
 - Fixed warning regarding PlaceholderAPI on server startup
 
