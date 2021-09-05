@@ -16,7 +16,7 @@ public class CrackShotHook {
 		
 		if(plugin.isHookCrackShot()) {
 			crackShotUtility = new CSUtility();
-			plugin.getLogger().info("Succesfully hooked into CrackShot");
+			plugin.getLogger().info("Successfully hooked into CrackShot");
 		}
 	}
 	
