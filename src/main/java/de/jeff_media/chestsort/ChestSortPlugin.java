@@ -421,10 +421,10 @@ public class ChestSortPlugin extends JavaPlugin {
         }
 
         setHookCrackShot(getConfig().getBoolean("hook-crackshot")
-                && Bukkit.getPluginManager().getPlugin("CrackShot") instanceof Plugin);
+                && Bukkit.getPluginManager().getPlugin("CrackShot") != null);
 
         setHookInventoryPages(getConfig().getBoolean("hook-inventorypages")
-                && Bukkit.getPluginManager().getPlugin("InventoryPages") instanceof Plugin);
+                && Bukkit.getPluginManager().getPlugin("InventoryPages") != null);
 
         setHookMinepacks(getConfig().getBoolean("hook-minepacks")
                 && Bukkit.getPluginManager().getPlugin("Minepacks") instanceof MinepacksPlugin);
