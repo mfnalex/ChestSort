@@ -467,12 +467,9 @@ public class Listener implements org.bukkit.event.Listener {
                 cause = Logger.SortCause.H_MIDDLE;
                 //if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
                 if (setting.middleClick && p.hasPermission(Hotkey.getPermission(Hotkey.MIDDLE_CLICK))) {
-                    if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE) {
+                    if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE
+                        || (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR)) {
                         sort = true;
-                    } else {
-                        if (event.getCurrentItem() != null || (event.getCurrentItem()==null && event.getCurrentItem().getType() != Material.AIR)) {
-                            sort = false;
-                        }
                     }
                 }
                 break;
