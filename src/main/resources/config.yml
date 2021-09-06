@@ -284,6 +284,12 @@ hook-headdatabase: true
 # prevent ChestSort from moving Slimefun backpacks until they fixed this.
 dont-move-slimefun-backpacks: false
 
+##### AdvancedChests #####
+# When AdvancedChests is installed, ChestSort will not sort
+# the buttons from the bottom row. You should not
+# disable this behaviour unless you know what you are doing!
+hook-advancedchests: true
+
 ##### Other backpack plugins #####
 # ChestSort is able to detect backpacks from most backpack
 # plugins like ShulkerPacks or Better Shulker Boxes.

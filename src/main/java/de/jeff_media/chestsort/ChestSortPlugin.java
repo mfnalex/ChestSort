@@ -76,6 +76,7 @@ public class ChestSortPlugin extends JavaPlugin {
     private boolean hookCrackShot = false;
     private boolean hookInventoryPages = false;
     private boolean hookMinepacks = false;
+    private boolean hookAdvancedChests = false;
     private PlayerVaultsHook playerVaultsHook;
     private boolean debug = false;
     private ArrayList<String> disabledWorlds;
@@ -359,6 +360,14 @@ public class ChestSortPlugin extends JavaPlugin {
         this.hookMinepacks = hookMinepacks;
     }
 
+    public boolean isHookAdvancedChests() {
+        return hookAdvancedChests;
+    }
+
+    public void setHookAdvancedChests(boolean hookAdvancedChests) {
+        this.hookAdvancedChests = hookAdvancedChests;
+    }
+
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public boolean isHotkeyGUI() {
         // TODO: Remove, it's unused
@@ -421,13 +430,16 @@ public class ChestSortPlugin extends JavaPlugin {
         }
 
         setHookCrackShot(getConfig().getBoolean("hook-crackshot")
-                && Bukkit.getPluginManager().getPlugin("CrackShot") instanceof Plugin);
+                && Bukkit.getPluginManager().getPlugin("CrackShot") != null);
 
         setHookInventoryPages(getConfig().getBoolean("hook-inventorypages")
-                && Bukkit.getPluginManager().getPlugin("InventoryPages") instanceof Plugin);
+                && Bukkit.getPluginManager().getPlugin("InventoryPages") != null);
 
         setHookMinepacks(getConfig().getBoolean("hook-minepacks")
                 && Bukkit.getPluginManager().getPlugin("Minepacks") instanceof MinepacksPlugin);
+
+        setHookAdvancedChests(getConfig().getBoolean("hook-advancedchests")
+                && Bukkit.getPluginManager().getPlugin("AdvancedChests") != null);
 
         setGenericHook(new GenericGUIHook(this, getConfig().getBoolean("hook-generic")));
 

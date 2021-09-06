@@ -42,6 +42,7 @@ public class Listener implements org.bukkit.event.Listener {
     final HeadDatabaseHook headDatabaseHook;
     final CrateReloadedHook crateReloadedHook;
     final GoldenCratesHook goldenCratesHook;
+    final AdvancedChestsHook advancedChestsHook;
 
     public Listener(ChestSortPlugin plugin) {
         this.plugin = plugin;
@@ -49,6 +50,7 @@ public class Listener implements org.bukkit.event.Listener {
         this.headDatabaseHook = new HeadDatabaseHook(plugin);
         this.crateReloadedHook = new CrateReloadedHook(plugin);
         this.goldenCratesHook = new GoldenCratesHook(plugin);
+        this.advancedChestsHook = new AdvancedChestsHook(plugin);
     }
 
     @EventHandler
@@ -65,7 +67,9 @@ public class Listener implements org.bukkit.event.Listener {
         if(!playerSetting.leftClickOutside) return;
         Container containerState = (Container) clickedBlock.getState();
         Inventory inventory = containerState.getInventory();
-        plugin.getOrganizer().sortInventory(inventory);
+        if(!advancedChestsHook.handleAChestSortingIfPresent(clickedBlock.getLocation())) {
+            plugin.getOrganizer().sortInventory(inventory);
+        }
         event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.MSG_CONTAINER_SORTED));
     }
 
@@ -164,7 +168,7 @@ public class Listener implements org.bukkit.event.Listener {
     }
 
     // This event fires when someone closes an inventory
-    // We check if the closed inventory belongs to a chest, shulkerbox or barrel,
+    // We check if the closed inventory belongs to a chest, advancedchest, shulkerbox or barrel,
     // and then call the Organizer to sort the inventory (if the player has
     // the chestsort.use permission and has /chestsort enabled)
     @EventHandler
@@ -190,6 +194,7 @@ public class Listener implements org.bukkit.event.Listener {
                 && !belongsToChestLikeBlock(inventory)
                 && !plugin.getEnderContainersHook().isEnderchest(inventory)
                 && !LlamaUtils.belongsToLlama(inventory)
+                && !advancedChestsHook.isAnAdvancedChest(inventory)
                 && !plugin.getOrganizer().isMarkedAsSortable(inventory)) {
             return;
         }
@@ -209,9 +214,11 @@ public class Listener implements org.bukkit.event.Listener {
             return;
         }
 
+        // If the involved inventory belongs to an AdvancedChest, sort all the pages.
+        if(advancedChestsHook.handleAChestSortingIfPresent(event.getInventory()))return;
+
         // Normal container inventories can be sorted completely
         plugin.getOrganizer().sortInventory(event.getInventory());
-
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
@@ -243,6 +250,7 @@ public class Listener implements org.bukkit.event.Listener {
                 && !belongsToChestLikeBlock(inventory)
                 && !plugin.getEnderContainersHook().isEnderchest(inventory)
                 && !LlamaUtils.belongsToLlama(inventory)
+                && !advancedChestsHook.isAnAdvancedChest(inventory)
                 && !plugin.getOrganizer().isMarkedAsSortable(inventory)) {
             return;
         }
@@ -262,6 +270,9 @@ public class Listener implements org.bukkit.event.Listener {
             plugin.getOrganizer().sortInventory(event.getInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
             return;
         }
+
+        // If the involved inventory belongs to an AdvancedChest, sort all the pages.
+        if(advancedChestsHook.handleAChestSortingIfPresent(event.getInventory()))return;
 
         // Normal container inventories can be sorted completely
         plugin.getOrganizer().sortInventory(event.getInventory());
@@ -467,12 +478,9 @@ public class Listener implements org.bukkit.event.Listener {
                 cause = Logger.SortCause.H_MIDDLE;
                 //if(plugin.getConfig().getBoolean("hotkeys.middle-click")) {
                 if (setting.middleClick && p.hasPermission(Hotkey.getPermission(Hotkey.MIDDLE_CLICK))) {
-                    if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE) {
+                    if (event.getWhoClicked().getGameMode() != GameMode.CREATIVE
+                        || (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR)) {
                         sort = true;
-                    } else {
-                        if (event.getCurrentItem() != null || (event.getCurrentItem()==null && event.getCurrentItem().getType() != Material.AIR)) {
-                            sort = false;
-                        }
                     }
                 }
                 break;
@@ -528,23 +536,28 @@ public class Listener implements org.bukkit.event.Listener {
                 || LlamaUtils.belongsToLlama(event.getClickedInventory())
                 || minepacksHook.isMinepacksBackpack(event.getClickedInventory())
                 || plugin.getPlayerVaultsHook().isPlayerVault(event.getClickedInventory())
-                || plugin.getEnderContainersHook().isEnderchest(event.getClickedInventory())) {
+                || plugin.getEnderContainersHook().isEnderchest(event.getClickedInventory())
+                || advancedChestsHook.isAnAdvancedChest(event.getClickedInventory())) {
 
 
             if (!p.hasPermission("chestsort.use")) {
                 return;
             }
 
-            if (LlamaUtils.belongsToLlama(event.getClickedInventory())) {
+            plugin.getLgr().logSort(p,cause);
 
-                plugin.getLgr().logSort(p,cause);
+            if (LlamaUtils.belongsToLlama(event.getClickedInventory())) {
                 ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
                 plugin.getOrganizer().sortInventory(event.getClickedInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
                 plugin.getOrganizer().updateInventoryView(event);
                 return;
             }
 
-            plugin.getLgr().logSort(p,cause);
+            if(advancedChestsHook.handleAChestSortingIfPresent(event.getInventory())){
+                plugin.getOrganizer().updateInventoryView(event);
+                return;
+            }
+
             plugin.getOrganizer().sortInventory(event.getClickedInventory());
             plugin.getOrganizer().updateInventoryView(event);
         } else if (holder instanceof Player) {
@@ -625,6 +638,12 @@ public class Listener implements org.bukkit.event.Listener {
         if(goldenCratesHook.isCrate(e.getClickedInventory())
                 || goldenCratesHook.isCrate(e.getInventory())) {
             //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
+            return;
+        }
+
+        // AdvancedChests hook
+        if(advancedChestsHook.isAnAdvancedChest(e.getClickedInventory())
+                || advancedChestsHook.isAnAdvancedChest(e.getInventory())){
             return;
         }
 

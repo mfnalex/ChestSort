@@ -20,7 +20,7 @@ public class MinepacksHook {
 	    Plugin bukkitPlugin = Bukkit.getPluginManager().getPlugin("Minepacks");
 	    if(plugin.isHookMinepacks() && bukkitPlugin instanceof MinepacksPlugin) {
 	        minepacks = (MinepacksPlugin) bukkitPlugin;
-			plugin.getLogger().info("Succesfully hooked into Minepacks");
+			plugin.getLogger().info("Successfully hooked into Minepacks");
 	    }
 	}
 	
