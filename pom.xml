@@ -9,7 +9,7 @@
     <name>ChestSort</name>
     <url>https://www.chestsort.de</url>
     <description>Allows automatic chest sorting!</description>
-    <version>11.5.0</version>
+    <version>11.5.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -239,9 +239,9 @@
         </dependency>
 
         <dependency>
-            <groupId>com.github.TheBusyBiscuit</groupId>
+            <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-15</version>
+            <version>RC-28</version>
             <scope>provided</scope>
         </dependency>
 

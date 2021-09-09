@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.5.1
+- Added support for new Slimefun API
+
 ## 11.5.0
 - Added support for AdvancedChests (thanks to its author)
 
