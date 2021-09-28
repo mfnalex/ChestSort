@@ -40,7 +40,7 @@ public class PlayerSetting {
 		NONE, RIGHT_CLICK, LEFT_CLICK
 	}
 
-	public PlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean leftCLickOutside, boolean changed) {
+	public PlayerSetting(boolean sortingEnabled, boolean invSortingEnabled, boolean middleClick, boolean shiftClick, boolean doubleClick, boolean shiftRightClick, boolean leftClick, boolean rightClick, boolean leftCLickOutside, boolean changed, boolean hasSeenMessage) {
 		this.sortingEnabled = sortingEnabled;
 		this.middleClick = middleClick;
 		this.shiftClick = shiftClick;
@@ -51,6 +51,7 @@ public class PlayerSetting {
 		this.rightClick = rightClick;
 		this.leftClickOutside = leftCLickOutside;
 		this.changed = changed;
+		this.hasSeenMessage = hasSeenMessage;
 	}
 
 	public DoubleClickType getCurrentDoubleClick(ChestSortPlugin plugin, DoubleClickType click) {

@@ -49,8 +49,8 @@ import de.jeff_media.chestsort.listeners.Listener;
 import de.jeff_media.chestsort.placeholders.Placeholders;
 import de.jeff_media.chestsort.utils.Utils;
 import de.jeff_media.jefflib.JeffLib;
+import de.jeff_media.jefflib.McVersion;
 import de.jeff_media.jefflib.NBTAPI;
-import de.jeff_media.jefflib.VersionUtil;
 import de.jeff_media.updatechecker.UpdateChecker;
 import io.papermc.lib.PaperLib;
 import org.bstats.bukkit.Metrics;
@@ -657,8 +657,9 @@ public class ChestSortPlugin extends JavaPlugin {
             boolean rightClick;
             boolean leftClickFromOutside;
             boolean changed;
+            boolean hasSeenMessage;
 
-            if (playerFile.exists() || VersionUtil.getServerBukkitVersion().isLowerThan(VersionUtil.v1_14_4_R01)) {
+            if (playerFile.exists() || !McVersion.isAtLeast(1,14,4)) {
                 // If the player settings file does not exist for this player, set it to the
                 // default value
                 activeForThisPlayer = playerConfig.getBoolean("sortingEnabled");
@@ -670,10 +671,11 @@ public class ChestSortPlugin extends JavaPlugin {
                 leftClickFromOutside = playerConfig.getBoolean("leftClickOutside");
                 leftClick = playerConfig.getBoolean("leftClick");
                 rightClick = playerConfig.getBoolean("rightClick");
+                hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
 
                 changed = true;
 
-                if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01)) {
+                if (McVersion.isAtLeast(1,14,4)) {
                     if (playerFile.delete()) {
                         this.getLogger().info("Converted old .yml playerdata file to NBT tags for player " + p.getName());
                     } else {
@@ -692,16 +694,22 @@ public class ChestSortPlugin extends JavaPlugin {
                 leftClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "leftClick", String.valueOf(playerConfig.getBoolean("leftClick", getConfig().getBoolean("additional-hotkeys.left-click")))));
                 rightClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "rightClick", String.valueOf(playerConfig.getBoolean("rightClick", getConfig().getBoolean("additional-hotkeys.right-click")))));
                 leftClickFromOutside = Boolean.parseBoolean(NBTAPI.getNBT(p, "leftClickOutside", String.valueOf(playerConfig.getBoolean("leftClickOutside", getConfig().getBoolean("left-click-to-sort-enabled-by-default")))));
+                hasSeenMessage = Boolean.parseBoolean(NBTAPI.getNBT(p, "hasSeenMessage", String.valueOf("false")));
+                //System.out.println("Loading playersetting from NBT");
+                if(getConfig().getBoolean("show-message-again-after-logout")) {
+                    //System.out.println("show-message-again-after-logout is true, sooo...");
+                    hasSeenMessage = false;
+                }
 
                 changed = true;
             }
 
-            PlayerSetting newSettings = new PlayerSetting(activeForThisPlayer, invActiveForThisPlayer, middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick, leftClickFromOutside, changed);
+            PlayerSetting newSettings = new PlayerSetting(activeForThisPlayer, invActiveForThisPlayer, middleClick, shiftClick, doubleClick, shiftRightClick, leftClick, rightClick, leftClickFromOutside, changed, hasSeenMessage);
 
             // when "show-message-again-after-logout" is enabled, we don't care if the
             // player already saw the message
             if (!getConfig().getBoolean("show-message-again-after-logout")) {
-                if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01) && !playerFile.exists()) {
+                if (McVersion.isAtLeast(1,14,4) && !playerFile.exists()) {
                     NBTAPI.getNBT(p, "hasSeenMessage", String.valueOf(false));
                 } else {
                     newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
@@ -865,7 +873,7 @@ public class ChestSortPlugin extends JavaPlugin {
         if (getPerPlayerSettings().containsKey(uniqueId.toString())) {
             PlayerSetting setting = getPerPlayerSettings().get(p.getUniqueId().toString());
 
-            if (VersionUtil.getServerBukkitVersion().isHigherThanOrEqualTo(VersionUtil.v1_14_4_R01)) {
+            if (McVersion.isAtLeast(1,14,4)) {
                 NBTAPI.addNBT(p, "sortingEnabled", String.valueOf(setting.sortingEnabled));
                 NBTAPI.addNBT(p, "invSortingEnabled", String.valueOf(setting.invSortingEnabled));
                 NBTAPI.addNBT(p, "hasSeenMessage", String.valueOf(setting.hasSeenMessage));

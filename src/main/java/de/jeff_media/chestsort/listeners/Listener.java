@@ -9,6 +9,7 @@ import de.jeff_media.chestsort.api.*;
 import de.jeff_media.chestsort.data.PlayerSetting;
 import de.jeff_media.chestsort.hooks.*;
 import de.jeff_media.chestsort.utils.LlamaUtils;
+import de.jeff_media.jefflib.ProtectionUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -62,6 +63,10 @@ public class Listener implements org.bukkit.event.Listener {
         if(!plugin.getConfig().getBoolean("allow-left-click-to-sort")) return;
         Block clickedBlock = event.getClickedBlock();
         if(!(clickedBlock.getState() instanceof Container)) return;
+        if(!ProtectionUtils.canInteract(event.getPlayer(), clickedBlock)) {
+            //System.out.println("ChestSort: cannot interact!");
+            return;
+        }
         plugin.registerPlayerIfNeeded(event.getPlayer());
         PlayerSetting playerSetting = plugin.getPlayerSetting(event.getPlayer());
         if(!playerSetting.leftClickOutside) return;
