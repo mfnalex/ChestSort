@@ -196,7 +196,7 @@ public class ChestSortPlugin extends JavaPlugin {
     }
 
     public ArrayList<String> getDisabledWorlds() {
-        return disabledWorlds;
+        return disabledWorlds == null ? new ArrayList<>() : disabledWorlds;
     }
 
     public void setDisabledWorlds(ArrayList<String> disabledWorlds) {

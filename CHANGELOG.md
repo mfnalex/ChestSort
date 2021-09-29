@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.5.3
+- Fixed "disabled-worlds" not working for "left-click hotkey"
+
 ## 11.5.1
 - Added support for new Slimefun API
 

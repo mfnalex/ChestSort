@@ -56,6 +56,10 @@ public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler
     public void onLeftClickChest(PlayerInteractEvent event) {
+        // checking in lower case for lazy admins
+        if (plugin.getDisabledWorlds().contains(event.getPlayer().getWorld().getName().toLowerCase())) {
+            return;
+        }
         if(!event.getPlayer().hasPermission("chestsort.use")) return;
         if(!event.getPlayer().hasPermission(Hotkey.getPermission(Hotkey.OUTSIDE))) return;
         if(event.getHand() != EquipmentSlot.HAND) return;
