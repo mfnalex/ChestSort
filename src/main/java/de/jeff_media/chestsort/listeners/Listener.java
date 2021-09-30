@@ -41,7 +41,6 @@ public class Listener implements org.bukkit.event.Listener {
     final ChestSortPlugin plugin;
     public final MinepacksHook minepacksHook;
     final HeadDatabaseHook headDatabaseHook;
-    final CrateReloadedHook crateReloadedHook;
     final GoldenCratesHook goldenCratesHook;
     final AdvancedChestsHook advancedChestsHook;
 
@@ -49,7 +48,6 @@ public class Listener implements org.bukkit.event.Listener {
         this.plugin = plugin;
         this.minepacksHook = new MinepacksHook(plugin);
         this.headDatabaseHook = new HeadDatabaseHook(plugin);
-        this.crateReloadedHook = new CrateReloadedHook(plugin);
         this.goldenCratesHook = new GoldenCratesHook(plugin);
         this.advancedChestsHook = new AdvancedChestsHook(plugin);
     }
@@ -67,6 +65,9 @@ public class Listener implements org.bukkit.event.Listener {
         if(!plugin.getConfig().getBoolean("allow-left-click-to-sort")) return;
         Block clickedBlock = event.getClickedBlock();
         if(!(clickedBlock.getState() instanceof Container)) return;
+        if(CrateReloadedHook.isCrate(clickedBlock)) {
+            return;
+        }
         if(!ProtectionUtils.canInteract(event.getPlayer(), clickedBlock)) {
             //System.out.println("ChestSort: cannot interact!");
             return;
@@ -637,8 +638,8 @@ public class Listener implements org.bukkit.event.Listener {
         }
 
         // CrateReloaded hook
-        if(crateReloadedHook.isCrate(e.getClickedInventory())
-                || crateReloadedHook.isCrate(e.getInventory())) {
+        if(CrateReloadedHook.isCrate(e.getClickedInventory())
+                || CrateReloadedHook.isCrate(e.getInventory())) {
             //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
             return;
         }

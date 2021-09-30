@@ -1,5 +1,8 @@
 # Changelog
 
+## 11.5.4
+- Fixed CratesReloaded preview GUI not opening when leftclicking chests
+
 ## 11.5.3
 - Fixed "disabled-worlds" not working for "left-click hotkey"
 
