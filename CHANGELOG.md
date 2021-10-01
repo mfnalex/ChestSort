@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.5
+- Fixed furnaces being sortable using the left-click hotkey
+
 ## 11.5.4
 - Fixed CratesReloaded preview GUI not opening when leftclicking chests
 

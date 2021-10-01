@@ -65,6 +65,7 @@ public class Listener implements org.bukkit.event.Listener {
         if(!plugin.getConfig().getBoolean("allow-left-click-to-sort")) return;
         Block clickedBlock = event.getClickedBlock();
         if(!(clickedBlock.getState() instanceof Container)) return;
+        if(!belongsToChestLikeBlock(((Container)clickedBlock.getState()).getInventory())) return;
         if(CrateReloadedHook.isCrate(clickedBlock)) {
             return;
         }
