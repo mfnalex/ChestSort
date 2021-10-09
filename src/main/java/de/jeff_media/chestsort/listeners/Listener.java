@@ -69,10 +69,11 @@ public class Listener implements org.bukkit.event.Listener {
         if(CrateReloadedHook.isCrate(clickedBlock)) {
             return;
         }
-        if(!ProtectionUtils.canInteract(event.getPlayer(), clickedBlock)) {
-            //System.out.println("ChestSort: cannot interact!");
-            return;
-        }
+            if (!ProtectionUtils.canInteract(event.getPlayer(), clickedBlock, plugin.getConfig().getBoolean("mute-protection-plugins"))) {
+                //System.out.println("ChestSort: cannot interact!");
+                return;
+            }
+
         plugin.registerPlayerIfNeeded(event.getPlayer());
         PlayerSetting playerSetting = plugin.getPlayerSetting(event.getPlayer());
         if(!playerSetting.leftClickOutside) return;

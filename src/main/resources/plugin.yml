@@ -15,11 +15,12 @@ commands:
   sort:
     description: Toggle automatic chest sorting or change your hotkey settings
     usage: |
-            /<command> -- Toggle automatic chest sorting
+            /<command> -- Shows the player setting GUI
             /<command> on -- Enable automatic chest sorting
             /<command> off -- Disable automatic chest sorting
-            /<command> hotkeys -- Change your hotkey settings
+            /<command> toggle -- Toggle automatic chest sorting
             /<command> reload -- Reloads config
+            /<command> resetplayersettings -- Resets all players' sorting settings
             /<command> help -- Shows help about this command
     aliases: chestsort
     permission: chestsort.use
@@ -35,11 +36,6 @@ commands:
             /<command> help -- Shows help about this command
     aliases: [invsort,inventorysort]
     permission: chestsort.use.inventory
-  chestsortadmin:
-    description: Admin command for ChestSort
-    usage: |
-            /<command> reset <player> -- Reset's a player's hotkey settings
-    permission: chestsort.admin
 permissions:
   chestsort.use:
     description: Allows chest sorting
@@ -47,6 +43,8 @@ permissions:
     description: Allows inventory sorting
   chestsort.reload:
     description: Allows to reload the config via /chestsort reload
+  chestsort.resetplayersettings:
+    description: Allows to reset every player's sorting settings
   chestsort.hotkey.shiftclick:
     default: true
   chestsort.hotkey.middleclick:

@@ -37,7 +37,14 @@ public class TabCompleter implements org.bukkit.command.TabCompleter {
 			entered = args[args.length-1];
 		}
 		if(command.getName().equalsIgnoreCase("sort")) {
-			return getMatchingOptions(entered,chestsortOptions);
+			List<String> list = getMatchingOptions(entered,chestsortOptions);
+			if(sender.hasPermission("chestsort.reload")) {
+				list.add("reload");
+			}
+			if(sender.isOp()) {
+				list.add("resetplayersettings");
+			}
+			return list;
 		}
 		if(command.getName().equalsIgnoreCase("invsort")) {
 			return getMatchingOptions(entered,invsortOptions);

@@ -1,6 +1,17 @@
 # Changelog
 
-## 1.5.5
+## 12.0.0
+- GUI is now 100% customizable!
+  - Supports Custom Model Data to create vanilla-looking GUIs
+  - Change names, items, slots, lore, and basically EVERYTHING
+  - Also supports changing automatic sorting and automatic inventory sorting
+- You can now reset the settings for all players using /sort resetplayerdata
+  - This is useful when you had some hotkeys enabled by default and changed it now, without having all players individually change their settings 
+
+## 11.5.6
+- Added option to disable "use-advanced-protection-plugin-detection" as it causes some troubles when other plugins blindly cast a Player object to CraftPlayer, without prior checking whether it's an instanceof CraftPlayer
+
+## 11.5.5
 - Fixed furnaces being sortable using the left-click hotkey
 
 ## 11.5.4

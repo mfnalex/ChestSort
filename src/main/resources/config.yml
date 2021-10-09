@@ -14,11 +14,14 @@
 #######    Commands     #######
 ###############################
 
-# /sort (or /chestsort)   Toggle automatic sorting for containers (chests, barrels, enderchests, llamas, etc.)
+# /sort (or /chestsort)   Shows the player settings GUI
 # /sort on                Enable automatic sorting for containers
 # /sort off               Disable automatic sorting for containers
 # /sort hotkeys           Open a GUI to change the sorting hotkeys
 # /sort help              Display help about the /sort (or /chestsort) command
+# /sort reload            Reloads the config file
+# /sort resetplayersettings   Resets every player's sorting settings. You should consider
+#                             running this after changing the default hotkey settings.
 
 # /isort (or /invsort)    Sort the player's inventory
 # /isort hotbar           Sort the player's hotbar
@@ -309,6 +312,16 @@ hook-generic: true
 # will also disable sorting for certain other inventories, so only use
 # it if it's the only possibility.
 prevent-sorting-null-inventories: false
+
+##### Protection Plugins #####
+# ChestSort checks whether a player is allowed to interact with a block
+# before attempting to sort a container when using the "outside"/"left-click-block"
+# hotkey. This can result in messages from WorldGuard, CoreProtect, etc. being
+# send to the player. To avoid this, set the following setting to true.
+# This can however lead to some warnings from other plugins that do not
+# properly check a Players' class before casting it to "CraftPlayer".
+# Although this should NOT cause ANY problems, it's disabled by default.
+mute-protection-plugins: false
 
 ##########################
 ##### Sorting Method #####

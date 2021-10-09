@@ -3,8 +3,10 @@ package de.jeff_media.chestsort.commands;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.config.Messages;
 import de.jeff_media.chestsort.data.PlayerSetting;
+import de.jeff_media.chestsort.gui.NewUI;
 import de.jeff_media.chestsort.handlers.Debugger;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,6 +41,17 @@ public class ChestSortCommand implements CommandExecutor {
             sendNoPermissionMessage(sender);
             return true;
         }
+
+        //System.out.println(1);
+        if(sender.hasPermission("chestsort.resetplayersettings") && args.length > 0 && args[0].equalsIgnoreCase("resetplayersettings")) {
+            for(Player online : Bukkit.getOnlinePlayers()) {
+                plugin.unregisterPlayer(online);
+            }
+            plugin.incrementFingerprint();
+            sender.sendMessage("§cAll player settings have been reset!");
+            return true;
+        }
+        //System.out.println(2);
 
         // Reload command
         if (args.length > 0 && args[0].equalsIgnoreCase("reload")) {
@@ -92,8 +105,13 @@ public class ChestSortCommand implements CommandExecutor {
 
         if(!p.hasPermission("chestsort.automatic")) args = new String[]{"hotkeys"};
 
+        if(args.length > 0 && (args[0].equalsIgnoreCase("hotkeys") || args[0].equalsIgnoreCase("hotkey"))) {
+            new NewUI(p).showGUI();
+            return true;
+        }
+
         // Settings GUI
-        if (args.length > 0) {
+        /*if (args.length > 0) {
             if (args[0].equalsIgnoreCase("hotkey") || args[0].equalsIgnoreCase("hotkeys")) {
 
                 if (!plugin.isHotkeyGUI()) {
@@ -106,7 +124,7 @@ public class ChestSortCommand implements CommandExecutor {
                 return true;
             }
 
-        }
+        }*/
         // Settings GUI End
 
         PlayerSetting setting = plugin.getPerPlayerSettings().get(p.getUniqueId().toString());
@@ -115,20 +133,25 @@ public class ChestSortCommand implements CommandExecutor {
             p.sendMessage(String.format(Messages.MSG_INVALIDOPTIONS, "\"" + args[0] + "\"", "\"toggle\", \"on\", \"off\", \"hotkeys\""));
             return true;
         }
-        if (args.length == 0 || args[0].equalsIgnoreCase("toggle")) {
-            setting.toggleChestSorting();
-        } else if (args[0].equalsIgnoreCase("on")) {
-            setting.enableChestSorting();
-        } else if (args[0].equalsIgnoreCase("off")) {
-            setting.disableChestSorting();
+
+        if(args.length > 0) {
+            if (args[0].equalsIgnoreCase("toggle")) {
+                setting.toggleChestSorting();
+            } else if (args[0].equalsIgnoreCase("on")) {
+                setting.enableChestSorting();
+            } else if (args[0].equalsIgnoreCase("off")) {
+                setting.disableChestSorting();
+            }
         }
         setting.hasSeenMessage = true;
 
-        if (setting.sortingEnabled) {
+        /*if (setting.sortingEnabled) {
             p.sendMessage(Messages.MSG_ACTIVATED);
         } else {
             p.sendMessage(Messages.MSG_DEACTIVATED);
-        }
+        }*/
+
+        new NewUI(p).showGUI();
 
         return true;
     }

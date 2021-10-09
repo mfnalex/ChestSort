@@ -37,6 +37,8 @@ import de.jeff_media.chestsort.config.ConfigUpdater;
 import de.jeff_media.chestsort.config.Messages;
 import de.jeff_media.chestsort.data.Category;
 import de.jeff_media.chestsort.data.PlayerSetting;
+import de.jeff_media.chestsort.gui.ChestSortGUIHolder;
+import de.jeff_media.chestsort.gui.GUIListener;
 import de.jeff_media.chestsort.gui.SettingsGUI;
 import de.jeff_media.chestsort.handlers.ChestSortOrganizer;
 import de.jeff_media.chestsort.handlers.ChestSortPermissionsHandler;
@@ -56,11 +58,13 @@ import io.papermc.lib.PaperLib;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.util.*;
@@ -95,10 +99,14 @@ public class ChestSortPlugin extends JavaPlugin {
     private UpdateChecker updateChecker;
     private boolean usingMatchingConfig = true;
     private boolean verbose = true;
+    private YamlConfiguration guiConfig = new YamlConfiguration();
+    private int settingsFingerprint = 0;
 
     public static ChestSortPlugin getInstance() {
         return instance;
     }
+
+    public YamlConfiguration getGuiConfig() { return guiConfig; }
 
     public static double getUpdateCheckInterval() {
         return updateCheckInterval;
@@ -125,6 +133,7 @@ public class ChestSortPlugin extends JavaPlugin {
         // This saves the config.yml included in the .jar file, but it will not
         // overwrite an existing config.yml
         this.saveDefaultConfig();
+        createGUIConfig();
         reloadConfig();
 
         // Load disabled-worlds. If it does not exist in the config, it returns null.
@@ -137,6 +146,14 @@ public class ChestSortPlugin extends JavaPlugin {
 
         setDefaultConfigValues();
 
+    }
+
+    private void createGUIConfig() {
+        File guiFile = new File(getDataFolder(), "gui.yml");
+        if(!guiFile.exists()) {
+            saveResource("gui.yml",false);
+        }
+        guiConfig = YamlConfiguration.loadConfiguration(guiFile);
     }
 
     private void createDirectories() {
@@ -411,6 +428,13 @@ public class ChestSortPlugin extends JavaPlugin {
 
     public void load(boolean reload) {
 
+        settingsFingerprint = 0;
+        File fingerprintFile = new File(getDataFolder(), "settings.fingerprint");
+        if(fingerprintFile.exists()) {
+            YamlConfiguration yaml = YamlConfiguration.loadConfiguration(fingerprintFile);
+            settingsFingerprint = yaml.getInt("v",0);
+        }
+
         if (reload) {
             unregisterAllPlayers();
             reloadConfig();
@@ -477,6 +501,7 @@ public class ChestSortPlugin extends JavaPlugin {
         setEnderContainersHook(new EnderContainersHook(this));
         getServer().getPluginManager().registerEvents(getListener(), this);
         getServer().getPluginManager().registerEvents(getSettingsGUI(), this);
+        getServer().getPluginManager().registerEvents(new GUIListener(), this);
         ChestSortCommand chestsortCommandExecutor = new ChestSortCommand(this);
         TabCompleter tabCompleter = new TabCompleter();
         this.getCommand("sort").setExecutor(chestsortCommandExecutor);
@@ -484,7 +509,7 @@ public class ChestSortPlugin extends JavaPlugin {
         InvSortCommand invsortCommandExecutor = new InvSortCommand(this);
         this.getCommand("invsort").setExecutor(invsortCommandExecutor);
         this.getCommand("invsort").setTabCompleter(tabCompleter);
-        this.getCommand("chestsortadmin").setExecutor(new AdminCommand(this));
+        //this.getCommand("chestsortadmin").setExecutor(new AdminCommand(this));
 
         if (isVerbose()) {
             getLogger().info("Use permissions: " + getConfig().getBoolean("use-permissions"));
@@ -546,9 +571,12 @@ public class ChestSortPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         // We have to unregister every player to save their perPlayerSettings
-        for (Player p : getServer().getOnlinePlayers()) {
-            unregisterPlayer(p);
-            getPermissionsHandler().removePermissions(p);
+        for (Player player : getServer().getOnlinePlayers()) {
+            if(player.getOpenInventory().getTopInventory().getHolder() instanceof ChestSortGUIHolder) {
+                player.closeInventory();
+            }
+            unregisterPlayer(player);
+            getPermissionsHandler().removePermissions(player);
         }
     }
 
@@ -624,6 +652,18 @@ public class ChestSortPlugin extends JavaPlugin {
 
     }
 
+    public void incrementFingerprint() {
+        YamlConfiguration yaml = new YamlConfiguration();
+        yaml.set("v",settingsFingerprint + 1);
+        settingsFingerprint++;
+        try {
+            yaml.save(new File(getDataFolder(),"settings.fingerprint"));
+            load(true);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void registerPlayerIfNeeded(Player p) {
         // Players are stored by their UUID, so that name changes don't break player's
         // settings
@@ -685,16 +725,19 @@ public class ChestSortPlugin extends JavaPlugin {
             } else {
                 // If the file exists, check if the player has sorting enabled
                 // NBT Values
-                activeForThisPlayer = Boolean.parseBoolean(NBTAPI.getNBT(p, "sortingEnabled", String.valueOf(playerConfig.getBoolean("sortingEnabled"))));
-                invActiveForThisPlayer = Boolean.parseBoolean(NBTAPI.getNBT(p, "invSortingEnabled", String.valueOf(playerConfig.getBoolean("invSortingEnabled", getConfig().getBoolean("inv-sorting-enabled-by-default")))));
-                middleClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "middleClick", String.valueOf(playerConfig.getBoolean("middleClick"))));
-                shiftClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "shiftClick", String.valueOf(playerConfig.getBoolean("shiftClick"))));
-                doubleClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "doubleClick", String.valueOf(playerConfig.getBoolean("doubleClick"))));
-                shiftRightClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "shiftRightClick", String.valueOf(playerConfig.getBoolean("shiftRightClick"))));
-                leftClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "leftClick", String.valueOf(playerConfig.getBoolean("leftClick", getConfig().getBoolean("additional-hotkeys.left-click")))));
-                rightClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "rightClick", String.valueOf(playerConfig.getBoolean("rightClick", getConfig().getBoolean("additional-hotkeys.right-click")))));
-                leftClickFromOutside = Boolean.parseBoolean(NBTAPI.getNBT(p, "leftClickOutside", String.valueOf(playerConfig.getBoolean("leftClickOutside", getConfig().getBoolean("left-click-to-sort-enabled-by-default")))));
-                hasSeenMessage = Boolean.parseBoolean(NBTAPI.getNBT(p, "hasSeenMessage", String.valueOf("false")));
+
+                String fingerprint = getFingerprint();
+
+                activeForThisPlayer = Boolean.parseBoolean(NBTAPI.getNBT(p, "sortingEnabled" + fingerprint, String.valueOf(playerConfig.getBoolean("sortingEnabled"))));
+                invActiveForThisPlayer = Boolean.parseBoolean(NBTAPI.getNBT(p, "invSortingEnabled" + fingerprint, String.valueOf(playerConfig.getBoolean("invSortingEnabled", getConfig().getBoolean("inv-sorting-enabled-by-default")))));
+                middleClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "middleClick" + fingerprint, String.valueOf(playerConfig.getBoolean("middleClick"))));
+                shiftClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "shiftClick" + fingerprint, String.valueOf(playerConfig.getBoolean("shiftClick"))));
+                doubleClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "doubleClick" + fingerprint, String.valueOf(playerConfig.getBoolean("doubleClick"))));
+                shiftRightClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "shiftRightClick" + fingerprint, String.valueOf(playerConfig.getBoolean("shiftRightClick"))));
+                leftClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "leftClick" + fingerprint, String.valueOf(playerConfig.getBoolean("leftClick", getConfig().getBoolean("additional-hotkeys.left-click")))));
+                rightClick = Boolean.parseBoolean(NBTAPI.getNBT(p, "rightClick" + fingerprint, String.valueOf(playerConfig.getBoolean("rightClick", getConfig().getBoolean("additional-hotkeys.right-click")))));
+                leftClickFromOutside = Boolean.parseBoolean(NBTAPI.getNBT(p, "leftClickOutside" + fingerprint, String.valueOf(playerConfig.getBoolean("leftClickOutside", getConfig().getBoolean("left-click-to-sort-enabled-by-default")))));
+                hasSeenMessage = Boolean.parseBoolean(NBTAPI.getNBT(p, "hasSeenMessage" + fingerprint, String.valueOf("false")));
                 //System.out.println("Loading playersetting from NBT");
                 if(getConfig().getBoolean("show-message-again-after-logout")) {
                     //System.out.println("show-message-again-after-logout is true, sooo...");
@@ -720,6 +763,14 @@ public class ChestSortPlugin extends JavaPlugin {
             getPerPlayerSettings().put(uniqueId.toString(), newSettings);
 
         }
+    }
+
+    private String getFingerprint() {
+        String fingerprint = "";
+        if(settingsFingerprint > 0) {
+            fingerprint = "-" + settingsFingerprint;
+        }
+        return fingerprint;
     }
 
     // Saves default category files, when enabled in the config
@@ -837,6 +888,8 @@ public class ChestSortPlugin extends JavaPlugin {
         getConfig().addDefault("hook-generic", true);
         getConfig().addDefault("prevent-sorting-null-inventories", false);
 
+        getConfig().addDefault("mute-protection-plugins", false);
+
         getConfig().addDefault("verbose", true); // Prints some information in onEnable()
     }
 
@@ -874,16 +927,25 @@ public class ChestSortPlugin extends JavaPlugin {
             PlayerSetting setting = getPerPlayerSettings().get(p.getUniqueId().toString());
 
             if (McVersion.isAtLeast(1,14,4)) {
-                NBTAPI.addNBT(p, "sortingEnabled", String.valueOf(setting.sortingEnabled));
-                NBTAPI.addNBT(p, "invSortingEnabled", String.valueOf(setting.invSortingEnabled));
-                NBTAPI.addNBT(p, "hasSeenMessage", String.valueOf(setting.hasSeenMessage));
-                NBTAPI.addNBT(p, "middleClick", String.valueOf(setting.middleClick));
-                NBTAPI.addNBT(p, "shiftClick", String.valueOf(setting.shiftClick));
-                NBTAPI.addNBT(p, "doubleClick", String.valueOf(setting.doubleClick));
-                NBTAPI.addNBT(p, "shiftRightClick", String.valueOf(setting.shiftRightClick));
-                NBTAPI.addNBT(p, "leftClick", String.valueOf(setting.leftClick));
-                NBTAPI.addNBT(p, "rightClick", String.valueOf(setting.rightClick));
-                NBTAPI.addNBT(p, "leftClickOutside", String.valueOf(setting.leftClickOutside));
+
+                for(NamespacedKey key : p.getPersistentDataContainer().getKeys()) {
+                    if(key.getKey().equals(new NamespacedKey(this,"test").getKey())) {
+                        p.getPersistentDataContainer().remove(key);
+                    }
+                }
+
+                String fingerprint = getFingerprint();
+
+                NBTAPI.addNBT(p, "sortingEnabled" + fingerprint, String.valueOf(setting.sortingEnabled));
+                NBTAPI.addNBT(p, "invSortingEnabled" + fingerprint, String.valueOf(setting.invSortingEnabled));
+                NBTAPI.addNBT(p, "hasSeenMessage" + fingerprint, String.valueOf(setting.hasSeenMessage));
+                NBTAPI.addNBT(p, "middleClick" + fingerprint, String.valueOf(setting.middleClick));
+                NBTAPI.addNBT(p, "shiftClick" + fingerprint, String.valueOf(setting.shiftClick));
+                NBTAPI.addNBT(p, "doubleClick" + fingerprint, String.valueOf(setting.doubleClick));
+                NBTAPI.addNBT(p, "shiftRightClick" + fingerprint, String.valueOf(setting.shiftRightClick));
+                NBTAPI.addNBT(p, "leftClick" + fingerprint, String.valueOf(setting.leftClick));
+                NBTAPI.addNBT(p, "rightClick" + fingerprint, String.valueOf(setting.rightClick));
+                NBTAPI.addNBT(p, "leftClickOutside" + fingerprint, String.valueOf(setting.leftClickOutside));
             } else {
 
                 File playerFile = new File(getDataFolder() + File.separator + "playerdata", p.getUniqueId() + ".yml");
