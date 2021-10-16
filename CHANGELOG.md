@@ -1,5 +1,12 @@
 # Changelog
 
+## 12.0.2
+- Replaced PlayerInteractEvent with ChestSortLeftClickHotkeyEvent (fixes problems with other plugins opening GUIs on PlayerInteractEvent)
+
+## 12.0.1
+- Fixed mistake in gui.yml: The default head for the "enabled rightclick" hotkey was set to show the "disabled" head
+  - Important: When upgrading from 12.0.0, change the "*base64-disabled" to "*base64-enabled" in your "rightclick-enabled" part in your gui.yml (should be line 207 if you havent changed anything) 
+
 ## 12.0.0
 - GUI is now 100% customizable!
   - Supports Custom Model Data to create vanilla-looking GUIs

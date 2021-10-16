@@ -204,7 +204,7 @@ items:
   rightclick-enabled:
     display-name: &rightclick-name "<#2e86c1>Empty Chest<#/85c1e9>"
     material: PLAYER_HEAD
-    base64: *base64-disabled
+    base64: *base64-enabled
     lore:
       - *lore-enabled
       - &rightclick-lore-1 "<#d5dbdb>Take matching items from a chest by"

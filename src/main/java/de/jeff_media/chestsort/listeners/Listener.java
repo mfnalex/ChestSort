@@ -3,6 +3,7 @@ package de.jeff_media.chestsort.listeners;
 import de.jeff_media.chestsort.api.ChestSortEvent;
 import de.jeff_media.chestsort.config.Messages;
 import de.jeff_media.chestsort.enums.Hotkey;
+import de.jeff_media.chestsort.events.ChestSortLeftClickHotkeyEvent;
 import de.jeff_media.chestsort.handlers.Logger;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.api.*;
@@ -10,6 +11,7 @@ import de.jeff_media.chestsort.data.PlayerSetting;
 import de.jeff_media.chestsort.hooks.*;
 import de.jeff_media.chestsort.utils.LlamaUtils;
 import de.jeff_media.jefflib.ProtectionUtils;
+import de.jeff_media.jefflib.data.ShadowPlayer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -18,6 +20,7 @@ import org.bukkit.Material;
 import org.bukkit.block.*;
 import org.bukkit.entity.ChestedHorse;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -44,6 +47,8 @@ public class Listener implements org.bukkit.event.Listener {
     final GoldenCratesHook goldenCratesHook;
     final AdvancedChestsHook advancedChestsHook;
 
+    private static Event ignoredEvent;
+
     public Listener(ChestSortPlugin plugin) {
         this.plugin = plugin;
         this.minepacksHook = new MinepacksHook(plugin);
@@ -54,6 +59,9 @@ public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler
     public void onLeftClickChest(PlayerInteractEvent event) {
+        if(event instanceof ChestSortLeftClickHotkeyEvent) {
+            return;
+        }
         // checking in lower case for lazy admins
         if (plugin.getDisabledWorlds().contains(event.getPlayer().getWorld().getName().toLowerCase())) {
             return;
@@ -69,14 +77,24 @@ public class Listener implements org.bukkit.event.Listener {
         if(CrateReloadedHook.isCrate(clickedBlock)) {
             return;
         }
-            if (!ProtectionUtils.canInteract(event.getPlayer(), clickedBlock, plugin.getConfig().getBoolean("mute-protection-plugins"))) {
-                //System.out.println("ChestSort: cannot interact!");
-                return;
-            }
 
         plugin.registerPlayerIfNeeded(event.getPlayer());
         PlayerSetting playerSetting = plugin.getPlayerSetting(event.getPlayer());
         if(!playerSetting.leftClickOutside) return;
+
+        if(plugin.getConfig().getBoolean("mute-protection-plugins")) {
+            if (!ProtectionUtils.canInteract(event.getPlayer(), clickedBlock, plugin.getConfig().getBoolean("mute-protection-plugins"))) {
+                //System.out.println("ChestSort: cannot interact!");
+                return;
+            }
+        } else {
+            ChestSortLeftClickHotkeyEvent testEvent = new ChestSortLeftClickHotkeyEvent(event.getPlayer(), Action.RIGHT_CLICK_BLOCK, event.getPlayer().getInventory().getItemInMainHand(), clickedBlock, BlockFace.UP, EquipmentSlot.HAND);
+            Bukkit.getPluginManager().callEvent(testEvent);
+            if(testEvent.isCancelled() || testEvent.useInteractedBlock() == Event.Result.DENY) {
+                return;
+            }
+        }
+
         Container containerState = (Container) clickedBlock.getState();
         Inventory inventory = containerState.getInventory();
         if(!advancedChestsHook.handleAChestSortingIfPresent(clickedBlock.getLocation())) {
