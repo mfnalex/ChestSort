@@ -13,15 +13,15 @@ You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin
 ```xml
 <repositories>
 	<repository>
-		<id>jeff-media-repo</id>
-		<url>https://repo.jeff-media.de/maven2</url>
+		<id>jeff-media-public</id>
+		<url>https://hub.jeff-media.com/nexus/repository/jeff-media-public/</url>
 	</repository>
 </repositories>
 <dependencies>
 	<dependency>
 		<groupId>de.jeff_media</groupId>
 		<artifactId>ChestSortAPI</artifactId>
-		<version>11.0.0-SNAPSHOT</version>
+		<version>12.0.0</version>
 		<scope>provided</scope>
 	</dependency>
 </dependencies>
