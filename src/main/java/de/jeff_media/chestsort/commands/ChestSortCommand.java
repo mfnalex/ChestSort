@@ -142,6 +142,13 @@ public class ChestSortCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("off")) {
                 setting.disableChestSorting();
             }
+            setting.hasSeenMessage = true;
+            if(setting.sortingEnabled) {
+                p.sendMessage(Messages.MSG_ACTIVATED);
+            } else {
+                p.sendMessage(Messages.MSG_DEACTIVATED);
+            }
+            return true;
         }
         setting.hasSeenMessage = true;
 

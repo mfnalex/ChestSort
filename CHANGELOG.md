@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.0.3
+- Fixed some commands (e.g. /sort on|off|toggle) accidently opening the GUI
+
 ## 12.0.2
 - Replaced PlayerInteractEvent with ChestSortLeftClickHotkeyEvent (fixes problems with other plugins opening GUIs on PlayerInteractEvent)
 
