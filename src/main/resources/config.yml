@@ -89,6 +89,9 @@ inv-sorting-enabled-by-default: false
 # this to false.
 allow-commands: true
 
+# You can prevent players from using the GUI. When set to "false", /sort behaves like /sort toggle
+allow-gui: true
+
 # when set to true, players with sorting DISABLED will be
 # shown a message on how to enable automatic chest sorting
 # when they use a chest for the first time.

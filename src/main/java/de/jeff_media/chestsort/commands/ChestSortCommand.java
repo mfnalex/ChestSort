@@ -105,6 +105,10 @@ public class ChestSortCommand implements CommandExecutor {
 
         if(!p.hasPermission("chestsort.automatic")) args = new String[]{"hotkeys"};
 
+        if(args.length==0 && plugin.getConfig().getBoolean("allow-gui",true) == false) {
+            args = new String[] {"toggle"};
+        }
+
         if(args.length > 0 && (args[0].equalsIgnoreCase("hotkeys") || args[0].equalsIgnoreCase("hotkey"))) {
             new NewUI(p).showGUI();
             return true;

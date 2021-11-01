@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.0.4
+- Added config option "allow-gui" (defaults to true)
+
 ## 12.0.3
 - Fixed some commands (e.g. /sort on|off|toggle) accidently opening the GUI
 
