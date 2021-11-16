@@ -638,8 +638,12 @@ public class Listener implements org.bukkit.event.Listener {
             return;
         }
         // Possible fix for #57
-        if (e.getInventory().getHolder() == null) return;
-        if (e.getInventory().getHolder() == p && e.getInventory() != p.getInventory()) return;
+        if (e.getInventory().getHolder() == null && !e.getView().getTopInventory().equals(p.getEnderChest())) {
+            return;
+        }
+        if (e.getInventory().getHolder() == p && e.getInventory() != p.getInventory()) {
+            return;
+        }
         // End Possible fix for #57
         if (e.getInventory().getType() != InventoryType.CHEST
                 && e.getInventory().getType() != InventoryType.DISPENSER
@@ -647,6 +651,7 @@ public class Listener implements org.bukkit.event.Listener {
                 && e.getInventory().getType() != InventoryType.ENDER_CHEST
                 && !e.getInventory().getType().name().equalsIgnoreCase("SHULKER_BOX")
                 && (e.getInventory().getHolder() == null || !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel"))
+                && e.getInventory() != p.getEnderChest()
                 && !(e.getInventory().getHolder() instanceof ISortable)) {
             return;
         }

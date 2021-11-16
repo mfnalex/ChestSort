@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.0.6
+- Fixed "additional-hotkeys" not working for ender chests
+
 ## 12.0.4
 - Added config option "allow-gui" (defaults to true)
 
