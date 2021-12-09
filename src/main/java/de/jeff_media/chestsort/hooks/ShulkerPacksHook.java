@@ -31,13 +31,13 @@ public class ShulkerPacksHook {
             } catch (Throwable t) {
                 installed = false;
                 ChestSortPlugin.getInstance().getLogger().severe("Error while hooking into ShulkerPacks. Try updating ShulkerPacks to the newest version.");
-                t.printStackTrace();
+                //t.printStackTrace();
                 return false;
             }
         }
 
 
-        if(installed) {
+        if(installed && checkIfOpenMethod != null) {
             try {
                 return (boolean) checkIfOpenMethod.invoke(null, item);
             } catch (IllegalAccessException | InvocationTargetException ignored) {
