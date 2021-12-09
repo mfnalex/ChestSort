@@ -5,6 +5,7 @@ import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.data.Category;
 import de.jeff_media.chestsort.hooks.CrackShotHook;
 import de.jeff_media.chestsort.hooks.InventoryPagesHook;
+import de.jeff_media.chestsort.hooks.ShulkerPacksHook;
 import de.jeff_media.chestsort.hooks.SlimeFunHook;
 import de.jeff_media.chestsort.data.CategoryLinePair;
 import de.jeff_media.chestsort.utils.EnchantmentUtils;
@@ -552,6 +553,7 @@ public class ChestSortOrganizer {
             if ((plugin.isHookMinepacks() && plugin.getListener().minepacksHook.isMinepacksBackpack(items[i]))
                     || (plugin.isHookInventoryPages() && inventoryPagesHook.isButton(items[i], i, inv))
                     || (plugin.getConfig().getBoolean("dont-move-slimefun-backpacks") && SlimeFunHook.isSlimefunBackpack(items[i]))
+                    || ShulkerPacksHook.isOpenShulkerPack(items[i])
                     || isOversizedStack(items[i])
                     || chestSortEvent.isUnmovable(i)
                     || chestSortEvent.isUnmovable(items[i])) {
@@ -717,6 +719,8 @@ public class ChestSortOrganizer {
 
             if (plugin.isHookInventoryPages()
                     && plugin.getOrganizer().inventoryPagesHook.isButton(currentItem, i, source)) continue;
+
+            if(ShulkerPacksHook.isOpenShulkerPack(currentItem)) continue;
 
             if (destinationIsShulkerBox && currentItem.getType().name().endsWith("SHULKER_BOX")) continue;
 

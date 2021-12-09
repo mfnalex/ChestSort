@@ -502,7 +502,6 @@ public class Listener implements org.bukkit.event.Listener {
             return;
         }
 
-
         switch (event.getClick()) {
             case MIDDLE:
                 cause = Logger.SortCause.H_MIDDLE;

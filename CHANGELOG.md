@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.1.1
+- ChestSort will no longer move any shulkerboxes in the inventory around if this shulkerbox is currently open in ShulkerPacks
+
 ## 12.0.6
 - Fixed "additional-hotkeys" not working for ender chests
 
