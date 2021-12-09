@@ -221,9 +221,9 @@ public final class ConfigUpdater {
                         String value = main.getConfig().get(node).toString();
 
                         // The hologram text needs special escaping for the newline symbols
-                        if (node.equals("hologram-text")) {
+                        //if (node.equals("hologram-text")) {
                             value = value.replaceAll("\n", "\\\\n");
-                        }
+                        //}
 
                         updatedLine = node + ": " + quotes + value + quotes;
                     }

@@ -1,5 +1,8 @@
 # Changelog
 
+## 12.1.2
+- Fixed newlines ("\n") in config.yml breaking the config updater
+
 ## 12.1.1
 - ChestSort will no longer move any shulkerboxes in the inventory around if this shulkerbox is currently open in ShulkerPacks
 
