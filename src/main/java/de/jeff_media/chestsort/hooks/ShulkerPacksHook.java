@@ -1,20 +1,26 @@
 package de.jeff_media.chestsort.hooks;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
-import de.jeff_media.chestsort.api.ChestSortEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.w3c.dom.ls.LSOutput;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 public class ShulkerPacksHook {
 
     private static Method checkIfOpenMethod;
     private static Boolean installed = null;
+
+    public static boolean isOpenShulkerView(InventoryView view) {
+        if(view == null) return false;
+        if(view.getTopInventory() == null) return false;
+        if(view.getTopInventory().getHolder() == null) return false;
+        return (view.getTopInventory().getHolder().getClass().getName().toLowerCase(Locale.ROOT).contains("shulkerpacks"));
+    }
 
     public static boolean isOpenShulkerPack(ItemStack item) {
         if(installed == null) {

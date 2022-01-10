@@ -698,6 +698,9 @@ public class Listener implements org.bukkit.event.Listener {
             return;
         }
 
+        // ShulkerPacks
+        if(ShulkerPacksHook.isOpenShulkerView(e.getView())) return;
+
         if (!p.hasPermission("chestsort.use")) return;
 
         plugin.registerPlayerIfNeeded(p);
