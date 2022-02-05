@@ -749,6 +749,8 @@ public class Listener implements org.bukkit.event.Listener {
         //plugin.organizer.sortInventory(e.getInventory());
         plugin.getOrganizer().updateInventoryView(e.getInventory());
         plugin.getOrganizer().updateInventoryView(p.getInventory());
+
+        Bukkit.getPluginManager().callEvent(new ChestSortPostSortEvent(chestSortEvent));
     }
 
 

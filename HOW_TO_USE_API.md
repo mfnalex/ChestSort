@@ -21,7 +21,7 @@ You can use maven to add ChestSort as a dependency to your Spigot-/Bukkit-Plugin
 	<dependency>
 		<groupId>de.jeff_media</groupId>
 		<artifactId>ChestSortAPI</artifactId>
-		<version>12.0.0</version>
+		<version>13.0.0-SNAPSHOT</version>
 		<scope>provided</scope>
 	</dependency>
 </dependencies>
@@ -130,7 +130,7 @@ ChestSortAPI.setUnsortable(myInventory);
 
 ## Javadocs, Source code, Example plugin & Discord
 There are more methods you can use, just have a look at the Javadocs.
-- [ChestSortAPI Javadocs](https://repo.jeff-media.de/javadocs/ChestSortAPI).
+- [ChestSortAPI Javadocs](https://hub.jeff-media.de/javadocs/chestsortapi).
 - [ChestSortAPI source code](https://github.com/JEFF-Media-GbR/Spigot-ChestSortAPI).
 
 Here is a complete example plugin that shows to add and use the ChestSort API: [LINK](https://github.com/JEFF-Media-GbR/ChestSortAPIExample)

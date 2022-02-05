@@ -2,6 +2,7 @@ package de.jeff_media.chestsort.handlers;
 
 import de.jeff_media.chestsort.api.ChestSortEvent;
 import de.jeff_media.chestsort.ChestSortPlugin;
+import de.jeff_media.chestsort.api.ChestSortPostSortEvent;
 import de.jeff_media.chestsort.data.Category;
 import de.jeff_media.chestsort.hooks.CrackShotHook;
 import de.jeff_media.chestsort.hooks.InventoryPagesHook;
@@ -623,6 +624,9 @@ public class ChestSortOrganizer {
             currentSlot++;
         }
         plugin.debug("Sorting successful. I'll go back to bed now.");
+
+        Bukkit.getPluginManager().callEvent(new ChestSortPostSortEvent(chestSortEvent));
+
     }
 
     public void updateInventoryView(InventoryClickEvent event) {
