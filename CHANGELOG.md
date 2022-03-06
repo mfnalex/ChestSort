@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.1
+- 1.18.2 support
+- Updated Chinese translation
+
 ## 12.1.4
 - Disabled additional hotkeys (fill & empty chest) for ShulkerPacks to avoid duplication and possible item loss caused by ShulkerPacks not checking for changed inventory in InventoryCloseEvent
 
