@@ -6,6 +6,7 @@ import org.bukkit.inventory.Inventory;
 import us.lynuxcraft.deadsilenceiv.advancedchests.AdvancedChestsAPI;
 import us.lynuxcraft.deadsilenceiv.advancedchests.chest.AdvancedChest;
 import us.lynuxcraft.deadsilenceiv.advancedchests.chest.gui.page.ChestPage;
+import us.lynuxcraft.deadsilenceiv.advancedchests.utils.inventory.InteractiveInventory;
 
 public class AdvancedChestsHook {
 
@@ -31,12 +32,13 @@ public class AdvancedChestsHook {
 
     public boolean handleAChestSortingIfPresent(Inventory inventory){
         if(!plugin.isHookAdvancedChests())return false;
-        AdvancedChest chest = AdvancedChestsAPI.getInventoryManager().getAdvancedChest(inventory);
-        if(chest != null){
-            plugin.getOrganizer().sortInventory(inventory,0,inventory.getSize()-10);
+        InteractiveInventory interactiveInventory = AdvancedChestsAPI.getInventoryManager().getInteractiveByBukkit(inventory);
+        if(interactiveInventory != null) {
+            if (interactiveInventory instanceof ChestPage) {
+                plugin.getOrganizer().sortInventory(inventory, 0, inventory.getSize() - 10);
+            }
             return true;
-        }
-        return false;
+        }else return false;
     }
 
     public boolean handleAChestSortingIfPresent(Location location){
