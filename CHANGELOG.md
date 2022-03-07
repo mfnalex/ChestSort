@@ -1,5 +1,10 @@
 # Changelog
 
+## 13.0.2
+- Fixed AdvancedChests bug (thanks @ DeadSilenceIV)
+- Fixed 1.18.2 support
+- Reduced file size by ~130kb
+
 ## 13.0.1
 - 1.18.2 support
 - Updated Chinese translation
