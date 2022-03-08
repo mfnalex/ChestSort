@@ -22,11 +22,9 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -492,7 +490,7 @@ public class ChestSortOrganizer {
     }
 
     // Sort an inventory only between startSlot and endSlot
-    public void sortInventory(@NotNull Inventory inv, int startSlot, int endSlot) {
+    public void sortInventory(Inventory inv, int startSlot, int endSlot) {
         if(inv==null) return;
         if(unsortableInventories.contains(inv)) return;
         plugin.debug("Attempting to sort an Inventory and calling ChestSortEvent.");

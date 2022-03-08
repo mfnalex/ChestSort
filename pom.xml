@@ -209,14 +209,8 @@
         <dependency>
             <groupId>de.jeff_media</groupId>
             <artifactId>InvUnload</artifactId>
-            <version>4.13.4</version>
+            <version>4.17.1</version>
             <scope>provided</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>de.jeff_media</groupId>
-                    <artifactId>PluginUpdateChecker</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
