@@ -4,7 +4,6 @@ import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.Inventory;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Method;
 import java.util.Locale;
@@ -31,7 +30,7 @@ public class CrateReloadedHook {
         }
     }
 
-    public static boolean isCrate(@NotNull final Block block) {
+    public static boolean isCrate(final Block block) {
         try {
             if(isCrateMethod != null) {
                 return (boolean) isCrateMethod.invoke(blockCrateRegistrarObject, block.getLocation());
@@ -40,7 +39,7 @@ public class CrateReloadedHook {
         return false;
     }
 
-    public static boolean isCrate(@NotNull final Inventory inv) {
+    public static boolean isCrate(final Inventory inv) {
         if(inv==null) return false;
         if(inv.getHolder()==null) return false;
         if(!main.getConfig().getBoolean("hook-cratereloaded",true)) return false;

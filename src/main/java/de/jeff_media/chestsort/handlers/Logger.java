@@ -3,7 +3,6 @@ package de.jeff_media.chestsort.handlers;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.data.PlayerSetting;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,7 +50,7 @@ public class Logger {
         logger.info(s);
     }
 
-    public void logSort(Player p, @Nullable SortCause cause) {
+    public void logSort(Player p, SortCause cause) {
         if(!log) return;
         String settings = getPlayerSettings(p);
         if(cause==null) cause = SortCause.UNKNOWN;

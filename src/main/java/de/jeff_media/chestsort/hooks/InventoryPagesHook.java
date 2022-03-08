@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
-import org.jetbrains.annotations.NotNull;
 
 public class InventoryPagesHook {
 
@@ -46,7 +45,7 @@ public class InventoryPagesHook {
 
 	}
 	
-	public boolean isButton(@NotNull ItemStack item, int slot, @NotNull Inventory inv) {
+	public boolean isButton(ItemStack item, int slot, Inventory inv) {
 		
 		if(!plugin.isHookInventoryPages()) {
 			return false;
