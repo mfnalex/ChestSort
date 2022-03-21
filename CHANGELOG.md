@@ -1,5 +1,13 @@
 # Changelog
 
+## 13.0.5
+Sorry for 3 updates within 10 minutes!
+
+- Fixed missing relocation of update checker library preventing ChestSort from enabling
+
+## 13.0.4
+- Fixed .jar name
+
 ## 13.0.3
 - Fixed AdvancedChests fix not being included in the last update
 - Removed CrackShot dependency. CrackShotHook will still work via reflection. Ask the author to upload their plugin to a maven repository if this bothers you.

@@ -9,7 +9,7 @@
     <name>ChestSort</name>
     <url>https://www.chestsort.de</url>
     <description>Allows automatic chest sorting!</description>
-    <version>13.0.4</version>
+    <version>13.0.5</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -73,7 +73,7 @@
                         </relocation>
 
                         <relocation>
-                            <pattern>de.jeff_media.updatechecker</pattern>
+                            <pattern>com.jeff_media.updatechecker</pattern>
                             <shadedPattern>de.jeff_media.chestsort.updatechecker</shadedPattern>
                         </relocation>
 
