@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.3
+- Fixed AdvancedChests fix not being included in the last update
+- Removed CrackShot dependency. CrackShotHook will still work via reflection. Ask the author to upload their plugin to a maven repository if this bothers you.
+
 ## 13.0.2
 - Fixed AdvancedChests bug (thanks @ DeadSilenceIV)
 - Fixed 1.18.2 support
