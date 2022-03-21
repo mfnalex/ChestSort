@@ -38,7 +38,9 @@ public class AdvancedChestsHook {
                 plugin.getOrganizer().sortInventory(inventory, 0, inventory.getSize() - 10);
             }
             return true;
-        }else return false;
+        }else {
+            return false;
+        }
     }
 
     public boolean handleAChestSortingIfPresent(Location location){
