@@ -28,6 +28,7 @@
 package de.jeff_media.chestsort;
 
 import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
+import com.jeff_media.updatechecker.UpdateChecker;
 import de.jeff_media.chestsort.commands.AdminCommand;
 import de.jeff_media.chestsort.commands.ChestSortCommand;
 import de.jeff_media.chestsort.commands.InvSortCommand;
@@ -53,7 +54,6 @@ import de.jeff_media.chestsort.utils.Utils;
 import de.jeff_media.jefflib.JeffLib;
 import de.jeff_media.jefflib.McVersion;
 import de.jeff_media.jefflib.NBTAPI;
-import de.jeff_media.updatechecker.UpdateChecker;
 import io.papermc.lib.PaperLib;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;

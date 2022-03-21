@@ -9,7 +9,7 @@
     <name>ChestSort</name>
     <url>https://www.chestsort.de</url>
     <description>Allows automatic chest sorting!</description>
-    <version>13.0.2</version>
+    <version>13.0.3</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -233,13 +233,6 @@
             <version>1.7</version>
             <scope>compile</scope>
         </dependency>
-
-        <!--<dependency>
-            <groupId>de.jeff_media.thirdparty</groupId>
-            <artifactId>CrackShot</artifactId>
-            <version>0.98.11</version>
-            <scope>provided</scope>
-        </dependency>--> <!-- not needed anymore, using reflection since crackshot is dead -->
 
         <dependency>
             <groupId>at.pcgamingfreaks</groupId>
