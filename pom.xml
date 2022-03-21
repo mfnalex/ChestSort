@@ -9,7 +9,7 @@
     <name>ChestSort</name>
     <url>https://www.chestsort.de</url>
     <description>Allows automatic chest sorting!</description>
-    <version>13.0.3</version>
+    <version>13.0.4</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -38,7 +38,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <finalName>${project.name}</finalName>
+                    <finalName>${project.name}-${project.version}</finalName>
                 </configuration>
             </plugin>
 
