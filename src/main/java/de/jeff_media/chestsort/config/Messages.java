@@ -1,6 +1,7 @@
 package de.jeff_media.chestsort.config;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
+import de.jeff_media.jefflib.TextUtils;
 import org.bukkit.ChatColor;
 
 public class Messages {
@@ -26,60 +27,60 @@ public class Messages {
 
 		ChestSortPlugin plugin = ChestSortPlugin.getInstance();
 
-		MSG_CONTAINER_SORTED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_CONTAINER_SORTED = TextUtils.format( plugin.getConfig()
 				.getString("message-container-sorted","&aContainer sorted!"));
 
-		MSG_ACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_ACTIVATED = TextUtils.format( plugin.getConfig()
 				.getString("message-sorting-enabled", "&7Automatic chest sorting has been &aenabled&7.&r"));
 
-		MSG_DEACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_DEACTIVATED = TextUtils.format( plugin.getConfig()
 				.getString("message-sorting-disabled", "&7Automatic chest sorting has been &cdisabled&7.&r"));
 		
-		MSG_INVACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_INVACTIVATED = TextUtils.format( plugin.getConfig()
 				.getString("message-inv-sorting-enabled", "&7Automatic inventory sorting has been &aenabled&7.&r"));
 
-		MSG_INVDEACTIVATED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_INVDEACTIVATED = TextUtils.format( plugin.getConfig()
 				.getString("message-inv-sorting-disabled", "&7Automatic inventory sorting has been &cdisabled&7.&r"));
 
-		MSG_COMMANDMESSAGE = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(
+		MSG_COMMANDMESSAGE = TextUtils.format( plugin.getConfig().getString(
 				"message-when-using-chest", "&7Hint: Type &6/chestsort&7 to enable automatic chest sorting."));
 
-		MSG_COMMANDMESSAGE2 = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString(
+		MSG_COMMANDMESSAGE2 = TextUtils.format( plugin.getConfig().getString(
 				"message-when-using-chest2", "&7Hint: Type &6/chestsort&7 to disable automatic chest sorting."));
 
-		MSG_PLAYERSONLY = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_PLAYERSONLY = TextUtils.format( plugin.getConfig()
 				.getString("message-error-players-only", "&cError: This command can only be run by players.&r"));
 
-		MSG_PLAYERINVSORTED = ChatColor.translateAlternateColorCodes('&',
+		MSG_PLAYERINVSORTED = TextUtils.format(
 				plugin.getConfig().getString("message-player-inventory-sorted", "&7Your inventory has been sorted."));
 
-		MSG_INVALIDOPTIONS = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_INVALIDOPTIONS = TextUtils.format( plugin.getConfig()
 				.getString("message-error-invalid-options", "&cError: Unknown option %s. Valid options are %s."));
 		
-		MSG_GUI_ENABLED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_GUI_ENABLED = TextUtils.format( plugin.getConfig()
 				.getString("message-gui-enabled","&aEnabled"));
 		
-		MSG_GUI_DISABLED = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_GUI_DISABLED = TextUtils.format( plugin.getConfig()
 				.getString("message-gui-disabled","&cDisabled"));
 		
-		MSG_GUI_MIDDLECLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_GUI_MIDDLECLICK = TextUtils.format( plugin.getConfig()
 				.getString("message-gui-middle-click","Middle-Click"));
 		
-		MSG_GUI_SHIFTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_GUI_SHIFTCLICK = TextUtils.format( plugin.getConfig()
 				.getString("message-gui-shift-click","Shift + Click"));
 		
-		MSG_GUI_DOUBLECLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_GUI_DOUBLECLICK = TextUtils.format( plugin.getConfig()
 				.getString("message-gui-double-click","Double-Click"));
 
-		MSG_GUI_LEFTCLICKOUTSIDE = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_GUI_LEFTCLICKOUTSIDE = TextUtils.format( plugin.getConfig()
 				.getString("message-gui-left-click-outside", "Left-Click"));
 		
-		MSG_GUI_SHIFTRIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig()
+		MSG_GUI_SHIFTRIGHTCLICK = TextUtils.format( plugin.getConfig()
 				.getString("message-gui-shift-right-click","Shift + Right-Click"));
 		
-		MSG_GUI_LEFTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-left-click","Fill Chest (Left-Click/Double-Left-Click)"));
+		MSG_GUI_LEFTCLICK = TextUtils.format( plugin.getConfig().getString("message-gui-left-click","Fill Chest (Left-Click/Double-Left-Click)"));
 		
-		MSG_GUI_RIGHTCLICK = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("message-gui-right-click","Unload Chest (Right-Click/Double-Right-Click)"));
+		MSG_GUI_RIGHTCLICK = TextUtils.format( plugin.getConfig().getString("message-gui-right-click","Unload Chest (Right-Click/Double-Right-Click)"));
 		
 		MSG_ERR_HOTKEYSDISABLED = ChatColor.RED + "[ChestSort] Hotkeys have been disabled by the admin.";
 	}
