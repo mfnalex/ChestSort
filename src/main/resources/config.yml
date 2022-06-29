@@ -765,6 +765,27 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-right-click: "Empty Chest (Chuột phải/nhấn đúp chuột phải)"
 #message-gui-left-click-outside: "Nhấn chuột trái bên ngoài"
 
+##### Hebrew / עברית
+#message-when-using-chest: "&7רמז: &fהקלידו &e/chestsort&f בשביל להפעיל מיון תיבות."
+#message-when-using-chest2: "&7רמז: &fהקלידו &e/chestsort&7 בשביל לכבות מיון תיבות."
+#message-sorting-disabled: "&fמיון תיבות &cלא פועל&f."
+#message-sorting-enabled: "&fמיון תיבות &aפועל&f."
+#message-inv-sorting-disabled: "&fמיון אינבנטורי &cלא פועל&f."
+#message-inv-sorting-enabled: "&fמיון אינבנטורי &aפועל&f."
+#message-player-inventory-sorted: "&fהאינבנטורי שלך סודר."
+#message-error-players-only: "&c&lשגיאה: הפקודה הזאת היא לשימוש השחקנים בלבד."
+#message-error-invalid-options: "&c&lשגיאה: Unknown option %s. Valid options are %s."
+#message-container-sorted: "&a&lסודר מחדש!"
+#message-gui-enabled: "&aפועל&f"
+#message-gui-disabled: "&cלא פועל"
+#message-gui-middle-click: "לחיצה בעמצא(עכבר)"
+#message-gui-shift-click: "Shift + קליד"
+#message-gui-double-click: "לחיצה כפולה"
+#message-gui-shift-right-click: "Shift + לחיצה ימנית"
+#message-gui-left-click: "למלא תיבה (לחיצה שמאלית/לחיצה שמאלית כפולה)"
+#message-gui-right-click: "לרוקן תיבה (לחיצה ימנית/לחיצה ימנית כפולה)"
+#message-gui-left-click-outside: "לחיצה שמאלית מבחוץ"
+
 ############################
 ##### Technical stuff! #####
 ############################
