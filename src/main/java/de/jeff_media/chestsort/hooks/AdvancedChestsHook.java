@@ -45,9 +45,9 @@ public class AdvancedChestsHook {
 
     public boolean handleAChestSortingIfPresent(Location location){
         if(!plugin.isHookAdvancedChests())return false;
-        AdvancedChest chest = AdvancedChestsAPI.getChestManager().getAdvancedChest(location);
+        AdvancedChest<?,?> chest = AdvancedChestsAPI.getChestManager().getAdvancedChest(location);
         if(chest != null){
-            for (ChestPage page : chest.getPages()) {
+            for (ChestPage<?> page : chest.getPages()) {
                 Inventory inventory = page.getBukkitInventory();
                 plugin.getOrganizer().sortInventory(inventory,0,inventory.getSize()-10);
             }
