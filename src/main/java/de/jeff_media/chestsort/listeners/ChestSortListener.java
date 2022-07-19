@@ -11,7 +11,6 @@ import de.jeff_media.chestsort.data.PlayerSetting;
 import de.jeff_media.chestsort.hooks.*;
 import de.jeff_media.chestsort.utils.LlamaUtils;
 import de.jeff_media.jefflib.ProtectionUtils;
-import de.jeff_media.jefflib.data.ShadowPlayer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -39,7 +38,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class Listener implements org.bukkit.event.Listener {
+public class ChestSortListener implements org.bukkit.event.Listener {
 
     final ChestSortPlugin plugin;
     public final MinepacksHook minepacksHook;
@@ -49,7 +48,7 @@ public class Listener implements org.bukkit.event.Listener {
 
     private static Event ignoredEvent;
 
-    public Listener(ChestSortPlugin plugin) {
+    public ChestSortListener(ChestSortPlugin plugin) {
         this.plugin = plugin;
         this.minepacksHook = new MinepacksHook(plugin);
         this.headDatabaseHook = new HeadDatabaseHook(plugin);
@@ -97,9 +96,14 @@ public class Listener implements org.bukkit.event.Listener {
 
         Container containerState = (Container) clickedBlock.getState();
         Inventory inventory = containerState.getInventory();
-        if(!advancedChestsHook.handleAChestSortingIfPresent(clickedBlock.getLocation())) {
-            plugin.getOrganizer().sortInventory(inventory);
-        }
+
+		try {
+			if (!advancedChestsHook.handleAChestSortingIfPresent(clickedBlock.getLocation())) {
+				plugin.getOrganizer().sortInventory(inventory);
+			}
+		} catch (Throwable ignored) {
+			// TODO: Remove when everyone updated AdvancedChests
+		}
         event.getPlayer().spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(Messages.MSG_CONTAINER_SORTED));
     }
 
@@ -315,6 +319,10 @@ public class Listener implements org.bukkit.event.Listener {
         if (inventory.getType() == InventoryType.ENDER_CHEST || inventory.getType().name().equalsIgnoreCase("SHULKER_BOX")) {
             return true;
         }
+
+		if (inventory.getHolder() != null && inventory.getHolder().getClass().getName().toLowerCase().contains("boat")) {
+			return true;
+		}
 
         // Possible Fix for https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues/13
         if (inventory.getHolder() == null) {

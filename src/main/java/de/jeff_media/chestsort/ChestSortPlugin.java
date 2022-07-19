@@ -29,7 +29,6 @@ package de.jeff_media.chestsort;
 
 import at.pcgamingfreaks.Minepacks.Bukkit.API.MinepacksPlugin;
 import com.jeff_media.updatechecker.UpdateChecker;
-import de.jeff_media.chestsort.commands.AdminCommand;
 import de.jeff_media.chestsort.commands.ChestSortCommand;
 import de.jeff_media.chestsort.commands.InvSortCommand;
 import de.jeff_media.chestsort.commands.TabCompleter;
@@ -48,7 +47,7 @@ import de.jeff_media.chestsort.handlers.Logger;
 import de.jeff_media.chestsort.hooks.EnderContainersHook;
 import de.jeff_media.chestsort.hooks.GenericGUIHook;
 import de.jeff_media.chestsort.hooks.PlayerVaultsHook;
-import de.jeff_media.chestsort.listeners.Listener;
+import de.jeff_media.chestsort.listeners.ChestSortListener;
 import de.jeff_media.chestsort.placeholders.Placeholders;
 import de.jeff_media.chestsort.utils.Utils;
 import de.jeff_media.jefflib.JeffLib;
@@ -62,9 +61,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
 import java.util.*;
@@ -86,7 +83,7 @@ public class ChestSortPlugin extends JavaPlugin {
     private ArrayList<String> disabledWorlds;
     private HashMap<UUID, Long> hotkeyCooldown;
     private Logger lgr;
-    private Listener listener;
+    private ChestSortListener chestSortListener;
     // 1.14.4 = 1_14_R1
     // 1.8.0  = 1_8_R1
     private int mcMinorVersion; // 14 for 1.14, 13 for 1.13, ...
@@ -252,12 +249,12 @@ public class ChestSortPlugin extends JavaPlugin {
         this.lgr = lgr;
     }
 
-    public Listener getListener() {
-        return listener;
+    public ChestSortListener getListener() {
+        return chestSortListener;
     }
 
-    public void setListener(Listener listener) {
-        this.listener = listener;
+    public void setListener(ChestSortListener chestSortListener) {
+        this.chestSortListener = chestSortListener;
     }
 
     public int getMcMinorVersion() {
@@ -492,7 +489,7 @@ public class ChestSortPlugin extends JavaPlugin {
             getLogger().severe("The Update Checker will NOT work when using CraftBukkit instead of Spigot/Paper!");
             PaperLib.suggestPaper(this);
         }
-        setListener(new Listener(this));
+        setListener(new ChestSortListener(this));
         setHotkeyCooldown(new HashMap<>());
         setPermissionsHandler(new ChestSortPermissionsHandler(this));
         setUpdateCheckInterval(getConfig().getDouble("check-interval"));
@@ -699,7 +696,7 @@ public class ChestSortPlugin extends JavaPlugin {
             boolean changed;
             boolean hasSeenMessage;
 
-            if (playerFile.exists() || !McVersion.isAtLeast(1,14,4)) {
+            if (playerFile.exists() || !McVersion.current().isAtLeast(1,14,4)) {
                 // If the player settings file does not exist for this player, set it to the
                 // default value
                 activeForThisPlayer = playerConfig.getBoolean("sortingEnabled");
@@ -715,7 +712,7 @@ public class ChestSortPlugin extends JavaPlugin {
 
                 changed = true;
 
-                if (McVersion.isAtLeast(1,14,4)) {
+                if (McVersion.current().isAtLeast(1,14,4)) {
                     if (playerFile.delete()) {
                         this.getLogger().info("Converted old .yml playerdata file to NBT tags for player " + p.getName());
                     } else {
@@ -752,7 +749,7 @@ public class ChestSortPlugin extends JavaPlugin {
             // when "show-message-again-after-logout" is enabled, we don't care if the
             // player already saw the message
             if (!getConfig().getBoolean("show-message-again-after-logout")) {
-                if (McVersion.isAtLeast(1,14,4) && !playerFile.exists()) {
+                if (McVersion.current().isAtLeast(1,14,4) && !playerFile.exists()) {
                     NBTAPI.getNBT(p, "hasSeenMessage", String.valueOf(false));
                 } else {
                     newSettings.hasSeenMessage = playerConfig.getBoolean("hasSeenMessage");
@@ -926,7 +923,7 @@ public class ChestSortPlugin extends JavaPlugin {
         if (getPerPlayerSettings().containsKey(uniqueId.toString())) {
             PlayerSetting setting = getPerPlayerSettings().get(p.getUniqueId().toString());
 
-            if (McVersion.isAtLeast(1,14,4)) {
+            if (McVersion.current().isAtLeast(1,14,4)) {
 
                 for(NamespacedKey key : p.getPersistentDataContainer().getKeys()) {
                     if(key.getKey().equals(new NamespacedKey(this,"test").getKey())) {

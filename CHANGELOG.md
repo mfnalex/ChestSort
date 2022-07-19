@@ -1,5 +1,8 @@
 # Changelog
 
+## 13.2.1
+- Fixed exceptions when using the latest version of AdvancedChests
+
 ## 13.0.5
 Sorry for 3 updates within 10 minutes!
 
