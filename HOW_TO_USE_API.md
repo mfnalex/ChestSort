@@ -42,8 +42,7 @@ ChestSortAPI.sortInventory(player.getInventory());
 ```
 
 ### As `softdepend`
-If you only softdepend on ChestSort, you have to check whether ChestSort is installed. To avoid exceptions, do not import the ChestSortAPI class
-in classes that you instantiate regardless of whether ChestSort is installed, but use qualified method calls instead:
+If you only softdepend on ChestSort, you have to check whether ChestSort is installed:
 
 ```java
 if(Bukkit.getPluginManager().getPlugin("ChestSort") != null) {
