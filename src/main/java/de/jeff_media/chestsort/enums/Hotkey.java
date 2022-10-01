@@ -54,6 +54,7 @@ public enum Hotkey {
 
     public static Hotkey fromPermission(String permission) {
         //System.out.println("Checking permission " + permission + " and returning the proper hotkey...");
+        if(permission == null) return null;
         switch(permission) {
             case "shiftclick": return SHIFT_CLICK;
             case "middleclick": return MIDDLE_CLICK;

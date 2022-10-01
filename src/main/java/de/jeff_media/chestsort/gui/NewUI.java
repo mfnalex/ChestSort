@@ -30,6 +30,7 @@ public class NewUI {
         if(conf.isString("slots." + slot)) {
             String buttonName = conf.getString("slots." + slot);
             //if(!player.hasPermission("chestsort.hotkey." + buttonName)) {
+            Hotkey key = Hotkey.fromPermission(buttonName);
             if(!Hotkey.fromPermission(buttonName).hasPermission(player)) {
                 buttonName = buttonName + "-nopermission";
             } else {

@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.4.0
+- Hoppers can now be sorted using hotkeys (not via automatic sorting, as this would break hopper sorting machines)
+- Added Hebrew translation
+
 ## 13.2.1
 - Fixed exceptions when using the latest version of AdvancedChests
 

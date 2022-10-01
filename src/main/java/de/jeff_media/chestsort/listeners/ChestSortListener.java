@@ -569,6 +569,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
         if (isAPICall
                 || belongsToChestLikeBlock(event.getClickedInventory())
+                || (event.getClickedInventory() != null && event.getClickedInventory().getType() == InventoryType.HOPPER)
                 || plugin.getOrganizer().isMarkedAsSortable(event.getClickedInventory())
                 || LlamaUtils.belongsToLlama(event.getClickedInventory())
                 || minepacksHook.isMinepacksBackpack(event.getClickedInventory())
