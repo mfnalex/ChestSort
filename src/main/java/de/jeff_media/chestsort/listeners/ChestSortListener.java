@@ -10,7 +10,7 @@ import de.jeff_media.chestsort.api.*;
 import de.jeff_media.chestsort.data.PlayerSetting;
 import de.jeff_media.chestsort.hooks.*;
 import de.jeff_media.chestsort.utils.LlamaUtils;
-import de.jeff_media.jefflib.ProtectionUtils;
+import com.jeff_media.jefflib.ProtectionUtils;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
@@ -82,7 +82,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         if(!playerSetting.leftClickOutside) return;
 
         if(plugin.getConfig().getBoolean("mute-protection-plugins")) {
-            if (!ProtectionUtils.canInteract(event.getPlayer(), clickedBlock, plugin.getConfig().getBoolean("mute-protection-plugins"))) {
+            if (!ProtectionUtils.canBreak(event.getPlayer(), clickedBlock.getLocation()/*, plugin.getConfig().getBoolean("mute-protection-plugins")*/)) {
                 //System.out.println("ChestSort: cannot interact!");
                 return;
             }

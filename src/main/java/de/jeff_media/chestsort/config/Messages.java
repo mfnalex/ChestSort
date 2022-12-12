@@ -1,7 +1,7 @@
 package de.jeff_media.chestsort.config;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
-import de.jeff_media.jefflib.TextUtils;
+import com.jeff_media.jefflib.TextUtils;
 import org.bukkit.ChatColor;
 
 public class Messages {

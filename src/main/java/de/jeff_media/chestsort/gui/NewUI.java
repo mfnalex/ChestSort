@@ -2,8 +2,8 @@ package de.jeff_media.chestsort.gui;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.enums.Hotkey;
-import de.jeff_media.jefflib.ItemStackUtils;
-import de.jeff_media.jefflib.TextUtils;
+import com.jeff_media.jefflib.ItemStackUtils;
+import com.jeff_media.jefflib.TextUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
