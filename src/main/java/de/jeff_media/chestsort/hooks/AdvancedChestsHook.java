@@ -61,7 +61,7 @@ public class AdvancedChestsHook {
 		try {
 			AdvancedChest<?, ?> chest = AdvancedChestsAPI.getChestManager().getAdvancedChest(location);
 			if (chest != null) {
-				for (ChestPage<?> page : chest.getPages()) {
+				for (ChestPage<?> page : chest.getPages().values()) {
 					Inventory inventory = page.getBukkitInventory();
 					plugin.getOrganizer().sortInventory(inventory, 0, inventory.getSize() - 10);
 				}
