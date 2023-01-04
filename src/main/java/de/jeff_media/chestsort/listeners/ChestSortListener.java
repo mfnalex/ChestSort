@@ -645,8 +645,14 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         if (e.getCursor() != null && e.getCursor().getType() != null && e.getCursor().getType() != Material.AIR) {
             return;
         }
+
+        boolean isAdvancedChest = advancedChestsHook.isAnAdvancedChest(e.getClickedInventory())
+                        || advancedChestsHook.isAnAdvancedChest(e.getInventory());
+
         // Possible fix for #57
-        if (e.getInventory().getHolder() == null && !e.getView().getTopInventory().equals(p.getEnderChest())) {
+        if (e.getInventory().getHolder() == null
+                && !e.getView().getTopInventory().equals(p.getEnderChest())
+                && !isAdvancedChest) {
             return;
         }
         if (e.getInventory().getHolder() == p && e.getInventory() != p.getInventory()) {
@@ -685,12 +691,6 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             return;
         }
 
-        // AdvancedChests hook
-        if(advancedChestsHook.isAnAdvancedChest(e.getClickedInventory())
-                || advancedChestsHook.isAnAdvancedChest(e.getInventory())){
-            return;
-        }
-
         // Detect generic GUIs
         if(!isAPICall(e.getInventory()) && !isAPICall(e.getClickedInventory()) &&
                 (plugin.getGenericHook().isPluginGUI(e.getInventory())
@@ -722,7 +722,10 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         chestSortEvent.setLocation(e.getWhoClicked().getLocation());
 
         chestSortEvent.setSortableMaps(new HashMap<>());
-        for (ItemStack item : e.getInventory().getContents()) {
+        ItemStack[] contents = e.getInventory().getContents();
+        int contentsLength = (!isAdvancedChest) ? contents.length : contents.length-9;
+        for (int i = 0; i < contentsLength; i++) {
+            ItemStack item = contents[i];
             chestSortEvent.getSortableMaps().put(item, plugin.getOrganizer().getSortableMap(item));
         }
 
@@ -737,7 +740,11 @@ public class ChestSortListener implements org.bukkit.event.Listener {
                     == PlayerSetting.DoubleClickType.LEFT_CLICK) {
             	// Left double click: put everything into destination
                 plugin.getOrganizer().stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), false, chestSortEvent);
-                plugin.getOrganizer().sortInventory(e.getInventory());
+                if(isAdvancedChest){
+                    plugin.getOrganizer().sortInventory(e.getInventory(),0,e.getInventory().getSize()-10);
+                }else{
+                    plugin.getOrganizer().sortInventory(e.getInventory());
+                }
             } else {
             	// Left single click: put only matching items into destination
                 plugin.getOrganizer().stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), true, chestSortEvent);
