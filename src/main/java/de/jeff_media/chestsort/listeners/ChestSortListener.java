@@ -31,10 +31,7 @@ import org.bukkit.event.inventory.InventoryType.SlotType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.*;
 
 import java.util.HashMap;
 
@@ -732,6 +729,12 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         Bukkit.getPluginManager().callEvent(chestSortEvent);
         if (chestSortEvent.isCancelled()) {
             return;
+        }
+
+        // CoreProtect hook
+        if (e.getInventory().getHolder() instanceof BlockInventoryHolder) {
+            Block block = ((BlockInventoryHolder) e.getInventory().getHolder()).getBlock();
+            CoreProtectHook.logContainerTransaction(p.getName(), block.getLocation());
         }
 
         if (e.isLeftClick() && setting.leftClick && p.hasPermission(Hotkey.getPermission(Hotkey.LEFT_CLICK))) {
