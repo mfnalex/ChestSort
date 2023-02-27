@@ -10,7 +10,7 @@ website: ${project.url}
 prefix: ${spigot.prefix}
 database: false
 loadbefore: [InvUnload]
-softdepend: [CrackShot,InventoryPages,Minepacks,PlaceholderAPI,AdvancedChests,ShulkerPacks]
+softdepend: [CrackShot,InventoryPages,Minepacks,PlaceholderAPI,AdvancedChests,ShulkerPacks,CoreProtect]
 commands:
   sort:
     description: Toggle automatic chest sorting or change your hotkey settings
