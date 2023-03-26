@@ -3,7 +3,7 @@
 
 # The default config uses Yaml Anchors so you don't have to define the same item
 # over and over again. I wrote a tiny explanation about them here:
-# https://wiki.jeff-media.com/books/general-information/page/yaml-anchors
+# https://github.com/JEFF-Media-GbR/ChestSort/blob/master/HOW_TO_USE_API.md
 
 # Items can be defined using the following values:
 #   material: DIAMOND
