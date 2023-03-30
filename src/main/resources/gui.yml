@@ -21,6 +21,11 @@
 #   enchantments:
 #     unbreaking: 3
 #     efficiency: 5
+#   commands:
+#     player:
+#       - "say Hello" # command that will be run as the player
+#     console:
+#       - "tell {player} Hello" # command that will be run as the console
 
 title: "<#000000>&l[<#007700>&lChest<#339933>&lSort<#000000>&l] &rSettings"
 size: 45

@@ -1,5 +1,6 @@
 package de.jeff_media.chestsort.gui;
 
+import com.jeff_media.morepersistentdatatypes.DataType;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.enums.Hotkey;
 import com.jeff_media.jefflib.ItemStackUtils;
@@ -12,6 +13,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
+
+import java.util.List;
 
 public class NewUI {
 
@@ -44,6 +47,10 @@ public class NewUI {
                 ItemMeta meta = button.getItemMeta();
                 assert meta != null;
                 meta.getPersistentDataContainer().set(new NamespacedKey(main,"function"),PersistentDataType.STRING, buttonName.split("-")[0]);
+                List<String> userCommands = conf.getStringList("items." + buttonName + ".commands.player");
+                List<String> adminCommands = conf.getStringList("items." + buttonName + ".commands.console");
+                meta.getPersistentDataContainer().set(new NamespacedKey(main,"user-commands"), DataType.asList(DataType.STRING), userCommands);
+                meta.getPersistentDataContainer().set(new NamespacedKey(main,"admin-commands"), DataType.asList(DataType.STRING), adminCommands);
                 button.setItemMeta(meta);
             }
             return button;
