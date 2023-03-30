@@ -51,7 +51,7 @@ import de.jeff_media.chestsort.listeners.ChestSortListener;
 import de.jeff_media.chestsort.placeholders.Placeholders;
 import de.jeff_media.chestsort.utils.Utils;
 import com.jeff_media.jefflib.JeffLib;
-import com.jeff_media.jefflib.McVersion;
+import com.jeff_media.jefflib.data.McVersion;
 import com.jeff_media.jefflib.NBTAPI;
 import io.papermc.lib.PaperLib;
 import org.bstats.bukkit.Metrics;
