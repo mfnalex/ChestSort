@@ -807,6 +807,27 @@ message-gui-left-click-outside: "Left-Click from outside"
 #message-gui-right-click: "Empty Chest (Chuột phải/nhấn đúp chuột phải)"
 #message-gui-left-click-outside: "Nhấn chuột trái bên ngoài"
 
+##### Romanian
+#message-when-using-chest: "&7Sugestie: Foloseste &6/chestsort&7 pentru a activa sortarea automata a cufarului."
+#message-when-using-chest2: "&7Sugestie: Foloseste &6/chestsort&7 pentru a dezactiva sortarea automata a cufarului."
+#message-sorting-disabled: "&7Sortarea automata a fost &cdezactivata&7."
+#message-sorting-enabled: "&7Sortarea automata a fost &aactivata&7."
+#message-inv-sorting-disabled: "&7Sortarea automata a inventarului a fost &cdezactivata&7."
+#message-inv-sorting-enabled: "&7Sortarea automata a inventarului a fost &aactivata&7."
+#message-player-inventory-sorted: "&7Inventarul tau a fost sortat."
+#message-error-players-only: "&cEroare: Comanda aceasta poate fii folosita doar de catre jucatori."
+#message-error-invalid-options: "&cEroare: Optiune necunoscuta %s. Optiunile valide sunt %s."
+#message-container-sorted: "&aRecipient sortat!"
+#message-gui-enabled: "&aActivat"
+#message-gui-disabled: "&cDezactivat"
+#message-gui-middle-click: "Middle-Click"
+#message-gui-shift-click: "Shift + Click"
+#message-gui-double-click: "Double-Click"
+#message-gui-shift-right-click: "Shift + Right-Click"
+#message-gui-left-click: "Umple cufarul (Left-Click/Double-Left-Click)"
+#message-gui-right-click: "Goloseste cufarul (Right-Click/Double-Right-Click)"
+#message-gui-left-click-outside: "Left-Click din afara"
+
 ############################
 ##### Technical stuff! #####
 ############################
