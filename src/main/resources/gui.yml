@@ -5,7 +5,7 @@
 # over and over again. I wrote a tiny explanation about them here:
 # https://wiki.jeff-media.com/books/general-information/page/yaml-anchors
 
-# Items can be defined using the following values:
+# Items can be defined inside the "items" section using the following values:
 #   material: DIAMOND
 #   display-name: "My Diamond"
 #   lore:
@@ -26,6 +26,8 @@
 #       - "say Hello" # command that will be run as the player
 #     console:
 #       - "tell {player} Hello" # command that will be run as the console
+
+# You can then reference the item in the "slots" section using their defined name.
 
 title: "<#000000>&l[<#007700>&lChest<#339933>&lSort<#000000>&l] &rSettings"
 size: 45

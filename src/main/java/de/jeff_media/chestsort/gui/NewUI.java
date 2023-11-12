@@ -34,13 +34,15 @@ public class NewUI {
             String buttonName = conf.getString("slots." + slot);
             //if(!player.hasPermission("chestsort.hotkey." + buttonName)) {
             Hotkey key = Hotkey.fromPermission(buttonName);
-            if(!Hotkey.fromPermission(buttonName).hasPermission(player)) {
+            if(key != null && !Hotkey.fromPermission(buttonName).hasPermission(player)) {
                 buttonName = buttonName + "-nopermission";
             } else {
-                boolean enabled = Hotkey.fromPermission(buttonName).hasEnabled(player);
+                boolean enabled = true;
+                if(key != null) enabled = Hotkey.fromPermission(buttonName).hasEnabled(player);
                 //System.out.println(buttonName + " is enabled: " + enabled);
-                buttonName = buttonName + (enabled ? "-enabled" : "-disabled");
+                if(key != null) buttonName = buttonName + (enabled ? "-enabled" : "-disabled");
             }
+            if(main.isDebug()) System.out.println("Button name: " + buttonName);
             ItemStack button = ItemStackUtils.fromConfigurationSection(conf.getConfigurationSection("items." + buttonName));
             //System.out.println(button);
             if(button.hasItemMeta() && !buttonName.endsWith("-nopermission")) {
