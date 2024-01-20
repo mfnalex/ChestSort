@@ -9,7 +9,7 @@
     <name>ChestSort</name>
     <url>https://www.chestsort.de</url>
     <description>Allows automatic chest sorting!</description>
-    <version>13.6.6</version>
+    <version>14.0.0</version>
     <packaging>jar</packaging>
 
     <properties>

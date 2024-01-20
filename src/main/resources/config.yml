@@ -326,6 +326,22 @@ prevent-sorting-null-inventories: false
 # Although this should NOT cause ANY problems, it's disabled by default.
 mute-protection-plugins: false
 
+##### Generic Detection by InventoryHolder #####
+# ChestSort can detect inventories from other plugins by their InventoryHolder.
+# If you encounter duplication issues with other plugins, or want to disabe sorting
+# for certain inventories for any other reason, you can do that here.
+# To find out the InventoryHolder name of an inventory, do the following:
+# 1. Run /chestsort debug
+# 2. Open the inventory and use a hotkey to sort
+# 3. Check the console for the InventoryHolder name, it should say something
+#    like "Holder class: class com.someplugin.InventoryHolder"
+# 4. Note the name of the InventoryHolder class, e.g. "com.someplugin.InventoryHolder"
+# 5. Add \Q at the beginning, and \E at the end of the name, e.g. \Qcom.someplugin.InventoryHolder\E
+# 6. Add that to the list below. You can also use advanced regexes, e.g. ".*[Bb]ack[Pp]ack.*" would blacklist all holders
+#    that contain the word "Backpack"
+blocked-inventory-holders-regex:
+- ".*[Bb]ack[Pp]ack.*"
+
 ##########################
 ##### Sorting Method #####
 ##########################

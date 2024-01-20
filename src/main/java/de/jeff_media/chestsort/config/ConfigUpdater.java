@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public final class ConfigUpdater {
 
     // Lines STARTING WITH these names will be treated as String lists
-    private static final String[] LINES_CONTAINING_STRING_LISTS = {Config.DISABLED_WORLDS + ":"};
+    private static final String[] LINES_CONTAINING_STRING_LISTS = {Config.DISABLED_WORLDS + ":", "blocked-inventory-holders-regex:"};
     // Lines STARTING WITH these names will never get the old value applied
     private static final String[] LINES_IGNORED = {"config-version:", "plugin-version:"};
     // Lines STARTING WITH these names will get no quotes although they would match one of the lists below

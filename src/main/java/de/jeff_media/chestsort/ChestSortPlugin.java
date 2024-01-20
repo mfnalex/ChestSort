@@ -65,6 +65,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class ChestSortPlugin extends JavaPlugin {
 
@@ -98,6 +99,8 @@ public class ChestSortPlugin extends JavaPlugin {
     private boolean verbose = true;
     private YamlConfiguration guiConfig = new YamlConfiguration();
     private int settingsFingerprint = 0;
+
+    public List<Pattern> blacklistedInventoryHolderClassNames = new ArrayList<>();
 
     public static ChestSortPlugin getInstance() {
         return instance;
@@ -465,6 +468,17 @@ public class ChestSortPlugin extends JavaPlugin {
         setGenericHook(new GenericGUIHook(this, getConfig().getBoolean("hook-generic")));
 
         saveDefaultCategories();
+
+        blacklistedInventoryHolderClassNames.clear();
+        for(String line : getConfig().getStringList("blocked-inventory-holders-regex")) {
+            try {
+                Pattern pattern = Pattern.compile(line);
+                blacklistedInventoryHolderClassNames.add(pattern);
+            } catch (Exception e) {
+                getLogger().warning("Invalid regex in blocked-inventory-holders-regex: " + line);
+                continue;
+            }
+        }
 
         setVerbose(getConfig().getBoolean("verbose"));
         setLgr(new Logger(this, getConfig().getBoolean("log")));
