@@ -260,22 +260,6 @@ public class ChestSortPlugin extends JavaPlugin {
         this.chestSortListener = chestSortListener;
     }
 
-    public int getMcMinorVersion() {
-        return mcMinorVersion;
-    }
-
-    public void setMcMinorVersion(int mcMinorVersion) {
-        this.mcMinorVersion = mcMinorVersion;
-    }
-
-    public String getMcVersion() {
-        return mcVersion;
-    }
-
-    public void setMcVersion(String mcVersion) {
-        this.mcVersion = mcVersion;
-    }
-
     public Messages getMessages() {
         return messages;
     }
@@ -598,10 +582,12 @@ public class ChestSortPlugin extends JavaPlugin {
 
         JeffLib.init(this);
 
-        String tmpVersion = getServer().getClass().getPackage().getName();
+        /*String tmpVersion = getServer().getClass().getPackage().getName();
         setMcVersion(tmpVersion.substring(tmpVersion.lastIndexOf('.') + 1));
         tmpVersion = getMcVersion().substring(getMcVersion().indexOf("_") + 1);
-        setMcMinorVersion(Integer.parseInt(tmpVersion.substring(0, tmpVersion.indexOf("_"))));
+        setMcMinorVersion(Integer.parseInt(tmpVersion.substring(0, tmpVersion.indexOf("_"))));*/
+
+
 
         load(false);
 

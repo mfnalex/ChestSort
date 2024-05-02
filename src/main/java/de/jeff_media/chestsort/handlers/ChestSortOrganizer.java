@@ -187,7 +187,7 @@ public class ChestSortOrganizer {
 
     @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     boolean doesInventoryContain(Inventory inv, Material mat) {
-        for (ItemStack item : Utils.getStorageContents(inv, plugin.getMcMinorVersion())) {
+        for (ItemStack item : Utils.getStorageContents(inv)) {
             if (item == null) continue;
             if (item.getType() == mat) {
                 return true;

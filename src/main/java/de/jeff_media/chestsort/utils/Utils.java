@@ -12,10 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Utils {
 
-	public static ItemStack[] getStorageContents(Inventory inv, int bukkitMinorVersion) {
-		if(bukkitMinorVersion<=8) {
-			return inv.getContents();
-		}
+	public static ItemStack[] getStorageContents(Inventory inv) {
 		return inv.getStorageContents();
 	}
 	
