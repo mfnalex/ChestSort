@@ -341,6 +341,7 @@ mute-protection-plugins: false
 #    that contain the word "Backpack"
 blocked-inventory-holders-regex:
 - ".*[Bb]ack[Pp]ack.*"
+- "\Qcom.loohp.interactivechat.objectholders.ICInventoryHolder\E"
 
 ##########################
 ##### Sorting Method #####

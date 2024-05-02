@@ -99,15 +99,21 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         }
 
         for (String className : toCheck) {
+            plugin.debug("Checking blacklisted holder: " + className);
             for (String blacklistedClassName : blacklistedInventoryHolderClassNames) {
+                plugin.debug("Checking against hardcoded blacklisted holder: " + blacklistedClassName);
                 if (className.contains(blacklistedClassName)) {
+                    plugin.debug("Blacklisted holder found: " + className);
                     return true;
                 }
-                for(Pattern pattern : plugin.blacklistedInventoryHolderClassNames) {
-                    Matcher matcher = pattern.matcher(className);
-                    if(matcher.matches()) {
-                        return true;
-                    }
+            }
+
+            for(Pattern pattern : plugin.blacklistedInventoryHolderClassNames) {
+                plugin.debug("Checking against regex blacklisted holder: " + pattern.pattern());
+                Matcher matcher = pattern.matcher(className);
+                if(matcher.matches()) {
+                    plugin.debug("Blacklisted holder found: " + className);
+                    return true;
                 }
             }
         }
@@ -253,6 +259,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
         if(isPossiblyBlacklisted(event.getView())) {
             plugin.debug("Abort: holder is blacklisted");
+            return;
         }
 
         if (event.getInventory().getHolder() == null) {
@@ -312,6 +319,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
         if(isPossiblyBlacklisted(event.getView())) {
             plugin.debug("Abort: holder is blacklisted");
+            return;
         }
 
         if (!(plugin.getConfig().getString("sort-time").equalsIgnoreCase("close") ||
@@ -368,6 +376,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
         if(isPossiblyBlacklisted(event.getView())) {
             plugin.debug("Abort: holder is blacklisted");
+            return;
         }
 
         if (!plugin.getConfig().getBoolean("allow-automatic-sorting")) {
@@ -534,6 +543,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
         if(isPossiblyBlacklisted(event.getView())) {
             plugin.debug("Abort: holder is blacklisted");
+            return;
         }
 
         if (!(event.getPlayer() instanceof Player)) {
@@ -568,6 +578,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
         if(isPossiblyBlacklisted(event.getView())) {
             plugin.debug("Abort: holder is blacklisted");
+            return;
         }
 
         if (!(event.getWhoClicked() instanceof Player)) {
@@ -755,6 +766,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
         if(isPossiblyBlacklisted(e.getView())) {
             plugin.debug("Abort: holder is blacklisted");
+            return;
         }
 
         if (LlamaUtils.belongsToLlama(e.getInventory()) || LlamaUtils.belongsToLlama(e.getClickedInventory())) {
