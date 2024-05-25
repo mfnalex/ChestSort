@@ -1,20 +1,19 @@
 package de.jeff_media.chestsort.handlers;
 
-import de.jeff_media.chestsort.api.ChestSortEvent;
 import de.jeff_media.chestsort.ChestSortPlugin;
+import de.jeff_media.chestsort.api.ChestSortEvent;
 import de.jeff_media.chestsort.api.ChestSortPostSortEvent;
 import de.jeff_media.chestsort.data.Category;
+import de.jeff_media.chestsort.data.CategoryLinePair;
 import de.jeff_media.chestsort.hooks.CrackShotHook;
 import de.jeff_media.chestsort.hooks.InventoryPagesHook;
 import de.jeff_media.chestsort.hooks.ShulkerPacksHook;
 import de.jeff_media.chestsort.hooks.SlimeFunHook;
-import de.jeff_media.chestsort.data.CategoryLinePair;
 import de.jeff_media.chestsort.utils.EnchantmentUtils;
 import de.jeff_media.chestsort.utils.TypeMatchPositionPair;
 import de.jeff_media.chestsort.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -28,7 +27,14 @@ import org.bukkit.potion.PotionData;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class ChestSortOrganizer {
 
@@ -54,11 +60,11 @@ public class ChestSortOrganizer {
     private static final int playerInvStartSlot = 9; // Inclusive
     private static final int playerInvEndSlot = 35; // Inclusive
     private static final String emptyPlaceholderString = "~";
+    // We store a list of all Category objects
+    public final ArrayList<Category> categories = new ArrayList<>();
     final ChestSortPlugin plugin;
     final CrackShotHook crackShotHook;
     final InventoryPagesHook inventoryPagesHook;
-    // We store a list of all Category objects
-    public final ArrayList<Category> categories = new ArrayList<>();
     final ArrayList<String> stickyCategoryNames = new ArrayList<>();
     private final HashSet<Inventory> sortableInventories = new HashSet<>();
     private final HashSet<Inventory> unsortableInventories = new HashSet<>();
@@ -114,7 +120,7 @@ public class ChestSortOrganizer {
     }
 
     static String getColorOrdered(String c) {
-        switch(c) {
+        switch (c) {
             case "white":
                 return "01_white";
             case "light_gray":
@@ -393,15 +399,13 @@ public class ChestSortOrganizer {
                 // Only continue if Method "getBasePotionData" exists
                 Class<? extends PotionMeta> potionMetaClass = potionMeta.getClass();
                 try {
-                    if (potionMetaClass.getDeclaredMethod("getBasePotionData", (Class<?>) null) != null) {
-                        if (potionMeta.getBasePotionData() != null) {
-                            PotionData pdata = potionMeta.getBasePotionData();
-                            if (pdata != null && pdata.getType() != null && pdata.getType().getEffectType() != null) {
-                                potionEffect = "|" + pdata.getType().getEffectType().getName();
-                            }
+                    if (potionMeta.getBasePotionData() != null) {
+                        PotionData pdata = potionMeta.getBasePotionData();
+                        if (pdata != null && pdata.getType() != null && pdata.getType().getEffectType() != null) {
+                            potionEffect = "|" + pdata.getType().getEffectType().getName();
                         }
                     }
-                } catch (NoSuchMethodException | SecurityException ignored) {
+                } catch (Throwable ignored) {
                 }
 
                 // potionEffects = potionEffects.substring(0, potionEffects.length()-1);
@@ -461,12 +465,12 @@ public class ChestSortOrganizer {
 
     private String getTier(ItemStack item) {
         String type = item.getType().name();
-        if(type.contains("NETHERITE")) return "10netherite";
-        if(type.contains("DIAMOND")) return "20diamond";
-        if(type.contains("GOLD")) return "30gold";
-        if(type.contains("IRON")) return "40iron";
-        if(type.contains("STONE")) return "50stone";
-        if(type.contains("WOOD")) return "60wood";
+        if (type.contains("NETHERITE")) return "10netherite";
+        if (type.contains("DIAMOND")) return "20diamond";
+        if (type.contains("GOLD")) return "30gold";
+        if (type.contains("IRON")) return "40iron";
+        if (type.contains("STONE")) return "50stone";
+        if (type.contains("WOOD")) return "60wood";
         return "99none";
     }
 
@@ -491,8 +495,8 @@ public class ChestSortOrganizer {
 
     // Sort an inventory only between startSlot and endSlot
     public void sortInventory(Inventory inv, int startSlot, int endSlot) {
-        if(inv==null) return;
-        if(unsortableInventories.contains(inv)) return;
+        if (inv == null) return;
+        if (unsortableInventories.contains(inv)) return;
         plugin.debug("Attempting to sort an Inventory and calling ChestSortEvent.");
         Class<? extends Inventory> invClass = inv.getClass();
         ChestSortEvent chestSortEvent = new ChestSortEvent(inv);
@@ -508,8 +512,8 @@ public class ChestSortOrganizer {
 
         }
 
-        if(inv.getHolder() != null) {
-            if(inv.getHolder() instanceof HumanEntity) {
+        if (inv.getHolder() != null) {
+            if (inv.getHolder() instanceof HumanEntity) {
                 chestSortEvent.setPlayer((HumanEntity) inv.getHolder());
             }
         }
@@ -586,7 +590,8 @@ public class ChestSortOrganizer {
         // Sort the array with ItemStacks according to each ItemStacks' sortable String
         Arrays.sort(nonNullItems, Comparator.comparing((ItemStack item) -> {
             // lambda expression used to pass extra parameter
-            return this.getSortableString(item, chestSortEvent.getSortableMaps().get(item));}));
+            return this.getSortableString(item, chestSortEvent.getSortableMaps().get(item));
+        }));
 
         // Now, we put everything back in a temporary inventory to combine ItemStacks
         // even when using strict slot sorting
@@ -614,7 +619,7 @@ public class ChestSortOrganizer {
         // duplication
         int currentSlot = startSlot;
         for (ItemStack item : tempInventory.getContents()) {
-            if(item==null) break; // TODO: If there is item loss, change break to continue (should not happen)
+            if (item == null) break; // TODO: If there is item loss, change break to continue (should not happen)
             while (unsortableSlots.contains(currentSlot) && currentSlot < endSlot) {
                 currentSlot++;
             }
@@ -711,18 +716,19 @@ public class ChestSortOrganizer {
         for (int i = playerInvStartSlot; i <= playerInvEndSlot; i++) {
             ItemStack currentItem = source.getItem(i);
             if (currentItem == null) continue;
-            if(chestSortEvent.isUnmovable(i) || chestSortEvent.isUnmovable(currentItem)) continue;
+            if (chestSortEvent.isUnmovable(i) || chestSortEvent.isUnmovable(currentItem)) continue;
 
             // This prevents Minepacks from being put into Minepacks
 			/*if(plugin.hookMinepacks && plugin.listener.minepacksHook.isMinepacksBackpack(destination)
 					&& plugin.listener.minepacksHook.isMinepacksBackpack(currentItem)) continue;*/
             // This prevents Minepacks from being moved at all
-            if (plugin.isHookMinepacks() && plugin.getListener().minepacksHook.isMinepacksBackpack(currentItem)) continue;
+            if (plugin.isHookMinepacks() && plugin.getListener().minepacksHook.isMinepacksBackpack(currentItem))
+                continue;
 
             if (plugin.isHookInventoryPages()
                     && plugin.getOrganizer().inventoryPagesHook.isButton(currentItem, i, source)) continue;
 
-            if(ShulkerPacksHook.isOpenShulkerPack(currentItem)) continue;
+            if (ShulkerPacksHook.isOpenShulkerPack(currentItem)) continue;
 
             if (destinationIsShulkerBox && currentItem.getType().name().endsWith("SHULKER_BOX")) continue;
 
