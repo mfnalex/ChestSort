@@ -3,13 +3,17 @@ package de.jeff_media.chestsort.gui;
 import com.jeff_media.morepersistentdatatypes.DataType;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.data.PlayerSetting;
+import de.jeff_media.chestsort.gui.tracker.CustomGUITracker;
+import de.jeff_media.chestsort.gui.tracker.CustomGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 
@@ -23,7 +27,7 @@ public class GUIListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
-        if(event.getView().getTopInventory().getHolder() instanceof ChestSortGUIHolder) {
+        if(CustomGUITracker.getType(event.getView()) == CustomGUIType.NEW) {
             event.setCancelled(true);
         }
 
@@ -55,6 +59,11 @@ public class GUIListener implements Listener {
         }
 
         new NewUI(player).showGUI();
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onClose(InventoryCloseEvent event) {
+        CustomGUITracker.close(event.getView());
     }
 
     private void executeCommands(Player player, CommandSender sender, List<String> commands) {

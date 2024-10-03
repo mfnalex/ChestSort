@@ -5,6 +5,8 @@ import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.enums.Hotkey;
 import com.jeff_media.jefflib.ItemStackUtils;
 import com.jeff_media.jefflib.TextUtils;
+import de.jeff_media.chestsort.gui.tracker.CustomGUITracker;
+import de.jeff_media.chestsort.gui.tracker.CustomGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -67,17 +69,14 @@ public class NewUI {
         int size = conf.getInt("size");
         String title = TextUtils.format(conf.getString("title"));
 
-        ChestSortGUIHolder holder = new ChestSortGUIHolder();
-        Inventory inv = Bukkit.createInventory(holder, size, title);
-        holder.setInventory(inv);
+        Inventory inv = Bukkit.createInventory(null, size, title);
 
         for(int i = 0; i < size; i++) {
             ItemStack item = getItem(i);
             inv.setItem(i, item);
         }
 
-        player.openInventory(inv);
-
+        CustomGUITracker.open(player, inv, CustomGUIType.NEW);
     }
 
 }

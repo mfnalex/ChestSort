@@ -19,6 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -512,9 +513,10 @@ public class ChestSortOrganizer {
 
         }
 
-        if (inv.getHolder() != null) {
-            if (inv.getHolder() instanceof HumanEntity) {
-                chestSortEvent.setPlayer((HumanEntity) inv.getHolder());
+        InventoryHolder holder = inv.getHolder();
+        if (holder != null) {
+            if (holder instanceof HumanEntity) {
+                chestSortEvent.setPlayer((HumanEntity) holder);
             }
         }
 
@@ -659,9 +661,10 @@ public class ChestSortOrganizer {
 
         ItemStack[] hotbarStuff = new ItemStack[9];
         boolean destinationIsPlayerInventory = true;
-        if (destination.getHolder() == null
-                || !(destination.getHolder() instanceof Player)
-                || destination.getType() != InventoryType.PLAYER) {
+        InventoryHolder holder = destination.getHolder();
+
+        if (!(holder instanceof Player)
+            || destination.getType() != InventoryType.PLAYER) {
             destinationIsPlayerInventory = false;
         }
 

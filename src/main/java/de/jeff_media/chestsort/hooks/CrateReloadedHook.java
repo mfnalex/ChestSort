@@ -7,6 +7,7 @@ import org.bukkit.inventory.Inventory;
 
 import java.lang.reflect.Method;
 import java.util.Locale;
+import org.bukkit.inventory.InventoryHolder;
 
 /**
  * Who doesn't make their API available in a public maven repository
@@ -39,11 +40,11 @@ public class CrateReloadedHook {
         return false;
     }
 
-    public static boolean isCrate(final Inventory inv) {
+    public static boolean isCrate(final Inventory inv, InventoryHolder holder) {
         if(inv==null) return false;
-        if(inv.getHolder()==null) return false;
+        if(holder ==null) return false;
         if(!main.getConfig().getBoolean("hook-cratereloaded",true)) return false;
-        return inv.getHolder().getClass().getName().toLowerCase(Locale.ROOT).contains("cratereloaded");
+        return holder.getClass().getName().toLowerCase(Locale.ROOT).contains("cratereloaded");
     }
 
 }

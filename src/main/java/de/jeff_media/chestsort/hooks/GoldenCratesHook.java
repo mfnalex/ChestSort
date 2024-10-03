@@ -2,6 +2,7 @@ package de.jeff_media.chestsort.hooks;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 
 public class GoldenCratesHook {
 
@@ -12,11 +13,11 @@ public class GoldenCratesHook {
     }
 
 
-    public boolean isCrate(Inventory inv) {
+    public boolean isCrate(Inventory inv, InventoryHolder holder) {
         if(inv==null) return false;
-        if(inv.getHolder()==null) return false;
+        if(holder ==null) return false;
         if(!main.getConfig().getBoolean("hook-goldencrates",true)) return false;
-        return inv.getHolder().getClass().getName().contains("crate") || inv.getHolder().getClass().getName().contains("crates") || inv.getHolder().getClass().getName().contains("preview") || inv.getHolder().getClass().getName().contains("golden");
+        return holder.getClass().getName().contains("crate") || holder.getClass().getName().contains("crates") || holder.getClass().getName().contains("preview") || holder.getClass().getName().contains("golden");
     }
 
 }

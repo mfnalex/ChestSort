@@ -2,6 +2,7 @@ package de.jeff_media.chestsort.hooks;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 
 public class EnderContainersHook {
 
@@ -13,11 +14,11 @@ public class EnderContainersHook {
         this.main = main;
     }
 
-    public boolean isEnderchest(Inventory inv) {
+    public boolean isEnderchest(Inventory inv, InventoryHolder holder) {
         if (inv == null) return false;
-        if (inv.getHolder() == null) return false;
+        if (holder == null) return false;
         if (!main.getConfig().getBoolean("hook-endercontainers", true)) return false;
-        return inv.getHolder().getClass().getName().equals(CLASS_NAME);
+        return holder.getClass().getName().equals(CLASS_NAME);
     }
 
 }

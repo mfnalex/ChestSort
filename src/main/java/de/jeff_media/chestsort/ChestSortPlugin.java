@@ -37,9 +37,10 @@ import de.jeff_media.chestsort.config.ConfigUpdater;
 import de.jeff_media.chestsort.config.Messages;
 import de.jeff_media.chestsort.data.Category;
 import de.jeff_media.chestsort.data.PlayerSetting;
-import de.jeff_media.chestsort.gui.ChestSortGUIHolder;
 import de.jeff_media.chestsort.gui.GUIListener;
 import de.jeff_media.chestsort.gui.SettingsGUI;
+import de.jeff_media.chestsort.gui.tracker.CustomGUITracker;
+import de.jeff_media.chestsort.gui.tracker.CustomGUIType;
 import de.jeff_media.chestsort.handlers.ChestSortOrganizer;
 import de.jeff_media.chestsort.handlers.ChestSortPermissionsHandler;
 import de.jeff_media.chestsort.handlers.Debugger;
@@ -567,7 +568,7 @@ public class ChestSortPlugin extends JavaPlugin {
     public void onDisable() {
         // We have to unregister every player to save their perPlayerSettings
         for (Player player : getServer().getOnlinePlayers()) {
-            if(player.getOpenInventory().getTopInventory().getHolder() instanceof ChestSortGUIHolder) {
+            if(CustomGUITracker.getType(player.getOpenInventory()) == CustomGUIType.SETTINGS) {
                 player.closeInventory();
             }
             unregisterPlayer(player);
