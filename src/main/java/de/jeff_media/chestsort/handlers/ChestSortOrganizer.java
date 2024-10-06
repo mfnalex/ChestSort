@@ -31,10 +31,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.WeakHashMap;
 
 public class ChestSortOrganizer {
 
@@ -66,8 +66,8 @@ public class ChestSortOrganizer {
     final CrackShotHook crackShotHook;
     final InventoryPagesHook inventoryPagesHook;
     final ArrayList<String> stickyCategoryNames = new ArrayList<>();
-    private final HashSet<Inventory> sortableInventories = new HashSet<>();
-    private final HashSet<Inventory> unsortableInventories = new HashSet<>();
+    private final WeakHashMap<Inventory, Void> sortableInventories = new WeakHashMap<>();
+    private final WeakHashMap<Inventory, Void> unsortableInventories = new WeakHashMap<>();
 
     public ChestSortOrganizer(ChestSortPlugin plugin) {
         this.plugin = plugin;
@@ -159,15 +159,15 @@ public class ChestSortOrganizer {
     }
 
     public void setSortable(Inventory inv) {
-        sortableInventories.add(inv);
+        sortableInventories.put(inv, null);
     }
 
     public void setUnsortable(Inventory inv) {
-        unsortableInventories.add(inv);
+        unsortableInventories.put(inv, null);
     }
 
     public boolean isMarkedAsSortable(Inventory inv) {
-        return sortableInventories.contains(inv);
+        return sortableInventories.containsKey(inv);
     }
 
     /*static int getNumberOfEnchantments(ItemStack is) {
@@ -496,7 +496,7 @@ public class ChestSortOrganizer {
     // Sort an inventory only between startSlot and endSlot
     public void sortInventory(Inventory inv, int startSlot, int endSlot) {
         if (inv == null) return;
-        if (unsortableInventories.contains(inv)) return;
+        if (unsortableInventories.containsKey(inv)) return;
         plugin.debug("Attempting to sort an Inventory and calling ChestSortEvent.");
         Class<? extends Inventory> invClass = inv.getClass();
         ChestSortEvent chestSortEvent = new ChestSortEvent(inv);
