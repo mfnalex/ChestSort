@@ -443,13 +443,15 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             return true;
         }
 
-        if (inventory.getHolder() != null &&
-                inventory.getHolder().getClass().getName().toLowerCase().contains("boat")) {
+        InventoryHolder holder = inventory.getHolder();
+
+        if (holder != null &&
+                holder.getClass().getName().toLowerCase().contains("boat")) {
             return true;
         }
 
         // Possible Fix for https://github.com/JEFF-Media-GbR/Spigot-ChestSort/issues/13
-        if (inventory.getHolder() == null) {
+        if (holder == null) {
             return false;
         }
 
@@ -468,11 +470,12 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         // WARNING: The names are inconsistent! A chest will return
         // org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
         // in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
-        return inventory.getHolder() instanceof Chest || inventory.getHolder() instanceof DoubleChest ||
-                inventory.getHolder().getClass().toString().endsWith(".CraftMinecartChest") ||
-                inventory.getHolder().getClass().toString().endsWith(".CraftShulkerBox")
+        String holderClassName = holder.getClass().toString();
+        return holder instanceof Chest || holder instanceof DoubleChest ||
+                holderClassName.endsWith(".CraftMinecartChest") ||
+                holderClassName.endsWith(".CraftShulkerBox")
                 //Obsolete, is checked above by InventoryType
-                || inventory.getHolder().getClass().toString().endsWith(".CraftBarrel");
+                || holderClassName.endsWith(".CraftBarrel");
     }
 
     private boolean isReadyToSort(Player p) {
