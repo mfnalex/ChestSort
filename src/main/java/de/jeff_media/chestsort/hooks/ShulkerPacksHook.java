@@ -3,6 +3,7 @@ package de.jeff_media.chestsort.hooks;
 import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
@@ -15,11 +16,8 @@ public class ShulkerPacksHook {
     private static Method checkIfOpenMethod;
     private static Boolean installed = null;
 
-    public static boolean isOpenShulkerView(InventoryView view) {
-        if(view == null) return false;
-        if(view.getTopInventory() == null) return false;
-        if(view.getTopInventory().getHolder() == null) return false;
-        return (view.getTopInventory().getHolder().getClass().getName().toLowerCase(Locale.ROOT).contains("shulkerpacks"));
+    public static boolean isOpenShulkerView(InventoryHolder topHolder) {
+        return topHolder != null && topHolder.getClass().getName().toLowerCase(Locale.ROOT).contains("shulkerpacks");
     }
 
     public static boolean isOpenShulkerPack(ItemStack item) {

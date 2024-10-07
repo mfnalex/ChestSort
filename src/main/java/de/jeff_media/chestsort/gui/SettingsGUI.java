@@ -4,6 +4,8 @@ import de.jeff_media.chestsort.ChestSortPlugin;
 import de.jeff_media.chestsort.config.Messages;
 import de.jeff_media.chestsort.data.PlayerSetting;
 import de.jeff_media.chestsort.enums.Hotkey;
+import de.jeff_media.chestsort.gui.tracker.CustomGUITracker;
+import de.jeff_media.chestsort.gui.tracker.CustomGUIType;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -107,11 +109,11 @@ public class SettingsGUI implements Listener {
         }
 
         setting.guiInventory = inventory;
-        player.openInventory(inventory);
+        CustomGUITracker.open(player, inventory, CustomGUIType.SETTINGS);
     }
 
     Inventory createGUI(String name, Player inventoryHolder) {
-        return Bukkit.createInventory(inventoryHolder, InventoryType.CHEST, name);
+        return Bukkit.createInventory(null, InventoryType.CHEST, name);
     }
 
     @EventHandler
@@ -133,7 +135,7 @@ public class SettingsGUI implements Listener {
         if (event.getClickedInventory() == null) {
             return;
         }
-        if (!event.getClickedInventory().equals(setting.guiInventory)) {
+        if (CustomGUITracker.getType(event.getView()) != CustomGUIType.SETTINGS) {
             return;
         }
 

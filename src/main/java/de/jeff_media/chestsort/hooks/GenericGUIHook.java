@@ -5,6 +5,7 @@ import org.bukkit.inventory.Inventory;
 
 import java.util.Arrays;
 import java.util.List;
+import org.bukkit.inventory.InventoryHolder;
 
 public class GenericGUIHook {
 
@@ -18,19 +19,19 @@ public class GenericGUIHook {
         //this.enabled=enabled;
     }
 
-    public boolean isPluginGUI(Inventory inv) {
-        if(inv.getHolder()!=null && (inv.getHolder().getClass().getName().toLowerCase().contains("gui")
-                || inv.getHolder().getClass().getName().endsWith(".FastInv")
-            || inv.getHolder().getClass().getName().toLowerCase().contains("menu"))) {
+    public boolean isPluginGUI(Inventory inv, InventoryHolder holder) {
+        if(holder !=null && (holder.getClass().getName().toLowerCase().contains("gui")
+                || holder.getClass().getName().endsWith(".FastInv")
+            || holder.getClass().getName().toLowerCase().contains("menu"))) {
             main.debug("Generic GUI detected by class name containing \"gui\" or \"menu\"");
             return true;
         }
         if(main.getConfig().getBoolean("prevent-sorting-null-inventories")) {
-            if(inv.getHolder()==null) {
+            if(holder ==null) {
                 return false;
             }
         }
-        if(inv.getHolder() != null && guiClasses.contains(inv.getHolder().getClass().getName())) return true;
+        if(holder != null && guiClasses.contains(holder.getClass().getName())) return true;
         return false;
     }
 

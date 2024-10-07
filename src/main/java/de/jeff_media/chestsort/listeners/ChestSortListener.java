@@ -24,10 +24,12 @@ import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.BlockState;
 import org.bukkit.block.Chest;
 import org.bukkit.block.Container;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.entity.ChestedHorse;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
@@ -77,25 +79,22 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         this.advancedChestsHook = new AdvancedChestsHook(plugin);
     }
 
-    private boolean isPossiblyBlacklisted(InventoryView view) {
-        Inventory top = view.getTopInventory();
-        Inventory bottom = view.getBottomInventory();
-        Set<String> toCheck = new HashSet<>();
-        if (top != null) {
-            InventoryHolder holder = top.getHolder();
-            if (holder != null) {
-                String className = holder.getClass().getName();
-                toCheck.add(className);
+    private boolean isPossiblyBlacklisted(InventoryView view, InventoryHolder topHolder) {
+        return isPossiblyBlacklisted(topHolder, view.getBottomInventory().getHolder());
+    }
 
-            }
+    private boolean isPossiblyBlacklisted(InventoryHolder topHolder, InventoryHolder bottomHolder) {
+        Set<String> toCheck = new HashSet<>();
+
+        if (topHolder != null) {
+            String className = topHolder.getClass().getName();
+            toCheck.add(className);
+
         }
 
-        if (bottom != null) {
-            InventoryHolder holder = bottom.getHolder();
-            if (holder != null) {
-                String className = holder.getClass().getName();
-                toCheck.add(className);
-            }
+        if (bottomHolder != null) {
+            String className = bottomHolder.getClass().getName();
+            toCheck.add(className);
         }
 
         for (String className : toCheck) {
@@ -146,10 +145,12 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             return;
         }
         Block clickedBlock = event.getClickedBlock();
-        if (!(clickedBlock.getState() instanceof Container)) {
+        BlockState state = clickedBlock.getState();
+
+        if (!(state instanceof Container)) {
             return;
         }
-        if (!belongsToChestLikeBlock(((Container) clickedBlock.getState()).getInventory())) {
+        if (!belongsToChestLikeBlock(((Container) state).getInventory())) {
             return;
         }
         if (CrateReloadedHook.isCrate(clickedBlock)) {
@@ -182,7 +183,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             }
         }
 
-        Container containerState = (Container) clickedBlock.getState();
+        Container containerState = (Container) state;
         Inventory inventory = containerState.getInventory();
 
         try {
@@ -235,7 +236,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         if (!plugin.getConfig().getBoolean("allow-automatic-sorting")) {
             return; //TODO: Maybe change to allow-automatic-inventory-sorting ?
         }
-        if (!minepacksHook.isMinepacksBackpack(inv)) {
+        if (!minepacksHook.isMinepacksBackpack(inv, inv.getHolder())) {
             return;
         }
         if (!p.hasPermission("chestsort.use")) {
@@ -254,29 +255,31 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
     @EventHandler
     public void onPlayerInventoryClose(InventoryCloseEvent event) {
+        Inventory inventory = event.getInventory();
+        InventoryHolder holder = inventory.getHolder();
 
         plugin.debug("Attempt to automatically sort a player inventory");
 
-        if(isPossiblyBlacklisted(event.getView())) {
+        if(isPossiblyBlacklisted(event.getView(), holder)) {
             plugin.debug("Abort: holder is blacklisted");
             return;
         }
 
-        if (event.getInventory().getHolder() == null) {
+        if (holder == null) {
             plugin.debug("Abort: holder == null");
             return;
         }
         // Might be obsolete, because its @NotNull in 1.15, but who knows if thats for 1.8
-        if (event.getInventory().getType() == null) {
+        if (inventory.getType() == null) {
             plugin.debug("Abort: type == null");
             return;
         }
-        if (event.getInventory().getType() != InventoryType.CRAFTING) {
-            plugin.debug("Abort: type != CRAFTING, but " + event.getInventory().getType().name());
+        if (inventory.getType() != InventoryType.CRAFTING) {
+            plugin.debug("Abort: type != CRAFTING, but " + inventory.getType().name());
             return; // Weird! Returns CRAFTING instead of PLAYER
         }
 
-        if (!(event.getInventory().getHolder() instanceof Player)) {
+        if (!(holder instanceof Player)) {
             plugin.debug("Abort: holder ! instanceof Player");
             return;
         }
@@ -286,7 +289,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             return;
         }
 
-        Player p = (Player) event.getInventory().getHolder();
+        Player p = (Player) holder;
 
         if (!p.hasPermission("chestsort.use.inventory") || !p.hasPermission("chestsort.automatic")) {
             plugin.debug("Missing permission chestsort.use.inventory or chestsort.automatic");
@@ -312,12 +315,16 @@ public class ChestSortListener implements org.bukkit.event.Listener {
     // the chestsort.use permission and has /chestsort enabled)
     @EventHandler
     public void onChestClose(InventoryCloseEvent event) {
+        InventoryView view = event.getView();
+        Inventory inventory = event.getInventory();
 
         if (!plugin.getConfig().getBoolean("allow-automatic-sorting")) {
             return;
         }
 
-        if(isPossiblyBlacklisted(event.getView())) {
+        InventoryHolder holder = inventory.getHolder();
+
+        if(isPossiblyBlacklisted(view, holder)) {
             plugin.debug("Abort: holder is blacklisted");
             return;
         }
@@ -332,14 +339,14 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             return;
         }
         Player p = (Player) event.getPlayer();
-        Inventory inventory = event.getInventory();
 
         if (!p.hasPermission("chestsort.automatic")) {
             return;
         }
 
-        if (!isAPICall(inventory) && !belongsToChestLikeBlock(inventory) &&
-                !plugin.getEnderContainersHook().isEnderchest(inventory) && !LlamaUtils.belongsToLlama(inventory) &&
+        if (!isAPICall(inventory, holder) && !belongsToChestLikeBlock(inventory, holder) &&
+                !plugin.getEnderContainersHook().isEnderchest(inventory, holder) &&
+                !LlamaUtils.belongsToLlama(inventory, holder) &&
                 !advancedChestsHook.isAnAdvancedChest(inventory) &&
                 !plugin.getOrganizer().isMarkedAsSortable(inventory)) {
             return;
@@ -354,27 +361,30 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         plugin.getLgr().logSort(p, Logger.SortCause.CONT_CLOSE);
 
         // Llama inventories need special start/end slots
-        if (LlamaUtils.belongsToLlama(event.getInventory())) {
-            ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
-            plugin.getOrganizer().sortInventory(event.getInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
+        if (LlamaUtils.belongsToLlama(inventory, holder)) {
+            ChestedHorse llama = (ChestedHorse) holder;
+            plugin.getOrganizer().sortInventory(inventory, 2, LlamaUtils.getLlamaChestSize(llama) + 1);
             return;
         }
 
         // If the involved inventory belongs to an AdvancedChest, sort all the pages.
-        if (advancedChestsHook.handleAChestSortingIfPresent(event.getInventory())) {
+        if (advancedChestsHook.handleAChestSortingIfPresent(inventory)) {
             return;
         }
 
         // Normal container inventories can be sorted completely
-        plugin.getOrganizer().sortInventory(event.getInventory());
+        plugin.getOrganizer().sortInventory(inventory);
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onChestOpen(InventoryOpenEvent event) {
+        InventoryView view = event.getView();
+        Inventory inventory = event.getInventory();
+        InventoryHolder holder = inventory.getHolder();
 
         plugin.debug("onChestOpen (InventoryOpenEvent");
 
-        if(isPossiblyBlacklisted(event.getView())) {
+        if(isPossiblyBlacklisted(view, holder)) {
             plugin.debug("Abort: holder is blacklisted");
             return;
         }
@@ -397,14 +407,13 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             return;
         }
         Player p = (Player) event.getPlayer();
-        Inventory inventory = event.getInventory();
 
         if (!p.hasPermission("chestsort.automatic")) {
             return;
         }
 
-        if (!isAPICall(inventory) && !belongsToChestLikeBlock(inventory) &&
-                !plugin.getEnderContainersHook().isEnderchest(inventory) && !LlamaUtils.belongsToLlama(inventory) &&
+        if (!isAPICall(inventory, holder) && !belongsToChestLikeBlock(inventory, holder) &&
+                !plugin.getEnderContainersHook().isEnderchest(inventory, holder) && !LlamaUtils.belongsToLlama(inventory, holder) &&
                 !advancedChestsHook.isAnAdvancedChest(inventory) &&
                 !plugin.getOrganizer().isMarkedAsSortable(inventory)) {
             return;
@@ -419,31 +428,32 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         plugin.getLgr().logSort(p, Logger.SortCause.CONT_OPEN);
 
         // Llama inventories need special start/end slots
-        if (LlamaUtils.belongsToLlama(event.getInventory())) {
-            ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
-            plugin.getOrganizer().sortInventory(event.getInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
+        if (LlamaUtils.belongsToLlama(inventory, holder)) {
+            ChestedHorse llama = (ChestedHorse) holder;
+            plugin.getOrganizer().sortInventory(inventory, 2, LlamaUtils.getLlamaChestSize(llama) + 1);
             return;
         }
 
         // If the involved inventory belongs to an AdvancedChest, sort all the pages.
-        if (advancedChestsHook.handleAChestSortingIfPresent(event.getInventory())) {
+        if (advancedChestsHook.handleAChestSortingIfPresent(inventory)) {
             return;
         }
 
         // Normal container inventories can be sorted completely
-        plugin.getOrganizer().sortInventory(event.getInventory());
+        plugin.getOrganizer().sortInventory(inventory);
 
     }
 
     private boolean belongsToChestLikeBlock(Inventory inventory) {
+        return belongsToChestLikeBlock(inventory, inventory.getHolder());
+    }
 
+    private boolean belongsToChestLikeBlock(Inventory inventory, InventoryHolder holder) {
         // Check by InventoryType
         if (inventory.getType() == InventoryType.ENDER_CHEST ||
                 inventory.getType().name().equalsIgnoreCase("SHULKER_BOX")) {
             return true;
         }
-
-        InventoryHolder holder = inventory.getHolder();
 
         if (holder != null &&
                 holder.getClass().getName().toLowerCase().contains("boat")) {
@@ -478,29 +488,29 @@ public class ChestSortListener implements org.bukkit.event.Listener {
                 || holderClassName.endsWith(".CraftBarrel");
     }
 
-    private boolean isReadyToSort(Player p) {
-        if (!p.hasPermission("chestsort.use")) {
+    private boolean isReadyToSort(Player player) {
+        if (!player.hasPermission("chestsort.use")) {
             return false;
         }
 
         // checking in lower case for lazy admins
-        if (plugin.getDisabledWorlds().contains(p.getWorld().getName().toLowerCase())) {
+        if (plugin.getDisabledWorlds().contains(player.getWorld().getName().toLowerCase())) {
             return false;
         }
 
         // Don't sort automatically when player is spectator or in adventure mode
         // TODO: Make this configurable in config.yml
-        if (p.getGameMode() == GameMode.SPECTATOR || p.getGameMode() == GameMode.ADVENTURE) {
+        if (player.getGameMode() == GameMode.SPECTATOR || player.getGameMode() == GameMode.ADVENTURE) {
             return false;
         }
 
         // Fixes exception when using Spigot's stupid /reload command
-        plugin.registerPlayerIfNeeded(p);
+        plugin.registerPlayerIfNeeded(player);
 
         // Get the current player's settings
         // We do not immediately cancel when sorting is disabled because we might want
         // to show the hint message
-        PlayerSetting setting = plugin.getPerPlayerSettings().get(p.getUniqueId().toString());
+        PlayerSetting setting = plugin.getPerPlayerSettings().get(player.getUniqueId().toString());
 
         // Show "how to enable ChestSort" message when ALL of the following criteria are
         // met:
@@ -509,11 +519,11 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         // logout
         // is defined by the config setting "show-message-again-after-logout")
         // - "show-message-when-using-chest" is set to true in the config.yml
-        if (!plugin.isSortingEnabled(p)) {
+        if (!plugin.isSortingEnabled(player)) {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
                 if (plugin.getConfig().getBoolean("show-message-when-using-chest")) {
-                    p.sendMessage(Messages.MSG_COMMANDMESSAGE);
+                    player.sendMessage(Messages.MSG_COMMANDMESSAGE);
                 }
             }
             return false;
@@ -530,7 +540,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             if (!setting.hasSeenMessage) {
                 setting.hasSeenMessage = true;
                 if (plugin.getConfig().getBoolean("show-message-when-using-chest-and-sorting-is-enabled")) {
-                    p.sendMessage(Messages.MSG_COMMANDMESSAGE2);
+                    player.sendMessage(Messages.MSG_COMMANDMESSAGE2);
                 }
             }
         }
@@ -544,7 +554,11 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             return;
         }
 
-        if(isPossiblyBlacklisted(event.getView())) {
+        InventoryView view = event.getView();
+        Inventory inventory = event.getInventory();
+        InventoryHolder holder = inventory.getHolder();
+
+        if(isPossiblyBlacklisted(view, holder)) {
             plugin.debug("Abort: holder is blacklisted");
             return;
         }
@@ -560,7 +574,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         }
 
         // Check if this is an EnderChest (is there a smarter way?)
-        if (!event.getInventory().equals(p.getEnderChest())) {
+        if (!inventory.equals(p.getEnderChest())) {
             return;
         }
 
@@ -570,7 +584,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
             plugin.getLgr().logSort(p, Logger.SortCause.EC_OPEN);
 
-            plugin.getOrganizer().sortInventory(event.getInventory());
+            plugin.getOrganizer().sortInventory(inventory);
         }
     }
 
@@ -578,8 +592,12 @@ public class ChestSortListener implements org.bukkit.event.Listener {
     public void onHotkey(InventoryClickEvent event) {
 
         plugin.debug2("Hotkey?");
+        InventoryView view = event.getView();
+        Inventory inventory = event.getInventory();
+        InventoryHolder topHolder = inventory.getHolder();
+        Inventory clicked = event.getClickedInventory();
 
-        if(isPossiblyBlacklisted(event.getView())) {
+        if(isPossiblyBlacklisted(view, topHolder)) {
             plugin.debug("Abort: holder is blacklisted");
             return;
         }
@@ -604,29 +622,30 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         }
 
         //InventoryHolder holder = event.getInventory().getHolder();
-        if (event.getClickedInventory() == null) {
+        if (clicked == null) {
             plugin.debug2("exit: 3");
             return;
         }
 
-        boolean isAPICall = isAPICall(event.getClickedInventory());
+        InventoryHolder holder = clicked.getHolder();
+        boolean isAPICall = isAPICall(clicked, holder);
 
         // Detect generic GUIs
-        if (!isAPICall && (plugin.getGenericHook().isPluginGUI(event.getInventory()) ||
-                plugin.getGenericHook().isPluginGUI(event.getInventory()))) {
+        if (!isAPICall && (plugin.getGenericHook().isPluginGUI(inventory, holder) ||
+                plugin.getGenericHook().isPluginGUI(inventory, holder))) {
             plugin.debug("Aborting hotkey sorting: no API call & generic GUI detected");
             return;
         }
 
+
         // Possible fix for #57
         if (!isAPICall &&
-                (event.getClickedInventory().getHolder() != null && event.getClickedInventory().getHolder() == p &&
-                        event.getClickedInventory() != p.getInventory())) {
+                (holder != null && holder == p &&
+                        clicked != p.getInventory())) {
             return;
         }
 
         // End Possible fix for #57
-        InventoryHolder holder = event.getClickedInventory().getHolder();
 
         boolean sort = false;
         Logger.SortCause cause = null;
@@ -634,12 +653,12 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         PlayerSetting setting = plugin.getPerPlayerSettings().get(p.getUniqueId().toString());
 
         // Do not sort the GUI inventory
-        if (event.getClickedInventory() == setting.guiInventory) {
+        if (clicked == setting.guiInventory) {
             return;
         }
 
         // Prevent player from putting items into GUI inventory
-        if (event.getInventory() == setting.guiInventory) {
+        if (inventory == setting.guiInventory) {
             event.setCancelled(true);
             return;
         }
@@ -705,14 +724,14 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
         plugin.debug("Hotkey triggered: " + event.getClick().name());
 
-        if (isAPICall || belongsToChestLikeBlock(event.getClickedInventory()) || (event.getClickedInventory() != null &&
-                event.getClickedInventory().getType() == InventoryType.HOPPER) ||
-                plugin.getOrganizer().isMarkedAsSortable(event.getClickedInventory()) ||
-                LlamaUtils.belongsToLlama(event.getClickedInventory()) ||
-                minepacksHook.isMinepacksBackpack(event.getClickedInventory()) ||
-                plugin.getPlayerVaultsHook().isPlayerVault(event.getClickedInventory()) ||
-                plugin.getEnderContainersHook().isEnderchest(event.getClickedInventory()) ||
-                advancedChestsHook.isAnAdvancedChest(event.getClickedInventory())) {
+        if (isAPICall || belongsToChestLikeBlock(clicked, holder) || (clicked != null &&
+                clicked.getType() == InventoryType.HOPPER) ||
+                plugin.getOrganizer().isMarkedAsSortable(clicked) ||
+                LlamaUtils.belongsToLlama(clicked, holder) ||
+                minepacksHook.isMinepacksBackpack(clicked, holder) ||
+                plugin.getPlayerVaultsHook().isPlayerVault(clicked, holder) ||
+                plugin.getEnderContainersHook().isEnderchest(clicked, holder) ||
+                advancedChestsHook.isAnAdvancedChest(clicked)) {
 
             if (!p.hasPermission("chestsort.use")) {
                 return;
@@ -720,20 +739,20 @@ public class ChestSortListener implements org.bukkit.event.Listener {
 
             plugin.getLgr().logSort(p, cause);
 
-            if (LlamaUtils.belongsToLlama(event.getClickedInventory())) {
-                ChestedHorse llama = (ChestedHorse) event.getInventory().getHolder();
+            if (LlamaUtils.belongsToLlama(clicked, topHolder)) {
+                ChestedHorse llama = (ChestedHorse) topHolder;
                 plugin.getOrganizer()
-                        .sortInventory(event.getClickedInventory(), 2, LlamaUtils.getLlamaChestSize(llama) + 1);
+                        .sortInventory(clicked, 2, LlamaUtils.getLlamaChestSize(llama) + 1);
                 plugin.getOrganizer().updateInventoryView(event);
                 return;
             }
 
-            if (advancedChestsHook.handleAChestSortingIfPresent(event.getInventory())) {
+            if (advancedChestsHook.handleAChestSortingIfPresent(inventory)) {
                 plugin.getOrganizer().updateInventoryView(event);
                 return;
             }
 
-            plugin.getOrganizer().sortInventory(event.getClickedInventory());
+            plugin.getOrganizer().sortInventory(clicked);
             plugin.getOrganizer().updateInventoryView(event);
         }
         else if (holder instanceof Player) {
@@ -757,92 +776,100 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         }
     }
 
-    private boolean isAPICall(Inventory inv) {
+    private boolean isAPICall(Inventory inv, InventoryHolder holder) {
         if (inv == null) {
             return false;
         }
-        return inv.getHolder() instanceof ISortable || plugin.getOrganizer().isMarkedAsSortable(inv);
+        return holder instanceof ISortable || plugin.getOrganizer().isMarkedAsSortable(inv);
     }
 
     @EventHandler
-    public void onAdditionalHotkeys(InventoryClickEvent e) {
+    public void onAdditionalHotkeys(InventoryClickEvent event) {
+        InventoryView view = event.getView();
+        HumanEntity whoClicked = event.getWhoClicked();
+        Inventory clickedInventory = event.getClickedInventory();
+        Inventory inventory = event.getInventory();
+        InventoryHolder holder = inventory.getHolder();
 
-        if(isPossiblyBlacklisted(e.getView())) {
+        if(isPossiblyBlacklisted(view, holder)) {
             plugin.debug("Abort: holder is blacklisted");
             return;
         }
 
-        if (LlamaUtils.belongsToLlama(e.getInventory()) || LlamaUtils.belongsToLlama(e.getClickedInventory())) {
-            return;
-        }
+
+
 
         if (!plugin.getConfig().getBoolean("allow-additional-hotkeys")) {
             return;
         }
-        if (!(e.getWhoClicked() instanceof Player)) {
+        if (!(whoClicked instanceof Player)) {
             return;
         }
-        Player p = (Player) e.getWhoClicked();
+        Player player = (Player) whoClicked;
         // Only continue if clicked outside of the chest
-        if (e.getClickedInventory() != null) {
-            return;
-        }
-        // Only continue if hand is empty
-        if (e.getCursor() != null && e.getCursor().getType() != null && e.getCursor().getType() != Material.AIR) {
+        if (clickedInventory != null) {
             return;
         }
 
-        boolean isAdvancedChest = advancedChestsHook.isAnAdvancedChest(e.getClickedInventory()) ||
-                advancedChestsHook.isAnAdvancedChest(e.getInventory());
+        // Only continue if hand is empty
+        if (event.getCursor() != null && event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR) {
+            return;
+        }
+
+        if (LlamaUtils.belongsToLlama(inventory, holder) /*|| LlamaUtils.belongsToLlama(clickedInventory, clickedInventory.getHolder())*/) {
+            return;
+        }
+
+        boolean isAdvancedChest = advancedChestsHook.isAnAdvancedChest(clickedInventory) ||
+                advancedChestsHook.isAnAdvancedChest(inventory);
 
         // Possible fix for #57
-        if (e.getInventory().getHolder() == null && !e.getView().getTopInventory().equals(p.getEnderChest()) &&
+        if (holder == null && !view.getTopInventory().equals(player.getEnderChest()) &&
                 !isAdvancedChest) {
             return;
         }
-        if (e.getInventory().getHolder() == p && e.getInventory() != p.getInventory()) {
+        if (holder == player && inventory != player.getInventory()) {
             return;
         }
         // End Possible fix for #57
-        if (e.getInventory().getType() != InventoryType.CHEST &&
-                e.getInventory().getType() != InventoryType.DISPENSER &&
-                e.getInventory().getType() != InventoryType.DROPPER &&
-                e.getInventory().getType() != InventoryType.ENDER_CHEST &&
-                e.getInventory().getType() != InventoryType.HOPPER &&
-                !e.getInventory().getType().name().equalsIgnoreCase("SHULKER_BOX") &&
-                (e.getInventory().getHolder() == null ||
-                        !e.getInventory().getHolder().getClass().toString().endsWith(".CraftBarrel")) &&
-                e.getInventory() != p.getEnderChest() && !(e.getInventory().getHolder() instanceof ISortable)) {
+        if (inventory.getType() != InventoryType.CHEST &&
+                inventory.getType() != InventoryType.DISPENSER &&
+                inventory.getType() != InventoryType.DROPPER &&
+                inventory.getType() != InventoryType.ENDER_CHEST &&
+                inventory.getType() != InventoryType.HOPPER &&
+                !inventory.getType().name().equalsIgnoreCase("SHULKER_BOX") &&
+                (holder == null ||
+                        !holder.getClass().toString().endsWith(".CraftBarrel")) &&
+                inventory != player.getEnderChest() && !(holder instanceof ISortable)) {
             return;
         }
 
         // HeadDatabase hook
-        if (headDatabaseHook.isHeadDB(e.getClickedInventory()) || headDatabaseHook.isHeadDB(e.getInventory())) {
+        if (headDatabaseHook.isHeadDB(clickedInventory, holder) || headDatabaseHook.isHeadDB(inventory, holder)) {
             return;
         }
 
         // CrateReloaded hook
-        if (CrateReloadedHook.isCrate(e.getClickedInventory()) || CrateReloadedHook.isCrate(e.getInventory())) {
+        if (CrateReloadedHook.isCrate(clickedInventory, holder) || CrateReloadedHook.isCrate(inventory, holder)) {
             //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
             return;
         }
 
         // GoldenCrates hook
-        if (goldenCratesHook.isCrate(e.getClickedInventory()) || goldenCratesHook.isCrate(e.getInventory())) {
+        if (goldenCratesHook.isCrate(clickedInventory, holder) || goldenCratesHook.isCrate(inventory, holder)) {
             //if(plugin.debug) plugin.getLogger().info("Aborting hotkey because this is a CrateReloaded crate");
             return;
         }
 
         // Detect generic GUIs
-        if (!isAPICall(e.getInventory()) && !isAPICall(e.getClickedInventory()) &&
-                (plugin.getGenericHook().isPluginGUI(e.getInventory()) ||
-                        plugin.getGenericHook().isPluginGUI(e.getInventory()))) {
+        if (!isAPICall(inventory, holder) && !isAPICall(clickedInventory, holder) &&
+                (plugin.getGenericHook().isPluginGUI(inventory, holder) ||
+                        plugin.getGenericHook().isPluginGUI(inventory, holder))) {
             return;
         }
 
         // Don't sort inventories belonging to BossShopPro
-        if (e.getInventory() != null && e.getInventory().getHolder() != null && e.getInventory()
-                .getHolder()
+        if (inventory != null && holder != null && holder
                 .getClass()
                 .getName()
                 .equalsIgnoreCase("org.black_ixx.bossshop.core.BSShopHolder")) {
@@ -850,8 +877,7 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         }
 
         // BetterBackpacks
-        if (e.getInventory() != null && e.getInventory().getHolder() != null && e.getInventory()
-                .getHolder()
+        if (inventory != null && holder != null && holder
                 .getClass()
                 .getName()
                 .equals("com.alonsoaliaga.betterbackpacks.others.BackpackHolder")) {
@@ -859,23 +885,23 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         }
 
         // ShulkerPacks
-        if (ShulkerPacksHook.isOpenShulkerView(e.getView())) {
+        if (ShulkerPacksHook.isOpenShulkerView(holder)) {
             return;
         }
 
-        if (!p.hasPermission("chestsort.use")) {
+        if (!player.hasPermission("chestsort.use")) {
             return;
         }
 
-        plugin.registerPlayerIfNeeded(p);
-        PlayerSetting setting = plugin.getPerPlayerSettings().get(p.getUniqueId().toString());
+        plugin.registerPlayerIfNeeded(player);
+        PlayerSetting setting = plugin.getPerPlayerSettings().get(player.getUniqueId().toString());
 
-        ChestSortEvent chestSortEvent = new ChestSortEvent(e.getInventory());
-        chestSortEvent.setPlayer(e.getWhoClicked());
-        chestSortEvent.setLocation(e.getWhoClicked().getLocation());
+        ChestSortEvent chestSortEvent = new ChestSortEvent(inventory);
+        chestSortEvent.setPlayer(whoClicked);
+        chestSortEvent.setLocation(whoClicked.getLocation());
 
         chestSortEvent.setSortableMaps(new HashMap<>());
-        ItemStack[] contents = e.getInventory().getContents();
+        ItemStack[] contents = inventory.getContents();
         int contentsLength = (!isAdvancedChest) ? contents.length : contents.length - 9;
         for (int i = 0; i < contentsLength; i++) {
             ItemStack item = contents[i];
@@ -887,46 +913,46 @@ public class ChestSortListener implements org.bukkit.event.Listener {
             return;
         }
 
-        if (e.isLeftClick() && setting.leftClick && p.hasPermission(Hotkey.getPermission(Hotkey.LEFT_CLICK))) {
-            plugin.getLgr().logSort(p, Logger.SortCause.H_LEFT);
+        if (event.isLeftClick() && setting.leftClick && player.hasPermission(Hotkey.getPermission(Hotkey.LEFT_CLICK))) {
+            plugin.getLgr().logSort(player, Logger.SortCause.H_LEFT);
             if (setting.getCurrentDoubleClick(plugin, PlayerSetting.DoubleClickType.LEFT_CLICK) ==
                     PlayerSetting.DoubleClickType.LEFT_CLICK) {
                 // Left double click: put everything into destination
                 plugin.getOrganizer()
-                        .stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), false, chestSortEvent);
+                        .stuffPlayerInventoryIntoAnother(player.getInventory(), inventory, false, chestSortEvent);
                 if (isAdvancedChest) {
-                    plugin.getOrganizer().sortInventory(e.getInventory(), 0, e.getInventory().getSize() - 10);
+                    plugin.getOrganizer().sortInventory(inventory, 0, inventory.getSize() - 10);
                 }
                 else {
-                    plugin.getOrganizer().sortInventory(e.getInventory());
+                    plugin.getOrganizer().sortInventory(inventory);
                 }
             }
             else {
                 // Left single click: put only matching items into destination
                 plugin.getOrganizer()
-                        .stuffPlayerInventoryIntoAnother(p.getInventory(), e.getInventory(), true, chestSortEvent);
+                        .stuffPlayerInventoryIntoAnother(player.getInventory(), inventory, true, chestSortEvent);
             }
 
         }
-        else if (e.isRightClick() && setting.rightClick && p.hasPermission(Hotkey.getPermission(Hotkey.RIGHT_CLICK))) {
-            plugin.getLgr().logSort(p, Logger.SortCause.H_RIGHT);
+        else if (event.isRightClick() && setting.rightClick && player.hasPermission(Hotkey.getPermission(Hotkey.RIGHT_CLICK))) {
+            plugin.getLgr().logSort(player, Logger.SortCause.H_RIGHT);
             if (setting.getCurrentDoubleClick(plugin, PlayerSetting.DoubleClickType.RIGHT_CLICK) ==
                     PlayerSetting.DoubleClickType.RIGHT_CLICK) {
                 // Right double click: put everything into player inventory
                 plugin.getOrganizer()
-                        .stuffInventoryIntoAnother(e.getInventory(), p.getInventory(), e.getInventory(), false);
-                plugin.getOrganizer().sortInventory(p.getInventory(), 9, 35);
+                        .stuffInventoryIntoAnother(inventory, player.getInventory(), inventory, false);
+                plugin.getOrganizer().sortInventory(player.getInventory(), 9, 35);
             }
             else {
                 // Right single click: put only matching items into player inventory
                 plugin.getOrganizer()
-                        .stuffInventoryIntoAnother(e.getInventory(), p.getInventory(), e.getInventory(), true);
+                        .stuffInventoryIntoAnother(inventory, player.getInventory(), inventory, true);
             }
 
         }
-        //plugin.organizer.sortInventory(e.getInventory());
-        plugin.getOrganizer().updateInventoryView(e.getInventory());
-        plugin.getOrganizer().updateInventoryView(p.getInventory());
+        //plugin.organizer.sortInventory(event.getInventory());
+        plugin.getOrganizer().updateInventoryView(inventory);
+        plugin.getOrganizer().updateInventoryView(player.getInventory());
 
         Bukkit.getPluginManager().callEvent(new ChestSortPostSortEvent(chestSortEvent));
     }

@@ -148,7 +148,7 @@
 
         <repository>
             <id>jeff-media-gbr</id>
-            <url>https://hub.jeff-media.com/nexus/repository/jeff-media-public</url>
+            <url>https://repo.jeff-media.com/public/</url>
         </repository>
 
         <repository>
@@ -226,7 +226,7 @@
         <dependency>
             <groupId>com.jeff-media.jefflib</groupId>
             <artifactId>jefflib</artifactId>
-            <version>14.1.0</version>
+            <version>14.2.2</version>
             <scope>compile</scope>
         </dependency>
 
@@ -240,7 +240,7 @@
         <dependency>
             <groupId>me.clip</groupId>
             <artifactId>placeholderapi</artifactId>
-            <version>2.10.6</version>
+            <version>2.10.5</version>
             <scope>provided</scope>
         </dependency>
 
@@ -274,7 +274,7 @@
         <dependency>
             <groupId>com.github.Slimefun</groupId>
             <artifactId>Slimefun4</artifactId>
-            <version>RC-28</version>
+            <version>RC-37</version>
             <scope>provided</scope>
         </dependency>
 

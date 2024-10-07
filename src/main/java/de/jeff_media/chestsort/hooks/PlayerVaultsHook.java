@@ -2,6 +2,7 @@ package de.jeff_media.chestsort.hooks;
 
 import de.jeff_media.chestsort.ChestSortPlugin;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 
 public class PlayerVaultsHook {
 
@@ -11,11 +12,11 @@ public class PlayerVaultsHook {
         this.main=main;
     }
 
-    public boolean isPlayerVault(Inventory inv) {
+    public boolean isPlayerVault(Inventory inv, InventoryHolder holder) {
         if(inv==null) return false;
-        if(inv.getHolder()==null) return false;
+        if(holder ==null) return false;
         if(!main.getConfig().getBoolean("hook-playervaults",true)) return false;
-        return inv.getHolder().getClass().getName().equals("com.drtshock.playervaults.vaultmanagement.VaultHolder")
-                || inv.getHolder().getClass().getName().equals("com.github.dig.endervaults.bukkit.vault.BukkitInventoryHolder");
+        return holder.getClass().getName().equals("com.drtshock.playervaults.vaultmanagement.VaultHolder")
+                || holder.getClass().getName().equals("com.github.dig.endervaults.bukkit.vault.BukkitInventoryHolder");
     }
 }
