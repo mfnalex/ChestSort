@@ -480,11 +480,12 @@ public class ChestSortListener implements org.bukkit.event.Listener {
         // WARNING: The names are inconsistent! A chest will return
         // org.bukkit.craftbukkit.v1_14_R1.block.CraftChest
         // in Spigot 1.14 while a double chest returns org.bukkit.block.DoubleChest
+        String holderClassName = holder.getClass().toString();
         return holder instanceof Chest || holder instanceof DoubleChest ||
-                holder.getClass().toString().endsWith(".CraftMinecartChest") ||
-                holder.getClass().toString().endsWith(".CraftShulkerBox")
+                holderClassName.endsWith(".CraftMinecartChest") ||
+                holderClassName.endsWith(".CraftShulkerBox")
                 //Obsolete, is checked above by InventoryType
-                || holder.getClass().toString().endsWith(".CraftBarrel");
+                || holderClassName.endsWith(".CraftBarrel");
     }
 
     private boolean isReadyToSort(Player player) {
