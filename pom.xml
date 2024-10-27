@@ -9,7 +9,7 @@
     <name>ChestSort</name>
     <url>https://www.chestsort.de</url>
     <description>Allows automatic chest sorting!</description>
-    <version>14.1.2</version>
+    <version>14.2.0</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -226,7 +226,7 @@
         <dependency>
             <groupId>com.jeff-media.jefflib</groupId>
             <artifactId>jefflib</artifactId>
-            <version>14.2.2</version>
+            <version>14.2.3</version>
             <scope>compile</scope>
         </dependency>
 
