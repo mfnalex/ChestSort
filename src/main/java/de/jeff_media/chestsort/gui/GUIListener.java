@@ -25,8 +25,11 @@ public class GUIListener implements Listener {
 
     private static final ChestSortPlugin main = ChestSortPlugin.getInstance();
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onClick(InventoryClickEvent event) {
+        if (event.isCancelled()) {
+            return;
+        }
         if(CustomGUITracker.getType(event.getView()) == CustomGUIType.NEW) {
             event.setCancelled(true);
         }
