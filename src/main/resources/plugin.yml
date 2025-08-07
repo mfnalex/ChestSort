@@ -3,6 +3,7 @@ name: ${project.name}
 version: ${project.version}
 api-version: "1.13"
 description: "${project.description}"
+folia-supported: true
 authors:
   - mfnalex
   - JEFF Media GbR

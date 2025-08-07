@@ -76,6 +76,7 @@ public class ChestSortPlugin extends JavaPlugin {
     boolean hotkeyGUI = true;
     private EnderContainersHook enderContainersHook;
     private GenericGUIHook genericHook;
+    public static boolean usingFolia = false;
     private boolean hookCrackShot = false;
     private boolean hookInventoryPages = false;
     private boolean hookMinepacks = false;
@@ -537,12 +538,13 @@ public class ChestSortPlugin extends JavaPlugin {
             getLogger().info("Categories: " + getCategoryList());
         }
 
+        // TODO: Fix update checker for folia
         if (getUpdateChecker() != null) {
             if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("true")) {
-                getUpdateChecker().checkEveryXHours(getUpdateCheckInterval()).checkNow();
+                if(!usingFolia) getUpdateChecker().checkEveryXHours(getUpdateCheckInterval()).checkNow();
             } // When set to on-startup, we check right now (delay 0)
             else if (getConfig().getString("check-for-updates", "true").equalsIgnoreCase("on-startup")) {
-                getUpdateChecker().checkNow();
+                if(!usingFolia)  getUpdateChecker().checkNow();
             }
         }
 
@@ -594,6 +596,16 @@ public class ChestSortPlugin extends JavaPlugin {
 
         if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new Placeholders(this).register();
+        }
+    }
+
+    @Override
+    public void onLoad() {
+        try {
+            Class.forName("io.papermc.paper.threadedregions.scheduler.RegionScheduler");
+            usingFolia = true;
+        } catch (ClassNotFoundException e) {
+            usingFolia = false;
         }
     }
 
