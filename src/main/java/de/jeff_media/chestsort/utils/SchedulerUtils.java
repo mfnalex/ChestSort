@@ -47,9 +47,10 @@ public abstract class SchedulerUtils {
                             delay
                     );
                 }
-                return;
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            return;
         }
         plugin.getServer().getScheduler().runTaskLater(plugin, task, delay);
     }
@@ -88,6 +89,7 @@ public abstract class SchedulerUtils {
                 }
                 runnable.setScheduledTask(task);
             } catch (Exception e) {
+                e.printStackTrace();
             }
             return;
         }
@@ -136,10 +138,10 @@ public abstract class SchedulerUtils {
                 Method getGlobalScheduler = plugin.getServer().getClass().getMethod("getGlobalRegionScheduler");
                 GlobalRegionScheduler globalScheduler = (GlobalRegionScheduler) getGlobalScheduler.invoke(plugin.getServer());
                 globalScheduler.execute(plugin, task);
-                return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return;
         }
         plugin.getServer().getScheduler().runTaskAsynchronously(plugin, task);
     }
@@ -162,10 +164,10 @@ public abstract class SchedulerUtils {
                     GlobalRegionScheduler globalScheduler = (GlobalRegionScheduler) getGlobalScheduler.invoke(plugin.getServer());
                     globalScheduler.execute(plugin, task);
                 }
-                return;
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            return;
         }
         plugin.getServer().getScheduler().runTask(plugin, task);
     }
