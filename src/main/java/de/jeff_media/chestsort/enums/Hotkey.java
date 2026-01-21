@@ -40,7 +40,12 @@ public enum Hotkey {
     public static String getPermission(Hotkey hotkey) {
 
         if(hotkey == AUTO_SORT) {
-            return "chestsort.use";
+            /*
+            Fixed a bug in the menu: when automatic sorting is not available,
+            a switch is still displayed instead of the barrier, although it does not work.
+            (It does not affect the operation of the auto-sorting mechanics itself, it still works well )
+             */
+            return "chestsort.automatic";
         }
 
         if(hotkey == AUTO_INV_SORT) {
